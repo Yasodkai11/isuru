@@ -13,7 +13,7 @@ export function HeritageStory() {
             <div className="relative aspect-4/5 max-w-md mx-auto border border-[#B8924A]/40 p-2.5 bg-[#FAF6EE] shadow-xl">
               <div className="relative w-full h-full bg-[#1A1410] overflow-hidden">
                 <Image
-                  src="/isuru_images/hero2.jpg"
+                  src="/isuru_images/crown.jpg"
                   alt="Artisanal gemstone pit washing and recovery in Ratnapura Sri Lanka showing illam gravel and wattiya baskets"
                   fill
                   sizes="(max-width: 768px) 100vw, 420px"
@@ -27,7 +27,7 @@ export function HeritageStory() {
               <div className="flex items-center gap-3">
                 <div className="relative w-16 h-16 shrink-0 rounded-xs overflow-hidden border border-[#D4AF67]/60">
                   <Image
-                    src="/isuru_images/hero3.jpg"
+                    src="/isuru_images/master.jpg"
                     alt="Master Ceylon gem cutter faceting a royal sapphire"
                     fill
                     sizes="64px"

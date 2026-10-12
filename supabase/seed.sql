@@ -144,7 +144,7 @@ insert into public.gemstones (
   'GIA-5542198034',
   null,
   '[
-    {"url": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=85", "alt": "Sharp 6-ray star sapphire cabochon from Sri Lanka"}
+    {"url": "/isuru_images/green.jpg", "alt": "Sharp 6-ray star sapphire cabochon from Sri Lanka"}
   ]'::jsonb
 ),
 (

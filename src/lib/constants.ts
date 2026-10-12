@@ -280,7 +280,7 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "/isuru_images/categories3.jpg",
+        url: "/isuru_images/green.jpg",
         alt: "Sharp 6-ray star sapphire cabochon from Sri Lanka showing perfect asterism under direct light",
       },
       {
