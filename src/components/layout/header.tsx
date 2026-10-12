@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCartStore } from "@/stores/cart-store";
 import { ShoppingBag, User, Menu, Search, Shield, PhoneCall, X } from "lucide-react";
@@ -89,18 +90,28 @@ export function Header() {
             })}
           </nav>
 
-          {/* Central Crest & Logo */}
+          {/* Central Crest & Logo (Traditional Lotus Emblem) */}
           <div className="flex flex-col items-center justify-center text-center">
             <Link href="/" className="group flex flex-col items-center">
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.35em] text-[#B8924A] font-semibold">
-                Est. {BRAND.established} • Ratnapura
-              </span>
-              <span className="font-serif text-2xl sm:text-3xl md:text-4xl tracking-wide text-[#5E0F1E] font-medium leading-none mt-1 group-hover:text-[#420A15] transition-colors">
+              <div className="relative w-8 h-8 sm:w-9 sm:h-9 mb-1">
+                <Image
+                  src="/isuru_images/logo-isuru.png"
+                  alt="Isuru Gems Sri Lanka"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <span className="font-serif text-2xl sm:text-3xl tracking-[0.08em] text-[#5E0F1E] font-medium leading-tight group-hover:text-[#420A15] transition-colors">
                 ISURU GEMS
               </span>
-              <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#1B3A8A] font-medium mt-1">
-                Ceylon Fine Gemstones
-              </span>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="w-4 h-[1px] bg-[#B8924A]/60" />
+                <span className="text-[9px] uppercase tracking-[0.25em] text-[#B8924A] font-semibold">
+                  Sri Lanka
+                </span>
+                <span className="w-4 h-[1px] bg-[#B8924A]/60" />
+              </div>
             </Link>
           </div>
 

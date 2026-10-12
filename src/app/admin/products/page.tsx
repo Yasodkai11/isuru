@@ -209,7 +209,9 @@ export default function AdminProductsPage() {
               )}
             </div>
             {row.featured && (
-              <Star className="w-3.5 h-3.5 text-[#B8924A] fill-current" title="Featured on Showcase" />
+              <span title="Featured on Showcase">
+                <Star className="w-3.5 h-3.5 text-[#B8924A] fill-current" />
+              </span>
             )}
           </div>
         );

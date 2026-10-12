@@ -79,33 +79,30 @@ export const CATEGORIES_CONFIG: Record<
   }
 > = {
   "blue-sapphires": {
-    title: "Ceylon Blue Sapphires",
+    title: "Blue Sapphires",
     subtitle: "Royal Blue & Cornflower Blue",
     tagline: "The Sovereign Gem of Serendib",
     description:
       "Celebrated for their velvety, open-color saturation that remains luminous in candlelight and daylight alike. Sourced directly from the historic gravels of Ratnapura and Elahera.",
-    image:
-      "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+    image: "/isuru_images/categories1.jpg",
     varietyQuery: "Blue",
   },
   "padparadscha": {
-    title: "Padparadscha Sapphires",
-    subtitle: "Sacred Lotus Blossom Sunset Hues",
-    tagline: "The World's Rarest Corundum",
+    title: "Coloured Gemstones",
+    subtitle: "Padparadscha, Rubies & Fancy Sapphires",
+    tagline: "Sacred Lotus Blossom Sunset Hues",
     description:
-      "Named after the Sinhalese term for aquatic lotus blossom (Padma Raga). A tender, celestial balance of soft morning rose pink and evening twilight orange.",
-    image:
-      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=85",
+      "Named after the Sinhalese term for aquatic lotus blossom (Padma Raga). A tender, celestial balance of soft morning rose pink, sunset orange, and fiery yellow.",
+    image: "/isuru_images/categories2.jpg",
     varietyQuery: "Padparadscha",
   },
   "rare-collector": {
-    title: "Collector's Rare Ceylon Gems",
-    subtitle: "Asterism Star Sapphires, Rubies & Alexandrites",
+    title: "Rough Gemstones",
+    subtitle: "Uncut Crystals, Star Sapphires & Minerals",
     tagline: "Museum & Investment Grade Crystals",
     description:
-      "Singular mineralogical phenomena including six-ray asterism crystals, untreated Ceylon Pigeon Blood rubies, and daylight-green to candlelight-raspberry Alexandrites.",
-    image:
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85",
+      "Singular mineralogical phenomena including natural unheated rough crystals direct from Ratnapura washing baskets, six-ray asterism crystals, and rare alluvial discoveries.",
+    image: "/isuru_images/categories3.jpg",
     varietyQuery: "Star",
   },
   "yellow-sapphires": {
@@ -114,8 +111,7 @@ export const CATEGORIES_CONFIG: Record<
     tagline: "Auspicious Brilliance from Balangoda",
     description:
       "Revered for centuries across Vedic traditions as Pushparaga. Displaying dazzling brilliance, fiery golden undertones, and outstanding natural crystal clarity.",
-    image:
-      "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=1200&q=85",
+    image: "/isuru_images/yellow.jpg",
     varietyQuery: "Yellow",
   },
 };
@@ -151,16 +147,12 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/blue1.jpg",
         alt: "Glistening unheated 4.28 carat Ceylon Royal Blue Cushion cut sapphire with royal luster",
       },
       {
-        url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/blue2.jpg",
         alt: "Macro facet view of the 4.28ct Ceylon Royal Blue sapphire showing exceptional clarity",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85",
-        alt: "Profile perspective of the gemstone showing pavilion proportions",
       },
     ],
     featured: true,
@@ -190,16 +182,12 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/pink1.jpg",
         alt: "Rare 3.15 carat natural Ceylon Padparadscha sapphire in delicate pink-orange sunset hues",
       },
       {
-        url: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/pink2.jpg",
         alt: "Side profile showing depth and fire of Ceylon Padparadscha sapphire",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=85",
-        alt: "Macro inclusion inspection view",
       },
     ],
     featured: true,
@@ -228,11 +216,11 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/blue2.jpg",
         alt: "Vibrant 2.85 carat round brilliant Ceylon Cornflower blue sapphire",
       },
       {
-        url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/blue1.jpg",
         alt: "Table facet reflection under daylight",
       },
     ],
@@ -262,15 +250,11 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/yellow.jpg",
         alt: "Flawless 5.60 carat Ceylon Yellow Sapphire emerald cut in honey gold tone",
       },
-      {
-        url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=85",
-        alt: "Step cut facets displaying amber flashes",
-      },
     ],
-    featured: false,
+    featured: true,
     description:
       "Revered in Vedic gemology as Pushparaga and associated with auspicious fortune and wisdom. Cut in an aristocratic emerald step profile showing radiant amber gold flashes.",
   },
@@ -296,15 +280,15 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/categories3.jpg",
         alt: "Sharp 6-ray star sapphire cabochon from Sri Lanka showing perfect asterism under direct light",
       },
       {
-        url: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/lightblue.jpg",
         alt: "Dome profile displaying silky rutile needle orientation",
       },
     ],
-    featured: false,
+    featured: true,
     description:
       "A rare phenomenon gem exhibiting sharp, centered asterism. Under sunlight or single-source beam, six razor-sharp light rays glide seamlessly across the high-domed cabochon surface.",
   },
@@ -330,11 +314,11 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/pink2.jpg",
         alt: "Luminous Ceylon Ruby cushion cut showing natural crimson fluorescence and intense fire",
       },
       {
-        url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/pink1.jpg",
         alt: "Facet fire view of natural Ceylon Ruby",
       },
     ],
@@ -345,14 +329,14 @@ export const SAMPLE_GEMS: Gemstone[] = [
   {
     id: "gem-007",
     slug: "ceylon-vivid-cornflower-oval-4-10ct",
-    name: "Ceylon Vivid Cornflower Sapphire (Unheated)",
-    variety: "Cornflower Blue Sapphire",
-    category: "blue-sapphires",
+    name: "Ceylon Vivid Green Sapphire (Rare Untreated)",
+    variety: "Green Sapphire",
+    category: "rare-collector",
     carat: 4.1,
     origin: "Ratnapura (City of Gems)",
     cut: "Oval Mixed Cut",
     dimensions: "10.15 x 8.20 x 5.45 mm",
-    color: "Vivid Cornflower Blue",
+    color: "Lustrous Ceylon Emerald Green",
     treatment: "Unheated",
     clarity: "Loupe Clean / VVS1",
     price: 15800,
@@ -364,29 +348,25 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=85",
-        alt: "Untreated 4.10 carat Oval Ceylon Cornflower Sapphire of supreme velvety azure",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
-        alt: "Scintillation under direct spotlight",
+        url: "/isuru_images/green.jpg",
+        alt: "Untreated 4.10 carat Oval Ceylon Green Sapphire with exceptional luster",
       },
     ],
-    featured: false,
+    featured: true,
     description:
-      "Mined from the gravels of the Kalu Ganga basin, this unheated oval corundum demonstrates velvety cornflower saturation without secondary extinction. Exceptional cut symmetry.",
+      "Mined from the gravels of the Kalu Ganga basin, this unheated green corundum demonstrates pure natural forest green hue without secondary extinction. Exceptional cut symmetry.",
   },
   {
     id: "gem-008",
     slug: "padparadscha-cushion-brilliant-2-42ct",
-    name: "Ceylon Imperial Padparadscha Cushion",
-    variety: "Padparadscha Sapphire",
-    category: "padparadscha",
+    name: "Ceylon Electric Light Blue Sapphire Cushion",
+    variety: "Cornflower Blue Sapphire",
+    category: "blue-sapphires",
     carat: 2.42,
     origin: "Elahera, Sri Lanka",
     cut: "Cushion Brilliant",
     dimensions: "8.10 x 7.35 x 4.88 mm",
-    color: "Delicate Lotus Blossom Pink-Orange",
+    color: "Electric Sky Blue",
     treatment: "Unheated Natural",
     clarity: "Eye Clean VVS",
     price: 21500,
@@ -398,12 +378,8 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=85",
-        alt: "2.42 ct Cushion Padparadscha displaying genuine lotus sunset coloration",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85",
-        alt: "Crown facet brilliance under diffuse daylight",
+        url: "/isuru_images/lightblue.jpg",
+        alt: "2.42 ct Cushion Ceylon Light Blue Sapphire displaying intense diamond-like dispersion",
       },
     ],
     featured: false,
@@ -432,17 +408,13 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85",
-        alt: "Rare 1.85 ct Ceylon Alexandrite with 90% color shift from lush forest teal to fiery raspberry",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=85",
-        alt: "Incandescent lamp view showing raspberry purple fluorescence",
+        url: "/isuru_images/blue3.jpg",
+        alt: "Rare 1.85 ct Ceylon Natural Sapphire with vivid oceanic luster",
       },
     ],
     featured: false,
     description:
-      "Emerald by day, ruby by night. This singular Ceylon chrysoberyl demonstrates an extraordinary 85-90% color transition. Authenticated by the prestigious Gubelin Gem Lab of Lucerne.",
+      "Emerald by day, ruby by night. This singular Ceylon gem demonstrates extraordinary optical brilliance direct from Morawaka mines.",
   },
   {
     id: "gem-010",
@@ -466,11 +438,11 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/blue1.jpg",
         alt: "5.20 ct Royal Blue Pear cut sapphire displaying intense saturation and flawless polish",
       },
       {
-        url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/blue2.jpg",
         alt: "Teardrop tip and wing proportions",
       },
     ],
@@ -500,7 +472,7 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/yellow.jpg",
         alt: "3.75 ct Cushion brilliant Yellow Ceylon sapphire radiating intense solar fire",
       },
     ],
@@ -530,7 +502,7 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/pink1.jpg",
         alt: "2.30 ct intense Ceylon Pink Sapphire with dazzling magenta sparkle",
       },
     ],

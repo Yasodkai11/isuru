@@ -22,9 +22,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             className={cn(
               "flex h-11 w-full bg-[#FDFBF7] border border-[#B8924A]/40 px-3.5 py-2 text-sm text-[#2B2B2B] placeholder:text-[#2B2B2B]/40 focus:border-[#B8924A] focus:outline-none focus:ring-1 focus:ring-[#B8924A] disabled:cursor-not-allowed disabled:opacity-50 transition-subtle",
-              startIcon && "pl-10",
-              endIcon && "pr-10",
-              error && "border-red-600 focus:border-red-600 focus:ring-red-600",
+              startIcon ? "pl-10" : undefined,
+              endIcon ? "pr-10" : undefined,
+              error ? "border-red-600 focus:border-red-600 focus:ring-red-600" : undefined,
               className
             )}
             ref={ref}

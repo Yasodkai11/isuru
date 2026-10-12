@@ -45,6 +45,7 @@ export interface DataTableProps<T> {
   initialPageSize?: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DataTable<T extends Record<string, any>>({
   data,
   columns,
@@ -108,7 +109,9 @@ export function DataTable<T extends Record<string, any>>({
 
     const column = columns.find((c) => c.key === sortKey);
     const sorted = [...filteredData].sort((a, b) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let valA: any = column?.sortValue ? column.sortValue(a) : a[sortKey];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let valB: any = column?.sortValue ? column.sortValue(b) : b[sortKey];
 
       if (valA === undefined || valA === null) valA = "";

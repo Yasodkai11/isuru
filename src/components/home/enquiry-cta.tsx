@@ -335,7 +335,7 @@ export function EnquiryCTA() {
               Payment & Armoured Transit
             </h4>
             <p>
-              High-value acquisitions are secured via escrow or verified bank wire. Shipments are handled door-to-door by specialized luxury armoured couriers (Malca-Amit / Brink's) with 100% comprehensive maritime and transit insurance.
+              High-value acquisitions are secured via escrow or verified bank wire. Shipments are handled door-to-door by specialized luxury armoured couriers (Malca-Amit / Brink&apos;s) with 100% comprehensive maritime and transit insurance.
             </p>
           </div>
 

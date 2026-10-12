@@ -87,7 +87,8 @@ export default async function Image({
             display: "flex",
             flexDirection: "column",
             gap: "12px",
-            my: "auto",
+            marginTop: "auto",
+            marginBottom: "auto",
           }}
         >
           <div

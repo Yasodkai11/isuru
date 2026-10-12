@@ -34,8 +34,8 @@ export default function AboutPage() {
         {/* Feature Image */}
         <div className="relative aspect-16/9 w-full bg-[#FAF6EE] border border-[#B8924A]/30 overflow-hidden shadow-md">
           <Image
-            src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1400&q=85"
-            alt="Artisanal gemstone miners evaluating natural sapphire crystals in the lush valleys of Ratnapura"
+            src="/isuru_images/hero1.jpg"
+            alt="Artisanal gemstone sorting and evaluation in Ratnapura Sri Lanka showing natural raw crystals and cut sapphires"
             fill
             priority
             className="object-cover"

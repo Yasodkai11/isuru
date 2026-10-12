@@ -89,7 +89,7 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredGems.slice(0, 6).map((gem) => {
             const primaryImage = gem.images[0] || {
-              url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=800&q=80",
+              url: "/isuru_images/blue1.jpg",
               alt: `${gem.name}`,
             };
 

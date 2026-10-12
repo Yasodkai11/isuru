@@ -244,7 +244,7 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
                   </div>
                   <span className="text-[11px] text-[#2B2B2B]/70 flex items-center gap-1.5 pt-1">
                     <Truck className="w-3.5 h-3.5 text-[#B8924A]" />
-                    <span>Complimentary Armoured Courier (Malca-Amit / Brink's)</span>
+                    <span>Complimentary Armoured Courier (Malca-Amit / Brink&apos;s)</span>
                   </span>
                 </div>
               </div>

@@ -318,7 +318,7 @@ export default function AdminSEOPage() {
                   <label className="font-semibold text-[#2B2B2B]">Schema.org Structured Type</label>
                   <select
                     value={schemaType}
-                    onChange={(e) => setSchemaType(e.target.value as any)}
+                    onChange={(e) => setSchemaType(e.target.value as AdminSEORecord["schemaType"])}
                     className="w-full text-xs p-2.5 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
                   >
                     <option value="CollectionPage">CollectionPage (Catalog)</option>

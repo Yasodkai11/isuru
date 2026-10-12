@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: "/",
       images: [
         {
-          url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+          url: "/isuru_images/blue1.jpg",
           width: 1200,
           height: 630,
           alt: "Isuru Gems - Fine Ceylon Blue Sapphire",

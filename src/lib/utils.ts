@@ -38,3 +38,19 @@ export function formatCurrency(amount: number, currency: "USD" | "LKR" = "USD"):
 export function formatCarats(weight: number): string {
   return `${weight.toFixed(2)} cts`;
 }
+
+/**
+ * Convert string to URL-safe slug
+ */
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/&/g, "-and-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+}

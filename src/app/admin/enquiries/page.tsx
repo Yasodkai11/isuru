@@ -214,7 +214,7 @@ export default function AdminEnquiriesPage() {
           row.email.toLowerCase().includes(query) ||
           row.country.toLowerCase().includes(query) ||
           row.message.toLowerCase().includes(query) ||
-          (row.gemName && row.gemName.toLowerCase().includes(query))
+          Boolean(row.gemName && row.gemName.toLowerCase().includes(query))
         }
         defaultSortKey="createdAt"
         defaultSortDirection="desc"
