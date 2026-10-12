@@ -55,22 +55,11 @@ export default async function HomePage() {
     <div className="flex flex-col min-h-screen">
       <JsonLd data={homeSchemas} />
 
-      {/* Hero: "The Timeless Beauty of Ceylon" */}
       <HeroSection />
-
-      {/* 3 Category Cards */}
       <CategoryCards />
-
-      {/* Featured Gems with Interactive Filter & Quick Enquiry Modal */}
       <FeaturedGems gems={gems} />
-
-      {/* Four Pillars of Trust & Ceylon Mineralogical Standards Table */}
       <TrustMarkers />
-
-      {/* Heritage & Ratnapura Story */}
       <HeritageStory />
-
-      {/* Private Acquisition Enquiry CTA & Concierge Desk */}
       <EnquiryCTA />
     </div>
   );

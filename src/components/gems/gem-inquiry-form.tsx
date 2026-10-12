@@ -7,11 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BRAND } from "@/lib/constants";
+import Image from "next/image";
 import {
   Mail,
   CheckCircle2,
   ShieldCheck,
-  MessageSquare,
   Clock,
   Sparkles,
 } from "lucide-react";
@@ -225,7 +225,13 @@ export function GemInquiryForm({ gem }: GemInquiryFormProps) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-[#1B3A8A] font-semibold hover:underline"
         >
-          <MessageSquare className="w-4 h-4 text-[#B8924A]" />
+          <Image
+            src="/isuru_images/whatsapp.png"
+            alt="WhatsApp"
+            width={16}
+            height={16}
+            className="w-4 h-4 object-contain"
+          />
           <span>Immediate WhatsApp Concierge</span>
         </a>
 

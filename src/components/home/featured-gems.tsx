@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
 import { formatCurrency, formatCarats } from "@/lib/utils";
-import { ArrowRight, Eye, Sparkles, CheckCircle2, ShieldCheck } from "lucide-react";
+import { ArrowRight, Eye, CheckCircle2, ShieldCheck } from "lucide-react";
 
 interface FeaturedGemsProps {
   gems: Gemstone[];
@@ -25,10 +25,10 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
   const [enquiryPhone, setEnquiryPhone] = useState("");
 
   const filters = [
-    { label: "All Masterpieces", key: "all" },
+    { label: "All", key: "all" },
     { label: "Royal Blue", key: "Royal Blue" },
     { label: "Padparadscha", key: "Padparadscha" },
-    { label: "Collector Rare", key: "rare" },
+    { label: "Rare", key: "rare" },
   ];
 
   const filteredGems = gems.filter((gem) => {
@@ -52,20 +52,14 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
   };
 
   return (
-    <section className="py-20 bg-[#FAF6EE] border-b border-[#B8924A]/25">
+    <section className="pb-20 bg-[#FAF6EE]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
-        <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
-          <span className="text-[11px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold block">
-            Rare Specimen Showcase
-          </span>
+        <div className="text-center max-w-2xl mx-auto mb-10">
           <h2 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-normal leading-tight">
-            Featured Ceylon Gemstones
+            Featured Gemstones
           </h2>
-          <p className="text-sm text-[#2B2B2B]/75 leading-relaxed">
-            Singular, investment-grade corundum crystals cut and polished to maximize optical dispersion, fire, and internal life.
-          </p>
-          <GoldDivider withOrnament className="my-5" />
+          <GoldDivider withOrnament className="my-5 max-w-xs mx-auto" />
 
           {/* Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
@@ -137,31 +131,16 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                       <span className="text-[#1B3A8A] font-bold">{formatCarats(gem.carat)}</span>
                     </div>
 
-                    <h3 className="font-serif text-xl font-medium text-[#5E0F1E] group-hover:text-[#420A15] transition-colors leading-snug">
+                    <h3 className="font-serif text-xl font-medium text-[#5E0F1E] group-hover:text-[#420A15] transition-colors leading-snug line-clamp-1">
                       <Link href={`/gems/${gem.slug}`}>{gem.name}</Link>
                     </h3>
-
-                    <p className="text-xs text-[#2B2B2B]/70 line-clamp-2 leading-relaxed">
-                      {gem.description}
-                    </p>
-
-                    <div className="pt-2 flex items-center space-x-3 text-xs text-[#2B2B2B]/75 border-t border-[#B8924A]/15">
-                      <span>{gem.cut}</span>
-                      <span>•</span>
-                      <span>{gem.color}</span>
-                      <span>•</span>
-                      <span>{gem.clarity}</span>
-                    </div>
                   </div>
                 </div>
 
                 {/* Footer with Price and Actions */}
-                <div className="p-5 pt-0 mt-3">
+                <div className="p-5 pt-0">
                   <div className="pt-3 border-t border-[#B8924A]/20 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-[#2B2B2B]/60 block font-medium">
-                        Investment Value
-                      </span>
                       <span className="font-serif text-xl font-bold text-[#1B3A8A]">
                         {formatCurrency(gem.price, gem.currency)}
                       </span>
@@ -194,7 +173,7 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
         <div className="text-center mt-14">
           <Link href="/gems">
             <Button variant="outline" size="lg" className="gap-2">
-              <span>View All Available Ceylon Gemstones</span>
+              <span>View All Gemstones</span>
               <ArrowRight className="w-4 h-4 text-[#B8924A]" />
             </Button>
           </Link>
@@ -207,7 +186,7 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
           isOpen={!!selectedGemForEnquiry}
           onClose={() => setSelectedGemForEnquiry(null)}
           title={`Enquire: ${selectedGemForEnquiry.name}`}
-          description={`Direct confidential inquiry for Specimen #${selectedGemForEnquiry.id} (${selectedGemForEnquiry.carat} cts ${selectedGemForEnquiry.variety}). Verified by ${selectedGemForEnquiry.certificate.lab}.`}
+          description={`${selectedGemForEnquiry.carat} ct ${selectedGemForEnquiry.variety} · ${selectedGemForEnquiry.certificate.lab} certified`}
           size="md"
         >
           {enquirySuccess ? (
@@ -215,9 +194,9 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
               <div className="w-12 h-12 rounded-full bg-[#B8924A]/20 text-[#5E0F1E] flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-6 h-6 text-[#5E0F1E]" />
               </div>
-              <h4 className="font-serif text-2xl text-[#5E0F1E]">Dossier Requested</h4>
+              <h4 className="font-serif text-2xl text-[#5E0F1E]">Enquiry Sent</h4>
               <p className="text-xs text-[#2B2B2B]/80 max-w-sm mx-auto">
-                Your interest in {selectedGemForEnquiry.name} has been notified to our head gemologist. You will receive microscopic high-resolution video and lab certificate scans shortly.
+                We&apos;ll be in touch about {selectedGemForEnquiry.name} shortly.
               </p>
             </div>
           ) : (
@@ -284,7 +263,7 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                   <span>NGJA Licensed Custody</span>
                 </span>
                 <Button type="submit" variant="primary" size="sm">
-                  Send Private Specimen Enquiry
+                  Send Enquiry
                 </Button>
               </div>
             </form>

@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -10,14 +9,7 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
-  },
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
 };
 

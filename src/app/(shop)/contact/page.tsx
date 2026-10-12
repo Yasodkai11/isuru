@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { GoldDivider } from "@/components/layout/gold-divider";
 import { InquiryForm } from "@/components/inquiry/inquiry-form";
 import { BRAND } from "@/lib/constants";
-import { MapPin, Phone, Mail, Clock, MessageSquare } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 interface ContactPageProps {
   searchParams: Promise<{
@@ -101,7 +102,13 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   <span>Direct Telephone: {BRAND.phone}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <MessageSquare className="w-4 h-4 text-[#B8924A]" />
+                  <Image
+                    src="/isuru_images/whatsapp.png"
+                    alt="WhatsApp"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 object-contain"
+                  />
                   <span>WhatsApp Concierge: {BRAND.whatsapp}</span>
                 </div>
                 <div className="flex items-center gap-3">

@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { X, Search, ShieldCheck, Phone, Mail, MessageSquare } from "lucide-react";
+import { X, Search, ShieldCheck, Phone, Mail } from "lucide-react";
 import { BRAND } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -36,7 +37,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 md:hidden flex justify-end" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-50 lg:hidden flex justify-end" role="dialog" aria-modal="true">
       {/* Dimmed backdrop */}
       <div
         className="fixed inset-0 bg-[#2B2B2B]/60 backdrop-blur-xs transition-opacity animate-gentle-fade"
@@ -126,7 +127,13 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
               rel="noopener noreferrer"
               className="flex items-center gap-2.5 text-[#1B3A8A] font-medium hover:underline"
             >
-              <MessageSquare className="w-3.5 h-3.5 text-[#B8924A]" />
+              <Image
+                src="/isuru_images/whatsapp.png"
+                alt="WhatsApp"
+                width={16}
+                height={16}
+                className="w-4 h-4 object-contain"
+              />
               <span>WhatsApp Concierge</span>
             </a>
           </div>
