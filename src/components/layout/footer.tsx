@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BRAND } from "@/lib/constants";
 import { GoldDivider } from "@/components/layout/gold-divider";
 import { Award, MapPin, Mail, Phone, CheckCircle2 } from "lucide-react";
@@ -9,8 +10,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export function Footer() {
+  const pathname = usePathname();
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState("");
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();

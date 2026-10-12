@@ -1,0 +1,371 @@
+"use client";
+
+import React, { useState } from "react";
+import {
+  Settings,
+  Shield,
+  DollarSign,
+  Truck,
+  Bell,
+  Save,
+  CheckCircle,
+  MapPin,
+  Phone,
+  Mail,
+  RefreshCw,
+} from "lucide-react";
+import { useAdminStore } from "@/stores/admin-store";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+export default function AdminSettingsPage() {
+  const { settings, updateSettings } = useAdminStore();
+
+  const [formData, setFormData] = useState({ ...settings });
+  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [activeTab, setActiveTab] = useState<"general" | "currency" | "logistics" | "notifications">("general");
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateSettings(formData);
+    setSavedSuccess(true);
+    setTimeout(() => setSavedSuccess(false), 3000);
+  };
+
+  const handleRateChange = (currency: keyof typeof settings.exchangeRates, value: string) => {
+    const num = parseFloat(value);
+    setFormData((prev) => ({
+      ...prev,
+      exchangeRates: {
+        ...prev.exchangeRates,
+        [currency]: isNaN(num) ? prev.exchangeRates[currency] : num,
+      },
+    }));
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#B8924A]/25">
+        <div>
+          <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
+            Console Settings & Governance
+          </h1>
+          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+            Configure NGJA gemstone export licenses, live exchange multipliers, and secure transport parameters.
+          </p>
+        </div>
+
+        {savedSuccess && (
+          <div className="px-3 py-1.5 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-semibold rounded-xs flex items-center gap-1.5 animate-gentle-fade">
+            <CheckCircle className="w-4 h-4 text-emerald-600" />
+            <span>Settings successfully persisted</span>
+          </div>
+        )}
+      </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-[#B8924A]/20 gap-2 text-xs font-semibold">
+        <button
+          onClick={() => setActiveTab("general")}
+          className={`pb-3 px-3 transition-colors border-b-2 ${
+            activeTab === "general"
+              ? "border-[#5E0F1E] text-[#5E0F1E]"
+              : "border-transparent text-[#2B2B2B]/60 hover:text-[#5E0F1E]"
+          }`}
+        >
+          General & Provenance
+        </button>
+        <button
+          onClick={() => setActiveTab("currency")}
+          className={`pb-3 px-3 transition-colors border-b-2 ${
+            activeTab === "currency"
+              ? "border-[#5E0F1E] text-[#5E0F1E]"
+              : "border-transparent text-[#2B2B2B]/60 hover:text-[#5E0F1E]"
+          }`}
+        >
+          Multi-Currency Exchange
+        </button>
+        <button
+          onClick={() => setActiveTab("logistics")}
+          className={`pb-3 px-3 transition-colors border-b-2 ${
+            activeTab === "logistics"
+              ? "border-[#5E0F1E] text-[#5E0F1E]"
+              : "border-transparent text-[#2B2B2B]/60 hover:text-[#5E0F1E]"
+          }`}
+        >
+          Armoured Transport & Escrow
+        </button>
+        <button
+          onClick={() => setActiveTab("notifications")}
+          className={`pb-3 px-3 transition-colors border-b-2 ${
+            activeTab === "notifications"
+              ? "border-[#5E0F1E] text-[#5E0F1E]"
+              : "border-transparent text-[#2B2B2B]/60 hover:text-[#5E0F1E]"
+          }`}
+        >
+          Concierge Notifications
+        </button>
+      </div>
+
+      <form onSubmit={handleSave} className="space-y-6 text-xs">
+        {/* Tab 1: General Atelier Information */}
+        {activeTab === "general" && (
+          <div className="p-6 bg-white border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4 animate-gentle-fade">
+            <h2 className="font-serif text-lg font-medium text-[#5E0F1E] border-b border-[#B8924A]/20 pb-2">
+              Atelier Profile & National Gem Authority Credentials
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="font-semibold text-[#2B2B2B]">Atelier Name</label>
+                <Input
+                  value={formData.storeName}
+                  onChange={(e) => setFormData({ ...formData, storeName: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-semibold text-[#2B2B2B]">Tagline</label>
+                <Input
+                  value={formData.tagline}
+                  onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="font-semibold text-[#2B2B2B]">NGJA Official Export License #</label>
+                <Input
+                  value={formData.ngjaLicense}
+                  onChange={(e) => setFormData({ ...formData, ngjaLicense: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="font-semibold text-[#2B2B2B]">Ratnapura Vault Headquarters Address</label>
+                <Input
+                  value={formData.ratnapuraVaultAddress}
+                  onChange={(e) => setFormData({ ...formData, ratnapuraVaultAddress: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="font-semibold text-[#2B2B2B]">Colombo Private Showroom Address</label>
+                <Input
+                  value={formData.colomboShowroomAddress}
+                  onChange={(e) => setFormData({ ...formData, colomboShowroomAddress: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-semibold text-[#2B2B2B]">Concierge Email</label>
+                <Input
+                  value={formData.primaryEmail}
+                  onChange={(e) => setFormData({ ...formData, primaryEmail: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-semibold text-[#2B2B2B]">WhatsApp Hotline</label>
+                <Input
+                  value={formData.whatsappNumber}
+                  onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 2: Multi-Currency */}
+        {activeTab === "currency" && (
+          <div className="p-6 bg-white border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4 animate-gentle-fade">
+            <div className="flex items-center justify-between border-b border-[#B8924A]/20 pb-2">
+              <div>
+                <h2 className="font-serif text-lg font-medium text-[#5E0F1E]">
+                  Multi-Currency Conversion Engine
+                </h2>
+                <p className="text-xs text-[#2B2B2B]/60">
+                  Base Catalog Price: USD ($1.00). Custom multipliers convert storefront and invoice displays.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-3 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs space-y-1">
+                <label className="font-bold text-[#5E0F1E]">Sri Lankan Rupee (LKR)</label>
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={formData.exchangeRates.LKR}
+                  onChange={(e) => handleRateChange("LKR", e.target.value)}
+                />
+                <span className="text-[10px] text-[#2B2B2B]/60">$10,000 = LKR {(10000 * formData.exchangeRates.LKR).toLocaleString()}</span>
+              </div>
+
+              <div className="p-3 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs space-y-1">
+                <label className="font-bold text-[#5E0F1E]">Euro (EUR)</label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.exchangeRates.EUR}
+                  onChange={(e) => handleRateChange("EUR", e.target.value)}
+                />
+                <span className="text-[10px] text-[#2B2B2B]/60">$10,000 = €{(10000 * formData.exchangeRates.EUR).toLocaleString()}</span>
+              </div>
+
+              <div className="p-3 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs space-y-1">
+                <label className="font-bold text-[#5E0F1E]">British Pound (GBP)</label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.exchangeRates.GBP}
+                  onChange={(e) => handleRateChange("GBP", e.target.value)}
+                />
+                <span className="text-[10px] text-[#2B2B2B]/60">$10,000 = £{(10000 * formData.exchangeRates.GBP).toLocaleString()}</span>
+              </div>
+
+              <div className="p-3 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs space-y-1">
+                <label className="font-bold text-[#5E0F1E]">UAE Dirham (AED)</label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.exchangeRates.AED}
+                  onChange={(e) => handleRateChange("AED", e.target.value)}
+                />
+                <span className="text-[10px] text-[#2B2B2B]/60">$10,000 = AED {(10000 * formData.exchangeRates.AED).toLocaleString()}</span>
+              </div>
+
+              <div className="p-3 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs space-y-1">
+                <label className="font-bold text-[#5E0F1E]">Singapore Dollar (SGD)</label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.exchangeRates.SGD}
+                  onChange={(e) => handleRateChange("SGD", e.target.value)}
+                />
+                <span className="text-[10px] text-[#2B2B2B]/60">$10,000 = SGD {(10000 * formData.exchangeRates.SGD).toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 3: Logistics & Escrow */}
+        {activeTab === "logistics" && (
+          <div className="p-6 bg-white border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4 animate-gentle-fade">
+            <h2 className="font-serif text-lg font-medium text-[#5E0F1E] border-b border-[#B8924A]/20 pb-2">
+              Armoured Transport Partners & Inspection Terms
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="font-semibold text-[#2B2B2B]">Default Escrow Review Window (Days)</label>
+                <Input
+                  type="number"
+                  value={formData.defaultEscrowDays}
+                  onChange={(e) => setFormData({ ...formData, defaultEscrowDays: Number(e.target.value) })}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-semibold text-[#2B2B2B]">NGJA Customs Clearance Duty Fee (USD)</label>
+                <Input
+                  type="number"
+                  value={formData.customsExportFeeUsd}
+                  onChange={(e) => setFormData({ ...formData, customsExportFeeUsd: Number(e.target.value) })}
+                />
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="font-semibold text-[#2B2B2B]">Accredited Armoured Transport Carriers</label>
+                <div className="space-y-2 pt-1">
+                  {formData.secureCourierPartners.map((carrier, idx) => (
+                    <div key={idx} className="flex items-center gap-2 p-2 bg-[#FAF6EE] border border-[#B8924A]/25 rounded-xs">
+                      <Truck className="w-4 h-4 text-[#B8924A]" />
+                      <span className="font-medium text-[#2B2B2B]">{carrier}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Notifications */}
+        {activeTab === "notifications" && (
+          <div className="p-6 bg-white border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4 animate-gentle-fade">
+            <h2 className="font-serif text-lg font-medium text-[#5E0F1E] border-b border-[#B8924A]/20 pb-2">
+              Staff & Concierge Notification Toggles
+            </h2>
+
+            <div className="space-y-3">
+              <label className="flex items-center gap-3 p-3 bg-[#FAF6EE] border border-[#B8924A]/20 rounded-xs cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.emailNotifications.newOrder}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      emailNotifications: { ...formData.emailNotifications, newOrder: e.target.checked },
+                    })
+                  }
+                  className="rounded-xs text-[#5E0F1E] focus:ring-[#5E0F1E]"
+                />
+                <div>
+                  <p className="font-semibold text-[#2B2B2B]">Instant High-Value Order Notification</p>
+                  <p className="text-[11px] text-[#2B2B2B]/60">Dispatch email immediately when an acquisition order is submitted.</p>
+                </div>
+              </label>
+
+              <label className="flex items-center gap-3 p-3 bg-[#FAF6EE] border border-[#B8924A]/20 rounded-xs cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.emailNotifications.newEnquiry}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      emailNotifications: { ...formData.emailNotifications, newEnquiry: e.target.checked },
+                    })
+                  }
+                  className="rounded-xs text-[#5E0F1E] focus:ring-[#5E0F1E]"
+                />
+                <div>
+                  <p className="font-semibold text-[#2B2B2B]">Concierge Inquiry Alerts</p>
+                  <p className="text-[11px] text-[#2B2B2B]/60">Alert Master Gemologist when private client or wholesale inquiry is filed.</p>
+                </div>
+              </label>
+
+              <label className="flex items-center gap-3 p-3 bg-[#FAF6EE] border border-[#B8924A]/20 rounded-xs cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.emailNotifications.lowInventory}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      emailNotifications: { ...formData.emailNotifications, lowInventory: e.target.checked },
+                    })
+                  }
+                  className="rounded-xs text-[#5E0F1E] focus:ring-[#5E0F1E]"
+                />
+                <div>
+                  <p className="font-semibold text-[#2B2B2B]">Vault Inventory Level Alerts</p>
+                  <p className="text-[11px] text-[#2B2B2B]/60">Notify when natural sapphire reserve drops below configured thresholds.</p>
+                </div>
+              </label>
+            </div>
+          </div>
+        )}
+
+        {/* Save Bar */}
+        <div className="flex items-center justify-end gap-3 pt-2">
+          <Button
+            type="submit"
+            className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold px-6 shadow-md"
+          >
+            <Save className="w-3.5 h-3.5 mr-1.5" />
+            Save Atelier Configuration
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}

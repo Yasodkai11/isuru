@@ -13,6 +13,7 @@ import {
   TableCaption,
 } from "@/components/ui/table";
 import { ShieldCheck, Truck, Briefcase, FileCheck } from "lucide-react";
+import { WholesaleForm } from "@/components/wholesale/wholesale-form";
 
 export const metadata: Metadata = {
   title: "Wholesale & B2B Gemstone Parcels | Isuru Gems Ceylon",
@@ -158,21 +159,9 @@ export default function WholesalePage() {
           </Table>
         </div>
 
-        {/* Wholesale CTA */}
-        <div className="p-8 sm:p-12 bg-[#FDFBF7] border border-[#B8924A]/40 text-center space-y-4 max-w-3xl mx-auto shadow-md">
-          <h3 className="font-serif text-3xl text-[#5E0F1E] font-medium">
-            Open a Corporate / Atelier Account
-          </h3>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/80 max-w-lg mx-auto leading-relaxed">
-            Contact our Ratnapura and Colombo export desk for wholesale pricing sheets, custom parcel cutting, and video inspection of rough crystals.
-          </p>
-          <div className="pt-2">
-            <Link href="/contact">
-              <Button variant="primary" size="lg">
-                Contact B2B Concierge
-              </Button>
-            </Link>
-          </div>
+        {/* Interactive B2B Wholesale Inquiry Section */}
+        <div id="wholesale-inquiry-form" className="max-w-4xl mx-auto pt-6">
+          <WholesaleForm />
         </div>
       </div>
     </div>

@@ -28,14 +28,30 @@ export interface Gemstone {
   images: GemImage[];
   featured?: boolean;
   description: string;
+  category?: string;
 }
 
 export interface GemFilterOptions {
   variety?: string;
+  colour?: string;
+  shape?: string;
   minCarat?: number;
   maxCarat?: number;
   origin?: string;
   treatment?: string;
+  minPrice?: number;
   maxPrice?: number;
-  sort?: "featured" | "price-asc" | "price-desc" | "carat-desc";
+  category?: string;
+  search?: string;
+  sort?: "featured" | "price-asc" | "price-desc" | "carat-desc" | "carat-asc" | "newest";
+  page?: number;
+  limit?: number;
+}
+
+export interface PaginatedGemsResult {
+  gems: Gemstone[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }

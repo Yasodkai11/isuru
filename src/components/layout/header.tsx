@@ -17,6 +17,10 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "Gemstones", href: "/gems" },

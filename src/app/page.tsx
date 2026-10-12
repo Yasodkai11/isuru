@@ -6,6 +6,12 @@ import { TrustMarkers } from "@/components/home/trust-markers";
 import { HeritageStory } from "@/components/home/heritage-story";
 import { EnquiryCTA } from "@/components/home/enquiry-cta";
 import { getGemstones } from "@/actions/gems";
+import {
+  JsonLd,
+  getOrganizationSchema,
+  getWebSiteSchema,
+  getBreadcrumbListSchema,
+} from "@/lib/seo/schema";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -18,6 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: "Isuru Gems | The Timeless Beauty of Ceylon",
       description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
+      url: "/",
       images: [
         {
           url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
@@ -27,14 +34,27 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: "Isuru Gems | Natural Ceylon Sapphires & Rare Gems",
+      description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
+    },
   };
 }
 
 export default async function HomePage() {
-  const gems = await getGemstones();
+  const { gems } = await getGemstones({ limit: 6 });
+
+  const homeSchemas = [
+    getOrganizationSchema(),
+    getWebSiteSchema(),
+    getBreadcrumbListSchema([{ name: "Home", url: "/" }]),
+  ];
 
   return (
     <div className="flex flex-col min-h-screen">
+      <JsonLd data={homeSchemas} />
+
       {/* Hero: "The Timeless Beauty of Ceylon" */}
       <HeroSection />
 
@@ -55,3 +75,4 @@ export default async function HomePage() {
     </div>
   );
 }
+

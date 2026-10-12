@@ -18,7 +18,7 @@ export function CategoryCards() {
       image:
         "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
       alt: "Exquisite faceted Ceylon blue sapphire reflecting pure azure light",
-      link: "/gems?variety=Royal+Blue",
+      link: "/gems/category/blue-sapphires",
       badge: "Signature Collection",
     },
     {
@@ -32,7 +32,7 @@ export function CategoryCards() {
       image:
         "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
       alt: "Rare Ceylon Padparadscha gemstone with radiant pink-orange lotus hues",
-      link: "/gems?variety=Padparadscha",
+      link: "/gems/category/padparadscha",
       badge: "World’s Rarest Corundum",
     },
     {
@@ -46,7 +46,7 @@ export function CategoryCards() {
       image:
         "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
       alt: "Collector grade Ceylon precious gem showcasing natural asterism and fine fire",
-      link: "/gems?variety=Star",
+      link: "/gems/category/rare-collector",
       badge: "Collector & Investment",
     },
   ];

@@ -3,15 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useCartStore } from "@/stores/cart-store";
 import { formatCurrency, formatCarats } from "@/lib/utils";
 import { X, Trash2, ShieldCheck, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function CartSheet() {
+  const pathname = usePathname();
   const { items, isOpen, setOpen, removeItem, totalAmount } = useCartStore();
 
-  if (!isOpen) return null;
+  if (pathname?.startsWith("/admin") || !isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -121,6 +123,14 @@ export function CartSheet() {
               </div>
 
               <div className="space-y-2 pt-2">
+                <Link
+                  href="/cart"
+                  onClick={() => setOpen(false)}
+                  className="w-full inline-flex items-center justify-center border border-[#B8924A] text-[#5E0F1E] py-2.5 px-4 text-xs uppercase tracking-wider font-medium hover:bg-[#FAF6EE] transition-subtle"
+                >
+                  View Full Vault Page
+                </Link>
+
                 <Link
                   href="/checkout"
                   onClick={() => setOpen(false)}
