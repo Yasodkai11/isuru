@@ -117,13 +117,18 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/gems/category/ceylon-rubies" className="hover:text-[#B8924A] transition-colors">
+                  Natural Ceylon Rubies
+                </Link>
+              </li>
+              <li>
                 <Link href="/gems?variety=Padparadscha" className="hover:text-[#B8924A] transition-colors">
                   Padparadscha Sapphires
                 </Link>
               </li>
               <li>
-                <Link href="/gems?variety=Cornflower" className="hover:text-[#B8924A] transition-colors">
-                  Cornflower Blue Sapphires
+                <Link href="/gems/category/alexandrite" className="hover:text-[#B8924A] transition-colors">
+                  Chrysoberyl Alexandrite
                 </Link>
               </li>
               <li>

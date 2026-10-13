@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { GoldDivider } from "@/components/layout/gold-divider";
 import { Compass, HeartHandshake, Shield } from "lucide-react";
@@ -31,14 +30,17 @@ export default function AboutPage() {
           <GoldDivider withOrnament className="my-8 max-w-xs mx-auto" />
         </div>
 
-        {/* Feature Image */}
+        {/* Feature Video */}
         <div className="relative aspect-16/9 w-full bg-[#FAF6EE] border border-[#B8924A]/30 overflow-hidden shadow-md">
-          <Image
-            src="/isuru_images/hero1.jpg"
-            alt="Artisanal gemstone sorting and evaluation in Ratnapura Sri Lanka showing natural raw crystals and cut sapphires"
-            fill
-            priority
-            className="object-cover"
+          <video
+            className="h-full w-full object-cover"
+            src="/isuru_images/our%20story%20video.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            aria-label="Our story video"
           />
         </div>
 

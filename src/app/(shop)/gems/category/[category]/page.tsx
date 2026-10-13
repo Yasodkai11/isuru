@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getGemstones } from "@/actions/gems";
 import { GemCard } from "@/components/gems/gem-card";
@@ -101,9 +102,11 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   const categoryNavItems = [
     { slug: "blue-sapphires", label: "Blue Sapphires" },
+    { slug: "ceylon-rubies", label: "Ceylon Rubies" },
     { slug: "padparadscha", label: "Padparadscha" },
-    { slug: "rare-collector", label: "Collector Rare" },
+    { slug: "alexandrite", label: "Alexandrite" },
     { slug: "yellow-sapphires", label: "Yellow Sapphires" },
+    { slug: "rare-collector", label: "Rough & Collector" },
   ];
 
   return (
@@ -132,39 +135,53 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           </Link>
         </div>
 
-        {/* Editorial Category Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <Badge variant="gold" className="text-[10px] tracking-[0.25em] py-1 px-3">
-            <Sparkles className="w-3.5 h-3.5 text-[#B8924A] mr-1 inline" />
-            {config.tagline}
-          </Badge>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#5E0F1E] font-normal tracking-tight">
-            {config.title}
-          </h1>
-          <p className="text-sm sm:text-base text-[#2B2B2B]/80 leading-relaxed">
-            {config.description}
-          </p>
-          <GoldDivider withOrnament className="my-5 max-w-sm mx-auto" />
-
-          {/* Category Switcher Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-            {categoryNavItems.map((item) => {
-              const isActive = item.slug === category;
-              return (
-                <Link
-                  key={item.slug}
-                  href={`/gems/category/${item.slug}`}
-                  className={`text-xs uppercase tracking-wider px-4 py-2 border transition-all font-medium ${
-                    isActive
-                      ? "bg-[#5E0F1E] text-[#FAF6EE] border-[#5E0F1E] shadow-xs"
-                      : "bg-[#FDFBF7] text-[#2B2B2B] border-[#B8924A]/30 hover:border-[#B8924A]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+        {/* Editorial Category Showcase Banner */}
+        <div className="relative overflow-hidden bg-[#161210] border border-[#B8924A]/40 p-6 sm:p-10 rounded-xs shadow-md">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF67] to-transparent" />
+          <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 relative z-10">
+            <div className="relative w-28 h-28 sm:w-36 sm:h-36 shrink-0 rounded-xs overflow-hidden border border-[#B8924A]/50 bg-[#221C16] shadow-[0_0_25px_rgba(184,146,74,0.3)]">
+              <Image
+                src={config.image}
+                alt={config.title}
+                fill
+                priority
+                sizes="(max-width: 640px) 112px, 144px"
+                className="object-cover"
+              />
+            </div>
+            <div className="space-y-3 text-center md:text-left flex-1">
+              <Badge variant="gold" className="text-[10px] tracking-[0.25em] py-0.5 px-3">
+                <Sparkles className="w-3 h-3 text-[#B8924A] mr-1 inline" />
+                {config.tagline}
+              </Badge>
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#FAF6EE] font-normal tracking-tight">
+                {config.title}
+              </h1>
+              <p className="text-xs sm:text-sm text-[#FAF6EE]/80 leading-relaxed max-w-2xl">
+                {config.description}
+              </p>
+            </div>
           </div>
+        </div>
+
+        {/* Category Switcher Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {categoryNavItems.map((item) => {
+            const isActive = item.slug === category;
+            return (
+              <Link
+                key={item.slug}
+                href={`/gems/category/${item.slug}`}
+                className={`text-xs uppercase tracking-wider px-4 py-2 border transition-all font-medium ${
+                  isActive
+                    ? "bg-[#5E0F1E] text-[#FAF6EE] border-[#5E0F1E] shadow-xs"
+                    : "bg-[#FDFBF7] text-[#2B2B2B] border-[#B8924A]/30 hover:border-[#B8924A]"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Filters */}

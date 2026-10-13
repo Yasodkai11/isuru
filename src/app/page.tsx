@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const { gems } = await getGemstones({ limit: 6 });
+  const { gems } = await getGemstones({ limit: 16 });
 
   const homeSchemas = [
     getOrganizationSchema(),

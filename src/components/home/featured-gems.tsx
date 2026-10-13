@@ -25,17 +25,26 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
   const [enquiryPhone, setEnquiryPhone] = useState("");
 
   const filters = [
-    { label: "All", key: "all" },
+    { label: "All Collections", key: "all" },
     { label: "Royal Blue", key: "Royal Blue" },
-    { label: "Padparadscha", key: "Padparadscha" },
-    { label: "Rare", key: "rare" },
+    { label: "Ceylon Rubies", key: "Ruby" },
+    { label: "Padparadscha & Fancy", key: "Padparadscha" },
+    { label: "Star & Rare Phenomenon", key: "rare" },
   ];
 
   const filteredGems = gems.filter((gem) => {
     if (selectedFilter === "all") return true;
-    if (selectedFilter === "Royal Blue") return gem.variety.includes("Royal Blue");
-    if (selectedFilter === "Padparadscha") return gem.variety.includes("Padparadscha");
-    if (selectedFilter === "rare") return gem.variety.includes("Star") || gem.variety.includes("Ruby") || gem.variety.includes("Yellow");
+    if (selectedFilter === "Royal Blue") return gem.variety.includes("Royal Blue") || gem.variety.includes("Blue");
+    if (selectedFilter === "Ruby") return gem.variety.includes("Ruby") || gem.variety.includes("Spinel");
+    if (selectedFilter === "Padparadscha") return gem.variety.includes("Padparadscha") || gem.variety.includes("Orange");
+    if (selectedFilter === "rare")
+      return (
+        gem.variety.includes("Star") ||
+        gem.variety.includes("Alexandrite") ||
+        gem.variety.includes("Pushparaga") ||
+        gem.variety.includes("Yellow") ||
+        gem.variety.includes("Spinel")
+      );
     return true;
   });
 

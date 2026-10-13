@@ -73,6 +73,15 @@
   background: #967433;
 }
 
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Traditional Sri Lankan & Luxury Accents */
 .gold-divider {
   height: 1px;
@@ -146,11 +155,86 @@
   }
 }
 
+/* Cinematic Ken Burns Hero Motion - Video Effect */
+@keyframes heroPan1 {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+@keyframes heroPan2 {
+  0% {
+    transform: scale(1.08) translate3d(-1%, 0.8%, 0);
+  }
+  100% {
+    transform: scale(1.01) translate3d(0.8%, -0.6%, 0);
+  }
+}
+
+@keyframes heroPan3 {
+  0% {
+    transform: scale(1.02) translate3d(0.8%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.09) translate3d(-1.2%, 0.5%, 0);
+  }
+}
+
+@keyframes heroPan4 {
+  0% {
+    transform: scale(1.07) translate3d(-0.8%, 0.6%, 0);
+  }
+  100% {
+    transform: scale(1.01) translate3d(0.4%, -0.6%, 0);
+  }
+}
+
+.animate-hero-pan-1 {
+  animation: heroPan1 7s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+.animate-hero-pan-2 {
+  animation: heroPan2 7s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+.animate-hero-pan-3 {
+  animation: heroPan3 7s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+.animate-hero-pan-4 {
+  animation: heroPan4 7s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float-gentle {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-gem-float,
   .animate-gem-turn,
-  .animate-gentle-fade {
-    animation: none;
+  .animate-gentle-fade,
+  .animate-hero-pan-1,
+  .animate-hero-pan-2,
+  .animate-hero-pan-3,
+  .animate-hero-pan-4,
+  .animate-float-gentle {
+    animation: none !important;
   }
 }
 

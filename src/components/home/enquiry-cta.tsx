@@ -30,7 +30,7 @@ export function EnquiryCTA() {
               alt="WhatsApp"
               width={18}
               height={18}
-              className="w-4 h-4 object-contain"
+              className="w-4 h-4 object-contain rounded-full"
             />
             WhatsApp
           </a>

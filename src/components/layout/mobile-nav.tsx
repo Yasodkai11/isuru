@@ -132,7 +132,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 alt="WhatsApp"
                 width={16}
                 height={16}
-                className="w-4 h-4 object-contain"
+                className="w-4 h-4 object-contain rounded-full"
               />
               <span>WhatsApp Concierge</span>
             </a>

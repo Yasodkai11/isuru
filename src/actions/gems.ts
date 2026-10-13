@@ -34,9 +34,13 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
         if (filters.category === "blue-sapphires") {
           query = query.ilike("variety", "%Blue%");
         } else if (filters.category === "padparadscha") {
-          query = query.ilike("variety", "%Padparadscha%");
+          query = query.or("variety.ilike.%Padparadscha%,variety.ilike.%Orange%");
+        } else if (filters.category === "ceylon-rubies" || filters.category === "rubies") {
+          query = query.ilike("variety", "%Ruby%");
+        } else if (filters.category === "alexandrite") {
+          query = query.ilike("variety", "%Alexandrite%");
         } else if (filters.category === "rare-collector") {
-          query = query.or("variety.ilike.%Star%,variety.ilike.%Ruby%,variety.ilike.%Alexandrite%,variety.ilike.%Pink%");
+          query = query.or("variety.ilike.%Star%,variety.ilike.%Ruby%,variety.ilike.%Alexandrite%,variety.ilike.%Pink%,variety.ilike.%Spinel%,variety.ilike.%Green%");
         } else if (filters.category === "yellow-sapphires") {
           query = query.ilike("variety", "%Yellow%");
         }
@@ -161,13 +165,17 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
     filtered = filtered.filter((g) => {
       if (g.category === cat) return true;
       if (cat === "blue-sapphires") return g.variety.toLowerCase().includes("blue");
-      if (cat === "padparadscha") return g.variety.toLowerCase().includes("padparadscha");
+      if (cat === "padparadscha") return g.variety.toLowerCase().includes("padparadscha") || g.variety.toLowerCase().includes("orange");
+      if (cat === "ceylon-rubies" || cat === "rubies") return g.variety.toLowerCase().includes("ruby");
+      if (cat === "alexandrite") return g.variety.toLowerCase().includes("alexandrite");
       if (cat === "rare-collector")
         return (
           g.variety.toLowerCase().includes("star") ||
           g.variety.toLowerCase().includes("ruby") ||
           g.variety.toLowerCase().includes("alexandrite") ||
-          g.variety.toLowerCase().includes("pink")
+          g.variety.toLowerCase().includes("pink") ||
+          g.variety.toLowerCase().includes("spinel") ||
+          g.variety.toLowerCase().includes("green")
         );
       if (cat === "yellow-sapphires") return g.variety.toLowerCase().includes("yellow");
       return false;

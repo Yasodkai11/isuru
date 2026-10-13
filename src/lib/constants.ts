@@ -87,23 +87,32 @@ export const CATEGORIES_CONFIG: Record<
     image: "/isuru_images/categories1.jpg",
     varietyQuery: "Blue",
   },
+  "ceylon-rubies": {
+    title: "Natural Ceylon Rubies",
+    subtitle: "Pigeon Blood & Scarlet Fluorescence",
+    tagline: "The Glowing King of Precious Gems",
+    description:
+      "Celebrated worldwide for their intense ultraviolet daylight fluorescence and glowing crimson hues. Completely unheated and ethically sourced from ancient river gravels.",
+    image: "/isuru_images/ruby%20category.jpg",
+    varietyQuery: "Ruby",
+  },
   "padparadscha": {
-    title: "Coloured Gemstones",
-    subtitle: "Padparadscha, Rubies & Fancy Sapphires",
-    tagline: "Sacred Lotus Blossom Sunset Hues",
+    title: "Padparadscha & Fancy Sapphires",
+    subtitle: "Sacred Lotus Blossom Sunset Hues",
+    tagline: "The World's Rarest Corundum",
     description:
       "Named after the Sinhalese term for aquatic lotus blossom (Padma Raga). A tender, celestial balance of soft morning rose pink, sunset orange, and fiery yellow.",
     image: "/isuru_images/categories2.jpg",
     varietyQuery: "Padparadscha",
   },
-  "rare-collector": {
-    title: "Rough Gemstones",
-    subtitle: "Uncut Crystals, Star Sapphires & Minerals",
-    tagline: "Museum & Investment Grade Crystals",
+  "alexandrite": {
+    title: "Chrysoberyl Alexandrite",
+    subtitle: "Dramatic Day-to-Night Color Change",
+    tagline: "Emerald by Day, Ruby by Night",
     description:
-      "Singular mineralogical phenomena including natural unheated rough crystals direct from Ratnapura washing baskets, six-ray asterism crystals, and rare alluvial discoveries.",
-    image: "/isuru_images/categories3.jpg",
-    varietyQuery: "Star",
+      "One of the rarest optical phenomena in the mineral kingdom. Displays an extraordinary transition from vibrant teal green in daylight to rich raspberry red under warm light.",
+    image: "/isuru_images/Alexandrite%20category.jpg",
+    varietyQuery: "Alexandrite",
   },
   "yellow-sapphires": {
     title: "Ceylon Yellow Sapphires (Pushparaga)",
@@ -113,6 +122,15 @@ export const CATEGORIES_CONFIG: Record<
       "Revered for centuries across Vedic traditions as Pushparaga. Displaying dazzling brilliance, fiery golden undertones, and outstanding natural crystal clarity.",
     image: "/isuru_images/yellow.jpg",
     varietyQuery: "Yellow",
+  },
+  "rare-collector": {
+    title: "Rough & Collector Gemstones",
+    subtitle: "Uncut Crystals, Star Sapphires & Minerals",
+    tagline: "Museum & Investment Grade Crystals",
+    description:
+      "Singular mineralogical phenomena including natural unheated rough crystals direct from Ratnapura washing baskets, six-ray asterism crystals, and rare alluvial discoveries.",
+    image: "/isuru_images/categories3.jpg",
+    varietyQuery: "Star",
   },
 };
 
@@ -182,11 +200,11 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "/isuru_images/pink1.jpg",
+        url: "/isuru_images/Padparadscha%20Sapphire.jpg",
         alt: "Rare 3.15 carat natural Ceylon Padparadscha sapphire in delicate pink-orange sunset hues",
       },
       {
-        url: "/isuru_images/pink2.jpg",
+        url: "/isuru_images/pink1.jpg",
         alt: "Side profile showing depth and fire of Ceylon Padparadscha sapphire",
       },
     ],
@@ -280,7 +298,7 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "/isuru_images/green.jpg",
+        url: "/isuru_images/Star%20Sapphire.jpg",
         alt: "Sharp 6-ray star sapphire cabochon from Sri Lanka showing perfect asterism under direct light",
       },
       {
@@ -297,10 +315,10 @@ export const SAMPLE_GEMS: Gemstone[] = [
     slug: "ceylon-ruby-cushion-2-05ct",
     name: "Natural Ceylon Ruby (Pigeon Blood Glow)",
     variety: "Ceylon Ruby",
-    category: "rare-collector",
+    category: "ceylon-rubies",
     carat: 2.05,
     origin: "Pelmadulla, Sri Lanka",
-    cut: "Cushion Brilliant",
+    cut: "Oval Mixed Cut",
     dimensions: "7.60 x 6.55 x 4.80 mm",
     color: "Vibrant Crimson Pink-Red",
     treatment: "Unheated",
@@ -314,11 +332,11 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "/isuru_images/pink2.jpg",
-        alt: "Luminous Ceylon Ruby cushion cut showing natural crimson fluorescence and intense fire",
+        url: "/isuru_images/Natural%20Ruby.jpg",
+        alt: "Luminous oval cut Ceylon Ruby showing natural crimson fluorescence and intense pigeon blood fire",
       },
       {
-        url: "/isuru_images/pink1.jpg",
+        url: "/isuru_images/pink2.jpg",
         alt: "Facet fire view of natural Ceylon Ruby",
       },
     ],
@@ -391,7 +409,7 @@ export const SAMPLE_GEMS: Gemstone[] = [
     slug: "ceylon-chrysoberyl-alexandrite-1-85ct",
     name: "Phenomenal Ceylon Alexandrite (Color Change)",
     variety: "Chrysoberyl Alexandrite",
-    category: "rare-collector",
+    category: "alexandrite",
     carat: 1.85,
     origin: "Morawaka, Sri Lanka",
     cut: "Oval Mixed Cut",
@@ -408,11 +426,15 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
+        url: "/isuru_images/Alexandrite%20category.jpg",
+        alt: "Rare 1.85 ct Ceylon Natural Alexandrite exhibiting dramatic green-to-raspberry color change",
+      },
+      {
         url: "/isuru_images/blue3.jpg",
-        alt: "Rare 1.85 ct Ceylon Natural Sapphire with vivid oceanic luster",
+        alt: "Table reflection under daylight",
       },
     ],
-    featured: false,
+    featured: true,
     description:
       "Emerald by day, ruby by night. This singular Ceylon gem demonstrates extraordinary optical brilliance direct from Morawaka mines.",
   },
@@ -438,12 +460,12 @@ export const SAMPLE_GEMS: Gemstone[] = [
     },
     images: [
       {
-        url: "/isuru_images/blue1.jpg",
-        alt: "5.20 ct Royal Blue Pear cut sapphire displaying intense saturation and flawless polish",
+        url: "/isuru_images/natural%20heart.jpg",
+        alt: "5.20 ct Imperial Royal Blue Pear cut sapphire displaying intense saturation and flawless polish",
       },
       {
-        url: "/isuru_images/blue2.jpg",
-        alt: "Teardrop tip and wing proportions",
+        url: "/isuru_images/blue1.jpg",
+        alt: "Macro facet view of 5.20ct Ceylon Royal Blue sapphire",
       },
     ],
     featured: true,
@@ -509,5 +531,99 @@ export const SAMPLE_GEMS: Gemstone[] = [
     featured: false,
     description:
       "A striking unheated pink corundum displaying vivid magenta flashes without any brown or grey modifier. Certified 100% natural Ceylon origin.",
+  },
+  {
+    id: "gem-013",
+    slug: "ceylon-vivid-orange-sapphire-oval-3-40ct",
+    name: "Ceylon Vivid Mandarin Orange Sapphire Oval",
+    variety: "Orange Sapphire",
+    category: "padparadscha",
+    carat: 3.4,
+    origin: "Balangoda, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "9.10 x 7.30 x 5.10 mm",
+    color: "Intense Fire Mandarin Orange",
+    treatment: "Unheated",
+    clarity: "Eye Clean / VVS",
+    price: 13500,
+    currency: "USD",
+    inStock: true,
+    certificate: {
+      lab: "GRS & NGJA",
+      number: "GRS2024-ORG8812",
+    },
+    images: [
+      {
+        url: "/isuru_images/Orange%20Sapphire.jpg",
+        alt: "3.40 ct oval brilliant Ceylon Orange Sapphire radiating fiery solar brilliance",
+      },
+    ],
+    featured: true,
+    description:
+      "A magnificent unheated fancy sapphire displaying pure, saturated mandarin orange brilliance without any brown overtone. Mined from the decomposed granite gravels of Balangoda and cut to ideal optical proportions.",
+  },
+  {
+    id: "gem-014",
+    slug: "ceylon-flame-red-spinel-oval-2-95ct",
+    name: "Ceylon Flame Red Spinel (Natural Unheated)",
+    variety: "Spinel",
+    category: "rare-collector",
+    carat: 2.95,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "8.80 x 6.95 x 4.90 mm",
+    color: "Vibrant Flame Red",
+    treatment: "None / 100% Earth Mined",
+    clarity: "Loupe Clean / VVS1",
+    price: 11200,
+    currency: "USD",
+    inStock: true,
+    certificate: {
+      lab: "GIA & NGJA",
+      number: "GIA-SPN-77401",
+    },
+    images: [
+      {
+        url: "/isuru_images/Red%20Ceylon%20Spinel.jpg",
+        alt: "2.95 ct vivid flame red Ceylon Spinel displaying singly-refractive high brilliance",
+      },
+    ],
+    featured: true,
+    description:
+      "An extraordinary untreated singly-refractive gemstone exhibiting fiery crimson brilliance. Sourced from the alluvial deposits of Pelmadulla with exceptional optical purity and no thermal treatment.",
+  },
+  {
+    id: "gem-015",
+    slug: "ceylon-royal-blue-pear-tear-of-serendib-4-15ct",
+    name: "Ceylon Royal Blue Pear 'Tear of Serendib'",
+    variety: "Royal Blue Sapphire",
+    category: "blue-sapphires",
+    carat: 4.15,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Pear / Teardrop",
+    dimensions: "11.20 x 7.80 x 5.60 mm",
+    color: "Vivid Royal Blue",
+    treatment: "Unheated (100% Natural)",
+    clarity: "Eye Clean / VVS1",
+    price: 22800,
+    currency: "USD",
+    inStock: true,
+    certificate: {
+      lab: "SSEF & NGJA",
+      number: "SSEF-BLU-90214",
+    },
+    images: [
+      {
+        url: "/isuru_images/natural%20heart.jpg",
+        alt: "4.15 ct unheated Pear cut Ceylon Royal Blue sapphire displaying aristocratic fire",
+      },
+      {
+        url: "/isuru_images/blue2.jpg",
+        alt: "Table reflection under daylight",
+      },
+    ],
+    featured: true,
+    description:
+      "A poetic masterpiece of Ceylon gemstone heritage. Mined from the legendary Kalu Ganga riverbeds of Ratnapura, this completely untreated pear brilliant combines deep velvety blue saturation with pure crystal transparency.",
   },
 ];
