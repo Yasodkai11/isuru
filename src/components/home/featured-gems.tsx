@@ -11,12 +11,17 @@ import { Modal } from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
 import { formatCurrency, formatCarats } from "@/lib/utils";
 import { ArrowRight, Eye, CheckCircle2, ShieldCheck } from "lucide-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { Reveal } from "@/components/motion/reveal";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface FeaturedGemsProps {
   gems: Gemstone[];
 }
 
 export function FeaturedGems({ gems }: FeaturedGemsProps) {
+  const reduce = useReducedMotion();
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [selectedGemForEnquiry, setSelectedGemForEnquiry] = useState<Gemstone | null>(null);
   const [enquirySuccess, setEnquirySuccess] = useState(false);
@@ -61,63 +66,106 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
   };
 
   return (
-    <section className="pb-20 bg-[#FAF6EE]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Title */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-normal leading-tight">
-            Featured Gemstones
-          </h2>
-          <GoldDivider withOrnament className="my-5 max-w-xs mx-auto" />
+    <section className="relative pt-8 pb-24 lg:pb-32 bg-[#FAF6EE] overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-48 top-24 w-[42rem] h-[42rem] rounded-full bg-[#1B3A8A]/[0.06] blur-[100px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-48 bottom-0 w-[36rem] h-[36rem] rounded-full bg-[#B8924A]/[0.08] blur-[100px]"
+      />
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-            {filters.map((f) => (
-              <button
-                key={f.key}
-                onClick={() => setSelectedFilter(f.key)}
-                className={`text-xs uppercase tracking-wider px-4 py-2 border transition-all cursor-pointer font-medium ${
-                  selectedFilter === f.key
-                    ? "bg-[#5E0F1E] text-[#FAF6EE] border-[#5E0F1E] shadow-xs"
-                    : "bg-[#FDFBF7] text-[#2B2B2B] border-[#B8924A]/30 hover:border-[#B8924A]"
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
+      <div className="relative container-luxe">
+        {/* Section header */}
+        <div className="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-8 mb-12 lg:mb-16">
+          <Reveal className="max-w-2xl text-center xl:text-left mx-auto xl:mx-0">
+            <p className="flex items-center justify-center xl:justify-start gap-3 text-xs uppercase tracking-[0.35em] text-[#B8924A]">
+              <span className="w-8 h-px bg-[#B8924A]" />
+              The Vault Selection
+            </p>
+            <h2 className="mt-4 font-serif text-4xl sm:text-5xl xl:text-6xl text-[#5E0F1E] font-normal leading-[1.05]">
+              Featured <em className="text-[#B8924A]">Gemstones</em>
+            </h2>
+            <p className="mt-5 text-base xl:text-lg font-light text-[#2B2B2B]/70 leading-relaxed">
+              Hand-selected, laboratory-certified specimens from our Ratnapura atelier, each one traceable
+              from mine head to final polish.
+            </p>
+            <GoldDivider withOrnament className="mt-6 mb-0 max-w-xs mx-auto xl:mx-0 xl:hidden" />
+          </Reveal>
+
+          <Reveal delay={0.15} className="flex flex-wrap items-center justify-center xl:justify-end gap-2">
+            {filters.map((f) => {
+              const active = selectedFilter === f.key;
+              return (
+                <button
+                  key={f.key}
+                  onClick={() => setSelectedFilter(f.key)}
+                  aria-pressed={active}
+                  className={`relative text-xs uppercase tracking-[0.15em] px-5 py-2.5 border rounded-full transition-colors duration-300 cursor-pointer ${
+                    active
+                      ? "text-[#FAF6EE] border-[#5E0F1E]"
+                      : "bg-[#FDFBF7] text-[#2B2B2B] border-[#B8924A]/30 hover:border-[#B8924A] hover:text-[#5E0F1E]"
+                  }`}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="featured-filter-pill"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      className="absolute inset-0 rounded-full bg-[#5E0F1E]"
+                    />
+                  )}
+                  <span className="relative z-10">{f.label}</span>
+                </button>
+              );
+            })}
+          </Reveal>
         </div>
 
         {/* Gemstones Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredGems.slice(0, 6).map((gem) => {
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8">
+          <AnimatePresence mode="popLayout">
+          {filteredGems.slice(0, 8).map((gem, index) => {
             const primaryImage = gem.images[0] || {
               url: "/isuru_images/blue1.jpg",
               alt: `${gem.name}`,
             };
 
             return (
-              <article
+              <motion.article
                 key={gem.id}
-                className="group bg-[#FDFBF7] border border-[#B8924A]/30 overflow-hidden transition-all duration-300 hover:border-[#B8924A] hover:shadow-xl flex flex-col justify-between"
+                layout
+                initial={reduce ? false : { opacity: 0, y: 40, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                exit={reduce ? undefined : { opacity: 0, scale: 0.94, transition: { duration: 0.25 } }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.8, delay: reduce ? 0 : (index % 4) * 0.08, ease: EASE }}
+                className={`group bg-[#FDFBF7] border border-[#B8924A]/25 overflow-hidden transition-[border-color,box-shadow,translate] duration-500 hover:-translate-y-1.5 hover:border-[#B8924A]/80 hover:shadow-[0_30px_60px_-20px_rgba(94,15,30,0.28)] flex-col justify-between ${
+                  index >= 6 ? "hidden 2xl:flex" : "flex"
+                }`}
               >
                 <div>
                   {/* Image Container with Badges */}
-                  <div className="relative aspect-4/3 w-full bg-[#FAF6EE] overflow-hidden border-b border-[#B8924A]/20">
+                  <div className="shine-sweep relative aspect-4/3 w-full bg-[#FAF6EE] overflow-hidden border-b border-[#B8924A]/20">
                     <Link href={`/gems/${gem.slug}`} className="block w-full h-full relative">
                       <Image
                         src={primaryImage.url}
                         alt={primaryImage.alt || `${gem.name} from ${gem.origin}`}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-106"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+                        className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
                       />
+                      <span className="absolute inset-0 bg-linear-to-t from-[#120F0D]/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <span className="absolute left-1/2 bottom-4 -translate-x-1/2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 inline-flex items-center gap-2 bg-[#FAF6EE]/95 backdrop-blur px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-[#5E0F1E] whitespace-nowrap">
+                        <Eye className="w-3.5 h-3.5" />
+                        View Details
+                      </span>
                     </Link>
 
                     {/* Floating Badges */}
                     <div className="absolute top-3 left-3 flex flex-col gap-1.5 pointer-events-none">
                       <Badge variant="maroon" className="text-[9px] py-0.5 px-2">
-                        {gem.origin.split(" ")[0]}
+                        {gem.origin.split(/[\s,]/)[0]}
                       </Badge>
                       {gem.treatment.toLowerCase().includes("unheated") && (
                         <Badge variant="unheated" className="text-[9px] py-0.5 px-2 bg-[#FAF6EE]/90">
@@ -134,23 +182,24 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                   </div>
 
                   {/* Gem Details */}
-                  <div className="p-5 space-y-3">
-                    <div className="flex items-center justify-between text-[11px] text-[#B8924A] font-semibold uppercase tracking-wider">
-                      <span>{gem.variety}</span>
-                      <span className="text-[#1B3A8A] font-bold">{formatCarats(gem.carat)}</span>
+                  <div className="p-5 xl:p-6 space-y-3">
+                    <div className="flex items-center justify-between text-[11px] text-[#B8924A] font-medium uppercase tracking-[0.18em]">
+                      <span className="truncate pr-2">{gem.variety}</span>
+                      <span className="text-[#1B3A8A] font-semibold shrink-0">{formatCarats(gem.carat)}</span>
                     </div>
 
-                    <h3 className="font-serif text-xl font-medium text-[#5E0F1E] group-hover:text-[#420A15] transition-colors leading-snug line-clamp-1">
+                    <h3 className="font-serif text-xl xl:text-[1.35rem] font-normal text-[#5E0F1E] group-hover:text-[#420A15] transition-colors leading-snug line-clamp-2 min-h-[2.8em]">
                       <Link href={`/gems/${gem.slug}`}>{gem.name}</Link>
                     </h3>
                   </div>
                 </div>
 
                 {/* Footer with Price and Actions */}
-                <div className="p-5 pt-0">
-                  <div className="pt-3 border-t border-[#B8924A]/20 flex items-center justify-between">
+                <div className="p-5 xl:p-6 pt-0 xl:pt-0">
+                  <div className="pt-4 border-t border-[#B8924A]/20 flex items-center justify-between">
                     <div>
-                      <span className="font-serif text-xl font-bold text-[#1B3A8A]">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-[#2B2B2B]/50 block">Price</span>
+                      <span className="font-serif text-xl xl:text-2xl text-[#1B3A8A]">
                         {formatCurrency(gem.price, gem.currency)}
                       </span>
                     </div>
@@ -158,14 +207,14 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setSelectedGemForEnquiry(gem)}
-                        className="border border-[#B8924A] text-[#5E0F1E] hover:bg-[#5E0F1E] hover:text-[#FAF6EE] text-[11px] uppercase tracking-wider px-3.5 py-2 font-medium transition-colors cursor-pointer"
+                        className="border border-[#B8924A] text-[#5E0F1E] hover:bg-[#5E0F1E] hover:border-[#5E0F1E] hover:text-[#FAF6EE] text-[11px] uppercase tracking-[0.18em] px-4 py-2.5 transition-colors duration-300 cursor-pointer"
                       >
                         Enquire
                       </button>
 
                       <Link
                         href={`/gems/${gem.slug}`}
-                        className="p-2 border border-[#B8924A]/30 text-[#2B2B2B] hover:text-[#5E0F1E] hover:border-[#B8924A] transition-colors"
+                        className="p-2.5 border border-[#B8924A]/30 text-[#2B2B2B] hover:text-[#5E0F1E] hover:border-[#B8924A] transition-colors"
                         aria-label={`View full details of ${gem.name}`}
                       >
                         <Eye className="w-4 h-4" />
@@ -173,20 +222,22 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                     </div>
                   </div>
                 </div>
-              </article>
+              </motion.article>
             );
           })}
-        </div>
+          </AnimatePresence>
+        </motion.div>
 
         {/* View All Button */}
-        <div className="text-center mt-14">
-          <Link href="/gems">
-            <Button variant="outline" size="lg" className="gap-2">
-              <span>View All Gemstones</span>
-              <ArrowRight className="w-4 h-4 text-[#B8924A]" />
-            </Button>
+        <Reveal className="text-center mt-16">
+          <Link
+            href="/gems"
+            className="shine-sweep group inline-flex items-center gap-3 border border-[#B8924A] text-[#5E0F1E] px-10 py-4 text-xs uppercase tracking-[0.25em] transition-colors duration-500 hover:bg-[#5E0F1E] hover:text-[#FAF6EE]"
+          >
+            View All Gemstones
+            <ArrowRight className="w-4 h-4 text-[#B8924A] transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
-        </div>
+        </Reveal>
       </div>
 
       {/* Quick Gemstone Enquiry Modal */}

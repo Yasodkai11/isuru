@@ -67,7 +67,7 @@ export default function WholesalePage() {
 
   return (
     <div className="py-16 bg-[#FAF6EE] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="container-luxe space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <Badge variant="gold" className="text-[10px] tracking-[0.25em] py-1 px-3">

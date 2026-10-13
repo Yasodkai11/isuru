@@ -66,7 +66,7 @@ export default async function GemsPage({ searchParams }: GemsPageProps) {
   }
 
   const currentPage = resolved.page ? Math.max(1, parseInt(resolved.page, 10) || 1) : 1;
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
 
   // Fetch paginated stones from Supabase (with fallback)
   const { gems, total, totalPages } = await getGemstones({
@@ -87,7 +87,7 @@ export default async function GemsPage({ searchParams }: GemsPageProps) {
 
   return (
     <div className="py-12 bg-[#FAF6EE] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-luxe">
         {/* Editorial Gemstones Vault Banner Matching Proposal Laptop Screen */}
         <div className="relative overflow-hidden bg-[#161210] border border-[#B8924A]/40 p-6 sm:p-10 mb-8 rounded-xs shadow-md">
           {/* Subtle gold ornamentation borders */}
@@ -158,7 +158,7 @@ export default async function GemsPage({ searchParams }: GemsPageProps) {
           </div>
         ) : (
           <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8">
               {gems.map((gem) => (
                 <GemCard key={gem.id} gem={gem} />
               ))}

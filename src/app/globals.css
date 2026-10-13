@@ -16,10 +16,22 @@
   --color-sapphire-light: #2A51B8;
   --color-sapphire-dark: #12285E;
 
-  --font-serif: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
-  --font-sans: var(--font-body), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
-  --font-body: var(--font-body), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: var(--font-bodoni), 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-sans: var(--font-jost), 'Jost', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: var(--font-bodoni), 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-body: var(--font-jost), 'Jost', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-marquee-reverse: marquee 55s linear infinite reverse;
+  --animate-shine: goldShine 6s linear infinite;
+}
+
+/* Fluid site container: stays generous on 1440p / 4K instead of capping at 1280px */
+@utility container-luxe {
+  width: 100%;
+  max-width: 110rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 5rem);
 }
 
 @layer base {
@@ -40,18 +52,150 @@
     --color-sapphire-dark: #12285E;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-cream);
     color: var(--color-charcoal);
-    font-family: var(--font-body, 'Inter', sans-serif);
+    font-family: var(--font-body);
+    font-feature-settings: "kern", "liga";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading, 'Cormorant Garamond', serif);
-    letter-spacing: -0.01em;
+    font-family: var(--font-heading);
+    letter-spacing: -0.015em;
+    text-wrap: balance;
   }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Bump the root size on very wide screens so the whole layout scales with the viewport */
+  @media (min-width: 1920px) {
+    html {
+      font-size: 17px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    html {
+      font-size: 19px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Animated gold foil text */
+.text-gold-gradient {
+  background: linear-gradient(110deg, #B8924A 0%, #F3DFA2 25%, #D4AF67 45%, #FFF3CF 55%, #B8924A 75%, #D4AF67 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: goldShine 6s linear infinite;
+  /* background-clip only paints inside the box, so extend it to cover italic descenders and overhangs */
+  padding: 0.05em 0.12em 0.22em 0;
+  margin: -0.05em -0.12em -0.22em 0;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@keyframes goldShine {
+  to {
+    background-position: -200% center;
+  }
+}
+
+@keyframes heroProgress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hero-progress {
+  transform-origin: left;
+  animation-name: heroProgress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Diagonal light sweep across cards on hover */
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 243, 207, 0.35) 48%, transparent 66%);
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.shine-sweep:hover::after {
+  transform: translateX(120%);
+}
+
+/* Subtle film grain for dark luxury surfaces */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Animated underline for nav and text links */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline:hover::after,
+.link-underline[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* Custom luxury scrollbar */
@@ -233,8 +377,15 @@
   .animate-hero-pan-2,
   .animate-hero-pan-3,
   .animate-hero-pan-4,
-  .animate-float-gentle {
+  .animate-float-gentle,
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .text-gold-gradient {
     animation: none !important;
+  }
+
+  .shine-sweep::after {
+    display: none;
   }
 }
 

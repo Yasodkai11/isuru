@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Bodoni_Moda, Jost } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CartSheet } from "@/components/cart/cart-sheet";
+import { ScrollProgress } from "@/components/layout/scroll-progress";
 
-const cormorant = Cormorant_Garamond({
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-bodoni",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
   display: "swap",
 });
 
-const inter = Inter({
+const jost = Jost({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-jost",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -51,8 +54,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="en" className={`${bodoni.variable} ${jost.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#FAF6EE] text-[#2B2B2B] antialiased selection:bg-[#B8924A]/20 selection:text-[#5E0F1E]">
+        <ScrollProgress />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

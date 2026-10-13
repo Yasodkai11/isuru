@@ -25,7 +25,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
   return (
     <div className="py-16 bg-[#FAF6EE] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-luxe">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
           <span className="text-[11px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold">

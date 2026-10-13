@@ -200,7 +200,7 @@ export function OurStory() {
       </svg>
 
       {/* Main 2-column container */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative container-luxe">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-center">
           
           {/* ======================================================== */}
@@ -406,7 +406,7 @@ export function OurStory() {
               variants={textContainerVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="space-y-6 sm:space-y-7 max-w-xl mx-auto lg:mx-0"
+              className="space-y-6 sm:space-y-7 max-w-xl 2xl:max-w-2xl mx-auto lg:mx-0"
             >
               {/* Eyebrow */}
               <motion.div variants={textItemVariants} className="flex items-center gap-2">
@@ -420,9 +420,9 @@ export function OurStory() {
               <motion.h2
                 id="our-story-title"
                 variants={textItemVariants}
-                className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl text-[#5E0F1E] font-normal leading-[1.18] tracking-tight"
+                className="font-serif text-4xl sm:text-5xl xl:text-6xl text-[#5E0F1E] font-normal leading-[1.08] tracking-tight"
               >
-                Four decades in the gem city of Ratnapura
+                Four decades in the gem city of <em className="text-[#B8924A]">Ratnapura</em>
               </motion.h2>
 
               {/* Gold gradient divider with center diamond & shimmer sweep */}

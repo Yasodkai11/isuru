@@ -5,6 +5,8 @@ import { FeaturedGems } from "@/components/home/featured-gems";
 import { TrustMarkers } from "@/components/home/trust-markers";
 import { OurStory } from "@/components/home/OurStory";
 import { EnquiryCTA } from "@/components/home/enquiry-cta";
+import { GemMarquee } from "@/components/home/gem-marquee";
+import { CraftJourney } from "@/components/home/craft-journey";
 import { getGemstones } from "@/actions/gems";
 import {
   JsonLd,
@@ -58,8 +60,10 @@ export default async function HomePage() {
       <HeroSection />
       <CategoryCards />
       <FeaturedGems gems={gems} />
-      <TrustMarkers />
+      <GemMarquee />
+      <CraftJourney />
       <OurStory />
+      <TrustMarkers />
       <EnquiryCTA />
     </div>
   );

@@ -135,7 +135,7 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
   return (
     <div className="py-10 bg-[#FAF6EE] min-h-screen">
       <JsonLd data={[productSchema, breadcrumbSchema]} />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="container-luxe space-y-12">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#2B2B2B]/70">
           <Link href="/" className="hover:text-[#5E0F1E] transition-colors">

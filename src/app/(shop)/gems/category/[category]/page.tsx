@@ -82,7 +82,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   }
 
   const currentPage = resolved.page ? Math.max(1, parseInt(resolved.page, 10) || 1) : 1;
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
 
   // Fetch gems filtered by this category + any active searchParams
   const { gems, total, totalPages } = await getGemstones({
@@ -111,7 +111,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   return (
     <div className="py-12 bg-[#FAF6EE] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div className="container-luxe space-y-10">
         {/* Breadcrumb and Back */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#2B2B2B]/70">
@@ -211,7 +211,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           </div>
         ) : (
           <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8">
               {gems.map((gem) => (
                 <GemCard key={gem.id} gem={gem} />
               ))}

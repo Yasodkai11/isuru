@@ -21,7 +21,7 @@ export function GemCard({ gem }: GemCardProps) {
     <article className="group bg-[#FDFBF7] border border-[#B8924A]/30 overflow-hidden transition-all duration-400 hover:border-[#B8924A] hover:shadow-[0_12px_30px_rgba(184,146,74,0.16)] flex flex-col justify-between h-full rounded-xs">
       <div>
         {/* Isolated Gemstone Showcase Area */}
-        <div className="relative aspect-square w-full bg-[#FAF6EE] overflow-hidden border-b border-[#B8924A]/20 flex items-center justify-center p-6">
+        <div className="shine-sweep relative aspect-square w-full bg-[#FAF6EE] overflow-hidden border-b border-[#B8924A]/20 flex items-center justify-center p-6">
           <Link href={`/gems/${gem.slug}`} className="block w-full h-full relative">
             <Image
               src={primaryImage.url}
@@ -65,7 +65,7 @@ export function GemCard({ gem }: GemCardProps) {
             <span>•</span>
             <span>{gem.color}</span>
             <span>•</span>
-            <span className="text-emerald-800 font-medium">{gem.origin.split(" ")[0]}</span>
+            <span className="text-emerald-800 font-medium">{gem.origin.split(/[\s,]/)[0]}</span>
           </div>
         </div>
       </div>

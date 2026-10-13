@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCartStore } from "@/stores/cart-store";
-import { ShoppingBag, User, Menu, Search, X } from "lucide-react";
+import { ShoppingBag, User, Menu, Search, X, Phone, ShieldCheck } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 import { Input } from "@/components/ui/input";
+import { BRAND } from "@/lib/constants";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -25,6 +26,14 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   if (pathname?.startsWith("/admin")) {
     return null;
@@ -40,8 +49,32 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#FAF6EE] border-b border-[#B8924A]/25">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+    <>
+    <div className="hidden md:block bg-[#120F0D] text-[#FAF6EE]/75 text-[11px] tracking-[0.18em] uppercase border-b border-[#B8924A]/20">
+      <div className="container-luxe h-9 flex items-center justify-between gap-6">
+        <span className="flex items-center gap-2">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF67]" />
+          NGJA Licensed · Certified Natural Ceylon Gemstones
+        </span>
+        <span className="hidden lg:block text-[#D4AF67]">Fully insured worldwide shipping</span>
+        <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2 hover:text-[#D4AF67] transition-colors">
+          <Phone className="w-3.5 h-3.5 text-[#D4AF67]" />
+          {BRAND.phone}
+        </a>
+      </div>
+    </div>
+    <header
+      className={`sticky top-0 z-40 w-full border-b transition-all duration-500 ${
+        scrolled
+          ? "bg-[#FAF6EE]/85 backdrop-blur-xl border-[#B8924A]/30 shadow-[0_8px_30px_-12px_rgba(43,43,43,0.18)]"
+          : "bg-[#FAF6EE] border-[#B8924A]/20"
+      }`}
+    >
+      <div
+        className={`container-luxe flex items-center justify-between gap-4 transition-[height] duration-500 ${
+          scrolled ? "h-16" : "h-16 sm:h-20"
+        }`}
+      >
         <div className="flex items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen(true)}
@@ -61,27 +94,26 @@ export function Header() {
               className="w-14 sm:w-16 h-auto mix-blend-multiply"
               priority
             />
-            <span className="font-serif text-xl sm:text-2xl tracking-[0.08em] text-[#5E0F1E] font-medium group-hover:text-[#420A15] transition-colors">
+            <span className="font-serif text-xl sm:text-2xl tracking-[0.12em] text-[#5E0F1E] font-medium group-hover:text-[#420A15] transition-colors">
               ISURU GEMS
             </span>
-            <span className="text-[9px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold mt-0.5">
+            <span className="text-[9px] uppercase tracking-[0.4em] text-[#B8924A] font-medium mt-0.5">
               Sri Lanka
             </span>
           </Link>
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          <nav className="hidden lg:flex items-center gap-8 mr-6 text-xs uppercase tracking-[0.2em] font-medium text-[#2B2B2B]">
+          <nav className="hidden lg:flex items-center gap-8 xl:gap-11 mr-6 xl:mr-10 text-[13px] uppercase tracking-[0.22em] text-[#2B2B2B]">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`py-1 border-b transition-colors ${
-                    isActive
-                      ? "text-[#5E0F1E] font-semibold border-[#B8924A]"
-                      : "border-transparent hover:text-[#5E0F1E] hover:border-[#B8924A]/60"
+                  aria-current={isActive ? "page" : undefined}
+                  className={`link-underline py-1 transition-colors ${
+                    isActive ? "text-[#5E0F1E] font-medium" : "hover:text-[#5E0F1E]"
                   }`}
                 >
                   {link.label}
@@ -155,5 +187,6 @@ export function Header() {
 
       <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
     </header>
+    </>
   );
 }
