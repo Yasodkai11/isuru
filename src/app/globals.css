@@ -131,8 +131,24 @@
   will-change: transform;
 }
 
+.animate-gem-turn {
+  transform-style: preserve-3d;
+  animation: gemTurn 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes gemTurn {
+  0%, 100% {
+    transform: perspective(700px) rotateX(4deg) rotateY(-7deg) rotateZ(-1deg);
+  }
+  50% {
+    transform: perspective(700px) rotateX(-3deg) rotateY(7deg) rotateZ(1deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-gem-float,
+  .animate-gem-turn,
   .animate-gentle-fade {
     animation: none;
   }
