@@ -3,7 +3,7 @@ import { HeroSection } from "@/components/home/hero-section";
 import { CategoryCards } from "@/components/home/category-cards";
 import { FeaturedGems } from "@/components/home/featured-gems";
 import { TrustMarkers } from "@/components/home/trust-markers";
-import { HeritageStory } from "@/components/home/heritage-story";
+import { OurStory } from "@/components/home/OurStory";
 import { EnquiryCTA } from "@/components/home/enquiry-cta";
 import { getGemstones } from "@/actions/gems";
 import {
@@ -59,7 +59,7 @@ export default async function HomePage() {
       <CategoryCards />
       <FeaturedGems gems={gems} />
       <TrustMarkers />
-      <HeritageStory />
+      <OurStory />
       <EnquiryCTA />
     </div>
   );
