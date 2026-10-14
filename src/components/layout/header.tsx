@@ -120,12 +120,12 @@ export function Header() {
 
           <Link href="/" className="group flex flex-col items-center leading-none">
             <Image
-              src="/isuru_images/logo-isuru.png"
-              alt=""
+              src="/isuru_images/logo-isuru-symbol.png"
+              alt="Isuru Gems Sri Lanka"
               width={64}
-              height={24}
+              height={35}
               sizes="64px"
-              className="w-14 sm:w-16 h-auto mix-blend-multiply"
+              className="w-11 sm:w-13 h-auto object-contain transition-transform duration-300 group-hover:scale-105"
               priority
             />
             <span className="font-serif text-xl sm:text-2xl tracking-[0.12em] text-[#5E0F1E] font-medium group-hover:text-[#420A15] transition-colors">

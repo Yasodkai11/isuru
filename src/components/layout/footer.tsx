@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { BRAND, CATEGORIES_CONFIG } from "@/lib/constants";
 import { Award, MapPin, Mail, Phone, CheckCircle2, ArrowUp, ArrowRight } from "lucide-react";
@@ -86,7 +87,16 @@ export function Footer() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pt-8 lg:pt-10">
           <div className="space-y-3.5 lg:col-span-4">
-            <h3 className="font-serif text-2xl tracking-[0.12em] font-normal">ISURU GEMS</h3>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/isuru_images/logo-isuru-symbol.png"
+                alt="Isuru Gems"
+                width={44}
+                height={24}
+                className="w-9 h-auto object-contain brightness-110"
+              />
+              <h3 className="font-serif text-2xl tracking-[0.12em] font-normal">ISURU GEMS</h3>
+            </div>
             <p className="text-xs sm:text-sm font-light text-[#FAF6EE]/65 leading-relaxed max-w-sm">
               Ethically sourced, unheated Ceylon sapphires and precious island gemstones directly from the alluvial riverbeds and historic pits of Ratnapura, Sri Lanka.
             </p>

@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     ],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  devIndicators: false,
 };
 
 export default nextConfig;

@@ -41,8 +41,15 @@ export default function AdminLoginPage() {
 
         {/* Brand Crest */}
         <div className="text-center space-y-2">
-          <div className="inline-flex p-3 rounded-full bg-[#5E0F1E]/40 border border-[#B8924A]/40 mb-2 shadow-lg">
-            <Lock className="w-6 h-6 text-[#D4AF67]" />
+          <div className="inline-flex items-center justify-center mb-2">
+            <Image
+              src="/isuru_images/logo-isuru-symbol.png"
+              alt="Isuru Gems"
+              width={72}
+              height={40}
+              className="w-16 h-auto object-contain brightness-110 drop-shadow-md"
+              priority
+            />
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl text-[#FAF6EE] font-medium tracking-wide">
             Admin Vault Console

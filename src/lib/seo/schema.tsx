@@ -18,7 +18,7 @@ export function getOrganizationSchema() {
     logo: {
       "@type": "ImageObject",
       "@id": `${SITE_URL}/#logo`,
-      url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=800&q=80",
+      url: `${SITE_URL}/icon.png`,
       caption: "Isuru Gems Ceylon Logo",
     },
     image: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",

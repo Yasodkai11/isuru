@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -129,8 +130,14 @@ export function AdminSidebar({
           className="flex items-center gap-3.5 group focus:outline-none"
           onClick={onCloseMobile}
         >
-          <div className="w-11 h-11 rounded-xs bg-gradient-to-br from-[#5E0F1E] via-[#3A0812] to-[#18191B] border border-[#B8924A]/60 flex items-center justify-center shadow-lg group-hover:border-[#B8924A] transition-all">
-            <Gem className="w-6 h-6 text-[#B8924A]" />
+          <div className="w-11 h-11 rounded-xs bg-gradient-to-br from-[#5E0F1E] via-[#3A0812] to-[#18191B] border border-[#B8924A]/60 flex items-center justify-center p-1.5 shadow-lg group-hover:border-[#B8924A] transition-all">
+            <Image
+              src="/isuru_images/logo-isuru-symbol.png"
+              alt="Isuru Gems"
+              width={36}
+              height={20}
+              className="w-full h-auto object-contain brightness-110"
+            />
           </div>
           <div>
             <div className="flex items-center gap-2">
