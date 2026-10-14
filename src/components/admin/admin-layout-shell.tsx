@@ -87,7 +87,7 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#FAF6EE] text-[#2B2B2B]">
+    <div className="admin-vault-shell min-h-screen flex bg-[#FAF6EE] text-[#2B2B2B]">
       {/* Sidebar */}
       <AdminSidebar
         mobileOpen={mobileSidebarOpen}
@@ -101,7 +101,7 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
           onOpenMobile={() => setMobileSidebarOpen(true)}
           currentUser={session.user}
         />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto animate-gentle-fade">
+        <main className="flex-1 p-5 sm:p-7 lg:p-9 max-w-7xl xl:max-w-[1440px] w-full mx-auto animate-gentle-fade">
           {children}
         </main>
       </div>

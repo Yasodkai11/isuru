@@ -107,20 +107,20 @@ export function LoginForm() {
   return (
     <div className="space-y-6">
       {/* Portal Selection Tabs */}
-      <div className="grid grid-cols-2 p-1 bg-[#F2EADB]/60 border border-[#B8924A]/30 rounded-xs text-xs font-medium">
+      <div className="grid grid-cols-2 p-1 bg-[#F2EADB]/60 border border-[#B8924A]/30 rounded-xs text-sm font-medium">
         <button
           type="button"
           onClick={() => {
             setMode("collector");
             setError(null);
           }}
-          className={`py-2 px-3 rounded-xs flex items-center justify-center gap-2 transition-all ${
+          className={`py-2.5 px-3 rounded-xs flex items-center justify-center gap-2 transition-all ${
             mode === "collector"
               ? "bg-[#5E0F1E] text-[#FAF6EE] shadow-xs font-semibold"
               : "text-[#2B2B2B]/70 hover:text-[#5E0F1E]"
           }`}
         >
-          <User className="w-3.5 h-3.5" />
+          <User className="w-4 h-4" />
           <span>Collector Portal</span>
         </button>
 
@@ -130,13 +130,13 @@ export function LoginForm() {
             setMode("admin");
             setError(null);
           }}
-          className={`py-2 px-3 rounded-xs flex items-center justify-center gap-2 transition-all ${
+          className={`py-2.5 px-3 rounded-xs flex items-center justify-center gap-2 transition-all ${
             mode === "admin"
               ? "bg-[#5E0F1E] text-[#FAF6EE] shadow-xs font-semibold"
               : "text-[#2B2B2B]/70 hover:text-[#5E0F1E]"
           }`}
         >
-          <ShieldCheck className="w-3.5 h-3.5" />
+          <ShieldCheck className="w-4 h-4" />
           <span>Staff Vault Admin</span>
         </button>
       </div>
@@ -148,7 +148,7 @@ export function LoginForm() {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={googleLoading || loading}
-            className="w-full py-3 px-4 bg-white hover:bg-neutral-50 text-[#2B2B2B] border border-[#B8924A]/35 shadow-xs font-sans text-xs uppercase tracking-wider font-semibold flex items-center justify-center gap-3 transition-colors cursor-pointer disabled:opacity-60"
+            className="w-full py-3.5 px-4 bg-white hover:bg-neutral-50 text-[#2B2B2B] border border-[#B8924A]/35 shadow-xs font-sans text-sm uppercase tracking-wider font-semibold flex items-center justify-center gap-3 transition-colors cursor-pointer disabled:opacity-60"
           >
             {googleLoading ? (
               <span className="w-4 h-4 border-2 border-[#5E0F1E] border-t-transparent rounded-full animate-spin" />
@@ -177,7 +177,7 @@ export function LoginForm() {
 
           <div className="relative flex items-center justify-center">
             <div className="border-t border-[#B8924A]/25 w-full" />
-            <span className="bg-[#FDFBF7] px-3 text-[11px] uppercase tracking-wider text-[#2B2B2B]/60 shrink-0">
+            <span className="bg-[#FDFBF7] px-3 text-xs uppercase tracking-wider text-[#2B2B2B]/60 shrink-0 font-medium">
               or sign in with password
             </span>
             <div className="border-t border-[#B8924A]/25 w-full" />
@@ -188,14 +188,14 @@ export function LoginForm() {
       {/* Main Authentication Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         {success && (
-          <div className="p-3.5 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs flex items-center gap-2 animate-gentle-fade">
+          <div className="p-3.5 bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm flex items-center gap-2 animate-gentle-fade">
             <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
             <span>{success}</span>
           </div>
         )}
 
         {error && (
-          <div className="p-3.5 bg-red-50 border border-red-300 text-red-900 text-xs flex items-center gap-2 animate-gentle-fade">
+          <div className="p-3.5 bg-red-50 border border-red-300 text-red-900 text-sm flex items-center gap-2 animate-gentle-fade">
             <AlertCircle className="w-4 h-4 text-red-700 shrink-0" />
             <span className="leading-relaxed">{error}</span>
           </div>
@@ -221,7 +221,7 @@ export function LoginForm() {
             <Label htmlFor="login-password" className="mb-0">
               {mode === "admin" ? "Vault Authorization Password" : "Vault Password"}
             </Label>
-            <span className="text-[11px] text-[#B8924A] hover:underline cursor-pointer">
+            <span className="text-xs text-[#B8924A] hover:underline cursor-pointer font-medium">
               Forgot Password?
             </span>
           </div>
@@ -251,7 +251,7 @@ export function LoginForm() {
           type="submit"
           variant="primary"
           disabled={loading || googleLoading}
-          className="w-full py-3.5 text-xs uppercase tracking-[0.2em]"
+          className="w-full py-3.5 text-sm uppercase tracking-[0.18em] font-semibold"
         >
           {loading
             ? "Verifying Credentials..."
@@ -265,15 +265,15 @@ export function LoginForm() {
             <button
               type="button"
               onClick={handleFillDemoAdmin}
-              className="text-[11px] text-[#B8924A] hover:text-[#5E0F1E] underline inline-flex items-center gap-1.5 transition-colors"
+              className="text-xs text-[#B8924A] hover:text-[#5E0F1E] underline inline-flex items-center gap-1.5 transition-colors font-medium cursor-pointer"
             >
-              <Sparkles className="w-3 h-3 text-[#B8924A]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#B8924A]" />
               <span>Use Executive Seed Credentials (Yohan Gunawardena)</span>
             </button>
           </div>
         )}
 
-        <div className="text-center text-xs text-[#2B2B2B]/70 pt-2 border-t border-[#B8924A]/15">
+        <div className="text-center text-xs sm:text-sm text-[#2B2B2B]/70 pt-2 border-t border-[#B8924A]/15">
           {mode === "collector" ? (
             <>
               <span>New patron of Isuru Gems? </span>
@@ -282,7 +282,7 @@ export function LoginForm() {
               </Link>
             </>
           ) : (
-            <p className="text-[11px] text-[#2B2B2B]/60">
+            <p className="text-xs text-[#2B2B2B]/60">
               Strictly restricted to licensed NGJA staff & administrators. Unauthorized access attempts are audited.
             </p>
           )}

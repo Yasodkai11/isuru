@@ -27,14 +27,14 @@ export default function AdminLoginPage() {
         <div className="mb-6 flex justify-between items-center">
           <Link
             href="/"
-            className="text-xs uppercase tracking-widest text-[#FAF6EE]/60 hover:text-[#D4AF67] flex items-center gap-1.5 transition-colors"
+            className="text-sm uppercase tracking-wider font-semibold text-[#FAF6EE]/70 hover:text-[#D4AF67] flex items-center gap-1.5 transition-colors"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+            <ArrowLeft className="w-4 h-4" />
             <span>Storefront</span>
           </Link>
 
-          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-[#D4AF67] bg-[#D4AF67]/10 px-2.5 py-1 border border-[#D4AF67]/30 rounded-xs">
-            <ShieldCheck className="w-3 h-3 text-[#D4AF67]" />
+          <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider font-semibold text-[#D4AF67] bg-[#D4AF67]/10 px-3 py-1.5 border border-[#D4AF67]/30 rounded-xs">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF67]" />
             <span>NGJA Vault Security</span>
           </span>
         </div>
@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
           <h1 className="font-serif text-3xl sm:text-4xl text-[#FAF6EE] font-medium tracking-wide">
             Admin Vault Console
           </h1>
-          <p className="text-xs text-[#FAF6EE]/70 uppercase tracking-[0.2em]">
+          <p className="text-sm text-[#FAF6EE]/80 uppercase tracking-[0.18em] font-medium">
             Executive Clearance & Staff Authentication
           </p>
         </div>
@@ -56,15 +56,15 @@ export default function AdminLoginPage() {
 
         {/* Login Container */}
         <div className="bg-[#FAF6EE] text-[#2B2B2B] p-6 sm:p-8 border border-[#B8924A]/40 shadow-2xl rounded-xs">
-          <Suspense fallback={<div className="py-8 text-center text-xs text-[#5E0F1E]">Initializing staff vault credentials...</div>}>
+          <Suspense fallback={<div className="py-8 text-center text-sm text-[#5E0F1E]">Initializing staff vault credentials...</div>}>
             <LoginForm />
           </Suspense>
         </div>
 
         {/* Security Disclaimers */}
-        <div className="mt-6 text-center text-[11px] text-[#FAF6EE]/50 space-y-1">
+        <div className="mt-6 text-center text-xs sm:text-sm text-[#FAF6EE]/60 space-y-1">
           <p>Restricted to licensed National Gem and Jewellery Authority signatories.</p>
-          <p className="text-[#D4AF67]/80">Armored dispatch, certificate vaults, and client records are encrypted.</p>
+          <p className="text-[#D4AF67]/90 font-medium">Armored dispatch, certificate vaults, and client records are encrypted.</p>
         </div>
       </div>
     </div>

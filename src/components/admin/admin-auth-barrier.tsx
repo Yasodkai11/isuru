@@ -24,37 +24,37 @@ export function AdminAuthBarrier({ onBypassDemo }: AdminAuthBarrierProps) {
         </div>
 
         <div className="space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.25em] text-[#B8924A] font-semibold block">
+          <span className="text-xs uppercase tracking-[0.22em] text-[#B8924A] font-bold block">
             National Gem & Jewellery Authority Clearance
           </span>
-          <h1 className="font-serif text-2xl sm:text-3xl text-[#5E0F1E] font-normal">
+          <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
             Vault Authorization Required
           </h1>
-          <p className="text-xs text-[#2B2B2B]/75 leading-relaxed max-w-sm mx-auto">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/75 leading-relaxed max-w-md mx-auto">
             The Isuru Gems Executive Console is restricted to authenticated staff, gemologists, and vault custodians. Please sign in to proceed.
           </p>
         </div>
 
-        <div className="p-4 bg-[#F2EADB]/60 border border-[#B8924A]/25 text-left text-xs space-y-2">
+        <div className="p-4 bg-[#F2EADB]/60 border border-[#B8924A]/25 text-left text-sm space-y-2 rounded-xs">
           <div className="flex items-center gap-2 font-semibold text-[#5E0F1E]">
-            <KeyRound className="w-3.5 h-3.5" />
+            <KeyRound className="w-4 h-4 text-[#B8924A]" />
             <span>Authorized Staff Credentials</span>
           </div>
-          <p className="text-[#2B2B2B]/70 text-[11px]">
-            Staff accounts use registered company emails (e.g., <code className="bg-white/80 px-1 py-0.5 border border-[#B8924A]/30">yohan@isurugems.com</code>) or staff usernames.
+          <p className="text-[#2B2B2B]/70 text-xs">
+            Staff accounts use registered company emails (e.g., <code className="bg-white/80 px-1.5 py-0.5 border border-[#B8924A]/30 font-mono">yohan@isurugems.com</code>) or staff usernames.
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <Link href="/admin/login" className="flex-1">
-            <Button variant="primary" className="w-full text-xs uppercase tracking-widest py-3">
+            <Button variant="primary" className="w-full text-sm font-semibold uppercase tracking-wider py-3.5">
               Sign In as Staff
             </Button>
           </Link>
 
           <Link href="/" className="flex-1">
-            <Button variant="outline" className="w-full text-xs uppercase tracking-widest py-3">
-              <ArrowLeft className="w-3.5 h-3.5 mr-1" />
+            <Button variant="outline" className="w-full text-sm font-semibold uppercase tracking-wider py-3.5 border-[#B8924A]/40 text-[#5E0F1E]">
+              <ArrowLeft className="w-4 h-4 mr-1.5" />
               Storefront
             </Button>
           </Link>

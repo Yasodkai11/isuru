@@ -374,18 +374,18 @@ export default function AdminStaffPage() {
             <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
               Staff & Vault Access Control
             </h1>
-            <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-widest bg-[#B8924A]/20 text-[#5E0F1E] border border-[#B8924A]/40 rounded-xs">
+            <span className="px-2.5 py-1 text-xs uppercase font-bold tracking-widest bg-[#B8924A]/20 text-[#5E0F1E] border border-[#B8924A]/40 rounded-xs">
               Governance
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/75 mt-1">
             Manage authorized gemologists, vault custodians, and concierge staff. Control role privileges, update login emails, and securely reset passwords.
           </p>
         </div>
 
         <Button
           onClick={() => setAddModalOpen(true)}
-          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold uppercase tracking-wider py-2.5 px-4 rounded-xs border border-[#B8924A]/40 flex items-center gap-2 shadow-sm"
+          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm font-semibold uppercase tracking-wider py-2.5 px-4 h-10 rounded-xs border border-[#B8924A]/40 flex items-center gap-2 shadow-sm"
         >
           <Plus className="w-4 h-4 text-[#D4AF67]" />
           <span>Add Staff Member</span>
@@ -396,60 +396,60 @@ export default function AdminStaffPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div className="p-4 bg-[#FDFBF7] border border-[#B8924A]/25 rounded-xs shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#2B2B2B]/70 mb-1">
-            <span className="uppercase tracking-wider font-semibold text-[10px] text-[#B8924A]">
+            <span className="uppercase tracking-wider font-bold text-xs text-[#B8924A]">
               Total Staff
             </span>
             <UserCheck className="w-4 h-4 text-[#B8924A]" />
           </div>
-          <div className="font-serif text-2xl sm:text-3xl font-medium text-[#5E0F1E]">
+          <div className="font-serif text-3xl sm:text-4xl font-medium text-[#5E0F1E]">
             {totalStaff}
           </div>
-          <p className="text-[11px] text-[#2B2B2B]/60 mt-1">
+          <p className="text-xs text-[#2B2B2B]/60 mt-1">
             {activeStaff} active in vault directory
           </p>
         </div>
 
         <div className="p-4 bg-[#FDFBF7] border border-[#B8924A]/25 rounded-xs shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#2B2B2B]/70 mb-1">
-            <span className="uppercase tracking-wider font-semibold text-[10px] text-[#1B3A8A]">
+            <span className="uppercase tracking-wider font-bold text-xs text-[#1B3A8A]">
               Vault Custodians
             </span>
             <Shield className="w-4 h-4 text-[#1B3A8A]" />
           </div>
-          <div className="font-serif text-2xl sm:text-3xl font-medium text-[#1B3A8A]">
+          <div className="font-serif text-3xl sm:text-4xl font-medium text-[#1B3A8A]">
             {vaultCustodians}
           </div>
-          <p className="text-[11px] text-[#2B2B2B]/60 mt-1">
+          <p className="text-xs text-[#2B2B2B]/60 mt-1">
             Physical handovers & armoring
           </p>
         </div>
 
         <div className="p-4 bg-[#FDFBF7] border border-[#B8924A]/25 rounded-xs shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#2B2B2B]/70 mb-1">
-            <span className="uppercase tracking-wider font-semibold text-[10px] text-[#5E0F1E]">
+            <span className="uppercase tracking-wider font-bold text-xs text-[#5E0F1E]">
               Super Admins
             </span>
             <ShieldCheck className="w-4 h-4 text-[#5E0F1E]" />
           </div>
-          <div className="font-serif text-2xl sm:text-3xl font-medium text-[#5E0F1E]">
+          <div className="font-serif text-3xl sm:text-4xl font-medium text-[#5E0F1E]">
             {superAdmins}
           </div>
-          <p className="text-[11px] text-[#2B2B2B]/60 mt-1">
+          <p className="text-xs text-[#2B2B2B]/60 mt-1">
             NGJA export & license signatories
           </p>
         </div>
 
         <div className="p-4 bg-[#FDFBF7] border border-[#B8924A]/25 rounded-xs shadow-xs">
           <div className="flex items-center justify-between text-xs text-[#2B2B2B]/70 mb-1">
-            <span className="uppercase tracking-wider font-semibold text-[10px] text-emerald-700">
+            <span className="uppercase tracking-wider font-bold text-xs text-emerald-700">
               Security Protocol
             </span>
             <Lock className="w-4 h-4 text-emerald-700" />
           </div>
-          <div className="font-serif text-xl sm:text-2xl font-medium text-emerald-800">
+          <div className="font-serif text-2xl sm:text-3xl font-medium text-emerald-800">
             NGJA-Cleared
           </div>
-          <p className="text-[11px] text-emerald-700/80 mt-1">
+          <p className="text-xs text-emerald-700/80 mt-1">
             Encrypted RBAC & credential isolation
           </p>
         </div>
@@ -458,7 +458,7 @@ export default function AdminStaffPage() {
       {/* Security Governance Notice */}
       <div className="p-4 bg-[#5E0F1E]/5 border border-[#5E0F1E]/20 rounded-xs flex items-start gap-3">
         <ShieldAlert className="w-5 h-5 text-[#5E0F1E] shrink-0 mt-0.5" />
-        <div className="text-xs text-[#2B2B2B]/85 space-y-1">
+        <div className="text-sm text-[#2B2B2B]/85 space-y-1">
           <p className="font-semibold text-[#5E0F1E]">
             Administrative Governance & Credential Modification Rule
           </p>
@@ -476,7 +476,7 @@ export default function AdminStaffPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search staff by name, email, department, or role..."
-            className="pl-9 bg-[#FAF6EE] border-[#B8924A]/30 text-xs h-10 w-full"
+            className="pl-9 bg-[#FAF6EE] border-[#B8924A]/30 text-sm h-10 w-full"
           />
         </div>
 
@@ -485,7 +485,7 @@ export default function AdminStaffPage() {
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="bg-[#FAF6EE] border border-[#B8924A]/30 text-xs text-[#2B2B2B] px-3 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+            className="bg-[#FAF6EE] border border-[#B8924A]/30 text-sm text-[#2B2B2B] h-10 px-3.5 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
           >
             <option value="all">All Roles</option>
             <option value="super_admin">Super Admin</option>
@@ -499,7 +499,7 @@ export default function AdminStaffPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-[#FAF6EE] border border-[#B8924A]/30 text-xs text-[#2B2B2B] px-3 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+            className="bg-[#FAF6EE] border border-[#B8924A]/30 text-sm text-[#2B2B2B] h-10 px-3.5 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
           >
             <option value="all">All Statuses</option>
             <option value="active">Active Only</option>
@@ -512,16 +512,16 @@ export default function AdminStaffPage() {
       {/* Staff Directory Table */}
       <div className="bg-[#FDFBF7] border border-[#B8924A]/25 rounded-xs overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-[#F2EADB] border-b border-[#B8924A]/25 text-[#5E0F1E] uppercase text-[10px] tracking-wider font-semibold">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-[#F2EADB] border-b border-[#B8924A]/25 text-[#5E0F1E] uppercase text-xs tracking-wider font-bold">
               <tr>
-                <th className="py-3 px-4">Staff Member</th>
-                <th className="py-3 px-4">Role & Department</th>
-                <th className="py-3 px-4">Contact & Login Email</th>
-                <th className="py-3 px-4">Permissions</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4">Last Active</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-4 px-4">Staff Member</th>
+                <th className="py-4 px-4">Role & Department</th>
+                <th className="py-4 px-4">Contact & Login Email</th>
+                <th className="py-4 px-4">Permissions</th>
+                <th className="py-4 px-4">Status</th>
+                <th className="py-4 px-4">Last Active</th>
+                <th className="py-4 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#B8924A]/15">
@@ -548,14 +548,14 @@ export default function AdminStaffPage() {
                       className="hover:bg-[#FAF6EE]/80 transition-colors"
                     >
                       {/* Name & Avatar */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         <div className="flex items-center gap-3">
                           <div className="relative">
-                            <div className="w-9 h-9 rounded-full bg-[#5E0F1E] text-[#FAF6EE] flex items-center justify-center font-serif font-bold text-xs border border-[#B8924A]/40 shadow-xs">
+                            <div className="w-10 h-10 rounded-full bg-[#5E0F1E] text-[#FAF6EE] flex items-center justify-center font-serif font-bold text-sm border border-[#B8924A]/40 shadow-xs">
                               {initials}
                             </div>
                             <span
-                              className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-[#FAF6EE] ${
+                              className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ring-2 ring-[#FAF6EE] ${
                                 member.status === "active"
                                   ? "bg-emerald-500"
                                   : member.status === "suspended"
@@ -565,10 +565,10 @@ export default function AdminStaffPage() {
                             />
                           </div>
                           <div>
-                            <p className="font-semibold text-sm text-[#2B2B2B]">
+                            <p className="font-semibold text-sm sm:text-base text-[#2B2B2B]">
                               {member.fullName}
                             </p>
-                            <span className="text-[10px] text-[#2B2B2B]/60">
+                            <span className="text-xs text-[#2B2B2B]/60">
                               ID: {member.id}
                             </span>
                           </div>
@@ -576,30 +576,30 @@ export default function AdminStaffPage() {
                       </td>
 
                       {/* Role & Department */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         <div className="space-y-1">
                           <span
-                            className={`inline-block px-2 py-0.5 rounded-xs text-[10px] font-bold border ${roleStyle.bg} ${roleStyle.text} ${roleStyle.border}`}
+                            className={`inline-block px-2.5 py-1 rounded-xs text-xs font-bold border ${roleStyle.bg} ${roleStyle.text} ${roleStyle.border}`}
                           >
                             {roleStyle.label}
                           </span>
-                          <p className="text-[11px] text-[#2B2B2B]/70 flex items-center gap-1">
-                            <Building2 className="w-3 h-3 text-[#B8924A]" />
+                          <p className="text-xs text-[#2B2B2B]/70 flex items-center gap-1.5">
+                            <Building2 className="w-3.5 h-3.5 text-[#B8924A]" />
                             {member.department}
                           </p>
                         </div>
                       </td>
 
                       {/* Contact & Email */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         <div className="space-y-1">
-                          <div className="flex items-center gap-1.5 font-mono text-[11px] text-[#5E0F1E]">
-                            <Mail className="w-3 h-3 text-[#B8924A] shrink-0" />
+                          <div className="flex items-center gap-1.5 font-mono text-xs text-[#5E0F1E]">
+                            <Mail className="w-3.5 h-3.5 text-[#B8924A] shrink-0" />
                             <span>{member.email}</span>
                           </div>
                           {member.phone && (
-                            <p className="text-[11px] text-[#2B2B2B]/70 flex items-center gap-1.5">
-                              <Phone className="w-3 h-3 text-[#B8924A] shrink-0" />
+                            <p className="text-xs text-[#2B2B2B]/70 flex items-center gap-1.5">
+                              <Phone className="w-3.5 h-3.5 text-[#B8924A] shrink-0" />
                               <span>{member.phone}</span>
                             </p>
                           )}
@@ -607,25 +607,25 @@ export default function AdminStaffPage() {
                       </td>
 
                       {/* Permissions matrix */}
-                      <td className="py-3.5 px-4">
-                        <div className="flex flex-wrap gap-1 max-w-xs">
+                      <td className="py-4 px-4">
+                        <div className="flex flex-wrap gap-1.5 max-w-xs">
                           {member.canManageGems && (
-                            <span className="px-1.5 py-0.5 bg-[#FAF6EE] border border-[#B8924A]/30 text-[9px] uppercase font-semibold text-[#5E0F1E]">
+                            <span className="px-2 py-0.5 bg-[#FAF6EE] border border-[#B8924A]/30 text-xs uppercase font-semibold text-[#5E0F1E]">
                               Gems
                             </span>
                           )}
                           {member.canManageOrders && (
-                            <span className="px-1.5 py-0.5 bg-[#FAF6EE] border border-[#B8924A]/30 text-[9px] uppercase font-semibold text-[#1B3A8A]">
+                            <span className="px-2 py-0.5 bg-[#FAF6EE] border border-[#B8924A]/30 text-xs uppercase font-semibold text-[#1B3A8A]">
                               Orders
                             </span>
                           )}
                           {member.canManageStaff && (
-                            <span className="px-1.5 py-0.5 bg-[#5E0F1E]/10 border border-[#5E0F1E]/30 text-[9px] uppercase font-semibold text-[#5E0F1E]">
+                            <span className="px-2 py-0.5 bg-[#5E0F1E]/10 border border-[#5E0F1E]/30 text-xs uppercase font-semibold text-[#5E0F1E]">
                               Staff
                             </span>
                           )}
                           {member.canExportData && (
-                            <span className="px-1.5 py-0.5 bg-emerald-50 border border-emerald-300 text-[9px] uppercase font-semibold text-emerald-800">
+                            <span className="px-2 py-0.5 bg-emerald-50 border border-emerald-300 text-xs uppercase font-semibold text-emerald-800">
                               Export
                             </span>
                           )}
@@ -633,37 +633,37 @@ export default function AdminStaffPage() {
                       </td>
 
                       {/* Status */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         {member.status === "active" ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
                             Active
                           </span>
                         ) : member.status === "suspended" ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                          <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
                             Suspended
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-stone-100 text-stone-700 border border-stone-300">
+                          <span className="px-3 py-1 rounded-full text-xs font-bold bg-stone-100 text-stone-700 border border-stone-300">
                             Inactive
                           </span>
                         )}
                       </td>
 
                       {/* Last Active */}
-                      <td className="py-3.5 px-4 text-[11px] text-[#2B2B2B]/70">
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-3 h-3 text-[#B8924A]" />
+                      <td className="py-4 px-4 text-xs text-[#2B2B2B]/70">
+                        <div className="flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-[#B8924A]" />
                           <span>{member.lastLogin || "Never"}</span>
                         </div>
                       </td>
 
                       {/* Actions */}
-                      <td className="py-3.5 px-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
+                      <td className="py-4 px-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
                           {/* Change Email & Password */}
                           <button
                             onClick={() => handleOpenCredentials(member)}
-                            className="p-1.5 text-[#B8924A] hover:text-[#5E0F1E] hover:bg-[#B8924A]/15 rounded-xs transition-colors cursor-pointer"
+                            className="p-2 text-[#B8924A] hover:text-[#5E0F1E] hover:bg-[#B8924A]/15 rounded-xs transition-colors cursor-pointer"
                             title="Change Email & Password Credentials"
                           >
                             <Key className="w-4 h-4" />
@@ -672,7 +672,7 @@ export default function AdminStaffPage() {
                           {/* Edit Profile */}
                           <button
                             onClick={() => handleOpenEditProfile(member)}
-                            className="p-1.5 text-[#2B2B2B]/70 hover:text-[#5E0F1E] hover:bg-[#B8924A]/15 rounded-xs transition-colors cursor-pointer"
+                            className="p-2 text-[#2B2B2B]/70 hover:text-[#5E0F1E] hover:bg-[#B8924A]/15 rounded-xs transition-colors cursor-pointer"
                             title="Edit Profile & Permissions"
                           >
                             <Edit className="w-4 h-4" />
@@ -689,7 +689,7 @@ export default function AdminStaffPage() {
                                 } for ${member.fullName}`
                               );
                             }}
-                            className="p-1.5 text-[#2B2B2B]/70 hover:text-amber-700 hover:bg-amber-50 rounded-xs transition-colors cursor-pointer"
+                            className="p-2 text-[#2B2B2B]/70 hover:text-amber-700 hover:bg-amber-50 rounded-xs transition-colors cursor-pointer"
                             title={
                               member.status === "active" ? "Suspend Access" : "Activate Access"
                             }
@@ -700,7 +700,7 @@ export default function AdminStaffPage() {
                           {/* Delete Member */}
                           <button
                             onClick={() => setDeleteConfirmMember(member)}
-                            className="p-1.5 text-[#2B2B2B]/70 hover:text-red-700 hover:bg-red-50 rounded-xs transition-colors cursor-pointer"
+                            className="p-2 text-[#2B2B2B]/70 hover:text-red-700 hover:bg-red-50 rounded-xs transition-colors cursor-pointer"
                             title="Revoke & Delete Member"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -735,14 +735,14 @@ export default function AdminStaffPage() {
           {activeStaffTarget && (
             <div className="p-3 bg-[#F2EADB] border border-[#B8924A]/30 rounded-xs flex items-center justify-between">
               <div>
-                <p className="font-semibold text-xs text-[#5E0F1E]">
+                <p className="font-semibold text-sm text-[#5E0F1E]">
                   {activeStaffTarget.fullName}
                 </p>
-                <p className="text-[11px] text-[#2B2B2B]/70">
+                <p className="text-xs text-[#2B2B2B]/70">
                   Role: {ROLE_CONFIG[activeStaffTarget.role]?.label}
                 </p>
               </div>
-              <Badge variant="outline" className="text-[10px] uppercase font-mono">
+              <Badge variant="outline" className="text-xs uppercase font-mono">
                 {activeStaffTarget.id}
               </Badge>
             </div>
@@ -750,7 +750,7 @@ export default function AdminStaffPage() {
 
           {/* Login Email */}
           <div>
-            <Label htmlFor="cred-email" className="text-xs font-semibold text-[#2B2B2B]">
+            <Label htmlFor="cred-email" className="text-sm font-semibold text-[#2B2B2B]">
               Vault Login Email Address
             </Label>
             <div className="relative mt-1">
@@ -762,10 +762,10 @@ export default function AdminStaffPage() {
                 value={credNewEmail}
                 onChange={(e) => setCredNewEmail(e.target.value)}
                 placeholder="staff@isurugems.com"
-                className="pl-9 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="pl-9 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
-            <p className="text-[10px] text-[#2B2B2B]/60 mt-1">
+            <p className="text-xs text-[#2B2B2B]/60 mt-1">
               Used to access both the Admin Vault Console and Supabase Auth.
             </p>
           </div>
@@ -773,7 +773,7 @@ export default function AdminStaffPage() {
           {/* New Password */}
           <div>
             <div className="flex items-center justify-between">
-              <Label htmlFor="cred-password" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="cred-password" className="text-sm font-semibold text-[#2B2B2B]">
                 New Vault Password
               </Label>
               <button
@@ -784,9 +784,9 @@ export default function AdminStaffPage() {
                   setCredConfirmPassword(strong);
                   setShowPassword(true);
                 }}
-                className="text-[11px] text-[#B8924A] hover:text-[#5E0F1E] font-medium flex items-center gap-1 cursor-pointer"
+                className="text-xs text-[#B8924A] hover:text-[#5E0F1E] font-medium flex items-center gap-1 cursor-pointer"
               >
-                <Sparkles className="w-3 h-3 text-[#D4AF67]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#D4AF67]" />
                 Generate Strong
               </button>
             </div>
@@ -799,7 +799,7 @@ export default function AdminStaffPage() {
                 value={credNewPassword}
                 onChange={(e) => setCredNewPassword(e.target.value)}
                 placeholder="Leave blank to keep existing password"
-                className="pl-9 pr-10 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10 font-mono"
+                className="pl-9 pr-10 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10 font-mono"
               />
               <button
                 type="button"
@@ -814,7 +814,7 @@ export default function AdminStaffPage() {
           {/* Confirm Password (only if password typed) */}
           {credNewPassword && (
             <div>
-              <Label htmlFor="cred-confirm-password" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="cred-confirm-password" className="text-sm font-semibold text-[#2B2B2B]">
                 Confirm New Password
               </Label>
               <div className="relative mt-1">
@@ -825,14 +825,14 @@ export default function AdminStaffPage() {
                   value={credConfirmPassword}
                   onChange={(e) => setCredConfirmPassword(e.target.value)}
                   placeholder="Re-enter password to confirm"
-                  className="pl-9 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10 font-mono"
+                  className="pl-9 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10 font-mono"
                 />
               </div>
             </div>
           )}
 
           {/* Security advisory */}
-          <div className="p-3 bg-amber-50 border border-amber-200 rounded-xs text-[11px] text-amber-900 leading-relaxed flex items-start gap-2">
+          <div className="p-3 bg-amber-50 border border-amber-200 rounded-xs text-xs text-amber-900 leading-relaxed flex items-start gap-2">
             <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
             <span>
               Passwords must be securely communicated to the staff member. Isuru Gems vaults enforce 256-bit hash encryption.
@@ -845,14 +845,14 @@ export default function AdminStaffPage() {
               type="button"
               variant="outline"
               onClick={() => setCredentialsModalOpen(false)}
-              className="text-xs border-[#B8924A]/40 text-[#2B2B2B]"
+              className="text-sm h-9 px-4 border-[#B8924A]/40 text-[#2B2B2B]"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={credLoading}
-              className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold uppercase tracking-wider py-2 px-4 rounded-xs border border-[#B8924A]/40"
+              className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm font-semibold uppercase tracking-wider h-9 px-4 rounded-xs border border-[#B8924A]/40"
             >
               {credLoading ? "Updating..." : "Save Credentials"}
             </Button>
@@ -874,7 +874,7 @@ export default function AdminStaffPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Full Name */}
             <div>
-              <Label htmlFor="new-name" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="new-name" className="text-sm font-semibold text-[#2B2B2B]">
                 Full Legal Name *
               </Label>
               <Input
@@ -883,13 +883,13 @@ export default function AdminStaffPage() {
                 value={newFullName}
                 onChange={(e) => setNewFullName(e.target.value)}
                 placeholder="e.g. Ruwan Wickramasinghe"
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
 
             {/* Email Address */}
             <div>
-              <Label htmlFor="new-email" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="new-email" className="text-sm font-semibold text-[#2B2B2B]">
                 Login Email Address *
               </Label>
               <Input
@@ -899,7 +899,7 @@ export default function AdminStaffPage() {
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
                 placeholder="ruwan@isurugems.com"
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
           </div>
@@ -907,7 +907,7 @@ export default function AdminStaffPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Role */}
             <div>
-              <Label htmlFor="new-role" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="new-role" className="text-sm font-semibold text-[#2B2B2B]">
                 Staff Role Hierarchy *
               </Label>
               <select
@@ -923,7 +923,7 @@ export default function AdminStaffPage() {
                     setNewCanExportData(true);
                   }
                 }}
-                className="mt-1 w-full bg-[#FDFBF7] border border-[#B8924A]/30 text-xs text-[#2B2B2B] px-3 py-2.5 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+                className="mt-1 w-full bg-[#FDFBF7] border border-[#B8924A]/30 text-sm text-[#2B2B2B] h-10 px-3 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
               >
                 <option value="super_admin">Super Administrator</option>
                 <option value="vault_custodian">Vault Custodian</option>
@@ -935,7 +935,7 @@ export default function AdminStaffPage() {
 
             {/* Department */}
             <div>
-              <Label htmlFor="new-dept" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="new-dept" className="text-sm font-semibold text-[#2B2B2B]">
                 Department / Salon
               </Label>
               <Input
@@ -943,7 +943,7 @@ export default function AdminStaffPage() {
                 value={newDepartment}
                 onChange={(e) => setNewDepartment(e.target.value)}
                 placeholder="e.g. Ratnapura Vault Logistics"
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
           </div>
@@ -951,7 +951,7 @@ export default function AdminStaffPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Phone */}
             <div>
-              <Label htmlFor="new-phone" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="new-phone" className="text-sm font-semibold text-[#2B2B2B]">
                 Direct Contact Phone
               </Label>
               <Input
@@ -959,22 +959,22 @@ export default function AdminStaffPage() {
                 value={newPhone}
                 onChange={(e) => setNewPhone(e.target.value)}
                 placeholder="+94 77 000 0000"
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
 
             {/* Initial Password */}
             <div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="new-pass" className="text-xs font-semibold text-[#2B2B2B]">
+                <Label htmlFor="new-pass" className="text-sm font-semibold text-[#2B2B2B]">
                   Initial Vault Password
                 </Label>
                 <button
                   type="button"
                   onClick={() => setNewPassword(generateStrongPassword())}
-                  className="text-[11px] text-[#B8924A] hover:text-[#5E0F1E] font-medium flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-[#B8924A] hover:text-[#5E0F1E] font-medium flex items-center gap-1 cursor-pointer"
                 >
-                  <Sparkles className="w-3 h-3 text-[#D4AF67]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#D4AF67]" />
                   Generate
                 </button>
               </div>
@@ -984,53 +984,53 @@ export default function AdminStaffPage() {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Min 6 characters"
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10 font-mono"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10 font-mono"
               />
             </div>
           </div>
 
           {/* Granular Permission Checkboxes */}
           <div>
-            <Label className="text-xs font-semibold text-[#2B2B2B] block mb-2">
+            <Label className="text-sm font-semibold text-[#2B2B2B] block mb-2">
               Granular Console Permissions
             </Label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 bg-[#F2EADB]/60 border border-[#B8924A]/25 rounded-xs">
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 bg-[#F2EADB]/60 border border-[#B8924A]/25 rounded-xs">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={newCanManageGems}
                   onChange={(e) => setNewCanManageGems(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Manage Gems</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={newCanManageOrders}
                   onChange={(e) => setNewCanManageOrders(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Manage Orders</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={newCanManageStaff}
                   onChange={(e) => setNewCanManageStaff(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Manage Staff</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={newCanExportData}
                   onChange={(e) => setNewCanExportData(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Export Dossiers</span>
               </label>
@@ -1039,7 +1039,7 @@ export default function AdminStaffPage() {
 
           {/* Notes */}
           <div>
-            <Label htmlFor="new-notes" className="text-xs font-semibold text-[#2B2B2B]">
+            <Label htmlFor="new-notes" className="text-sm font-semibold text-[#2B2B2B]">
               Administrative Notes & Background
             </Label>
             <Input
@@ -1047,7 +1047,7 @@ export default function AdminStaffPage() {
               value={newNotes}
               onChange={(e) => setNewNotes(e.target.value)}
               placeholder="e.g. NGJA certified gemologist, specialized in Corundum thermal treatment detection."
-              className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+              className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
             />
           </div>
 
@@ -1057,14 +1057,14 @@ export default function AdminStaffPage() {
               type="button"
               variant="outline"
               onClick={() => setAddModalOpen(false)}
-              className="text-xs border-[#B8924A]/40 text-[#2B2B2B]"
+              className="text-sm h-9 px-4 border-[#B8924A]/40 text-[#2B2B2B]"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={addLoading}
-              className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold uppercase tracking-wider py-2 px-4 rounded-xs border border-[#B8924A]/40"
+              className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm font-semibold uppercase tracking-wider h-9 px-4 rounded-xs border border-[#B8924A]/40"
             >
               {addLoading ? "Enrolling..." : "Create Staff Profile"}
             </Button>
@@ -1089,7 +1089,7 @@ export default function AdminStaffPage() {
         <form onSubmit={handleSaveProfile} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="edit-name" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="edit-name" className="text-sm font-semibold text-[#2B2B2B]">
                 Full Legal Name
               </Label>
               <Input
@@ -1097,33 +1097,33 @@ export default function AdminStaffPage() {
                 required
                 value={editFullName}
                 onChange={(e) => setEditFullName(e.target.value)}
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
 
             <div>
-              <Label htmlFor="edit-dept" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="edit-dept" className="text-sm font-semibold text-[#2B2B2B]">
                 Department
               </Label>
               <Input
                 id="edit-dept"
                 value={editDepartment}
                 onChange={(e) => setEditDepartment(e.target.value)}
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <Label htmlFor="edit-role" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="edit-role" className="text-sm font-semibold text-[#2B2B2B]">
                 Role Hierarchy
               </Label>
               <select
                 id="edit-role"
                 value={editRole}
                 onChange={(e) => setEditRole(e.target.value as StaffRole)}
-                className="mt-1 w-full bg-[#FDFBF7] border border-[#B8924A]/30 text-xs text-[#2B2B2B] px-3 py-2.5 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+                className="mt-1 w-full bg-[#FDFBF7] border border-[#B8924A]/30 text-sm text-[#2B2B2B] h-10 px-3 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
               >
                 <option value="super_admin">Super Administrator</option>
                 <option value="vault_custodian">Vault Custodian</option>
@@ -1134,14 +1134,14 @@ export default function AdminStaffPage() {
             </div>
 
             <div>
-              <Label htmlFor="edit-status" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="edit-status" className="text-sm font-semibold text-[#2B2B2B]">
                 Status
               </Label>
               <select
                 id="edit-status"
                 value={editStatus}
                 onChange={(e) => setEditStatus(e.target.value as StaffStatus)}
-                className="mt-1 w-full bg-[#FDFBF7] border border-[#B8924A]/30 text-xs text-[#2B2B2B] px-3 py-2.5 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+                className="mt-1 w-full bg-[#FDFBF7] border border-[#B8924A]/30 text-sm text-[#2B2B2B] h-10 px-3 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E]"
               >
                 <option value="active">Active</option>
                 <option value="suspended">Suspended</option>
@@ -1150,60 +1150,60 @@ export default function AdminStaffPage() {
             </div>
 
             <div>
-              <Label htmlFor="edit-phone" className="text-xs font-semibold text-[#2B2B2B]">
+              <Label htmlFor="edit-phone" className="text-sm font-semibold text-[#2B2B2B]">
                 Contact Phone
               </Label>
               <Input
                 id="edit-phone"
                 value={editPhone}
                 onChange={(e) => setEditPhone(e.target.value)}
-                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+                className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
               />
             </div>
           </div>
 
           {/* Granular Permission Checkboxes */}
           <div>
-            <Label className="text-xs font-semibold text-[#2B2B2B] block mb-2">
+            <Label className="text-sm font-semibold text-[#2B2B2B] block mb-2">
               Granular Console Permissions
             </Label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 bg-[#F2EADB]/60 border border-[#B8924A]/25 rounded-xs">
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 bg-[#F2EADB]/60 border border-[#B8924A]/25 rounded-xs">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={editCanManageGems}
                   onChange={(e) => setEditCanManageGems(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Manage Gems</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={editCanManageOrders}
                   onChange={(e) => setEditCanManageOrders(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Manage Orders</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={editCanManageStaff}
                   onChange={(e) => setEditCanManageStaff(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Manage Staff</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-[#2B2B2B] cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-[#2B2B2B] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={editCanExportData}
                   onChange={(e) => setEditCanExportData(e.target.checked)}
-                  className="accent-[#5E0F1E]"
+                  className="accent-[#5E0F1E] w-4 h-4"
                 />
                 <span>Export Dossiers</span>
               </label>
@@ -1212,14 +1212,14 @@ export default function AdminStaffPage() {
 
           {/* Notes */}
           <div>
-            <Label htmlFor="edit-notes" className="text-xs font-semibold text-[#2B2B2B]">
+            <Label htmlFor="edit-notes" className="text-sm font-semibold text-[#2B2B2B]">
               Administrative Notes
             </Label>
             <Input
               id="edit-notes"
               value={editNotes}
               onChange={(e) => setEditNotes(e.target.value)}
-              className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-xs h-10"
+              className="mt-1 bg-[#FDFBF7] border-[#B8924A]/30 text-sm h-10"
             />
           </div>
 
@@ -1229,14 +1229,14 @@ export default function AdminStaffPage() {
               type="button"
               variant="outline"
               onClick={() => setEditProfileModalOpen(false)}
-              className="text-xs border-[#B8924A]/40 text-[#2B2B2B]"
+              className="text-sm h-9 px-4 border-[#B8924A]/40 text-[#2B2B2B]"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={editLoading}
-              className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold uppercase tracking-wider py-2 px-4 rounded-xs border border-[#B8924A]/40"
+              className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm font-semibold uppercase tracking-wider h-9 px-4 rounded-xs border border-[#B8924A]/40"
             >
               {editLoading ? "Saving..." : "Save Changes"}
             </Button>
@@ -1256,12 +1256,12 @@ export default function AdminStaffPage() {
       >
         <div className="space-y-4">
           {deleteConfirmMember && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xs text-xs text-red-900 space-y-1">
+            <div className="p-3.5 bg-red-50 border border-red-200 rounded-xs text-sm text-red-900 space-y-1">
               <p className="font-semibold">
                 Revoking access for: {deleteConfirmMember.fullName}
               </p>
-              <p className="text-[11px] font-mono">{deleteConfirmMember.email}</p>
-              <p className="text-[10px] text-red-700/80 mt-1">
+              <p className="text-xs font-mono">{deleteConfirmMember.email}</p>
+              <p className="text-xs text-red-700/80 mt-1">
                 This action revokes their vault authorization key and terminates active sessions immediately.
               </p>
             </div>
@@ -1272,14 +1272,14 @@ export default function AdminStaffPage() {
               variant="outline"
               size="sm"
               onClick={() => setDeleteConfirmMember(null)}
-              className="text-xs border-[#B8924A]/40"
+              className="text-sm h-9 px-4 border-[#B8924A]/40"
             >
               Cancel
             </Button>
             <Button
               size="sm"
               onClick={handleConfirmDelete}
-              className="bg-red-700 hover:bg-red-800 text-white text-xs font-semibold"
+              className="bg-red-700 hover:bg-red-800 text-white text-sm h-9 px-4 font-semibold"
             >
               Confirm Revocation
             </Button>

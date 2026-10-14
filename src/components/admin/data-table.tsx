@@ -197,11 +197,11 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div className="space-y-4">
       {/* Top Toolbar: Search, Filters, Actions */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3.5">
         {/* Search bar & Filter dropdowns */}
-        <div className="flex flex-wrap items-center gap-2.5 flex-1">
-          <div className="relative min-w-[240px] max-w-sm flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#2B2B2B]/40" />
+        <div className="flex flex-wrap items-center gap-3 flex-1">
+          <div className="relative min-w-[260px] max-w-sm flex-1">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#2B2B2B]/40" />
             <Input
               value={searchQuery}
               onChange={(e) => {
@@ -209,14 +209,14 @@ export function DataTable<T extends Record<string, any>>({
                 setCurrentPage(1);
               }}
               placeholder={searchPlaceholder}
-              className="pl-9 pr-8 text-xs bg-white/80 border-[#B8924A]/30 focus:border-[#5E0F1E]"
+              className="pl-10 pr-9 text-sm h-10 bg-white/80 border-[#B8924A]/30 focus:border-[#5E0F1E]"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#2B2B2B]/40 hover:text-[#5E0F1E]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2B2B2B]/40 hover:text-[#5E0F1E]"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -227,7 +227,7 @@ export function DataTable<T extends Record<string, any>>({
               key={f.key}
               value={activeFilters[f.key] || "all"}
               onChange={(e) => handleFilterChange(f.key, e.target.value)}
-              className="text-xs bg-white/80 border border-[#B8924A]/30 text-[#2B2B2B] px-3 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E] font-medium transition-colors"
+              className="text-sm h-10 bg-white/80 border border-[#B8924A]/30 text-[#2B2B2B] px-3.5 py-2 rounded-xs focus:outline-none focus:border-[#5E0F1E] font-medium transition-colors"
             >
               <option value="all">All {f.label}</option>
               {f.options.map((opt) => (
@@ -242,24 +242,24 @@ export function DataTable<T extends Record<string, any>>({
           {activeFilterCount > 0 && (
             <button
               onClick={clearAllFilters}
-              className="text-[11px] text-[#5E0F1E] hover:underline font-medium flex items-center gap-1 px-2 py-1 bg-[#5E0F1E]/5 rounded-xs"
+              className="text-xs text-[#5E0F1E] hover:underline font-semibold flex items-center gap-1.5 px-2.5 py-1.5 bg-[#5E0F1E]/5 rounded-xs"
             >
-              <X className="w-3 h-3" />
+              <X className="w-3.5 h-3.5" />
               Clear filters ({activeFilterCount})
             </button>
           )}
         </div>
 
         {/* Export & Custom Actions */}
-        <div className="flex items-center gap-2 self-end lg:self-auto shrink-0">
+        <div className="flex items-center gap-2.5 self-end lg:self-auto shrink-0">
           <Button
             variant="outline"
             size="sm"
             onClick={handleExportCSV}
-            className="text-xs flex items-center gap-1.5 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10"
+            className="text-sm h-10 px-4 flex items-center gap-2 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
             title="Export filtered records to CSV"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-4 h-4" />
             <span>Export CSV</span>
           </Button>
 
@@ -269,13 +269,13 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Main Table */}
       <div className="overflow-x-auto border border-[#B8924A]/30 bg-white/70 shadow-xs">
-        <table className="w-full text-left border-collapse text-xs">
+        <table className="w-full text-left border-collapse text-sm">
           <thead>
-            <tr className="bg-[#F2EADB]/80 border-b border-[#B8924A]/30 text-[#5E0F1E] uppercase tracking-wider text-[11px] font-semibold">
+            <tr className="bg-[#F2EADB]/80 border-b border-[#B8924A]/30 text-[#5E0F1E] uppercase tracking-wider text-xs font-bold">
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`p-3.5 select-none ${col.className || ""} ${
+                  className={`p-4 select-none ${col.className || ""} ${
                     col.sortable ? "cursor-pointer hover:bg-[#F2EADB]" : ""
                   }`}
                   onClick={() => col.sortable && handleSort(col.key)}
@@ -286,12 +286,12 @@ export function DataTable<T extends Record<string, any>>({
                       <span className="text-[#B8924A]">
                         {sortKey === col.key ? (
                           sortDirection === "asc" ? (
-                            <ArrowUp className="w-3.5 h-3.5 text-[#5E0F1E]" />
+                            <ArrowUp className="w-4 h-4 text-[#5E0F1E]" />
                           ) : (
-                            <ArrowDown className="w-3.5 h-3.5 text-[#5E0F1E]" />
+                            <ArrowDown className="w-4 h-4 text-[#5E0F1E]" />
                           )
                         ) : (
-                          <ArrowUpDown className="w-3 h-3 text-[#B8924A]/50" />
+                          <ArrowUpDown className="w-3.5 h-3.5 text-[#B8924A]/50" />
                         )}
                       </span>
                     )}
@@ -305,7 +305,7 @@ export function DataTable<T extends Record<string, any>>({
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="p-12 text-center text-[#2B2B2B]/60 italic font-medium"
+                  className="p-12 text-center text-[#2B2B2B]/60 italic font-medium text-sm"
                 >
                   {emptyMessage}
                 </td>
@@ -317,7 +317,7 @@ export function DataTable<T extends Record<string, any>>({
                   className="hover:bg-[#FDFBF7] transition-colors"
                 >
                   {columns.map((col) => (
-                    <td key={col.key} className={`p-3.5 align-middle ${col.className || ""}`}>
+                    <td key={col.key} className={`p-4 align-middle ${col.className || ""}`}>
                       {col.render ? col.render(row) : row[col.key]}
                     </td>
                   ))}
@@ -329,9 +329,9 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#2B2B2B]/75 pt-1">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3.5 text-sm text-[#2B2B2B]/80 pt-2">
         {/* Results summary & page size */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3.5">
           <span>
             Showing{" "}
             <strong className="text-[#5E0F1E]">
@@ -352,7 +352,7 @@ export function DataTable<T extends Record<string, any>>({
                 setPageSize(Number(e.target.value));
                 setCurrentPage(1);
               }}
-              className="bg-transparent border border-[#B8924A]/30 text-xs px-2 py-0.5 rounded-xs text-[#5E0F1E] font-semibold"
+              className="bg-transparent border border-[#B8924A]/30 text-sm px-2.5 py-1 rounded-xs text-[#5E0F1E] font-semibold"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -363,19 +363,19 @@ export function DataTable<T extends Record<string, any>>({
         </div>
 
         {/* Page navigation buttons */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={validCurrentPage <= 1}
-            className="h-8 px-2.5 text-xs border-[#B8924A]/30 text-[#5E0F1E] disabled:opacity-40"
+            className="h-9 px-3 text-sm border-[#B8924A]/30 text-[#5E0F1E] disabled:opacity-40 font-medium"
           >
-            <ChevronLeft className="w-3.5 h-3.5" />
+            <ChevronLeft className="w-4 h-4" />
             <span className="hidden sm:inline">Prev</span>
           </Button>
 
-          <span className="px-3 py-1 bg-[#F2EADB] border border-[#B8924A]/30 text-xs font-semibold text-[#5E0F1E]">
+          <span className="px-3.5 py-1.5 bg-[#F2EADB] border border-[#B8924A]/30 text-sm font-semibold text-[#5E0F1E]">
             {validCurrentPage} / {totalPages}
           </span>
 
@@ -384,10 +384,10 @@ export function DataTable<T extends Record<string, any>>({
             size="sm"
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={validCurrentPage >= totalPages}
-            className="h-8 px-2.5 text-xs border-[#B8924A]/30 text-[#5E0F1E] disabled:opacity-40"
+            className="h-9 px-3 text-sm border-[#B8924A]/30 text-[#5E0F1E] disabled:opacity-40 font-medium"
           >
             <span className="hidden sm:inline">Next</span>
-            <ChevronRight className="w-3.5 h-3.5" />
+            <ChevronRight className="w-4 h-4" />
           </Button>
         </div>
       </div>

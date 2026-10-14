@@ -78,10 +78,10 @@ export default function AdminSEOPage() {
       sortValue: (row) => row.pagePath,
       render: (row) => (
         <div>
-          <span className="font-mono font-bold text-xs text-[#5E0F1E] block">
+          <span className="font-mono font-bold text-sm text-[#5E0F1E] block">
             {row.pagePath}
           </span>
-          <span className="text-[10px] text-[#2B2B2B]/60">{row.pageTitle}</span>
+          <span className="text-xs text-[#2B2B2B]/60">{row.pageTitle}</span>
         </div>
       ),
     },
@@ -92,8 +92,8 @@ export default function AdminSEOPage() {
       sortValue: (row) => row.metaTitle,
       render: (row) => (
         <div className="max-w-md">
-          <p className="font-medium text-[#2B2B2B] truncate text-xs">{row.metaTitle}</p>
-          <p className="text-[10px] text-[#2B2B2B]/60 truncate mt-0.5">{row.metaDescription}</p>
+          <p className="font-semibold text-[#2B2B2B] truncate text-sm">{row.metaTitle}</p>
+          <p className="text-xs text-[#2B2B2B]/60 truncate mt-0.5">{row.metaDescription}</p>
         </div>
       ),
     },
@@ -109,11 +109,11 @@ export default function AdminSEOPage() {
         return (
           <div className="flex items-center gap-1.5">
             {allGood ? (
-              <span className="px-2 py-0.5 bg-emerald-50 text-emerald-800 border border-emerald-300 text-[10px] font-bold rounded-full">
+              <span className="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-bold rounded-full">
                 Optimal Length
               </span>
             ) : (
-              <span className="px-2 py-0.5 bg-amber-50 text-amber-800 border border-amber-300 text-[10px] font-bold rounded-full">
+              <span className="px-3 py-1 bg-amber-50 text-amber-800 border border-amber-300 text-xs font-bold rounded-full">
                 Needs Polish
               </span>
             )}
@@ -127,7 +127,7 @@ export default function AdminSEOPage() {
       sortable: true,
       sortValue: (row) => row.schemaType,
       render: (row) => (
-        <span className="font-mono text-[11px] text-[#1B3A8A] font-semibold">
+        <span className="font-mono text-sm text-[#1B3A8A] font-semibold">
           {row.schemaType}
         </span>
       ),
@@ -138,7 +138,7 @@ export default function AdminSEOPage() {
       sortable: true,
       sortValue: (row) => row.indexStatus,
       render: (row) => (
-        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <span className="px-3 py-1 rounded-full text-xs font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">
           {row.indexStatus}
         </span>
       ),
@@ -153,10 +153,10 @@ export default function AdminSEOPage() {
             size="sm"
             variant="outline"
             onClick={() => openEditModal(row)}
-            className="text-xs h-7 px-2.5 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
+            className="text-sm h-8 px-3 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
           >
             <span>Edit SERP</span>
-            <Edit className="w-3 h-3 ml-1" />
+            <Edit className="w-3.5 h-3.5 ml-1" />
           </Button>
         </div>
       ),
@@ -171,7 +171,7 @@ export default function AdminSEOPage() {
           <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
             SEO & Metadata Manager
           </h1>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/75 mt-1">
             Optimize Google SERP titles, OpenGraph social cards, and Schema.org structured data for Ceylon gemstone search visibility.
           </p>
         </div>
@@ -201,12 +201,12 @@ export default function AdminSEOPage() {
         size="xl"
       >
         {selectedRecord && (
-          <form onSubmit={handleSave} className="space-y-6 text-xs">
+          <form onSubmit={handleSave} className="space-y-6 text-sm">
             {/* Live Google Search Preview Box */}
             <div className="p-4 bg-white border border-[#B8924A]/30 rounded-xs space-y-3 shadow-xs">
               <div className="flex items-center justify-between border-b border-[#B8924A]/15 pb-2">
-                <span className="font-bold text-[11px] uppercase tracking-wider text-[#5E0F1E] flex items-center gap-1.5">
-                  <Search className="w-3.5 h-3.5 text-[#B8924A]" />
+                <span className="font-bold text-xs uppercase tracking-wider text-[#5E0F1E] flex items-center gap-1.5">
+                  <Search className="w-4 h-4 text-[#B8924A]" />
                   Live Google SERP Snippet Preview
                 </span>
 
@@ -214,7 +214,7 @@ export default function AdminSEOPage() {
                   <button
                     type="button"
                     onClick={() => setPreviewDevice("desktop")}
-                    className={`px-2 py-0.5 rounded-xs font-semibold ${
+                    className={`px-2.5 py-1 rounded-xs text-xs font-semibold ${
                       previewDevice === "desktop" ? "bg-[#5E0F1E] text-white" : "text-[#2B2B2B]/60"
                     }`}
                   >
@@ -223,7 +223,7 @@ export default function AdminSEOPage() {
                   <button
                     type="button"
                     onClick={() => setPreviewDevice("mobile")}
-                    className={`px-2 py-0.5 rounded-xs font-semibold ${
+                    className={`px-2.5 py-1 rounded-xs text-xs font-semibold ${
                       previewDevice === "mobile" ? "bg-[#5E0F1E] text-white" : "text-[#2B2B2B]/60"
                     }`}
                   >
@@ -235,22 +235,22 @@ export default function AdminSEOPage() {
               {/* SERP Card rendering */}
               <div className={`p-4 bg-white font-sans ${previewDevice === "mobile" ? "max-w-sm border rounded-lg p-3" : ""}`}>
                 <div className="flex items-center gap-2 text-xs text-[#202124] mb-1">
-                  <span className="w-4 h-4 rounded-full bg-[#5E0F1E] text-white text-[9px] flex items-center justify-center font-serif font-bold">
+                  <span className="w-5 h-5 rounded-full bg-[#5E0F1E] text-white text-[10px] flex items-center justify-center font-serif font-bold">
                     IG
                   </span>
                   <div className="leading-tight">
                     <span className="font-semibold text-xs block text-[#202124]">isurugems.com</span>
-                    <span className="text-[11px] text-[#5f6368] font-mono">
+                    <span className="text-xs text-[#5f6368] font-mono">
                       https://isurugems.com{selectedRecord.pagePath}
                     </span>
                   </div>
                 </div>
 
-                <h4 className="text-base sm:text-lg text-[#1a0dab] hover:underline cursor-pointer leading-snug font-normal line-clamp-1">
+                <h4 className="text-lg sm:text-xl text-[#1a0dab] hover:underline cursor-pointer leading-snug font-normal line-clamp-1">
                   {metaTitle || "Isuru Gems | Natural Ceylon Sapphires"}
                 </h4>
 
-                <p className="text-xs sm:text-sm text-[#4d5156] mt-1 leading-relaxed line-clamp-2">
+                <p className="text-sm sm:text-base text-[#4d5156] mt-1 leading-relaxed line-clamp-2">
                   {metaDescription || "Direct from the historic gem gravels of Ratnapura, Sri Lanka. Ethically mined, unheated certified Ceylon gemstones."}
                 </p>
               </div>
@@ -261,9 +261,9 @@ export default function AdminSEOPage() {
               {/* Title & Counter */}
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <label className="font-semibold text-[#2B2B2B]">Meta Title Tag (50-60 characters recommended)</label>
+                  <label className="font-semibold text-sm text-[#2B2B2B]">Meta Title Tag (50-60 characters recommended)</label>
                   <span
-                    className={`font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-xs ${
+                    className={`font-mono text-xs font-bold px-2 py-0.5 rounded-xs ${
                       titleLen >= 50 && titleLen <= 65
                         ? "bg-emerald-100 text-emerald-800"
                         : "bg-amber-100 text-amber-800"
@@ -283,9 +283,9 @@ export default function AdminSEOPage() {
               {/* Description & Counter */}
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <label className="font-semibold text-[#2B2B2B]">Meta Description Tag (150-160 characters recommended)</label>
+                  <label className="font-semibold text-sm text-[#2B2B2B]">Meta Description Tag (150-160 characters recommended)</label>
                   <span
-                    className={`font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-xs ${
+                    className={`font-mono text-xs font-bold px-2 py-0.5 rounded-xs ${
                       descLen >= 140 && descLen <= 165
                         ? "bg-emerald-100 text-emerald-800"
                         : "bg-amber-100 text-amber-800"
@@ -299,14 +299,14 @@ export default function AdminSEOPage() {
                   value={metaDescription}
                   onChange={(e) => setMetaDescription(e.target.value)}
                   placeholder="Compelling SERP description highlighting NGJA certification and Ceylon provenance..."
-                  className="w-full text-xs p-2.5 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+                  className="w-full text-sm p-3 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-semibold text-[#2B2B2B]">Canonical URL</label>
+                  <label className="font-semibold text-sm text-[#2B2B2B]">Canonical URL</label>
                   <Input
                     value={canonicalUrl}
                     onChange={(e) => setCanonicalUrl(e.target.value)}
@@ -315,11 +315,11 @@ export default function AdminSEOPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-semibold text-[#2B2B2B]">Schema.org Structured Type</label>
+                  <label className="font-semibold text-sm text-[#2B2B2B]">Schema.org Structured Type</label>
                   <select
                     value={schemaType}
                     onChange={(e) => setSchemaType(e.target.value as AdminSEORecord["schemaType"])}
-                    className="w-full text-xs p-2.5 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+                    className="w-full text-sm p-2.5 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
                   >
                     <option value="CollectionPage">CollectionPage (Catalog)</option>
                     <option value="Product">Product (Individual Gemstone)</option>
@@ -331,14 +331,14 @@ export default function AdminSEOPage() {
               </div>
 
               {/* Social OpenGraph Preview */}
-              <div className="p-3 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs space-y-2">
-                <span className="font-bold text-[11px] uppercase tracking-wider text-[#5E0F1E] flex items-center gap-1.5">
-                  <Share2 className="w-3.5 h-3.5 text-[#B8924A]" />
+              <div className="p-3.5 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs space-y-2">
+                <span className="font-bold text-xs uppercase tracking-wider text-[#5E0F1E] flex items-center gap-1.5">
+                  <Share2 className="w-4 h-4 text-[#B8924A]" />
                   OpenGraph Social Card Configuration (WhatsApp / iMessage / LinkedIn)
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="font-semibold text-[#2B2B2B]">OG Title</label>
+                    <label className="font-semibold text-sm text-[#2B2B2B]">OG Title</label>
                     <Input
                       value={ogTitle}
                       onChange={(e) => setOgTitle(e.target.value)}
@@ -346,7 +346,7 @@ export default function AdminSEOPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-semibold text-[#2B2B2B]">OG Share Image URL</label>
+                    <label className="font-semibold text-sm text-[#2B2B2B]">OG Share Image URL</label>
                     <Input
                       value={ogImage}
                       onChange={(e) => setOgImage(e.target.value)}
@@ -363,13 +363,13 @@ export default function AdminSEOPage() {
                 type="button"
                 variant="outline"
                 onClick={() => setSelectedRecord(null)}
-                className="text-xs border-[#B8924A]/40"
+                className="text-sm h-9 px-4 border-[#B8924A]/40"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="text-xs bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
+                className="text-sm h-9 px-4 bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
               >
                 Save SEO Metadata
               </Button>

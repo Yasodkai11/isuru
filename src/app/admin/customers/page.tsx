@@ -147,27 +147,27 @@ export default function AdminCustomersPage() {
     switch (tier) {
       case "vip_collector":
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#5E0F1E] text-[#FAF6EE] flex items-center gap-1 w-fit shadow-xs">
-            <Crown className="w-2.5 h-2.5 text-[#D4AF67]" />
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#5E0F1E] text-[#FAF6EE] flex items-center gap-1.5 w-fit shadow-xs">
+            <Crown className="w-3.5 h-3.5 text-[#D4AF67]" />
             VIP Collector
           </span>
         );
       case "premier_connoisseur":
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#B8924A]/20 text-[#5E0F1E] border border-[#B8924A]/40 flex items-center gap-1 w-fit">
-            <Sparkles className="w-2.5 h-2.5 text-[#B8924A]" />
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#B8924A]/20 text-[#5E0F1E] border border-[#B8924A]/40 flex items-center gap-1.5 w-fit">
+            <Sparkles className="w-3.5 h-3.5 text-[#B8924A]" />
             Premier Connoisseur
           </span>
         );
       case "trade_jeweller":
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#1B3A8A]/10 text-[#1B3A8A] border border-[#1B3A8A]/30 w-fit">
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#1B3A8A]/10 text-[#1B3A8A] border border-[#1B3A8A]/30 w-fit">
             Trade Jeweller / Atelier
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gray-100 text-gray-700 w-fit">
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700 w-fit">
             Private Client
           </span>
         );
@@ -182,8 +182,8 @@ export default function AdminCustomersPage() {
       sortValue: (row) => row.name,
       render: (row) => (
         <div>
-          <span className="font-semibold text-[#2B2B2B] block">{row.name}</span>
-          <span className="text-[10px] text-[#2B2B2B]/60">{row.email}</span>
+          <span className="font-semibold text-sm sm:text-base text-[#2B2B2B] block">{row.name}</span>
+          <span className="text-xs text-[#2B2B2B]/60">{row.email}</span>
         </div>
       ),
     },
@@ -200,7 +200,7 @@ export default function AdminCustomersPage() {
       sortable: true,
       sortValue: (row) => row.country,
       render: (row) => (
-        <span className="text-xs text-[#2B2B2B]/80 font-medium">
+        <span className="text-sm text-[#2B2B2B]/80 font-medium">
           {row.city}, {row.country}
         </span>
       ),
@@ -211,7 +211,7 @@ export default function AdminCustomersPage() {
       sortable: true,
       sortValue: (row) => row.totalSpent,
       render: (row) => (
-        <span className="font-serif font-bold text-sm text-[#5E0F1E]">
+        <span className="font-serif font-bold text-base text-[#5E0F1E]">
           {formatCurrency(row.totalSpent)}
         </span>
       ),
@@ -222,7 +222,7 @@ export default function AdminCustomersPage() {
       sortable: true,
       sortValue: (row) => row.ordersCount,
       render: (row) => (
-        <span className="font-mono font-bold text-xs text-[#2B2B2B]">
+        <span className="font-mono font-bold text-sm text-[#2B2B2B]">
           {row.ordersCount} Gem{row.ordersCount > 1 ? "s" : ""}
         </span>
       ),
@@ -232,11 +232,11 @@ export default function AdminCustomersPage() {
       header: "Preferred Gemstones",
       sortable: false,
       render: (row) => (
-        <div className="flex flex-wrap gap-1 max-w-xs">
+        <div className="flex flex-wrap gap-1.5 max-w-xs">
           {row.preferredVarieties.map((v, i) => (
             <span
               key={i}
-              className="px-1.5 py-0.5 bg-[#FAF6EE] border border-[#B8924A]/25 text-[10px] text-[#5E0F1E] font-medium rounded-xs"
+              className="px-2 py-0.5 bg-[#FAF6EE] border border-[#B8924A]/25 text-xs text-[#5E0F1E] font-medium rounded-xs"
             >
               {v}
             </span>
@@ -253,10 +253,10 @@ export default function AdminCustomersPage() {
           size="sm"
           variant="outline"
           onClick={() => openCustomerDetail(row)}
-          className="text-xs h-7 px-2.5 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
+          className="text-sm h-8 px-3 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
         >
           <span>Dossier</span>
-          <ArrowRight className="w-3 h-3 ml-1" />
+          <ArrowRight className="w-3.5 h-3.5 ml-1" />
         </Button>
       ),
     },
@@ -283,7 +283,7 @@ export default function AdminCustomersPage() {
           <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
             Private Collectors & VIP CRM
           </h1>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/75 mt-1">
             Maintain relationship dossiers, preferences, and cumulative gemstone acquisitions for high-net-worth collectors.
           </p>
         </div>
@@ -294,7 +294,7 @@ export default function AdminCustomersPage() {
             variant="outline"
             size="sm"
             disabled={loading}
-            className="text-xs border-[#B8924A]/40 text-[#5E0F1E] flex items-center gap-1.5"
+            className="text-sm h-9 px-3.5 border-[#B8924A]/40 text-[#5E0F1E] flex items-center gap-1.5"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-[#B8924A]" : ""}`} />
             <span>{loading ? "Syncing..." : "Refresh CRM"}</span>
@@ -303,7 +303,7 @@ export default function AdminCustomersPage() {
           <Button
             onClick={() => setAddModalOpen(true)}
             size="sm"
-            className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold shrink-0"
+            className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm h-9 px-4 font-semibold shrink-0"
           >
             <Plus className="w-3.5 h-3.5 mr-1.5" />
             Add Client Record
@@ -337,32 +337,32 @@ export default function AdminCustomersPage() {
         size="md"
       >
         {selectedCustomer && (
-          <form onSubmit={handleSaveNotes} className="space-y-4 text-xs">
+          <form onSubmit={handleSaveNotes} className="space-y-4 text-sm">
             <div className="grid grid-cols-2 gap-3 p-3 bg-[#FAF6EE] border border-[#B8924A]/30 rounded-xs">
               <div>
-                <span className="text-[10px] text-[#2B2B2B]/60 uppercase block">Lifetime Value</span>
-                <span className="font-serif font-bold text-lg text-[#5E0F1E]">
+                <span className="text-xs font-bold text-[#2B2B2B]/60 uppercase block">Lifetime Value</span>
+                <span className="font-serif font-bold text-xl text-[#5E0F1E]">
                   {formatCurrency(selectedCustomer.totalSpent)}
                 </span>
               </div>
               <div>
-                <span className="text-[10px] text-[#2B2B2B]/60 uppercase block">Total Orders</span>
-                <span className="font-serif font-bold text-lg text-[#2B2B2B]">
+                <span className="text-xs font-bold text-[#2B2B2B]/60 uppercase block">Total Orders</span>
+                <span className="font-serif font-bold text-xl text-[#2B2B2B]">
                   {selectedCustomer.ordersCount} Completed
                 </span>
               </div>
               <div>
-                <span className="text-[10px] text-[#2B2B2B]/60 uppercase block">First Acquisition</span>
+                <span className="text-xs font-bold text-[#2B2B2B]/60 uppercase block">First Acquisition</span>
                 <span className="font-medium text-[#2B2B2B]">{selectedCustomer.firstAcquisitionDate}</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#2B2B2B]/60 uppercase block">Last Active</span>
+                <span className="text-xs font-bold text-[#2B2B2B]/60 uppercase block">Last Active</span>
                 <span className="font-medium text-[#2B2B2B]">{selectedCustomer.lastAcquisitionDate}</span>
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="font-semibold text-[#2B2B2B]">
+              <label className="font-semibold text-sm text-[#2B2B2B]">
                 Private Concierge Notes & Inclusion Preferences
               </label>
               <textarea
@@ -370,7 +370,7 @@ export default function AdminCustomersPage() {
                 value={customerNotes}
                 onChange={(e) => setCustomerNotes(e.target.value)}
                 placeholder="Collector criteria (e.g. only unheated 4ct+ Ceylon cushions, prefer GRS reports)..."
-                className="w-full text-xs p-2.5 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+                className="w-full text-sm p-3 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
               />
             </div>
 
@@ -379,14 +379,14 @@ export default function AdminCustomersPage() {
                 type="button"
                 variant="outline"
                 onClick={() => setSelectedCustomer(null)}
-                className="text-xs border-[#B8924A]/40"
+                className="text-sm h-9 px-4 border-[#B8924A]/40"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={savingNotes}
-                className="text-xs bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
+                className="text-sm h-9 px-4 bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
               >
                 {savingNotes ? "Saving Notes..." : "Save Notes"}
               </Button>
@@ -403,9 +403,9 @@ export default function AdminCustomersPage() {
         description="Register a high-value client or wholesale atelier dossier in the private vault directory."
         size="md"
       >
-        <form onSubmit={handleCreateCustomer} className="space-y-3 text-xs">
+        <form onSubmit={handleCreateCustomer} className="space-y-4 text-sm">
           <div className="space-y-1">
-            <label className="font-semibold text-[#2B2B2B]">Client Full Name *</label>
+            <label className="font-semibold text-sm text-[#2B2B2B]">Client Full Name *</label>
             <Input
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
@@ -416,7 +416,7 @@ export default function AdminCustomersPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-[#2B2B2B]">Email Address *</label>
+              <label className="font-semibold text-sm text-[#2B2B2B]">Email Address *</label>
               <Input
                 type="email"
                 value={newEmail}
@@ -426,7 +426,7 @@ export default function AdminCustomersPage() {
               />
             </div>
             <div className="space-y-1">
-              <label className="font-semibold text-[#2B2B2B]">Phone / WhatsApp</label>
+              <label className="font-semibold text-sm text-[#2B2B2B]">Phone / WhatsApp</label>
               <Input
                 value={newPhone}
                 onChange={(e) => setNewPhone(e.target.value)}
@@ -437,7 +437,7 @@ export default function AdminCustomersPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-[#2B2B2B]">Country</label>
+              <label className="font-semibold text-sm text-[#2B2B2B]">Country</label>
               <Input
                 value={newCountry}
                 onChange={(e) => setNewCountry(e.target.value)}
@@ -445,7 +445,7 @@ export default function AdminCustomersPage() {
               />
             </div>
             <div className="space-y-1">
-              <label className="font-semibold text-[#2B2B2B]">City</label>
+              <label className="font-semibold text-sm text-[#2B2B2B]">City</label>
               <Input
                 value={newCity}
                 onChange={(e) => setNewCity(e.target.value)}
@@ -456,11 +456,11 @@ export default function AdminCustomersPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-[#2B2B2B]">VIP Tier</label>
+              <label className="font-semibold text-sm text-[#2B2B2B]">VIP Tier</label>
               <select
                 value={newTier}
                 onChange={(e) => setNewTier(e.target.value as CustomerTier)}
-                className="w-full text-xs p-2.5 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
+                className="w-full text-sm p-2.5 border border-[#B8924A]/30 bg-white rounded-xs focus:outline-none focus:border-[#5E0F1E]"
               >
                 <option value="vip_collector">VIP Collector</option>
                 <option value="premier_connoisseur">Premier Connoisseur</option>
@@ -469,7 +469,7 @@ export default function AdminCustomersPage() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="font-semibold text-[#2B2B2B]">Estimated Spend ($)</label>
+              <label className="font-semibold text-sm text-[#2B2B2B]">Estimated Spend ($)</label>
               <Input
                 type="number"
                 value={newSpent}
@@ -480,13 +480,13 @@ export default function AdminCustomersPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-[#2B2B2B]">Initial Gemological Notes</label>
+            <label className="font-semibold text-sm text-[#2B2B2B]">Initial Gemological Notes</label>
             <textarea
               rows={2}
               value={newNotes}
               onChange={(e) => setNewNotes(e.target.value)}
               placeholder="Inclusion preferences, favorite sapphire colors..."
-              className="w-full text-xs p-2 border border-[#B8924A]/30 bg-white rounded-xs"
+              className="w-full text-sm p-2.5 border border-[#B8924A]/30 bg-white rounded-xs"
             />
           </div>
 
@@ -495,14 +495,14 @@ export default function AdminCustomersPage() {
               type="button"
               variant="outline"
               onClick={() => setAddModalOpen(false)}
-              className="text-xs border-[#B8924A]/40"
+              className="text-sm h-9 px-4 border-[#B8924A]/40"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={creatingClient}
-              className="text-xs bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
+              className="text-sm h-9 px-4 bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
             >
               {creatingClient ? "Registering Client..." : "Register Client"}
             </Button>

@@ -100,17 +100,17 @@ export default function AdminOrdersPage() {
   const getStatusBadge = (status: OrderStatus) => {
     switch (status) {
       case "pending_verification":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">Pending Verification</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">Pending Verification</span>;
       case "escrow_funded":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">Escrow Funded</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-300">Escrow Funded</span>;
       case "customs_clearance":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-300">Customs Clearance</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-300">Customs Clearance</span>;
       case "dispatched":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">Dispatched (Armoured)</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">Dispatched (Armoured)</span>;
       case "delivered":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Delivered & Sealed</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Delivered & Sealed</span>;
       case "cancelled":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-800 border border-red-300">Cancelled</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-300">Cancelled</span>;
       default:
         return null;
     }
@@ -123,7 +123,7 @@ export default function AdminOrdersPage() {
       sortable: true,
       sortValue: (row) => row.id,
       render: (row) => (
-        <span className="font-mono font-bold text-[#5E0F1E] text-xs">
+        <span className="font-mono font-bold text-[#5E0F1E] text-sm">
           {row.id}
         </span>
       ),
@@ -135,8 +135,8 @@ export default function AdminOrdersPage() {
       sortValue: (row) => row.customerName,
       render: (row) => (
         <div>
-          <span className="font-semibold text-[#2B2B2B] block">{row.customerName}</span>
-          <span className="text-[10px] text-[#2B2B2B]/60">
+          <span className="font-semibold text-sm text-[#2B2B2B] block">{row.customerName}</span>
+          <span className="text-xs text-[#2B2B2B]/60 mt-0.5 block">
             {row.city}, {row.country}
           </span>
         </div>
@@ -147,17 +147,17 @@ export default function AdminOrdersPage() {
       header: "Gemstone(s)",
       sortable: false,
       render: (row) => (
-        <div className="flex items-center gap-2 max-w-xs">
+        <div className="flex items-center gap-2.5 max-w-xs">
           {row.items[0] && (
-            <div className="relative w-8 h-8 rounded-xs overflow-hidden border border-[#B8924A]/30 shrink-0">
-              <Image src={row.items[0].image} alt={row.items[0].name} fill className="object-cover" sizes="32px" />
+            <div className="relative w-9 h-9 rounded-xs overflow-hidden border border-[#B8924A]/30 shrink-0">
+              <Image src={row.items[0].image} alt={row.items[0].name} fill className="object-cover" sizes="36px" />
             </div>
           )}
           <div className="min-w-0">
-            <p className="text-xs font-medium text-[#2B2B2B] truncate">
+            <p className="text-sm font-medium text-[#2B2B2B] truncate">
               {row.items.map((i) => i.name).join(", ")}
             </p>
-            <p className="text-[10px] text-[#2B2B2B]/60">
+            <p className="text-xs text-[#2B2B2B]/60 mt-0.5">
               {row.items.length} piece{row.items.length > 1 ? "s" : ""} • {row.items.map((i) => formatCarats(i.carat)).join(", ")}
             </p>
           </div>
@@ -170,7 +170,7 @@ export default function AdminOrdersPage() {
       sortable: true,
       sortValue: (row) => row.totalAmount,
       render: (row) => (
-        <span className="font-serif font-bold text-sm text-[#2B2B2B]">
+        <span className="font-serif font-bold text-base text-[#2B2B2B]">
           {formatCurrency(row.totalAmount)}
         </span>
       ),
@@ -181,7 +181,7 @@ export default function AdminOrdersPage() {
       sortable: true,
       sortValue: (row) => new Date(row.createdAt).getTime(),
       render: (row) => (
-        <span className="text-[11px] text-[#2B2B2B]/70 font-medium">
+        <span className="text-xs text-[#2B2B2B]/75 font-medium">
           {new Date(row.createdAt).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -206,10 +206,10 @@ export default function AdminOrdersPage() {
           size="sm"
           variant="outline"
           onClick={() => openOrderDetail(row)}
-          className="text-xs h-7 px-2.5 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
+          className="text-sm h-8 px-3 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
         >
           <span>Manage</span>
-          <ArrowRight className="w-3 h-3 ml-1" />
+          <ArrowRight className="w-3.5 h-3.5 ml-1" />
         </Button>
       ),
     },
@@ -232,12 +232,12 @@ export default function AdminOrdersPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#B8924A]/25">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
           <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
             Acquisition Orders & Dispatch Workflow
           </h1>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Progress high-value client gem acquisitions from escrow funding through NGJA export sealing and armored courier flight dispatch.
           </p>
         </div>

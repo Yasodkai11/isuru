@@ -203,14 +203,14 @@ export default function AdminProductsPage() {
             <div className="relative w-12 h-12 rounded-xs overflow-hidden border border-[#B8924A]/30 shrink-0 bg-[#FAF6EE]">
               <Image src={cover} alt={row.name} fill className="object-cover" sizes="48px" />
               {row.images.length > 1 && (
-                <span className="absolute bottom-0 right-0 bg-black/70 text-white text-[9px] px-1 font-bold">
+                <span className="absolute bottom-0 right-0 bg-black/75 text-white text-xs px-1.5 py-0.5 font-bold">
                   +{row.images.length - 1}
                 </span>
               )}
             </div>
             {row.featured && (
               <span title="Featured on Showcase">
-                <Star className="w-3.5 h-3.5 text-[#B8924A] fill-current" />
+                <Star className="w-4 h-4 text-[#B8924A] fill-current" />
               </span>
             )}
           </div>
@@ -224,10 +224,10 @@ export default function AdminProductsPage() {
       sortValue: (row) => row.name,
       render: (row) => (
         <div>
-          <span className="font-semibold text-[#2B2B2B] hover:text-[#5E0F1E] block">
+          <span className="font-semibold text-sm sm:text-base text-[#2B2B2B] hover:text-[#5E0F1E] block">
             {row.name}
           </span>
-          <div className="flex items-center gap-2 mt-0.5 text-[10px] text-[#2B2B2B]/60 font-mono">
+          <div className="flex items-center gap-2 mt-1 text-xs text-[#2B2B2B]/65 font-mono">
             <span>Slug: {row.slug}</span>
             <span>•</span>
             <span className="text-[#5E0F1E] font-medium">{row.certificate.lab} #{row.certificate.number}</span>
@@ -242,8 +242,8 @@ export default function AdminProductsPage() {
       sortValue: (row) => row.variety,
       render: (row) => (
         <div>
-          <span className="font-medium text-[#2B2B2B] block">{row.variety}</span>
-          <span className="text-[10px] text-[#2B2B2B]/60">{row.cut}</span>
+          <span className="font-medium text-sm text-[#2B2B2B] block">{row.variety}</span>
+          <span className="text-xs text-[#2B2B2B]/60 mt-0.5 block">{row.cut}</span>
         </div>
       ),
     },
@@ -253,7 +253,7 @@ export default function AdminProductsPage() {
       sortable: true,
       sortValue: (row) => row.carat,
       render: (row) => (
-        <span className="font-bold text-[#5E0F1E] font-serif text-sm">
+        <span className="font-bold text-[#5E0F1E] font-serif text-base">
           {formatCarats(row.carat)}
         </span>
       ),
@@ -264,7 +264,7 @@ export default function AdminProductsPage() {
       sortable: true,
       sortValue: (row) => row.origin,
       render: (row) => (
-        <span className="text-[11px] text-[#2B2B2B]/80 font-medium">{row.origin}</span>
+        <span className="text-sm text-[#2B2B2B]/85 font-medium">{row.origin}</span>
       ),
     },
     {
@@ -273,7 +273,7 @@ export default function AdminProductsPage() {
       sortable: true,
       sortValue: (row) => row.price,
       render: (row) => (
-        <span className="font-bold text-sm font-serif text-[#2B2B2B]">
+        <span className="font-bold text-base font-serif text-[#2B2B2B]">
           {formatCurrency(row.price)}
         </span>
       ),
@@ -286,7 +286,7 @@ export default function AdminProductsPage() {
       render: (row) => (
         <button
           onClick={() => toggleStock(row.id)}
-          className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full transition-colors cursor-pointer border ${
+          className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full transition-colors cursor-pointer border ${
             row.inStock
               ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
               : "bg-red-50 text-red-800 border-red-300 hover:bg-red-100"
@@ -302,14 +302,14 @@ export default function AdminProductsPage() {
       header: "Actions",
       sortable: false,
       render: (row) => (
-        <div className="flex items-center gap-1.5 justify-end">
+        <div className="flex items-center gap-2 justify-end">
           <Link
             href={`/gems/${row.slug}`}
             target="_blank"
             className="p-1.5 text-[#2B2B2B]/60 hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
             title="Preview Live on Storefront"
           >
-            <Eye className="w-3.5 h-3.5" />
+            <Eye className="w-4 h-4" />
           </Link>
 
           <button
@@ -317,7 +317,7 @@ export default function AdminProductsPage() {
             className="p-1.5 text-[#2B2B2B]/60 hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
             title="Edit Gemstone Details"
           >
-            <Edit className="w-3.5 h-3.5" />
+            <Edit className="w-4 h-4" />
           </button>
 
           <button
@@ -325,7 +325,7 @@ export default function AdminProductsPage() {
             className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xs transition-colors"
             title="Delete from Catalog"
           >
-            <Trash2 className="w-3.5 h-3.5" />
+            <Trash2 className="w-4 h-4" />
           </button>
         </div>
       ),
@@ -363,12 +363,12 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#B8924A]/25">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
           <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
             Gemstone Products CRUD
           </h1>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Manage your fine Ceylon gemstone inventory with multi-angle photography, certificate data, and live vault stock states.
           </p>
         </div>
@@ -376,9 +376,9 @@ export default function AdminProductsPage() {
         <Button
           onClick={openAddModal}
           size="sm"
-          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold shrink-0"
+          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm h-10 px-4 font-semibold shrink-0"
         >
-          <Plus className="w-3.5 h-3.5 mr-1.5" />
+          <Plus className="w-4 h-4 mr-1.5" />
           Add New Gemstone
         </Button>
       </div>

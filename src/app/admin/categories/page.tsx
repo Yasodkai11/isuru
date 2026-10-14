@@ -131,8 +131,8 @@ export default function AdminCategoriesPage() {
       sortValue: (row) => row.name,
       render: (row) => (
         <div>
-          <span className="font-semibold text-[#2B2B2B] block">{row.name}</span>
-          <span className="text-[10px] text-[#2B2B2B]/60 font-mono">/gems?category={row.slug}</span>
+          <span className="font-semibold text-sm sm:text-base text-[#2B2B2B] block">{row.name}</span>
+          <span className="text-xs text-[#2B2B2B]/60 font-mono mt-0.5 block">/gems?category={row.slug}</span>
         </div>
       ),
     },
@@ -142,8 +142,8 @@ export default function AdminCategoriesPage() {
       sortable: false,
       render: (row) => (
         <div>
-          <span className="font-medium text-[#5E0F1E] block">{row.tagline}</span>
-          <span className="text-[10px] text-[#2B2B2B]/60 line-clamp-1">{row.subtitle}</span>
+          <span className="font-medium text-sm text-[#5E0F1E] block">{row.tagline}</span>
+          <span className="text-xs text-[#2B2B2B]/65 line-clamp-1 mt-0.5 block">{row.subtitle}</span>
         </div>
       ),
     },
@@ -153,7 +153,7 @@ export default function AdminCategoriesPage() {
       sortable: true,
       sortValue: (row) => row.productCount,
       render: (row) => (
-        <span className="font-serif font-bold text-sm text-[#5E0F1E]">
+        <span className="font-serif font-bold text-base text-[#5E0F1E]">
           {row.productCount} Listed
         </span>
       ),
@@ -164,7 +164,7 @@ export default function AdminCategoriesPage() {
       sortable: true,
       sortValue: (row) => row.sortOrder,
       render: (row) => (
-        <span className="font-mono font-bold text-xs text-[#2B2B2B]/70">
+        <span className="font-mono font-bold text-sm text-[#2B2B2B]/75">
           #{row.sortOrder}
         </span>
       ),
@@ -177,7 +177,7 @@ export default function AdminCategoriesPage() {
       render: (row) => (
         <button
           onClick={() => updateCategory(row.id, { featured: !row.featured })}
-          className={`px-2 py-0.5 rounded-full text-[10px] font-bold border transition-colors ${
+          className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${
             row.featured
               ? "bg-[#B8924A]/10 text-[#5E0F1E] border-[#B8924A]/40"
               : "bg-gray-100 text-gray-500 border-gray-200"
@@ -192,28 +192,28 @@ export default function AdminCategoriesPage() {
       header: "Actions",
       sortable: false,
       render: (row) => (
-        <div className="flex items-center gap-1.5 justify-end">
+        <div className="flex items-center gap-2 justify-end">
           <Link
             href={`/gems?category=${row.slug}`}
             target="_blank"
             className="p-1.5 text-[#2B2B2B]/60 hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
             title="View Storefront Collection"
           >
-            <Eye className="w-3.5 h-3.5" />
+            <Eye className="w-4 h-4" />
           </Link>
           <button
             onClick={() => openEditModal(row)}
             className="p-1.5 text-[#2B2B2B]/60 hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
             title="Edit Category"
           >
-            <Edit className="w-3.5 h-3.5" />
+            <Edit className="w-4 h-4" />
           </button>
           <button
             onClick={() => setDeleteConfirm(row)}
             className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xs transition-colors"
             title="Delete Category"
           >
-            <Trash2 className="w-3.5 h-3.5" />
+            <Trash2 className="w-4 h-4" />
           </button>
         </div>
       ),
@@ -223,12 +223,12 @@ export default function AdminCategoriesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#B8924A]/25">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
           <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
             Categories & Taxonomies
           </h1>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Organize Ceylon sapphires into curated storefront collections with custom editorial headers and imagery.
           </p>
         </div>
@@ -236,9 +236,9 @@ export default function AdminCategoriesPage() {
         <Button
           onClick={openAddModal}
           size="sm"
-          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold shrink-0"
+          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm h-10 px-4 font-semibold shrink-0"
         >
-          <Plus className="w-3.5 h-3.5 mr-1.5" />
+          <Plus className="w-4 h-4 mr-1.5" />
           Add Category
         </Button>
       </div>

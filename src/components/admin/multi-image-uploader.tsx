@@ -140,10 +140,10 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <label className="text-xs uppercase tracking-wider font-semibold text-[#5E0F1E] block">
+          <label className="text-sm uppercase tracking-wider font-semibold text-[#5E0F1E] block">
             Gemstone Photography & Macro Views ({images.length})
           </label>
-          <p className="text-[11px] text-[#2B2B2B]/70 mt-0.5">
+          <p className="text-xs text-[#2B2B2B]/70 mt-0.5">
             The first image is the primary cover. Use the arrows to reorder or click &apos;Make Cover&apos;.
           </p>
         </div>
@@ -151,20 +151,20 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
         <button
           type="button"
           onClick={() => setShowPresets(!showPresets)}
-          className="text-xs text-[#B8924A] hover:text-[#5E0F1E] flex items-center gap-1 font-medium underline"
+          className="text-sm text-[#B8924A] hover:text-[#5E0F1E] flex items-center gap-1.5 font-medium underline cursor-pointer"
         >
-          <Sparkles className="w-3.5 h-3.5" />
+          <Sparkles className="w-4 h-4 text-[#D4AF67]" />
           <span>{showPresets ? "Hide Gallery Presets" : "Pick from Presets"}</span>
         </button>
       </div>
 
       {/* Preset Pickers */}
       {showPresets && (
-        <div className="p-3 bg-[#F2EADB] border border-[#B8924A]/40 rounded-xs space-y-2 animate-gentle-fade">
-          <p className="text-[10px] uppercase font-bold tracking-wider text-[#5E0F1E]">
+        <div className="p-3.5 bg-[#F2EADB] border border-[#B8924A]/40 rounded-xs space-y-2.5 animate-gentle-fade">
+          <p className="text-xs uppercase font-bold tracking-wider text-[#5E0F1E]">
             Curated Ceylon High-Res Presets (Click to Add):
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
             {PRESET_CEYLON_IMAGES.map((preset, idx) => (
               <button
                 key={idx}
@@ -179,7 +179,7 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
                   className="object-cover group-hover:scale-105 transition-transform"
                   sizes="120px"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-[10px] font-bold transition-opacity">
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold transition-opacity">
                   + Add View
                 </div>
               </button>
@@ -190,14 +190,14 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
 
       {/* Current Images Gallery with Reordering */}
       {images.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
           {images.map((img, index) => {
             const isPrimary = index === 0;
 
             return (
               <div
                 key={`${img.url}-${index}`}
-                className={`relative border bg-white p-2 flex flex-col justify-between transition-all rounded-xs shadow-xs ${
+                className={`relative border bg-white p-2.5 flex flex-col justify-between transition-all rounded-xs shadow-xs ${
                   isPrimary
                     ? "border-[#5E0F1E] ring-2 ring-[#5E0F1E]/20"
                     : "border-[#B8924A]/30 hover:border-[#B8924A]"
@@ -215,15 +215,15 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
 
                   {/* Primary Cover Badge */}
                   {isPrimary ? (
-                    <span className="absolute top-2 left-2 px-2 py-0.5 bg-[#5E0F1E] text-[#FAF6EE] text-[9px] uppercase tracking-widest font-bold flex items-center gap-1 shadow-md">
-                      <Star className="w-2.5 h-2.5 fill-current text-[#D4AF67]" />
+                    <span className="absolute top-2 left-2 px-2.5 py-1 bg-[#5E0F1E] text-[#FAF6EE] text-xs uppercase tracking-wider font-bold flex items-center gap-1 shadow-md">
+                      <Star className="w-3 h-3 fill-current text-[#D4AF67]" />
                       Primary Cover
                     </span>
                   ) : (
                     <button
                       type="button"
                       onClick={() => setPrimary(index)}
-                      className="absolute top-2 left-2 px-2 py-0.5 bg-black/60 hover:bg-[#5E0F1E] text-white text-[9px] uppercase tracking-wider font-semibold opacity-0 hover:opacity-100 transition-opacity"
+                      className="absolute top-2 left-2 px-2.5 py-1 bg-black/70 hover:bg-[#5E0F1E] text-white text-xs uppercase tracking-wider font-semibold opacity-0 hover:opacity-100 transition-opacity"
                     >
                       Make Cover
                     </button>
@@ -236,13 +236,13 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
                     className="absolute top-2 right-2 p-1.5 bg-red-600/90 hover:bg-red-700 text-white rounded-xs shadow-md transition-colors"
                     title="Remove Image"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
                 {/* Alt Text Input */}
                 <div className="space-y-1 mb-2">
-                  <span className="text-[10px] text-[#2B2B2B]/60 font-semibold uppercase">
+                  <span className="text-xs text-[#2B2B2B]/70 font-semibold uppercase">
                     Alt Text (SEO):
                   </span>
                   <input
@@ -250,27 +250,27 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
                     value={img.alt}
                     onChange={(e) => updateAlt(index, e.target.value)}
                     placeholder="Describe angle, facet, or lighting"
-                    className="w-full text-[11px] p-1.5 border border-[#B8924A]/30 rounded-xs bg-[#FAF6EE]/50 focus:bg-white focus:outline-none focus:border-[#5E0F1E]"
+                    className="w-full text-xs p-2 border border-[#B8924A]/30 rounded-xs bg-[#FAF6EE]/50 focus:bg-white focus:outline-none focus:border-[#5E0F1E]"
                   />
                 </div>
 
                 {/* Reorder Controls */}
                 <div className="flex items-center justify-between pt-1 border-t border-[#B8924A]/20 text-xs">
-                  <span className="text-[10px] text-[#2B2B2B]/60 font-mono font-bold">
+                  <span className="text-xs text-[#2B2B2B]/70 font-mono font-bold">
                     Slot #{index + 1}
                   </span>
 
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <Button
                       type="button"
                       variant="outline"
                       size="sm"
                       onClick={() => moveLeft(index)}
                       disabled={index === 0}
-                      className="h-6 w-6 p-0 border-[#B8924A]/40 text-[#5E0F1E] disabled:opacity-30"
+                      className="h-7 w-7 p-0 border-[#B8924A]/40 text-[#5E0F1E] disabled:opacity-30"
                       title="Move Left"
                     >
-                      <ArrowLeft className="w-3 h-3" />
+                      <ArrowLeft className="w-3.5 h-3.5" />
                     </Button>
 
                     <Button
@@ -279,10 +279,10 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
                       size="sm"
                       onClick={() => moveRight(index)}
                       disabled={index === images.length - 1}
-                      className="h-6 w-6 p-0 border-[#B8924A]/40 text-[#5E0F1E] disabled:opacity-30"
+                      className="h-7 w-7 p-0 border-[#B8924A]/40 text-[#5E0F1E] disabled:opacity-30"
                       title="Move Right"
                     >
-                      <ArrowRight className="w-3 h-3" />
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
                   </div>
                 </div>
@@ -293,8 +293,8 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
       ) : (
         <div className="p-8 border-2 border-dashed border-[#B8924A]/40 text-center bg-[#FAF6EE] rounded-xs space-y-2">
           <Upload className="w-8 h-8 mx-auto text-[#B8924A]" />
-          <p className="text-xs font-semibold text-[#5E0F1E]">No images uploaded yet</p>
-          <p className="text-[11px] text-[#2B2B2B]/60 max-w-sm mx-auto">
+          <p className="text-sm font-semibold text-[#5E0F1E]">No images uploaded yet</p>
+          <p className="text-xs text-[#2B2B2B]/60 max-w-sm mx-auto">
             Add high-resolution macro photography, facet angles, or certificates below.
           </p>
         </div>
@@ -302,14 +302,14 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
 
       {/* Add New Image Controls */}
       <div className="p-4 bg-[#F2EADB]/60 border border-[#B8924A]/30 rounded-xs space-y-3">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-[#5E0F1E] block">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#5E0F1E] block">
           Add Photo via File Upload or URL
         </span>
 
         {/* File input button */}
         <div className="flex flex-wrap items-center gap-3">
-          <label className="cursor-pointer inline-flex items-center gap-2 px-3 py-2 bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold rounded-xs shadow-xs transition-colors">
-            <Upload className="w-3.5 h-3.5" />
+          <label className="cursor-pointer inline-flex items-center gap-2 px-3.5 py-2 bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm font-semibold rounded-xs shadow-xs transition-colors">
+            <Upload className="w-4 h-4" />
             <span>Upload Device Files</span>
             <input
               type="file"
@@ -319,7 +319,7 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
               className="hidden"
             />
           </label>
-          <span className="text-xs text-[#2B2B2B]/50 font-medium">or paste remote image link:</span>
+          <span className="text-xs text-[#2B2B2B]/60 font-medium">or paste remote image link:</span>
         </div>
 
         {/* Add by URL Form */}
@@ -328,22 +328,22 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
             value={urlInput}
             onChange={(e) => setUrlInput(e.target.value)}
             placeholder="https://... image URL (Unsplash, CDN, Supabase Storage)"
-            className="text-xs flex-1 bg-white"
+            className="text-sm h-10 flex-1 bg-white"
           />
           <Input
             value={altInput}
             onChange={(e) => setAltInput(e.target.value)}
             placeholder="Image Alt Description"
-            className="text-xs sm:w-56 bg-white"
+            className="text-sm h-10 sm:w-56 bg-white"
           />
           <Button
             type="button"
             onClick={handleAddUrl}
             disabled={!urlInput.trim()}
             variant="outline"
-            className="text-xs border-[#B8924A]/50 text-[#5E0F1E] shrink-0"
+            className="text-sm h-10 px-4 border-[#B8924A]/50 text-[#5E0F1E] shrink-0 font-semibold"
           >
-            <Plus className="w-3.5 h-3.5 mr-1" />
+            <Plus className="w-4 h-4 mr-1.5" />
             Add Image
           </Button>
         </div>

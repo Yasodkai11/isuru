@@ -52,46 +52,46 @@ export default function AdminDashboardPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "pending_verification":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">Pending Verification</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">Pending Verification</span>;
       case "escrow_funded":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">Escrow Funded</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-300">Escrow Funded</span>;
       case "customs_clearance":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-300">Customs Clearance</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-300">Customs Clearance</span>;
       case "dispatched":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">Dispatched (Armoured)</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">Dispatched (Armoured)</span>;
       case "delivered":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Delivered & Sealed</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Delivered & Sealed</span>;
       default:
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gray-100 text-gray-800">Cancelled</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-800">Cancelled</span>;
     }
   };
 
   return (
     <div className="space-y-8">
       {/* Top Welcome & Quick Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#B8924A]/25">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
               Vault Overview
             </h1>
-            <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-widest bg-[#B8924A]/20 text-[#5E0F1E] border border-[#B8924A]/40 rounded-xs">
+            <span className="px-2.5 py-0.5 text-xs uppercase font-bold tracking-widest bg-[#B8924A]/20 text-[#5E0F1E] border border-[#B8924A]/40 rounded-xs">
               Live
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Executive cockpit for Ceylon sapphire acquisitions, high-value vault inventory, and NGJA export logistics.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <Link href="/admin/products">
             <Button
               variant="outline"
               size="sm"
-              className="text-xs border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10"
+              className="text-sm h-10 px-4 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
             >
-              <Plus className="w-3.5 h-3.5 mr-1 text-[#B8924A]" />
+              <Plus className="w-4 h-4 mr-1.5 text-[#B8924A]" />
               Add Gemstone
             </Button>
           </Link>
@@ -99,9 +99,9 @@ export default function AdminDashboardPage() {
           <Link href="/admin/orders">
             <Button
               size="sm"
-              className="text-xs bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE]"
+              className="text-sm h-10 px-4 bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
             >
-              <ShoppingBag className="w-3.5 h-3.5 mr-1" />
+              <ShoppingBag className="w-4 h-4 mr-1.5" />
               Manage Orders ({orders.length})
             </Button>
           </Link>
@@ -109,84 +109,84 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Primary Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {/* Card 1: Vault Valuation */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#5E0F1E]">
+            <span className="text-xs uppercase tracking-[0.18em] font-bold text-[#5E0F1E]">
               Vault Valuation
             </span>
-            <div className="w-8 h-8 rounded-full bg-[#B8924A]/10 text-[#5E0F1E] flex items-center justify-center">
-              <Gem className="w-4 h-4 text-[#B8924A]" />
+            <div className="w-10 h-10 rounded-full bg-[#B8924A]/10 text-[#5E0F1E] flex items-center justify-center">
+              <Gem className="w-5 h-5 text-[#B8924A]" />
             </div>
           </div>
-          <div className="mt-3">
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#2B2B2B]">
+          <div className="mt-3.5">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#2B2B2B]">
               {formatCurrency(totalVaultValue)}
             </div>
-            <div className="flex items-center gap-1.5 mt-1 text-[11px] text-emerald-700 font-medium">
-              <TrendingUp className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-1.5 mt-1.5 text-xs sm:text-sm text-emerald-700 font-semibold">
+              <TrendingUp className="w-4 h-4" />
               <span>{inStockGems.length} pieces currently available</span>
             </div>
           </div>
         </div>
 
         {/* Card 2: Cumulative Order Volume */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#5E0F1E]">
+            <span className="text-xs uppercase tracking-[0.18em] font-bold text-[#5E0F1E]">
               Pipeline Revenue
             </span>
-            <div className="w-8 h-8 rounded-full bg-[#5E0F1E]/10 text-[#5E0F1E] flex items-center justify-center">
-              <DollarSign className="w-4 h-4 text-[#5E0F1E]" />
+            <div className="w-10 h-10 rounded-full bg-[#5E0F1E]/10 text-[#5E0F1E] flex items-center justify-center">
+              <DollarSign className="w-5 h-5 text-[#5E0F1E]" />
             </div>
           </div>
-          <div className="mt-3">
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#2B2B2B]">
+          <div className="mt-3.5">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#2B2B2B]">
               {formatCurrency(totalOrderRevenue)}
             </div>
-            <div className="flex items-center gap-1.5 mt-1 text-[11px] text-emerald-700 font-medium">
-              <TrendingUp className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-1.5 mt-1.5 text-xs sm:text-sm text-emerald-700 font-semibold">
+              <TrendingUp className="w-4 h-4" />
               <span>+18.4% vs last calendar month</span>
             </div>
           </div>
         </div>
 
         {/* Card 3: Gemstones in Vault */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#5E0F1E]">
+            <span className="text-xs uppercase tracking-[0.18em] font-bold text-[#5E0F1E]">
               Active Inventory
             </span>
-            <div className="w-8 h-8 rounded-full bg-[#1B3A8A]/10 text-[#1B3A8A] flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-[#1B3A8A]" />
+            <div className="w-10 h-10 rounded-full bg-[#1B3A8A]/10 text-[#1B3A8A] flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[#1B3A8A]" />
             </div>
           </div>
-          <div className="mt-3">
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#2B2B2B]">
+          <div className="mt-3.5">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#2B2B2B]">
               {gemstones.length} Gems / {formatCarats(totalCarats)}
             </div>
-            <div className="flex items-center gap-1.5 mt-1 text-[11px] text-[#1B3A8A] font-medium">
+            <div className="flex items-center gap-1.5 mt-1.5 text-xs sm:text-sm text-[#1B3A8A] font-semibold">
               <span>{Math.round((unheatedCount / (gemstones.length || 1)) * 100)}% 100% Unheated Natural</span>
             </div>
           </div>
         </div>
 
         {/* Card 4: Orders & Concierge Attention */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 shadow-xs rounded-xs relative overflow-hidden group hover:border-[#B8924A] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#5E0F1E]">
+            <span className="text-xs uppercase tracking-[0.18em] font-bold text-[#5E0F1E]">
               Action Required
             </span>
-            <div className="w-8 h-8 rounded-full bg-amber-500/10 text-amber-700 flex items-center justify-center">
-              <AlertTriangle className="w-4 h-4 text-amber-600" />
+            <div className="w-10 h-10 rounded-full bg-amber-500/10 text-amber-700 flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-amber-600" />
             </div>
           </div>
-          <div className="mt-3">
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#5E0F1E]">
+          <div className="mt-3.5">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#5E0F1E]">
               {pendingOrders.length + pendingEnquiries.length} Items
             </div>
-            <div className="flex items-center gap-2 mt-1 text-[11px] text-[#2B2B2B]/80 font-medium">
+            <div className="flex items-center gap-2 mt-1.5 text-xs sm:text-sm text-[#2B2B2B]/80 font-medium">
               <span className="text-amber-700 font-bold">{pendingOrders.length} orders</span>
               <span>•</span>
               <span className="text-[#1B3A8A] font-bold">{pendingEnquiries.length} enquiries</span>
@@ -198,32 +198,32 @@ export default function AdminDashboardPage() {
       {/* Analytics & Variety Distribution Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Variety Breakdown */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-[#B8924A]/20 pb-3">
-            <h2 className="font-serif text-lg font-medium text-[#5E0F1E]">
+            <h2 className="font-serif text-xl font-medium text-[#5E0F1E]">
               Variety Distribution
             </h2>
             <Link
               href="/admin/products"
-              className="text-xs text-[#B8924A] hover:text-[#5E0F1E] flex items-center gap-1 font-semibold"
+              className="text-sm text-[#B8924A] hover:text-[#5E0F1E] flex items-center gap-1 font-semibold"
             >
               <span>Catalog</span>
-              <ArrowRight className="w-3 h-3" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             {Object.entries(varietyBreakdown).map(([variety, count]) => {
               const percentage = Math.round((count / (gemstones.length || 1)) * 100);
               return (
-                <div key={variety} className="space-y-1">
-                  <div className="flex items-center justify-between text-xs">
+                <div key={variety} className="space-y-1.5">
+                  <div className="flex items-center justify-between text-sm">
                     <span className="font-medium text-[#2B2B2B]">{variety}</span>
-                    <span className="text-[#2B2B2B]/60 font-mono font-bold">
+                    <span className="text-[#2B2B2B]/70 font-mono font-bold">
                       {count} ({percentage}%)
                     </span>
                   </div>
-                  <div className="w-full h-1.5 bg-[#FAF6EE] border border-[#B8924A]/20 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-[#FAF6EE] border border-[#B8924A]/20 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-[#5E0F1E] to-[#B8924A]"
                       style={{ width: `${percentage}%` }}
@@ -236,87 +236,87 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Workflow Pipeline Status */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4 lg:col-span-2">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4 lg:col-span-2">
           <div className="flex items-center justify-between border-b border-[#B8924A]/20 pb-3">
             <div>
-              <h2 className="font-serif text-lg font-medium text-[#5E0F1E]">
+              <h2 className="font-serif text-xl font-medium text-[#5E0F1E]">
                 High-Value Escrow & Dispatch Pipeline
               </h2>
-              <p className="text-[11px] text-[#2B2B2B]/60">
+              <p className="text-xs sm:text-sm text-[#2B2B2B]/70 mt-0.5">
                 End-to-end provenance: Sri Lanka Ratnapura Vault → Customs Clearance → Malca-Amit/Brinks
               </p>
             </div>
             <Link
               href="/admin/orders"
-              className="text-xs text-[#B8924A] hover:text-[#5E0F1E] flex items-center gap-1 font-semibold"
+              className="text-sm text-[#B8924A] hover:text-[#5E0F1E] flex items-center gap-1 font-semibold"
             >
               <span>All Orders</span>
-              <ArrowRight className="w-3 h-3" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="p-3 bg-[#FAF6EE] border border-amber-300/60 rounded-xs">
-              <span className="text-[10px] uppercase font-bold text-amber-800 tracking-wider">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+            <div className="p-3.5 bg-[#FAF6EE] border border-amber-300/60 rounded-xs">
+              <span className="text-xs uppercase font-bold text-amber-800 tracking-wider">
                 1. Verification
               </span>
-              <p className="font-serif text-2xl font-bold text-amber-900 mt-1">
+              <p className="font-serif text-3xl font-bold text-amber-900 mt-1">
                 {orders.filter((o) => o.status === "pending_verification").length}
               </p>
-              <p className="text-[10px] text-amber-800/80 mt-0.5">Wire / Escrow review</p>
+              <p className="text-xs text-amber-800/80 mt-1">Wire / Escrow review</p>
             </div>
 
-            <div className="p-3 bg-[#FAF6EE] border border-blue-300/60 rounded-xs">
-              <span className="text-[10px] uppercase font-bold text-blue-800 tracking-wider">
+            <div className="p-3.5 bg-[#FAF6EE] border border-blue-300/60 rounded-xs">
+              <span className="text-xs uppercase font-bold text-blue-800 tracking-wider">
                 2. Escrow Funded
               </span>
-              <p className="font-serif text-2xl font-bold text-blue-900 mt-1">
+              <p className="font-serif text-3xl font-bold text-blue-900 mt-1">
                 {orders.filter((o) => o.status === "escrow_funded").length}
               </p>
-              <p className="text-[10px] text-blue-800/80 mt-0.5">NGJA Sealing prep</p>
+              <p className="text-xs text-blue-800/80 mt-1">NGJA Sealing prep</p>
             </div>
 
-            <div className="p-3 bg-[#FAF6EE] border border-purple-300/60 rounded-xs">
-              <span className="text-[10px] uppercase font-bold text-purple-800 tracking-wider">
+            <div className="p-3.5 bg-[#FAF6EE] border border-purple-300/60 rounded-xs">
+              <span className="text-xs uppercase font-bold text-purple-800 tracking-wider">
                 3. Customs Clearance
               </span>
-              <p className="font-serif text-2xl font-bold text-purple-900 mt-1">
+              <p className="font-serif text-3xl font-bold text-purple-900 mt-1">
                 {orders.filter((o) => o.status === "customs_clearance").length}
               </p>
-              <p className="text-[10px] text-purple-800/80 mt-0.5">Export duty stamped</p>
+              <p className="text-xs text-purple-800/80 mt-1">Export duty stamped</p>
             </div>
 
-            <div className="p-3 bg-[#FAF6EE] border border-indigo-300/60 rounded-xs">
-              <span className="text-[10px] uppercase font-bold text-indigo-800 tracking-wider">
+            <div className="p-3.5 bg-[#FAF6EE] border border-indigo-300/60 rounded-xs">
+              <span className="text-xs uppercase font-bold text-indigo-800 tracking-wider">
                 4. In Transit
               </span>
-              <p className="font-serif text-2xl font-bold text-indigo-900 mt-1">
+              <p className="font-serif text-3xl font-bold text-indigo-900 mt-1">
                 {orders.filter((o) => o.status === "dispatched").length}
               </p>
-              <p className="text-[10px] text-indigo-800/80 mt-0.5">Armoured flight courier</p>
+              <p className="text-xs text-indigo-800/80 mt-1">Armoured flight courier</p>
             </div>
           </div>
 
-          <div className="p-3 bg-[#F2EADB]/60 border border-[#B8924A]/30 rounded-xs flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-[#B8924A]" />
-              <span className="text-[#2B2B2B]/80 font-medium">
+          <div className="p-3.5 bg-[#F2EADB]/60 border border-[#B8924A]/30 rounded-xs flex items-center justify-between text-xs sm:text-sm">
+            <div className="flex items-center gap-2.5">
+              <Shield className="w-5 h-5 text-[#B8924A]" />
+              <span className="text-[#2B2B2B]/85 font-medium">
                 All shipments covered by Lloyd&apos;s of London 100% Specie Insurance & NGJA Assayed Seals.
               </span>
             </div>
-            <span className="text-[11px] font-bold text-[#5E0F1E]">Zero Loss Record Since 1984</span>
+            <span className="text-xs sm:text-sm font-bold text-[#5E0F1E] shrink-0">Zero Loss Record Since 1984</span>
           </div>
         </div>
       </div>
 
       {/* Recent Orders Section */}
-      <div className="p-5 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
+      <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
         <div className="flex items-center justify-between border-b border-[#B8924A]/20 pb-3">
           <div>
             <h2 className="font-serif text-xl font-medium text-[#5E0F1E]">
               Recent Acquisition Orders
             </h2>
-            <p className="text-xs text-[#2B2B2B]/60">
+            <p className="text-sm text-[#2B2B2B]/70 mt-0.5">
               Live transactions submitted through client checkout and private concierge bookings.
             </p>
           </div>
@@ -325,58 +325,58 @@ export default function AdminDashboardPage() {
             <Button
               variant="outline"
               size="sm"
-              className="text-xs border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10"
+              className="text-sm border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold h-9 px-3.5"
             >
               <span>View All ({orders.length})</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
           </Link>
         </div>
 
         {/* Orders Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-[#B8924A]/20 text-[10px] uppercase tracking-wider text-[#5E0F1E] font-semibold bg-[#FAF6EE]">
-                <th className="p-3">Order ID</th>
-                <th className="p-3">Customer</th>
-                <th className="p-3">Gemstone Acquired</th>
-                <th className="p-3">Total Amount</th>
-                <th className="p-3">Date</th>
-                <th className="p-3">Workflow Stage</th>
-                <th className="p-3 text-right">Action</th>
+              <tr className="border-b border-[#B8924A]/20 text-xs uppercase tracking-wider text-[#5E0F1E] font-bold bg-[#FAF6EE]">
+                <th className="p-3.5">Order ID</th>
+                <th className="p-3.5">Customer</th>
+                <th className="p-3.5">Gemstone Acquired</th>
+                <th className="p-3.5">Total Amount</th>
+                <th className="p-3.5">Date</th>
+                <th className="p-3.5">Workflow Stage</th>
+                <th className="p-3.5 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#B8924A]/15">
               {orders.slice(0, 5).map((order) => (
                 <tr key={order.id} className="hover:bg-[#FAF6EE] transition-colors">
-                  <td className="p-3 font-mono font-bold text-[#5E0F1E]">
+                  <td className="p-3.5 font-mono font-bold text-[#5E0F1E] text-sm">
                     {order.id}
                   </td>
-                  <td className="p-3">
-                    <p className="font-medium text-[#2B2B2B]">{order.customerName}</p>
-                    <p className="text-[10px] text-[#2B2B2B]/60">{order.country}</p>
+                  <td className="p-3.5">
+                    <p className="font-medium text-[#2B2B2B] text-sm">{order.customerName}</p>
+                    <p className="text-xs text-[#2B2B2B]/60 mt-0.5">{order.country}</p>
                   </td>
-                  <td className="p-3 max-w-xs truncate">
+                  <td className="p-3.5 max-w-xs truncate text-sm">
                     {order.items.map((i) => i.name).join(", ") || "Custom parcel"}
                   </td>
-                  <td className="p-3 font-serif font-bold text-sm text-[#2B2B2B]">
+                  <td className="p-3.5 font-serif font-bold text-base text-[#2B2B2B]">
                     {formatCurrency(order.totalAmount)}
                   </td>
-                  <td className="p-3 text-[11px] text-[#2B2B2B]/70">
+                  <td className="p-3.5 text-xs text-[#2B2B2B]/75 font-medium">
                     {new Date(order.createdAt).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                     })}
                   </td>
-                  <td className="p-3">{getStatusBadge(order.status)}</td>
-                  <td className="p-3 text-right">
+                  <td className="p-3.5">{getStatusBadge(order.status)}</td>
+                  <td className="p-3.5 text-right">
                     <Link
                       href="/admin/orders"
-                      className="text-xs font-semibold text-[#5E0F1E] hover:text-[#B8924A] inline-flex items-center gap-1"
+                      className="text-sm font-semibold text-[#5E0F1E] hover:text-[#B8924A] inline-flex items-center gap-1"
                     >
                       <span>Manage</span>
-                      <ArrowRight className="w-3 h-3" />
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </td>
                 </tr>
@@ -389,42 +389,42 @@ export default function AdminDashboardPage() {
       {/* Urgent Enquiries & Quick Module Jumps */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Urgent Enquiries */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-[#B8924A]/20 pb-3">
-            <div className="flex items-center gap-2">
-              <Inbox className="w-4 h-4 text-[#1B3A8A]" />
-              <h2 className="font-serif text-lg font-medium text-[#5E0F1E]">
+            <div className="flex items-center gap-2.5">
+              <Inbox className="w-5 h-5 text-[#1B3A8A]" />
+              <h2 className="font-serif text-xl font-medium text-[#5E0F1E]">
                 Concierge Inquiries Requiring Reply
               </h2>
             </div>
             <Link
               href="/admin/enquiries"
-              className="text-xs text-[#1B3A8A] hover:underline font-semibold"
+              className="text-sm text-[#1B3A8A] hover:underline font-semibold"
             >
               Open Inbox ({enquiries.length})
             </Link>
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {enquiries.slice(0, 3).map((enq) => (
               <div
                 key={enq.id}
-                className="p-3 bg-[#FAF6EE] border border-[#B8924A]/25 rounded-xs space-y-1 hover:border-[#B8924A] transition-colors"
+                className="p-3.5 bg-[#FAF6EE] border border-[#B8924A]/25 rounded-xs space-y-1.5 hover:border-[#B8924A] transition-colors"
               >
-                <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center justify-between text-sm">
                   <span className="font-bold text-[#2B2B2B]">{enq.fullName}</span>
-                  <span className="text-[10px] font-semibold text-[#5E0F1E] uppercase">
+                  <span className="text-xs font-bold text-[#5E0F1E] uppercase tracking-wider">
                     {enq.type.replace(/_/g, " ")}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#2B2B2B]/75 line-clamp-2">
+                <p className="text-sm text-[#2B2B2B]/80 line-clamp-2">
                   {enq.message}
                 </p>
-                <div className="flex items-center justify-between text-[10px] text-[#2B2B2B]/50 pt-1">
+                <div className="flex items-center justify-between text-xs text-[#2B2B2B]/60 pt-1">
                   <span>{enq.country} • {enq.preferredCurrency}</span>
                   <Link
                     href="/admin/enquiries"
-                    className="font-semibold text-[#1B3A8A] hover:underline"
+                    className="font-semibold text-sm text-[#1B3A8A] hover:underline"
                   >
                     Reply Dossier →
                   </Link>
@@ -435,63 +435,63 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Quick Console Jump Hub */}
-        <div className="p-5 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
+        <div className="p-5 sm:p-6 bg-white/80 border border-[#B8924A]/30 rounded-xs shadow-xs space-y-4">
           <div className="border-b border-[#B8924A]/20 pb-3">
-            <h2 className="font-serif text-lg font-medium text-[#5E0F1E]">
+            <h2 className="font-serif text-xl font-medium text-[#5E0F1E]">
               Management Modules
             </h2>
-            <p className="text-xs text-[#2B2B2B]/60">
+            <p className="text-sm text-[#2B2B2B]/70 mt-0.5">
               Direct access to system configuration and media infrastructure.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-xs">
+          <div className="grid grid-cols-2 gap-3 text-sm">
             <Link
               href="/admin/categories"
-              className="p-3.5 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
+              className="p-4 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
             >
-              <p className="font-semibold text-[#5E0F1E]">Categories Manager</p>
-              <p className="text-[11px] text-[#2B2B2B]/60 mt-0.5">
+              <p className="font-bold text-[#5E0F1E] text-sm sm:text-base">Categories Manager</p>
+              <p className="text-xs sm:text-sm text-[#2B2B2B]/70 mt-1">
                 {categories.length} Taxonomy Groups
               </p>
             </Link>
 
             <Link
               href="/admin/customers"
-              className="p-3.5 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
+              className="p-4 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
             >
-              <p className="font-semibold text-[#5E0F1E]">Customers & VIPs</p>
-              <p className="text-[11px] text-[#2B2B2B]/60 mt-0.5">
+              <p className="font-bold text-[#5E0F1E] text-sm sm:text-base">Customers & VIPs</p>
+              <p className="text-xs sm:text-sm text-[#2B2B2B]/70 mt-1">
                 Private Collector CRM
               </p>
             </Link>
 
             <Link
               href="/admin/media"
-              className="p-3.5 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
+              className="p-4 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
             >
-              <p className="font-semibold text-[#5E0F1E]">Media Library</p>
-              <p className="text-[11px] text-[#2B2B2B]/60 mt-0.5">
+              <p className="font-bold text-[#5E0F1E] text-sm sm:text-base">Media Library</p>
+              <p className="text-xs sm:text-sm text-[#2B2B2B]/70 mt-1">
                 Macro Assets & Certs
               </p>
             </Link>
 
             <Link
               href="/admin/seo"
-              className="p-3.5 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
+              className="p-4 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block"
             >
-              <p className="font-semibold text-[#5E0F1E]">SEO & Metadata</p>
-              <p className="text-[11px] text-[#2B2B2B]/60 mt-0.5">
+              <p className="font-bold text-[#5E0F1E] text-sm sm:text-base">SEO & Metadata</p>
+              <p className="text-xs sm:text-sm text-[#2B2B2B]/70 mt-1">
                 SERP Previews & JSON-LD
               </p>
             </Link>
 
             <Link
               href="/admin/settings"
-              className="p-3.5 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block col-span-2"
+              className="p-4 bg-[#FAF6EE] hover:bg-[#F2EADB] border border-[#B8924A]/25 rounded-xs transition-colors block col-span-2"
             >
-              <p className="font-semibold text-[#5E0F1E]">Atelier Settings & Multi-Currency</p>
-              <p className="text-[11px] text-[#2B2B2B]/60 mt-0.5">
+              <p className="font-bold text-[#5E0F1E] text-sm sm:text-base">Atelier Settings & Multi-Currency</p>
+              <p className="text-xs sm:text-sm text-[#2B2B2B]/70 mt-1">
                 Configure NGJA License, Ratnapura vault coordinates, and LKR/USD/EUR exchange rates.
               </p>
             </Link>

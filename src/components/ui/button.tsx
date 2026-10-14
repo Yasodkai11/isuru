@@ -44,8 +44,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const sizes = {
       sm: "text-xs tracking-wider uppercase px-3.5 py-1.5",
-      md: "text-xs uppercase tracking-[0.18em] px-6 py-3",
-      lg: "text-sm uppercase tracking-[0.2em] px-8 py-3.5",
+      md: "text-sm font-semibold uppercase tracking-wider px-5 py-2.5",
+      lg: "text-base uppercase tracking-wider px-7 py-3.5",
       icon: "h-10 w-10 p-2",
     };
 

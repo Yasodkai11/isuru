@@ -90,6 +90,18 @@
     }
   }
 
+  /* Admin Vault Console base typography and scaling */
+  .admin-vault-shell {
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 1440px) {
+    .admin-vault-shell {
+      font-size: 15px;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

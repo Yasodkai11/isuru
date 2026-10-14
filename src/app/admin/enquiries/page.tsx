@@ -61,13 +61,13 @@ export default function AdminEnquiriesPage() {
   const getStatusBadge = (status: EnquiryStatus) => {
     switch (status) {
       case "pending":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">New / Unreplied</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">New / Unreplied</span>;
       case "in_progress":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">In Progress</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-300">In Progress</span>;
       case "replied":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Replied</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Replied</span>;
       case "archived":
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-700 border border-gray-300">Archived</span>;
+        return <span className="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700 border border-gray-300">Archived</span>;
     }
   };
 
@@ -79,8 +79,8 @@ export default function AdminEnquiriesPage() {
       sortValue: (row) => row.fullName,
       render: (row) => (
         <div>
-          <span className="font-semibold text-[#2B2B2B] block">{row.fullName}</span>
-          <span className="text-[10px] text-[#2B2B2B]/60">{row.email}</span>
+          <span className="font-semibold text-sm sm:text-base text-[#2B2B2B] block">{row.fullName}</span>
+          <span className="text-xs text-[#2B2B2B]/60 mt-0.5 block">{row.email}</span>
         </div>
       ),
     },
@@ -90,7 +90,7 @@ export default function AdminEnquiriesPage() {
       sortable: true,
       sortValue: (row) => row.type,
       render: (row) => (
-        <span className="text-[11px] font-bold uppercase tracking-wider text-[#5E0F1E]">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#5E0F1E]">
           {row.type.replace(/_/g, " ")}
         </span>
       ),
@@ -100,7 +100,7 @@ export default function AdminEnquiriesPage() {
       header: "Gem Reference",
       sortable: false,
       render: (row) => (
-        <span className="text-xs text-[#2B2B2B] font-medium max-w-xs truncate block">
+        <span className="text-sm text-[#2B2B2B] font-medium max-w-xs truncate block">
           {row.gemName || "General Consultation"}
         </span>
       ),
@@ -111,7 +111,7 @@ export default function AdminEnquiriesPage() {
       sortable: true,
       sortValue: (row) => row.country,
       render: (row) => (
-        <span className="text-xs text-[#2B2B2B]/80 font-medium">
+        <span className="text-sm text-[#2B2B2B]/85 font-medium">
           {row.country} ({row.preferredCurrency})
         </span>
       ),
@@ -122,7 +122,7 @@ export default function AdminEnquiriesPage() {
       sortable: true,
       sortValue: (row) => new Date(row.createdAt).getTime(),
       render: (row) => (
-        <span className="text-[11px] text-[#2B2B2B]/70 font-medium">
+        <span className="text-xs text-[#2B2B2B]/75 font-medium">
           {new Date(row.createdAt).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -149,17 +149,17 @@ export default function AdminEnquiriesPage() {
             size="sm"
             variant="outline"
             onClick={() => openEnquiry(row)}
-            className="text-xs h-7 px-2.5 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
+            className="text-sm h-8 px-3 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
           >
             <span>Review</span>
-            <ArrowRight className="w-3 h-3 ml-1" />
+            <ArrowRight className="w-3.5 h-3.5 ml-1" />
           </Button>
           <button
             onClick={() => deleteEnquiry(row.id)}
             className="p-1 text-red-500 hover:text-red-700"
             title="Delete Enquiry"
           >
-            <Trash2 className="w-3.5 h-3.5" />
+            <Trash2 className="w-4 h-4" />
           </button>
         </div>
       ),
@@ -192,12 +192,12 @@ export default function AdminEnquiriesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#B8924A]/25">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
           <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
             Concierge Enquiries Inbox
           </h1>
-          <p className="text-xs sm:text-sm text-[#2B2B2B]/75 mt-1">
+          <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Private client dossiers, bespoke gem inquiries, and international high jewellery wholesale parcel requests.
           </p>
         </div>
