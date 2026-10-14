@@ -74,16 +74,16 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
   };
 
   return (
-    <div className="bg-[#FDFBF7] border border-[#B8924A]/30 p-5 sm:p-6 mb-10 shadow-xs rounded-xs">
+    <div className="bg-[#FAF8F5] border border-[#B8924A]/30 p-5 sm:p-6 mb-10 shadow-xs rounded-xl">
       {/* Mobile Toggle */}
       <div className="flex sm:hidden items-center justify-between pb-3 border-b border-[#B8924A]/20">
-        <span className="text-xs uppercase tracking-widest text-[#5E0F1E] font-semibold">
+        <span className="text-xs uppercase tracking-widest text-[#0E2A20] font-semibold">
           Filters ({totalCount} Stones)
         </span>
         <button
           type="button"
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="flex items-center gap-1.5 text-xs text-[#5E0F1E] border border-[#B8924A]/40 px-3 py-1.5 bg-[#FAF6EE]"
+          className="flex items-center gap-1.5 text-xs text-[#0E2A20] border border-[#B8924A]/40 px-3 py-1.5 bg-[#FAF8F5] rounded-full"
         >
           <SlidersHorizontal className="w-3.5 h-3.5 text-[#B8924A]" />
           <span>{mobileFiltersOpen ? "Close" : "Open Filters"}</span>
@@ -91,7 +91,7 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
         </button>
       </div>
 
-      {/* Filter Form Matching Laptop Mockup */}
+      {/* Filter Form Matching Modern Ceylon Mockup */}
       <form
         onSubmit={handleApplyFilters}
         className={`pt-2 sm:pt-0 ${mobileFiltersOpen ? "block" : "hidden sm:block"}`}
@@ -99,13 +99,13 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
           {/* 1. Colour */}
           <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-[0.2em] text-[#5E0F1E] font-semibold block">
+            <label className="text-[10px] uppercase tracking-[0.22em] text-[#0E2A20] font-semibold block">
               Colour
             </label>
             <select
               value={selectedColour}
               onChange={(e) => setSelectedColour(e.target.value)}
-              className="w-full bg-[#FAF6EE] border border-[#B8924A]/40 px-3 py-2.5 text-xs text-[#2B2B2B] focus:outline-none focus:border-[#5E0F1E] transition-subtle rounded-xs cursor-pointer font-medium"
+              className="w-full bg-[#FAF8F5] border border-[#B8924A]/40 px-3.5 py-2.5 text-xs text-[#2B2B2B] focus:outline-none focus:border-[#0E2A20] transition-all rounded-lg cursor-pointer font-medium"
             >
               <option value="all">All Colours</option>
               {GEM_COLOURS.map((c) => (
@@ -118,13 +118,13 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
 
           {/* 2. Shape */}
           <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-[0.2em] text-[#5E0F1E] font-semibold block">
+            <label className="text-[10px] uppercase tracking-[0.22em] text-[#0E2A20] font-semibold block">
               Shape
             </label>
             <select
               value={selectedShape}
               onChange={(e) => setSelectedShape(e.target.value)}
-              className="w-full bg-[#FAF6EE] border border-[#B8924A]/40 px-3 py-2.5 text-xs text-[#2B2B2B] focus:outline-none focus:border-[#5E0F1E] transition-subtle rounded-xs cursor-pointer font-medium"
+              className="w-full bg-[#FAF8F5] border border-[#B8924A]/40 px-3.5 py-2.5 text-xs text-[#2B2B2B] focus:outline-none focus:border-[#0E2A20] transition-all rounded-lg cursor-pointer font-medium"
             >
               <option value="all">All Shapes</option>
               {GEM_SHAPES.map((s) => (
@@ -137,13 +137,13 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
 
           {/* 3. Carat */}
           <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-[0.2em] text-[#5E0F1E] font-semibold block">
+            <label className="text-[10px] uppercase tracking-[0.22em] text-[#0E2A20] font-semibold block">
               Carat
             </label>
             <select
               value={selectedCarat}
               onChange={(e) => setSelectedCarat(e.target.value)}
-              className="w-full bg-[#FAF6EE] border border-[#B8924A]/40 px-3 py-2.5 text-xs text-[#2B2B2B] focus:outline-none focus:border-[#5E0F1E] transition-subtle rounded-xs cursor-pointer font-medium"
+              className="w-full bg-[#FAF8F5] border border-[#B8924A]/40 px-3.5 py-2.5 text-xs text-[#2B2B2B] focus:outline-none focus:border-[#0E2A20] transition-all rounded-lg cursor-pointer font-medium"
             >
               <option value="all">All Carat</option>
               {CARAT_PRESETS.filter((p) => p.label !== "All Weights").map((p) => (
@@ -154,12 +154,12 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
             </select>
           </div>
 
-          {/* 4. Action: Maroon "Apply Filters" Button */}
+          {/* 4. Action: Modern Emerald "Apply Filters" Pill Button */}
           <div className="flex items-center gap-2">
             <button
               type="submit"
               disabled={isPending}
-              className="flex-1 bg-[#5E0F1E] hover:bg-[#7E1529] text-[#FAF6EE] border border-[#B8924A]/60 py-2.5 px-4 text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300 shadow-sm cursor-pointer text-center"
+              className="flex-1 bg-[#0E2A20] hover:bg-[#173E30] text-[#FAF8F5] py-2.5 px-5 text-xs uppercase tracking-[0.18em] font-medium transition-all duration-300 shadow-sm cursor-pointer text-center rounded-lg hover:shadow-md"
             >
               {isPending ? "Filtering..." : "Apply Filters"}
             </button>
@@ -168,7 +168,7 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
               <button
                 type="button"
                 onClick={handleReset}
-                className="p-2.5 text-[#B8924A] hover:text-[#5E0F1E] border border-[#B8924A]/30 bg-[#FAF6EE] hover:bg-[#B8924A]/10 transition-colors cursor-pointer"
+                className="p-2.5 text-[#B8924A] hover:text-[#0E2A20] border border-[#B8924A]/40 bg-[#FAF8F5] hover:bg-[#B8924A]/10 transition-colors cursor-pointer rounded-lg"
                 title="Reset filters"
               >
                 <RotateCcw className="w-4 h-4" />

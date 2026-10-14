@@ -16,23 +16,23 @@ export function GemCard({ gem }: GemCardProps) {
   };
 
   return (
-    <article className="group bg-[#FDFBF7] border border-[#B8924A]/30 overflow-hidden transition-all duration-400 hover:border-[#B8924A] hover:shadow-[0_12px_30px_rgba(184,146,74,0.16)] flex flex-col justify-between h-full rounded-xs">
+    <article className="group bg-[#FAF8F5] border border-[#B8924A]/25 overflow-hidden transition-all duration-400 hover:border-[#B8924A]/70 hover:shadow-[0_14px_30px_rgba(25,20,15,0.08)] flex flex-col justify-between h-full rounded-xl">
       <div>
         {/* Isolated Gemstone Showcase Area */}
-        <div className="shine-sweep relative aspect-square w-full bg-[#FAF6EE] overflow-hidden border-b border-[#B8924A]/20 flex items-center justify-center">
+        <div className="shine-sweep relative aspect-square w-full bg-[#F4EFEA]/60 overflow-hidden border-b border-[#B8924A]/15 flex items-center justify-center p-4">
           <Link href={`/gems/${gem.slug}`} className="block w-full h-full relative">
             <Image
               src={primaryImage.url}
               alt={primaryImage.alt || gem.name}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              className="object-contain gem-contact-shadow transition-transform duration-700 ease-out group-hover:scale-110"
             />
           </Link>
 
           {/* Unheated Natural Seal */}
           <div className="absolute top-3 left-3 pointer-events-none">
-            <span className="inline-block text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 bg-[#5E0F1E] text-[#FAF6EE] shadow-xs">
+            <span className="inline-block text-[9px] uppercase tracking-wider font-semibold px-2.5 py-0.5 bg-[#0E2A20] text-[#FAF8F5] rounded-full shadow-xs">
               {gem.treatment.toLowerCase().includes("unheated") ? "Unheated" : "Natural"}
             </span>
           </div>
@@ -40,7 +40,7 @@ export function GemCard({ gem }: GemCardProps) {
           {/* Certificate Authority */}
           {gem.certificate.lab && (
             <div className="absolute top-3 right-3 pointer-events-none">
-              <span className="inline-block text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 bg-[#FAF6EE] text-[#5E0F1E] border border-[#B8924A]/40 shadow-xs">
+              <span className="inline-block text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 bg-[#FAF8F5] text-[#0E2A20] border border-[#B8924A]/40 rounded-full shadow-xs">
                 {gem.certificate.lab}
               </span>
             </div>
@@ -51,21 +51,21 @@ export function GemCard({ gem }: GemCardProps) {
         <div className="p-5 space-y-3">
           <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-[#B8924A] font-semibold">
             <span>{gem.variety}</span>
-            <span className="text-[#1B3A8A] font-bold">{formatGemCarats(gem.carat)}</span>
+            <span className="text-[#0E2A20] font-bold">{formatGemCarats(gem.carat)}</span>
           </div>
 
-          <h3 className="font-serif text-lg sm:text-xl font-medium text-[#5E0F1E] group-hover:text-[#420A15] transition-colors leading-snug">
+          <h3 className="font-serif text-lg sm:text-xl font-normal text-[#1D1B18] group-hover:text-[#0E2A20] transition-colors leading-snug">
             <Link href={`/gems/${gem.slug}`} className="hover:underline">
               {gem.name}
             </Link>
           </h3>
 
-          <div className="flex items-center space-x-2 text-[11px] text-[#2B2B2B]/70 pt-1">
+          <div className="flex items-center space-x-2 text-[11px] text-[#736B63] pt-0.5">
             <span>{gem.cut}</span>
             <span>•</span>
             <span>{gem.color}</span>
             <span>•</span>
-            <span className="text-emerald-800 font-medium">{gem.origin.split(/[\s,]/)[0]}</span>
+            <span className="text-[#0E2A20] font-medium">{gem.origin.split(/[\s,]/)[0]}</span>
           </div>
         </div>
       </div>
@@ -74,10 +74,10 @@ export function GemCard({ gem }: GemCardProps) {
       <div className="p-5 pt-0 mt-2">
         <div className="pt-3 border-t border-[#B8924A]/15 flex items-center justify-between">
           <div>
-            <span className="text-[9px] uppercase tracking-wider text-[#2B2B2B]/60 block font-medium">
+            <span className="text-[9px] uppercase tracking-wider text-[#736B63] block font-medium">
               Net Valuation
             </span>
-            <span className="font-serif text-lg font-bold text-[#1B3A8A]">
+            <span className="font-serif text-lg font-bold text-[#0E2A20]">
               {formatGemPrice(gem.price, gem.currency)}
             </span>
           </div>
@@ -86,7 +86,7 @@ export function GemCard({ gem }: GemCardProps) {
             {isPriceOnRequest(gem.price) ? (
               <Link
                 href={`/gems/${gem.slug}#inquiry-section`}
-                className="inline-flex items-center border border-[#B8924A]/50 text-[#5E0F1E] hover:bg-[#5E0F1E] hover:text-[#FAF6EE] text-xs px-3 py-2 transition-colors"
+                className="inline-flex items-center border border-[#B8924A]/50 text-[#0E2A20] hover:bg-[#0E2A20] hover:text-[#FAF8F5] text-xs px-3.5 py-1.5 rounded-lg transition-colors font-medium"
               >
                 Enquire
               </Link>
@@ -95,7 +95,7 @@ export function GemCard({ gem }: GemCardProps) {
                 gem={gem}
                 size="sm"
                 variant="outline"
-                className="text-xs border-[#B8924A]/50 text-[#5E0F1E] hover:bg-[#5E0F1E] hover:text-[#FAF6EE]"
+                className="text-xs border-[#B8924A]/50 text-[#0E2A20] hover:bg-[#0E2A20] hover:text-[#FAF8F5] rounded-lg"
               />
             )}
           </div>

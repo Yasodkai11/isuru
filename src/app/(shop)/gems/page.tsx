@@ -86,49 +86,48 @@ export default async function GemsPage({ searchParams }: GemsPageProps) {
   });
 
   return (
-    <div className="py-12 bg-[#FAF6EE] min-h-screen">
+    <div className="py-10 sm:py-14 bg-[#FAF8F5] min-h-screen">
       <div className="container-luxe">
-        {/* Editorial Gemstones Vault Banner Matching Proposal Laptop Screen */}
-        <div className="relative overflow-hidden bg-[#161210] border border-[#B8924A]/40 p-6 sm:p-10 mb-8 rounded-xs shadow-md">
-          {/* Subtle gold ornamentation borders */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF67] to-transparent" />
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
-            <div className="flex items-center gap-5 text-center sm:text-left">
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-full overflow-hidden border border-[#B8924A]/50 bg-[#221C16] shadow-[0_0_20px_rgba(27,58,138,0.3)]">
-                <Image
-                  src="/isuru_images/blue1.jpg"
-                  alt="Ceylon Gemstones Vault"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-[#B8924A] text-[10px] uppercase tracking-[0.25em] font-medium justify-center sm:justify-start">
-                  <span className="w-3 h-[1px] bg-[#B8924A]" />
-                  <span>Ceylon Vault Catalog</span>
-                </div>
-                {/* Strictly single H1 for this route */}
-                <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#FAF6EE] font-normal tracking-wide">
-                  Gemstones
-                </h1>
-                <p className="text-xs text-[#FAF6EE]/75 max-w-lg">
-                  Natural unheated sapphires, rare Padparadschas, and precious crystals direct from Ratnapura alluvial gravels.
-                </p>
+        {/* Concept 03: Modern Ceylon Gemstone Collection Header */}
+        <div className="relative pb-8 mb-8 border-b border-[#B8924A]/25 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+          <div className="space-y-2 relative">
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[#B8924A] font-semibold">
+                Natural Ceylon Vault
+              </span>
+              <div className="h-px w-10 bg-[#B8924A]/50" />
+            </div>
+
+            <div className="flex items-center gap-4">
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1D1B18] font-normal tracking-tight">
+                Gemstone Collection
+              </h1>
+              {/* Botanical Leaf Accent */}
+              <div className="w-8 h-8 opacity-60 text-[#B8924A] shrink-0 hidden sm:block">
+                <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-full h-full">
+                  <path d="M5 45 C 10 30, 25 15, 45 5 C 35 15, 25 30, 20 45" />
+                  <path d="M22 20 C 18 15, 12 18, 10 22 C 15 22, 20 20, 22 20" />
+                  <path d="M30 14 C 28 8, 22 10, 20 15 C 25 15, 28 14, 30 14" />
+                </svg>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-xs text-[#B8924A]">
-              <div className="px-4 py-2 border border-[#B8924A]/30 bg-[#221C16]/80 text-center">
-                <span className="font-serif text-lg font-bold text-[#D4AF67] block">{total}</span>
-                <span className="text-[9px] uppercase tracking-wider text-[#FAF6EE]/70">Available Pieces</span>
-              </div>
-              <div className="px-4 py-2 border border-[#B8924A]/30 bg-[#221C16]/80 text-center">
-                <span className="font-serif text-lg font-bold text-[#D4AF67] block">100%</span>
-                <span className="text-[9px] uppercase tracking-wider text-[#FAF6EE]/70">Earth-Mined</span>
-              </div>
-            </div>
+            <p className="text-xs sm:text-sm text-[#736B63] max-w-xl">
+              Curated natural unheated Ceylon sapphires, Padparadschas, rubies, and collector mineral specimens authenticated with laboratory certifications.
+            </p>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B8924A]/50 to-transparent" />
+
+          <div className="flex flex-col items-start sm:items-end text-left sm:text-right">
+            <span className="text-[10px] uppercase tracking-[0.22em] text-[#B8924A] font-semibold">
+              Curated Selection
+            </span>
+            <span className="font-serif text-xl sm:text-2xl font-medium text-[#0E2A20]">
+              {total} Exceptional Specimens
+            </span>
+            <span className="text-[10px] uppercase tracking-wider text-[#736B63] mt-0.5">
+              Direct from Sri Lankan Mines
+            </span>
+          </div>
         </div>
 
         {/* URL-synchronized Client Filters */}

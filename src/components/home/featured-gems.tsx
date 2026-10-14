@@ -180,10 +180,10 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
         <Reveal className="text-center mt-16">
           <Link
             href="/gems"
-            className="shine-sweep group inline-flex items-center gap-3 border border-[#B8924A] text-[#5E0F1E] px-10 py-4 text-xs uppercase tracking-[0.25em] transition-colors duration-500 hover:bg-[#5E0F1E] hover:text-[#FAF6EE]"
+            className="modern-pill-primary group shadow-lg"
           >
-            View All Gemstones
-            <ArrowRight className="w-4 h-4 text-[#B8924A] transition-transform duration-300 group-hover:translate-x-1" />
+            <span>View Complete Vault</span>
+            <ArrowRight className="w-4 h-4 text-[#D4AF67] transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </Reveal>
       </div>

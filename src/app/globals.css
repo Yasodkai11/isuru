@@ -15,6 +15,10 @@
   --color-sapphire: #1B3A8A;
   --color-sapphire-light: #2A51B8;
   --color-sapphire-dark: #12285E;
+  --color-emerald-deep: #0E2A20;
+  --color-emerald-forest: #123524;
+  --color-marble: #FAF8F5;
+  --color-marble-light: #FDFBF9;
 
   --font-serif: var(--font-ibm-plex-serif), 'IBM Plex Serif', Georgia, serif;
   --font-sans: var(--font-jost), 'Jost', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -51,6 +55,10 @@
     --color-sapphire: #1B3A8A;
     --color-sapphire-light: #2A51B8;
     --color-sapphire-dark: #12285E;
+    --color-emerald-deep: #0E2A20;
+    --color-emerald-forest: #123524;
+    --color-marble: #FAF8F5;
+    --color-marble-light: #FDFBF9;
   }
 
   html {
@@ -419,4 +427,56 @@
   transform: translateY(-4px);
   border-color: rgba(184, 146, 74, 0.7);
   box-shadow: 0 12px 30px -4px rgba(94, 15, 30, 0.12), 0 0 0 1px rgba(184, 146, 74, 0.3);
+}
+
+/* Concept 03: Modern Ceylon Luxury Utilities */
+.gem-contact-shadow {
+  filter: drop-shadow(0 16px 20px rgba(35, 28, 20, 0.18)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+}
+
+.modern-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border-radius: 9999px;
+  background-color: #0E2A20;
+  color: #FAF8F5;
+  padding: 0.85rem 1.85rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 20px -4px rgba(14, 42, 32, 0.3);
+}
+
+.modern-pill-primary:hover {
+  background-color: #173E30;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px -4px rgba(14, 42, 32, 0.4);
+}
+
+.modern-pill-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: #FAF8F5;
+  border: 1px solid rgba(184, 146, 74, 0.65);
+  color: #23201D;
+  padding: 0.85rem 1.85rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modern-pill-secondary:hover {
+  background-color: #F3EFE6;
+  border-color: #B8924A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(184, 146, 74, 0.2);
 }
