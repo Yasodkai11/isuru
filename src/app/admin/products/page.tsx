@@ -68,10 +68,10 @@ export default function AdminProductsPage() {
     setLoading(true);
     try {
       const res = await getAdminGemstonesAction();
-      if (res.success && res.data && res.data.length > 0) {
+      if (res.data) {
         setGemstones(res.data);
-        setDbNotice(`Synchronized with Supabase DB (${res.data.length} real products)`);
       }
+      setDbNotice(res.message);
     } catch (err) {
       console.warn("Could not load from DB:", err);
     } finally {

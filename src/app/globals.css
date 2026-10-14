@@ -357,6 +357,15 @@
   }
 }
 
+@keyframes heroPan5 {
+  0% {
+    transform: scale(1.03) translate3d(-1%, -0.8%, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(1%, 0.5%, 0);
+  }
+}
+
 .animate-hero-pan-1 {
   animation: heroPan1 7s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
   will-change: transform;
@@ -374,6 +383,11 @@
 
 .animate-hero-pan-4 {
   animation: heroPan4 7s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+.animate-hero-pan-5 {
+  animation: heroPan5 7s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
   will-change: transform;
 }
 
@@ -398,6 +412,7 @@
   .animate-hero-pan-2,
   .animate-hero-pan-3,
   .animate-hero-pan-4,
+  .animate-hero-pan-5,
   .animate-float-gentle,
   .animate-marquee,
   .animate-marquee-reverse,

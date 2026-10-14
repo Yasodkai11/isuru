@@ -1,7 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { checkoutSchema, CheckoutInput } from "@/schemas/checkout";
 import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -46,28 +46,32 @@ export async function processOrderAction(data: CheckoutInput): Promise<CheckoutR
   const { fullName, email, phone, address, city, country, postalCode, specialInstructions, itemIds, paymentMethod } =
     parsed.data;
 
-  // Resolve gems from the local catalog, with Supabase lookup fallback
   const resolvedGems: Array<{ id: string; name: string; carat: number; price: number }> = [];
-  
-  for (const id of itemIds) {
-    const localGem = CATALOG_GEMS.find((g) => g.id === id && g.price > 0);
-    if (localGem) {
-      resolvedGems.push({ id: localGem.id, name: localGem.name, carat: localGem.carat, price: localGem.price });
-    }
-  }
 
-  if (resolvedGems.length < itemIds.length) {
-    try {
-      const supabase = await createClient();
-      const missingIds = itemIds.filter((id) => !resolvedGems.some((g) => g.id === id));
-      const { data: dbGems } = await supabase.from("gemstones").select("id, name, carat, price").in("id", missingIds);
-      if (dbGems) {
-        for (const g of dbGems) {
+  try {
+    const supabase = await createClient();
+    const { data: dbGems } = await supabase
+      .from("gemstones")
+      .select("id, name, carat, price")
+      .in("id", itemIds);
+    if (dbGems) {
+      for (const g of dbGems) {
+        if (Number(g.price) > 0) {
           resolvedGems.push({ id: g.id, name: g.name, carat: Number(g.carat), price: Number(g.price) });
         }
       }
-    } catch {
-      // Continue with whatever gems were resolved
+    }
+  } catch {
+    // Continue with whatever gems were resolved
+  }
+
+  if (!isSupabaseConfigured) {
+    for (const id of itemIds) {
+      if (resolvedGems.some((g) => g.id === id)) continue;
+      const localGem = CATALOG_GEMS.find((g) => g.id === id && g.price > 0);
+      if (localGem) {
+        resolvedGems.push({ id: localGem.id, name: localGem.name, carat: localGem.carat, price: localGem.price });
+      }
     }
   }
 

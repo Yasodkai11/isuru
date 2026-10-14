@@ -1,10 +1,11 @@
 "use server";
 
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/server";
-import { Gemstone, GemImage } from "@/types/gem";
+import { Gemstone } from "@/types/gem";
 import { AdminOrder, OrderStatus, AdminEnquiry, EnquiryStatus } from "@/types/admin";
 import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import { INITIAL_ADMIN_ORDERS, INITIAL_ADMIN_ENQUIRIES } from "@/lib/admin-seed";
+import { mapDbRowToGemstone } from "@/lib/map-gemstone";
 import { revalidatePath } from "next/cache";
 
 export interface AdminActionResult<T = unknown> {
@@ -12,49 +13,6 @@ export interface AdminActionResult<T = unknown> {
   message: string;
   data?: T;
   error?: string;
-}
-
-function determineCategory(color: string, variety: string): string {
-  const c = (color || "").toLowerCase();
-  const v = (variety || "").toLowerCase();
-  if (v.includes("parcel") || v.includes("lot") || v.includes("tray") || v.includes("grid")) return "gem-collections";
-  if (c.includes("blue")) return "blue-gems";
-  if (c.includes("pink") || c.includes("purple") || c.includes("magenta") || c.includes("violet")) return "pink-purple-gems";
-  if (c.includes("red") || c.includes("crimson") || c.includes("maroon") || v.includes("ruby") || v.includes("spinel")) return "red-gems";
-  if (c.includes("yellow") || c.includes("gold") || c.includes("orange") || c.includes("honey") || v.includes("pushparaga")) return "yellow-gems";
-  if (c.includes("green") || c.includes("olive")) return "green-gems";
-  return "blue-gems";
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapDbRowToGemstone(row: any): Gemstone {
-  const color = row.color || "Ceylon Blue";
-  const variety = row.variety || "Ceylon Sapphire";
-  return {
-    id: row.id,
-    slug: row.slug,
-    name: row.name,
-    variety,
-    category: determineCategory(color, variety),
-    carat: Number(row.carat) || 0,
-    origin: row.origin || "Ratnapura, Sri Lanka",
-    cut: row.cut || "Oval Mixed Cut",
-    dimensions: row.dimensions || "Available on request",
-    color,
-    treatment: row.treatment || "None / Unheated (100% Natural)",
-    clarity: row.clarity || "Eye Clean",
-    price: Number(row.price) || 0,
-    currency: (row.currency as "USD" | "LKR") || "USD",
-    inStock: Boolean(row.in_stock),
-    featured: Boolean(row.featured),
-    description: row.description || "",
-    certificate: {
-      lab: row.certificate_lab || "NGJA",
-      number: row.certificate_number || "NGJA-CERT",
-      pdfUrl: row.certificate_pdf_url || undefined,
-    },
-    images: Array.isArray(row.images) ? (row.images as unknown as GemImage[]) : [],
-  };
 }
 
 /**
@@ -76,27 +34,29 @@ export async function getAdminGemstonesAction(): Promise<AdminActionResult<Gemst
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (error || !data || data.length === 0) {
+    if (error) {
       return {
-        success: true,
-        message: "No database records found, returning local catalog fallback.",
-        data: CATALOG_GEMS,
+        success: false,
+        message: `Could not load gemstones from Supabase: ${error.message}`,
+        error: error.message,
+        data: [],
       };
     }
 
-    const gems = data.map(mapDbRowToGemstone);
+    const gems = (data ?? []).map(mapDbRowToGemstone);
     return {
       success: true,
-      message: `Retrieved ${gems.length} real gemstones from Supabase database.`,
+      message: `Retrieved ${gems.length} gemstones from Supabase.`,
       data: gems,
     };
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.warn("getAdminGemstonesAction note:", msg);
     return {
-      success: true,
-      message: "Fallback to local catalog.",
-      data: CATALOG_GEMS,
+      success: false,
+      message: `Could not load gemstones from Supabase: ${msg}`,
+      error: msg,
+      data: [],
     };
   }
 }
@@ -445,7 +405,7 @@ export async function getAdminOverviewMetricsAction() {
     getAdminInquiriesAction(),
   ]);
 
-  const gems = gemsRes.data || CATALOG_GEMS;
+  const gems = gemsRes.data ?? [];
   const orders = ordersRes.data || INITIAL_ADMIN_ORDERS;
   const enquiries = inqRes.data || INITIAL_ADMIN_ENQUIRIES;
 

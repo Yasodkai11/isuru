@@ -6,7 +6,9 @@ import { AdminSidebar } from "./admin-sidebar";
 import { AdminHeader } from "./admin-header";
 import { AdminAuthBarrier } from "./admin-auth-barrier";
 import { getCurrentUserAction, CurrentUserSession } from "@/actions/auth";
+import { getAdminGemstonesAction } from "@/actions/admin-db";
 import { createClient } from "@/lib/supabase/client";
+import { useAdminStore } from "@/stores/admin-store";
 
 export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -19,6 +21,22 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
   });
 
   const isLoginPage = pathname === "/admin/login";
+  const setGemstones = useAdminStore((state) => state.setGemstones);
+
+  useEffect(() => {
+    if (!session.isAuthenticated || !session.isAdmin) return;
+
+    let cancelled = false;
+    getAdminGemstonesAction().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setGemstones(res.data);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [session.isAuthenticated, session.isAdmin, setGemstones]);
 
   useEffect(() => {
     if (isLoginPage) {

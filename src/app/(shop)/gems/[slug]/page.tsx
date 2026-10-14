@@ -31,13 +31,14 @@ import {
   Lock,
 } from "lucide-react";
 
-import { CATALOG_GEMS, DETAIL_ON_REQUEST } from "@/lib/catalog-gems";
+import { DETAIL_ON_REQUEST } from "@/lib/catalog-gems";
 
 // ISR: Cache page for 1 hour, revalidated on-demand when product updates occur
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  return CATALOG_GEMS.map((gem) => ({
+  const { gems } = await getGemstones({ limit: 500 });
+  return gems.map((gem) => ({
     slug: gem.slug,
   }));
 }

@@ -75,7 +75,7 @@ export function AdminHeader({ onOpenMobile, currentUser }: AdminHeaderProps) {
   };
 
   const handleReset = () => {
-    if (confirm("Reset admin demo data (gemstones, orders, inquiries, settings) to factory defaults?")) {
+    if (confirm("Reset local admin demo data (orders, inquiries, settings) to factory defaults? Gemstones stay loaded from the database.")) {
       resetToDefaults();
       setResetSuccess(true);
       setTimeout(() => setResetSuccess(false), 3000);

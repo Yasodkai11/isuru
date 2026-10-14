@@ -1,9 +1,10 @@
 "use server";
 
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
-import { Gemstone, GemFilterOptions, GemImage, PaginatedGemsResult } from "@/types/gem";
+import { Gemstone, GemFilterOptions, PaginatedGemsResult } from "@/types/gem";
 import { CATEGORIES_CONFIG } from "@/lib/constants";
 import { CATALOG_GEMS } from "@/lib/catalog-gems";
+import { mapDbRowToGemstone } from "@/lib/map-gemstone";
 
 export async function getGemstones(filters?: GemFilterOptions): Promise<PaginatedGemsResult> {
   const page = Math.max(1, filters?.page || 1);
@@ -93,43 +94,24 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
 
       const { data, count, error } = await query;
 
-      if (!error && data && data.length > 0 && count !== null) {
-        const gems: Gemstone[] = data.map((row) => ({
-          id: row.id,
-          slug: row.slug,
-          name: row.name,
-          variety: row.variety,
-          carat: Number(row.carat),
-          origin: row.origin,
-          cut: row.cut,
-          dimensions: row.dimensions,
-          color: row.color,
-          treatment: row.treatment,
-          clarity: row.clarity,
-          price: Number(row.price),
-          currency: (row.currency as "USD" | "LKR") || "USD",
-          inStock: row.in_stock,
-          featured: row.featured,
-          description: row.description,
-          certificate: {
-            lab: row.certificate_lab,
-            number: row.certificate_number,
-            pdfUrl: row.certificate_pdf_url || undefined,
-          },
-          images: Array.isArray(row.images) ? (row.images as unknown as GemImage[]) : [],
-          category: row.category || undefined,
-        }));
-
-        return {
-          gems,
-          total: count,
-          page,
-          limit,
-          totalPages: Math.ceil(count / limit),
-        };
+      if (error) {
+        console.warn("Supabase gemstones query failed:", error.message);
+        return { gems: [], total: 0, page, limit, totalPages: 1 };
       }
+
+      const gems = (data ?? []).map(mapDbRowToGemstone);
+      const total = count ?? gems.length;
+
+      return {
+        gems,
+        total,
+        page,
+        limit,
+        totalPages: Math.max(1, Math.ceil(total / limit)),
+      };
     } catch (err) {
-      console.warn("Supabase query note, falling back to local dataset:", err);
+      console.warn("Supabase gemstones query failed:", err);
+      return { gems: [], total: 0, page, limit, totalPages: 1 };
     }
   }
 
@@ -234,35 +216,12 @@ export async function getGemBySlug(slug: string): Promise<Gemstone | null> {
         .single();
 
       if (!error && data) {
-        return {
-          id: data.id,
-          slug: data.slug,
-          name: data.name,
-          variety: data.variety,
-          carat: Number(data.carat),
-          origin: data.origin,
-          cut: data.cut,
-          dimensions: data.dimensions,
-          color: data.color,
-          treatment: data.treatment,
-          clarity: data.clarity,
-          price: Number(data.price),
-          currency: (data.currency as "USD" | "LKR") || "USD",
-          inStock: data.in_stock,
-          featured: data.featured,
-          description: data.description,
-          certificate: {
-            lab: data.certificate_lab,
-            number: data.certificate_number,
-            pdfUrl: data.certificate_pdf_url || undefined,
-          },
-          images: Array.isArray(data.images) ? (data.images as unknown as GemImage[]) : [],
-          category: data.category || undefined,
-        };
+        return mapDbRowToGemstone(data);
       }
     } catch (err) {
       console.warn("Supabase single gem fetch note:", err);
     }
+    return null;
   }
 
   return CATALOG_GEMS.find((g) => g.slug === slug) || null;

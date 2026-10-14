@@ -15,7 +15,6 @@ import {
   AdminSettingsData,
   AdminStaffMember,
 } from "@/types/admin";
-import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import {
   INITIAL_ADMIN_CATEGORIES,
   INITIAL_ADMIN_ORDERS,
@@ -91,7 +90,7 @@ export interface AdminState {
 export const useAdminStore = create<AdminState>()(
   persist(
     (set, get) => ({
-      gemstones: [...CATALOG_GEMS],
+      gemstones: [],
       categories: [...INITIAL_ADMIN_CATEGORIES],
       orders: [...INITIAL_ADMIN_ORDERS],
       enquiries: [...INITIAL_ADMIN_ENQUIRIES],
@@ -316,7 +315,6 @@ export const useAdminStore = create<AdminState>()(
       // Reset
       resetToDefaults: () => {
         set({
-          gemstones: [...CATALOG_GEMS],
           categories: [...INITIAL_ADMIN_CATEGORIES],
           orders: [...INITIAL_ADMIN_ORDERS],
           enquiries: [...INITIAL_ADMIN_ENQUIRIES],
@@ -329,8 +327,18 @@ export const useAdminStore = create<AdminState>()(
       },
     }),
     {
-      name: "isuru-gems-admin-store-v3",
+      name: "isuru-gems-admin-store-v4",
       storage: createJSONStorage(() => (typeof window !== "undefined" ? localStorage : ({} as Storage))),
+      partialize: (state) => ({
+        categories: state.categories,
+        orders: state.orders,
+        enquiries: state.enquiries,
+        customers: state.customers,
+        mediaAssets: state.mediaAssets,
+        seoRecords: state.seoRecords,
+        settings: state.settings,
+        staff: state.staff,
+      }),
     }
   )
 );
