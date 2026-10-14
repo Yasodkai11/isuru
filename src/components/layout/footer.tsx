@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BRAND } from "@/lib/constants";
+import { BRAND, CATEGORIES_CONFIG } from "@/lib/constants";
 import { Award, MapPin, Mail, Phone, CheckCircle2, ArrowUp, ArrowRight } from "lucide-react";
 
 const EXPLORE_LINKS = [
@@ -15,14 +15,10 @@ const EXPLORE_LINKS = [
   { label: "Contact Concierge", href: "/contact" },
 ];
 
-const VARIETY_LINKS = [
-  { label: "Royal Blue Sapphires", href: "/gems?variety=Royal+Blue" },
-  { label: "Natural Ceylon Rubies", href: "/gems/category/ceylon-rubies" },
-  { label: "Padparadscha Sapphires", href: "/gems?variety=Padparadscha" },
-  { label: "Chrysoberyl Alexandrite", href: "/gems/category/alexandrite" },
-  { label: "Pushparaga (Yellow)", href: "/gems?variety=Yellow" },
-  { label: "Asterism Star Sapphires", href: "/gems?variety=Star" },
-];
+const VARIETY_LINKS = Object.entries(CATEGORIES_CONFIG).map(([slug, config]) => ({
+  label: config.title,
+  href: `/gems/category/${slug}`,
+}));
 
 export function Footer() {
   const pathname = usePathname();
@@ -115,7 +111,7 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Gem varieties" className="lg:col-span-2">
-            <h4 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Gem Varieties</h4>
+            <h4 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Shop by Colour</h4>
             <ul className="space-y-2 text-xs sm:text-sm font-light text-[#FAF6EE]/70">
               {VARIETY_LINKS.map((l) => (
                 <li key={l.href}>

@@ -100,14 +100,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     limit: itemsPerPage,
   });
 
-  const categoryNavItems = [
-    { slug: "blue-sapphires", label: "Blue Sapphires" },
-    { slug: "ceylon-rubies", label: "Ceylon Rubies" },
-    { slug: "padparadscha", label: "Padparadscha" },
-    { slug: "alexandrite", label: "Alexandrite" },
-    { slug: "yellow-sapphires", label: "Yellow Sapphires" },
-    { slug: "rare-collector", label: "Rough & Collector" },
-  ];
+  const categoryNavItems = Object.entries(CATEGORIES_CONFIG).map(([slug, item]) => ({
+    slug,
+    label: item.title,
+  }));
 
   return (
     <div className="py-12 bg-[#FAF6EE] min-h-screen">

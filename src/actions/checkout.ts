@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { checkoutSchema, CheckoutInput } from "@/schemas/checkout";
-import { SAMPLE_GEMS } from "@/lib/constants";
+import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export interface CheckoutResult {
@@ -46,11 +46,11 @@ export async function processOrderAction(data: CheckoutInput): Promise<CheckoutR
   const { fullName, email, phone, address, city, country, postalCode, specialInstructions, itemIds, paymentMethod } =
     parsed.data;
 
-  // Resolve gems from SAMPLE_GEMS, with Supabase lookup fallback
+  // Resolve gems from the local catalog, with Supabase lookup fallback
   const resolvedGems: Array<{ id: string; name: string; carat: number; price: number }> = [];
   
   for (const id of itemIds) {
-    const localGem = SAMPLE_GEMS.find((g) => g.id === id);
+    const localGem = CATALOG_GEMS.find((g) => g.id === id && g.price > 0);
     if (localGem) {
       resolvedGems.push({ id: localGem.id, name: localGem.name, carat: localGem.carat, price: localGem.price });
     }

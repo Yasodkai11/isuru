@@ -15,7 +15,7 @@ import {
   AdminSettingsData,
   AdminStaffMember,
 } from "@/types/admin";
-import { SAMPLE_GEMS } from "@/lib/constants";
+import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import {
   INITIAL_ADMIN_CATEGORIES,
   INITIAL_ADMIN_ORDERS,
@@ -88,7 +88,7 @@ export interface AdminState {
 export const useAdminStore = create<AdminState>()(
   persist(
     (set, get) => ({
-      gemstones: [...SAMPLE_GEMS],
+      gemstones: [...CATALOG_GEMS],
       categories: [...INITIAL_ADMIN_CATEGORIES],
       orders: [...INITIAL_ADMIN_ORDERS],
       enquiries: [...INITIAL_ADMIN_ENQUIRIES],
@@ -301,7 +301,7 @@ export const useAdminStore = create<AdminState>()(
       // Reset
       resetToDefaults: () => {
         set({
-          gemstones: [...SAMPLE_GEMS],
+          gemstones: [...CATALOG_GEMS],
           categories: [...INITIAL_ADMIN_CATEGORIES],
           orders: [...INITIAL_ADMIN_ORDERS],
           enquiries: [...INITIAL_ADMIN_ENQUIRIES],

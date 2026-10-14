@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { CATEGORIES_CONFIG } from "@/lib/constants";
 
 interface CategoryItem {
   title: string;
@@ -14,50 +15,13 @@ interface CategoryItem {
   tag?: string;
 }
 
-const CATEGORIES: CategoryItem[] = [
-  {
-    title: "Blue Sapphires",
-    subtitle: "Royal & Cornflower Blue",
-    image: "/isuru_images/categories1.jpg",
-    link: "/gems/category/blue-sapphires",
-    tag: "Signature Ceylon",
-  },
-  {
-    title: "Natural Ceylon Rubies",
-    subtitle: "Pigeon Blood & Crimson Fire",
-    image: "/isuru_images/ruby%20category.jpg",
-    link: "/gems/category/ceylon-rubies",
-    tag: "High Fluorescence",
-  },
-  {
-    title: "Padparadscha Sapphires",
-    subtitle: "Sacred Lotus Blossom Sunset",
-    image: "/isuru_images/categories2.jpg",
-    link: "/gems/category/padparadscha",
-    tag: "Rarest Corundum",
-  },
-  {
-    title: "Chrysoberyl Alexandrite",
-    subtitle: "Day-to-Night Color Change",
-    image: "/isuru_images/Alexandrite%20category.jpg",
-    link: "/gems/category/alexandrite",
-    tag: "Optical Phenomenon",
-  },
-  {
-    title: "Yellow Sapphires",
-    subtitle: "Imperial Honey Pushparaga",
-    image: "/isuru_images/yellow.jpg",
-    link: "/gems/category/yellow-sapphires",
-    tag: "Auspicious Vedic",
-  },
-  {
-    title: "Rough & Collector Gems",
-    subtitle: "Natural Crystals & Asterism",
-    image: "/isuru_images/categories3.jpg",
-    link: "/gems/category/rare-collector",
-    tag: "Museum Grade",
-  },
-];
+const CATEGORIES: CategoryItem[] = Object.entries(CATEGORIES_CONFIG).map(([slug, config]) => ({
+  title: config.title,
+  subtitle: config.subtitle,
+  image: config.image,
+  link: `/gems/category/${slug}`,
+  tag: config.tagline,
+}));
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 

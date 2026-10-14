@@ -8,7 +8,7 @@ import {
   AdminSettingsData,
   AdminStaffMember,
 } from "@/types/admin";
-import { SAMPLE_GEMS, BRAND, CATEGORIES_CONFIG } from "./constants";
+import { BRAND, CATEGORIES_CONFIG } from "./constants";
 
 export const INITIAL_ADMIN_CATEGORIES: AdminCategory[] = [
   {

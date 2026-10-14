@@ -52,7 +52,7 @@ export default function AdminProductsPage() {
   const [formName, setFormName] = useState("");
   const [formSlug, setFormSlug] = useState("");
   const [formVariety, setFormVariety] = useState<string>(GEM_VARIETIES[0]);
-  const [formCategory, setFormCategory] = useState("blue-sapphires");
+  const [formCategory, setFormCategory] = useState("blue-gems");
   const [formCarat, setFormCarat] = useState("3.50");
   const [formOrigin, setFormOrigin] = useState<string>(CEYLON_ORIGINS[0]);
   const [formCut, setFormCut] = useState("Cushion Brilliant");
@@ -75,7 +75,7 @@ export default function AdminProductsPage() {
     setFormName("");
     setFormSlug("");
     setFormVariety(GEM_VARIETIES[0]);
-    setFormCategory("blue-sapphires");
+    setFormCategory("blue-gems");
     setFormCarat("3.50");
     setFormOrigin(CEYLON_ORIGINS[0]);
     setFormCut("Cushion Brilliant");
@@ -107,7 +107,7 @@ export default function AdminProductsPage() {
     setFormName(gem.name);
     setFormSlug(gem.slug);
     setFormVariety(gem.variety);
-    setFormCategory(gem.category || "blue-sapphires");
+    setFormCategory(gem.category || "blue-gems");
     setFormCarat(gem.carat.toString());
     setFormOrigin(gem.origin);
     setFormCut(gem.cut);

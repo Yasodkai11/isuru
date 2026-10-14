@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
-import { formatCurrency, formatCarats } from "@/lib/utils";
+import { formatGemCarats, formatGemPrice } from "@/lib/utils";
 import { ArrowRight, Eye, CheckCircle2, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Reveal } from "@/components/motion/reveal";
@@ -120,18 +120,20 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                       )}
                     </div>
 
-                    <div className="absolute top-3 right-3 pointer-events-none">
-                      <Badge variant="gold" className="text-[9px] py-0.5 px-2 bg-[#FAF6EE]/90">
-                        {gem.certificate.lab}
-                      </Badge>
-                    </div>
+                    {gem.certificate.lab && (
+                      <div className="absolute top-3 right-3 pointer-events-none">
+                        <Badge variant="gold" className="text-[9px] py-0.5 px-2 bg-[#FAF6EE]/90">
+                          {gem.certificate.lab}
+                        </Badge>
+                      </div>
+                    )}
                   </div>
 
                   {/* Gem Details */}
                   <div className="p-5 xl:p-6 space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-[#B8924A] font-medium uppercase tracking-[0.18em]">
                       <span className="truncate pr-2">{gem.variety}</span>
-                      <span className="text-[#1B3A8A] font-semibold shrink-0">{formatCarats(gem.carat)}</span>
+                      <span className="text-[#1B3A8A] font-semibold shrink-0">{formatGemCarats(gem.carat)}</span>
                     </div>
 
                     <h3 className="font-serif text-xl xl:text-[1.35rem] font-normal text-[#5E0F1E] group-hover:text-[#420A15] transition-colors leading-snug line-clamp-2 min-h-[2.8em]">
@@ -146,7 +148,7 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                     <div>
                       <span className="text-[10px] uppercase tracking-[0.2em] text-[#2B2B2B]/50 block">Price</span>
                       <span className="font-serif text-xl xl:text-2xl text-[#1B3A8A]">
-                        {formatCurrency(gem.price, gem.currency)}
+                        {formatGemPrice(gem.price, gem.currency)}
                       </span>
                     </div>
 
@@ -192,7 +194,13 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
           isOpen={!!selectedGemForEnquiry}
           onClose={() => setSelectedGemForEnquiry(null)}
           title={`Enquire: ${selectedGemForEnquiry.name}`}
-          description={`${selectedGemForEnquiry.carat} ct ${selectedGemForEnquiry.variety} · ${selectedGemForEnquiry.certificate.lab} certified`}
+          description={[
+            formatGemCarats(selectedGemForEnquiry.carat),
+            selectedGemForEnquiry.variety,
+            selectedGemForEnquiry.certificate.lab && `${selectedGemForEnquiry.certificate.lab} certified`,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
           size="md"
         >
           {enquirySuccess ? (
@@ -210,13 +218,13 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
               <div className="p-3 bg-[#F2EADB]/60 border border-[#B8924A]/30 flex items-center justify-between text-xs">
                 <div>
                   <span className="font-semibold text-[#5E0F1E] block">
-                    {formatCarats(selectedGemForEnquiry.carat)} • {selectedGemForEnquiry.cut}
+                    {formatGemCarats(selectedGemForEnquiry.carat)} • {selectedGemForEnquiry.cut}
                   </span>
                   <span className="text-[#2B2B2B]/70">Origin: {selectedGemForEnquiry.origin}</span>
                 </div>
                 <div className="text-right">
                   <span className="font-bold text-[#1B3A8A] font-serif text-base block">
-                    {formatCurrency(selectedGemForEnquiry.price, selectedGemForEnquiry.currency)}
+                    {formatGemPrice(selectedGemForEnquiry.price, selectedGemForEnquiry.currency)}
                   </span>
                   <Badge variant="unheated" className="text-[9px]">
                     {selectedGemForEnquiry.treatment}

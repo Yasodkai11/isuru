@@ -102,11 +102,64 @@ export function getProductSchema(gem: Gemstone) {
     ? gem.images.map((img) => img.url)
     : ["https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85"];
 
+  const offers = {
+    "@type": "Offer",
+    "@id": `${SITE_URL}/gems/${gem.slug}#offer`,
+    url: `${SITE_URL}/gems/${gem.slug}`,
+    priceCurrency: gem.currency || "USD",
+    price: gem.price,
+    priceValidUntil: "2027-12-31",
+    itemCondition: "https://schema.org/NewCondition",
+    availability: gem.inStock
+      ? "https://schema.org/InStock"
+      : "https://schema.org/OutOfStock",
+    seller: {
+      "@type": "Organization",
+      name: "Isuru Gems Ceylon",
+      url: SITE_URL,
+    },
+    shippingDetails: {
+      "@type": "OfferShippingDetails",
+      shippingRate: {
+        "@type": "MonetaryAmount",
+        value: "0.00",
+        currency: gem.currency || "USD",
+      },
+      shippingDestination: {
+        "@type": "DefinedRegion",
+        addressCountry: "Worldwide",
+      },
+      deliveryTime: {
+        "@type": "ShippingDeliveryTime",
+        handlingTime: {
+          "@type": "QuantitativeValue",
+          minValue: 1,
+          maxValue: 2,
+          unitCode: "DAY",
+        },
+        transitTime: {
+          "@type": "QuantitativeValue",
+          minValue: 2,
+          maxValue: 5,
+          unitCode: "DAY",
+        },
+      },
+    },
+    hasMerchantReturnPolicy: {
+      "@type": "MerchantReturnPolicy",
+      applicableCountry: "Worldwide",
+      returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+      merchantReturnDays: 14,
+      returnMethod: "https://schema.org/ReturnByMail",
+      returnFees: "https://schema.org/FreeReturn",
+    },
+  };
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": `${SITE_URL}/gems/${gem.slug}#product`,
-    name: `${gem.name} (${gem.carat} cts)`,
+    name: gem.carat > 0 ? `${gem.name} (${gem.carat} cts)` : gem.name,
     image: images,
     description: gem.description,
     sku: `ISURU-${gem.slug.toUpperCase()}`,
@@ -120,58 +173,7 @@ export function getProductSchema(gem: Gemstone) {
       "@type": "Country",
       name: "Sri Lanka",
     },
-    offers: {
-      "@type": "Offer",
-      "@id": `${SITE_URL}/gems/${gem.slug}#offer`,
-      url: `${SITE_URL}/gems/${gem.slug}`,
-      priceCurrency: gem.currency || "USD",
-      price: gem.price,
-      priceValidUntil: "2027-12-31",
-      itemCondition: "https://schema.org/NewCondition",
-      availability: gem.inStock
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      seller: {
-        "@type": "Organization",
-        name: "Isuru Gems Ceylon",
-        url: SITE_URL,
-      },
-      shippingDetails: {
-        "@type": "OfferShippingDetails",
-        shippingRate: {
-          "@type": "MonetaryAmount",
-          value: "0.00",
-          currency: gem.currency || "USD",
-        },
-        shippingDestination: {
-          "@type": "DefinedRegion",
-          addressCountry: "Worldwide",
-        },
-        deliveryTime: {
-          "@type": "ShippingDeliveryTime",
-          handlingTime: {
-            "@type": "QuantitativeValue",
-            minValue: 1,
-            maxValue: 2,
-            unitCode: "DAY",
-          },
-          transitTime: {
-            "@type": "QuantitativeValue",
-            minValue: 2,
-            maxValue: 5,
-            unitCode: "DAY",
-          },
-        },
-      },
-      hasMerchantReturnPolicy: {
-        "@type": "MerchantReturnPolicy",
-        applicableCountry: "Worldwide",
-        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-        merchantReturnDays: 14,
-        returnMethod: "https://schema.org/ReturnByMail",
-        returnFees: "https://schema.org/FreeReturn",
-      },
-    },
+    ...(gem.price > 0 ? { offers } : {}),
     additionalProperty: [
       {
         "@type": "PropertyValue",

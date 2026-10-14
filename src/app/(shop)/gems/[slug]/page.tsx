@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGemBySlug, getRelatedGems, getGemstones } from "@/actions/gems";
-import { formatCurrency, formatCarats } from "@/lib/utils";
+import { formatGemCarats, formatGemPrice, isPriceOnRequest } from "@/lib/utils";
 import { GoldDivider } from "@/components/layout/gold-divider";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { GemGallery } from "@/components/gems/gem-gallery";
@@ -31,13 +31,13 @@ import {
   Lock,
 } from "lucide-react";
 
-import { SAMPLE_GEMS } from "@/lib/constants";
+import { CATALOG_GEMS, DETAIL_ON_REQUEST } from "@/lib/catalog-gems";
 
 // ISR: Cache page for 1 hour, revalidated on-demand when product updates occur
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  return SAMPLE_GEMS.map((gem) => ({
+  return CATALOG_GEMS.map((gem) => ({
     slug: gem.slug,
   }));
 }
@@ -78,14 +78,22 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
         },
       ];
 
+  const caratSuffix = gem.carat > 0 ? ` (${formatGemCarats(gem.carat)})` : "";
+
   return {
-    title: `${gem.name} (${formatCarats(gem.carat)}) | Isuru Gems Ceylon`,
-    description: `Natural ${gem.variety} from ${gem.origin}. ${gem.treatment}, ${gem.dimensions}. Certified by ${gem.certificate.lab}. Net Investment: ${formatCurrency(gem.price, gem.currency)}.`,
+    title: `${gem.name}${caratSuffix} | Isuru Gems Ceylon`,
+    description: [
+      `Natural ${gem.variety} from ${gem.origin}.`,
+      gem.certificate.lab && `Certified by ${gem.certificate.lab}.`,
+      `${formatGemPrice(gem.price, gem.currency)}.`,
+    ]
+      .filter(Boolean)
+      .join(" "),
     alternates: {
       canonical: `/gems/${gem.slug}`,
     },
     openGraph: {
-      title: `${gem.name} (${formatCarats(gem.carat)}) | Isuru Gems`,
+      title: `${gem.name}${caratSuffix} | Isuru Gems`,
       description: gem.description,
       url: `/gems/${gem.slug}`,
       type: "website",
@@ -117,19 +125,29 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
     { name: gem.name, url: `/gems/${gem.slug}` },
   ]);
 
+  const isCorundum = /sapphire|ruby|padparadscha/i.test(gem.variety);
+  const priceOnRequest = isPriceOnRequest(gem.price);
+
   const specs = [
-    { label: "Mineral Species", value: "Natural Corundum (Al₂O₃)" },
+    ...(isCorundum ? [{ label: "Mineral Species", value: "Natural Corundum (Al₂O₃)" }] : []),
     { label: "Variety", value: gem.variety },
-    { label: "Carat Weight", value: formatCarats(gem.carat) },
+    { label: "Carat Weight", value: formatGemCarats(gem.carat) },
     { label: "Cut & Shape", value: gem.cut },
     { label: "Exact Dimensions", value: gem.dimensions },
     { label: "Color / Saturation", value: gem.color },
     { label: "Clarity Grade", value: gem.clarity },
     { label: "Enhancement / Treatment", value: gem.treatment },
     { label: "Mining Locality", value: gem.origin },
-    { label: "Certification Report", value: `${gem.certificate.lab} (${gem.certificate.number})` },
-    { label: "Mohs Hardness", value: "9.0 Mohs Scale" },
-    { label: "Refractive Index", value: "1.762 – 1.770 (Birefringence 0.008)" },
+    {
+      label: "Certification Report",
+      value: gem.certificate.lab ? `${gem.certificate.lab} (${gem.certificate.number})` : DETAIL_ON_REQUEST,
+    },
+    ...(isCorundum
+      ? [
+          { label: "Mohs Hardness", value: "9.0 Mohs Scale" },
+          { label: "Refractive Index", value: "1.762 – 1.770 (Birefringence 0.008)" },
+        ]
+      : []),
   ];
 
   return (
@@ -221,10 +239,12 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
                   <span className="text-[11px] uppercase tracking-[0.25em] text-[#B8924A] font-semibold">
                     {gem.variety}
                   </span>
-                  <Badge variant="gold" className="text-[10px]">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#B8924A] mr-1 inline" />
-                    {gem.certificate.lab}
-                  </Badge>
+                  {gem.certificate.lab && (
+                    <Badge variant="gold" className="text-[10px]">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#B8924A] mr-1 inline" />
+                      {gem.certificate.lab}
+                    </Badge>
+                  )}
                 </div>
 
                 {/* Single H1 for the page */}
@@ -236,11 +256,13 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
                 <div className="pt-2 flex flex-col space-y-1">
                   <div className="flex items-baseline space-x-3">
                     <span className="font-serif text-3xl sm:text-4xl font-bold text-[#1B3A8A]">
-                      {formatCurrency(gem.price, gem.currency)}
+                      {formatGemPrice(gem.price, gem.currency)}
                     </span>
-                    <span className="text-xs text-[#2B2B2B]/60 uppercase tracking-wider">
-                      Net Investment Price
-                    </span>
+                    {!priceOnRequest && (
+                      <span className="text-xs text-[#2B2B2B]/60 uppercase tracking-wider">
+                        Net Investment Price
+                      </span>
+                    )}
                   </div>
                   <span className="text-[11px] text-[#2B2B2B]/70 flex items-center gap-1.5 pt-1">
                     <Truck className="w-3.5 h-3.5 text-[#B8924A]" />
@@ -275,26 +297,39 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
 
               {/* Acquisition Action Buttons */}
               <div className="space-y-3 pt-3 border-t border-[#B8924A]/20">
-                <AddToCartButton
-                  gem={gem}
-                  className="w-full py-4 text-xs uppercase tracking-[0.2em]"
-                />
+                {priceOnRequest ? (
+                  <a
+                    href="#inquiry-section"
+                    className="w-full inline-flex items-center justify-center bg-[#5E0F1E] text-[#FAF6EE] py-4 px-4 text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#7E1529] transition-subtle text-center"
+                  >
+                    Request Price & Details
+                  </a>
+                ) : (
+                  <>
+                    <AddToCartButton
+                      gem={gem}
+                      className="w-full py-4 text-xs uppercase tracking-[0.2em]"
+                    />
 
-                <a
-                  href="#inquiry-section"
-                  className="w-full inline-flex items-center justify-center border border-[#B8924A] text-[#5E0F1E] py-3.5 px-4 text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#FAF6EE] transition-subtle text-center"
-                >
-                  Enquire About This Specimen Below
-                </a>
+                    <a
+                      href="#inquiry-section"
+                      className="w-full inline-flex items-center justify-center border border-[#B8924A] text-[#5E0F1E] py-3.5 px-4 text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#FAF6EE] transition-subtle text-center"
+                    >
+                      Enquire About This Specimen Below
+                    </a>
+                  </>
+                )}
               </div>
 
               {/* Certificate Security Assurance */}
-              <div className="pt-3 border-t border-[#B8924A]/15 flex items-start gap-2.5 text-xs text-[#2B2B2B]/75 leading-relaxed">
-                <ShieldCheck className="w-4 h-4 text-[#B8924A] shrink-0 mt-0.5" />
-                <span>
-                  Delivered with sealed original gemological report from {gem.certificate.lab} and tamper-proof security cassette.
-                </span>
-              </div>
+              {gem.certificate.lab && (
+                <div className="pt-3 border-t border-[#B8924A]/15 flex items-start gap-2.5 text-xs text-[#2B2B2B]/75 leading-relaxed">
+                  <ShieldCheck className="w-4 h-4 text-[#B8924A] shrink-0 mt-0.5" />
+                  <span>
+                    Delivered with sealed original gemological report from {gem.certificate.lab} and tamper-proof security cassette.
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

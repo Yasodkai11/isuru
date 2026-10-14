@@ -69,10 +69,12 @@ export function GemGallery({
           <Badge variant="maroon" className="text-[9px] py-0.5 px-2.5 shadow-xs">
             {origin}
           </Badge>
-          <Badge variant="gold" className="text-[9px] py-0.5 px-2 bg-[#FAF6EE]/90 shadow-xs">
-            <ShieldCheck className="w-3 h-3 text-[#B8924A] mr-1 inline" />
-            {certificateLab} Certified
-          </Badge>
+          {certificateLab && (
+            <Badge variant="gold" className="text-[9px] py-0.5 px-2 bg-[#FAF6EE]/90 shadow-xs">
+              <ShieldCheck className="w-3 h-3 text-[#B8924A] mr-1 inline" />
+              {certificateLab} Certified
+            </Badge>
+          )}
         </div>
 
         {/* Zoom Hint Button */}

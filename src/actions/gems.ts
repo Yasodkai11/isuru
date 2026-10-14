@@ -2,7 +2,8 @@
 
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { Gemstone, GemFilterOptions, GemImage, PaginatedGemsResult } from "@/types/gem";
-import { SAMPLE_GEMS } from "@/lib/constants";
+import { CATEGORIES_CONFIG } from "@/lib/constants";
+import { CATALOG_GEMS } from "@/lib/catalog-gems";
 
 export async function getGemstones(filters?: GemFilterOptions): Promise<PaginatedGemsResult> {
   const page = Math.max(1, filters?.page || 1);
@@ -31,18 +32,9 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
 
       // Category filter
       if (filters?.category && filters.category !== "all") {
-        if (filters.category === "blue-sapphires") {
-          query = query.ilike("variety", "%Blue%");
-        } else if (filters.category === "padparadscha") {
-          query = query.or("variety.ilike.%Padparadscha%,variety.ilike.%Orange%");
-        } else if (filters.category === "ceylon-rubies" || filters.category === "rubies") {
-          query = query.ilike("variety", "%Ruby%");
-        } else if (filters.category === "alexandrite") {
-          query = query.ilike("variety", "%Alexandrite%");
-        } else if (filters.category === "rare-collector") {
-          query = query.or("variety.ilike.%Star%,variety.ilike.%Ruby%,variety.ilike.%Alexandrite%,variety.ilike.%Pink%,variety.ilike.%Spinel%,variety.ilike.%Green%");
-        } else if (filters.category === "yellow-sapphires") {
-          query = query.ilike("variety", "%Yellow%");
+        const match = CATEGORIES_CONFIG[filters.category]?.match;
+        if (match) {
+          query = query.ilike(match.column, `%${match.value}%`);
         }
       }
 
@@ -141,7 +133,7 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
   }
 
   // Graceful in-memory fallback with full filtering, sorting, and pagination
-  let filtered = [...SAMPLE_GEMS];
+  let filtered = [...CATALOG_GEMS];
 
   if (filters?.colour && filters.colour !== "all") {
     const col = filters.colour.toLowerCase();
@@ -161,25 +153,7 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
   }
 
   if (filters?.category && filters.category !== "all") {
-    const cat = filters.category;
-    filtered = filtered.filter((g) => {
-      if (g.category === cat) return true;
-      if (cat === "blue-sapphires") return g.variety.toLowerCase().includes("blue");
-      if (cat === "padparadscha") return g.variety.toLowerCase().includes("padparadscha") || g.variety.toLowerCase().includes("orange");
-      if (cat === "ceylon-rubies" || cat === "rubies") return g.variety.toLowerCase().includes("ruby");
-      if (cat === "alexandrite") return g.variety.toLowerCase().includes("alexandrite");
-      if (cat === "rare-collector")
-        return (
-          g.variety.toLowerCase().includes("star") ||
-          g.variety.toLowerCase().includes("ruby") ||
-          g.variety.toLowerCase().includes("alexandrite") ||
-          g.variety.toLowerCase().includes("pink") ||
-          g.variety.toLowerCase().includes("spinel") ||
-          g.variety.toLowerCase().includes("green")
-        );
-      if (cat === "yellow-sapphires") return g.variety.toLowerCase().includes("yellow");
-      return false;
-    });
+    filtered = filtered.filter((g) => g.category === filters.category);
   }
 
   if (filters?.origin && filters.origin !== "all") {
@@ -289,20 +263,21 @@ export async function getGemBySlug(slug: string): Promise<Gemstone | null> {
     }
   }
 
-  return SAMPLE_GEMS.find((g) => g.slug === slug) || null;
+  return CATALOG_GEMS.find((g) => g.slug === slug) || null;
 }
 
 export async function getRelatedGems(currentSlug: string, limit: number = 3): Promise<Gemstone[]> {
   const current = await getGemBySlug(currentSlug);
-  const { gems } = await getGemstones({ limit: 12 });
-  
+  const { gems } = await getGemstones({ limit: 100 });
+
   return gems
     .filter((g) => g.slug !== currentSlug)
     .sort((a, b) => {
-      // Prioritize same variety or category
-      if (current && a.variety === current.variety) return -1;
-      if (current && b.variety === current.variety) return 1;
-      return 0;
+      // Prioritize same category, then same variety
+      const score = (g: Gemstone) =>
+        (current && g.category && g.category === current.category ? 2 : 0) +
+        (current && g.variety === current.variety ? 1 : 0);
+      return score(b) - score(a);
     })
     .slice(0, limit);
 }

@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getGemBySlug } from "@/actions/gems";
-import { formatCurrency, formatCarats } from "@/lib/utils";
+import { formatGemCarats, formatGemPrice } from "@/lib/utils";
+import { DETAIL_ON_REQUEST } from "@/lib/catalog-gems";
 
 export const alt = "Ceylon Natural Gemstone Specimen";
 export const size = {
@@ -19,11 +20,12 @@ export default async function Image({
 
   const title = gem ? gem.name : "Ceylon Natural Gemstone Specimen";
   const variety = gem ? gem.variety : "Natural Corundum";
-  const carats = gem ? formatCarats(gem.carat) : "Natural Weight";
-  const price = gem ? formatCurrency(gem.price, gem.currency) : "Price Upon Request";
+  const carats = gem ? formatGemCarats(gem.carat) : "Natural Weight";
+  const price = gem ? formatGemPrice(gem.price, gem.currency) : "Price Upon Request";
   const origin = gem ? gem.origin : "Ratnapura, Sri Lanka";
   const lab = gem ? gem.certificate.lab : "NGJA Certified";
-  const treatment = gem ? gem.treatment : "Unheated";
+  const labBadge = lab ? `${lab} Authenticated` : "Natural Gemstone";
+  const treatment = gem ? (gem.treatment === DETAIL_ON_REQUEST ? gem.cut : gem.treatment) : "Unheated";
 
   return new ImageResponse(
     (
@@ -77,7 +79,7 @@ export default async function Image({
               fontFamily: "sans-serif",
             }}
           >
-            {lab} Authenticated
+            {labBadge}
           </div>
         </div>
 

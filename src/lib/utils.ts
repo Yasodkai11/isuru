@@ -40,6 +40,21 @@ export function formatCarats(weight: number): string {
 }
 
 /**
+ * A price of 0 means the stone is listed without a public price (enquiry only).
+ */
+export function isPriceOnRequest(price: number): boolean {
+  return !(price > 0);
+}
+
+export function formatGemPrice(price: number, currency: "USD" | "LKR" = "USD"): string {
+  return isPriceOnRequest(price) ? "Price on request" : formatCurrency(price, currency);
+}
+
+export function formatGemCarats(weight: number): string {
+  return weight > 0 ? formatCarats(weight) : "Weight on request";
+}
+
+/**
  * Convert string to URL-safe slug
  */
 export function slugify(text: string): string {
