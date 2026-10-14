@@ -315,7 +315,7 @@ export async function updateStaffMemberAction(
     if (partial.canExportData !== undefined) updatePayload.can_export_data = partial.canExportData;
     if (partial.notes !== undefined) updatePayload.notes = partial.notes;
 
-    const { error } = await adminSupabase.from("staff_members").update(updatePayload).eq("id", id);
+    const { error } = await adminSupabase.from("staff_members").update(updatePayload as any).eq("id", id);
 
     if (error) {
       return {

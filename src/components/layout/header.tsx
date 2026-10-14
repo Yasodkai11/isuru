@@ -88,7 +88,7 @@ export function Header() {
       <div className="container-luxe h-9 flex items-center justify-between gap-6">
         <span className="flex items-center gap-2">
           <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF67]" />
-          NGJA Licensed · Certified Natural Ceylon Gemstones
+          NGJA Licensed · 100% Natural Ceylon Gemstones
         </span>
         <span className="hidden lg:block text-[#D4AF67]">Fully insured worldwide shipping</span>
         <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2 hover:text-[#D4AF67] transition-colors">

@@ -1,0 +1,1169 @@
+import { createClient } from "@supabase/supabase-js";
+import fs from "fs";
+
+const env = fs.readFileSync(".env.local", "utf8");
+const urlMatch = env.match(/NEXT_PUBLIC_SUPABASE_URL=(.*)/);
+const keyMatch = env.match(/SUPABASE_SERVICE_ROLE_KEY=(.*)/);
+if (!urlMatch || !keyMatch) {
+  console.error("Missing Supabase credentials in .env.local");
+  process.exit(1);
+}
+
+const supabase = createClient(urlMatch[1].trim(), keyMatch[1].trim());
+
+const ROOT = "/isuru_images/Gems_Categorized_By_Visible_Color";
+const SINGLE = `${ROOT}/01_Single_Gems`;
+const TRAYS = `${ROOT}/02_Gem_Collections_and_Trays`;
+const INDIVIDUAL = `${ROOT}/03_Individual_Gem_Photos`;
+
+export const REAL_PRODUCTS = [
+  // --- Showcase High-Jewelry Specimens (Mined in Ratnapura / Pelmadulla / Balangoda) ---
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00001",
+    slug: "ceylon-royal-blue-sapphire-tear-of-serendib-4-15ct",
+    name: "Ceylon Royal Blue Sapphire 'Tear of Serendib'",
+    variety: "Royal Blue Sapphire",
+    carat: 4.15,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Pear / Teardrop",
+    dimensions: "11.20 x 7.80 x 5.60 mm",
+    color: "Vivid Royal Blue",
+    treatment: "None / Unheated (Certified 100% Natural)",
+    clarity: "Eye Clean / VVS1",
+    price: 22800.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A monumental Ceylon royal blue sapphire mined from the alluvial gravels of Kalu Ganga, Ratnapura. Displays velvety blue saturation with intense scintillation and zero thermal treatment.",
+    certificate_lab: "GRS & NGJA",
+    certificate_number: "GRS2024-089921",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/natural%20heart.jpg", alt: "4.15ct Ceylon Royal Blue Sapphire Tear of Serendib" },
+      { url: "/isuru_images/blue1.jpg", alt: "Facet brilliance under daylight" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00002",
+    slug: "ceylon-padparadscha-sapphire-lotus-blossom-3-15ct",
+    name: "Ceylon Padparadscha Sapphire (Lotus Blossom)",
+    variety: "Padparadscha Sapphire",
+    carat: 3.15,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "8.75 x 7.10 x 5.22 mm",
+    color: "Sunset Salmon Pink-Orange",
+    treatment: "None / Unheated (100% Natural)",
+    clarity: "Eye Clean / VS1",
+    price: 24000.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A breathtaking natural Ceylon Padparadscha capturing the exact equilibrium between soft lotus petal pink and sunset gold. Completely unheated with Swiss SSEF certification.",
+    certificate_lab: "SSEF & NGJA",
+    certificate_number: "SSEF-118492",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/Padparadscha%20Sapphire.jpg", alt: "3.15ct Ceylon Padparadscha Sapphire" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00003",
+    slug: "ceylon-asterism-star-sapphire-cabochon-6-80ct",
+    name: "Ceylon Asterism Star Sapphire Cabochon",
+    variety: "Star Sapphire",
+    carat: 6.80,
+    origin: "Ratnapura (City of Gems)",
+    cut: "High Dome Oval Cabochon",
+    dimensions: "11.80 x 9.90 x 7.30 mm",
+    color: "Silvery Denim Blue",
+    treatment: "None / Unheated (Natural Rutile Needles)",
+    clarity: "Translucent with Crisp 6-Ray Star",
+    price: 14800.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A rare phenomenon gem displaying a crisp, centered six-ray asterism star that glides seamlessly under direct lighting. Mined from the historic pit mines of Ratnapura.",
+    certificate_lab: "GIA & NGJA",
+    certificate_number: "GIA-5542198034",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/Star%20Sapphire.jpg", alt: "6.80ct Ceylon Asterism Star Sapphire Cabochon" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00004",
+    slug: "phenomenal-ceylon-alexandrite-color-change-1-85ct",
+    name: "Phenomenal Ceylon Alexandrite (Color Change)",
+    variety: "Chrysoberyl Alexandrite",
+    carat: 1.85,
+    origin: "Morawaka, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "7.80 x 6.10 x 4.30 mm",
+    color: "Teal Green to Raspberry Red",
+    treatment: "None / 100% Earth Mined",
+    clarity: "Eye Clean / VS1",
+    price: 28500.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "Emerald by day, ruby by night. This exceptional untreated Ceylon chrysoberyl alexandrite displays dramatic optical color transformation between natural sunlight and incandescent warm light.",
+    certificate_lab: "Gubelin & NGJA",
+    certificate_number: "GUB-2024-9982",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/Alexandrite%20category.jpg", alt: "1.85ct Phenomenal Ceylon Alexandrite" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00005",
+    slug: "natural-ceylon-pigeon-blood-ruby-2-05ct",
+    name: "Natural Ceylon Ruby (Pigeon Blood Glow)",
+    variety: "Ceylon Ruby",
+    carat: 2.05,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Cushion Brilliant",
+    dimensions: "7.60 x 6.55 x 4.80 mm",
+    color: "Vibrant Crimson Pink-Red",
+    treatment: "None / Unheated (Natural Fluorescence)",
+    clarity: "Eye Clean / VS1",
+    price: 16200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "Sourced from the deep gravels of Pelmadulla. Celebrated for high chromium content giving intense internal scarlet luminescence and natural fluorescence under daylight.",
+    certificate_lab: "GRS Certified",
+    certificate_number: "GRS-RUB-88412",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/Natural%20Ruby.jpg", alt: "2.05ct Natural Ceylon Ruby Cushion" },
+      { url: "/isuru_images/ruby%20category.jpg", alt: "Ceylon Ruby table reflection" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00006",
+    slug: "ceylon-golden-pushparaga-yellow-sapphire-5-60ct",
+    name: "Ceylon Golden Pushparaga (Yellow Sapphire)",
+    variety: "Yellow Sapphire (Pushparaga)",
+    carat: 5.60,
+    origin: "Balangoda, Sri Lanka",
+    cut: "Emerald Cut",
+    dimensions: "11.20 x 8.45 x 6.10 mm",
+    color: "Imperial Honey Gold",
+    treatment: "None / Unheated",
+    clarity: "Eye Clean / Flawless",
+    price: 11400.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "Revered in Vedic gemology as Pushparaga for auspicious fortune. Cut in a stately emerald step profile with fiery amber brilliance from the decomposed granite gravels of Balangoda.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-C9081",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/yellow.jpg", alt: "5.60ct Ceylon Golden Pushparaga Emerald Cut" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00007",
+    slug: "ceylon-flame-red-spinel-unheated-2-95ct",
+    name: "Ceylon Flame Red Spinel (Natural Unheated)",
+    variety: "Spinel",
+    carat: 2.95,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "8.80 x 6.95 x 4.90 mm",
+    color: "Vibrant Flame Red",
+    treatment: "None / 100% Earth Mined",
+    clarity: "Loupe Clean / VVS1",
+    price: 11200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "An extraordinary singly-refractive untreated natural red spinel showcasing pure crimson fire. Zero heat or synthetic treatment, certified by GIA and NGJA.",
+    certificate_lab: "GIA & NGJA",
+    certificate_number: "GIA-SPN-77401",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/Red%20Ceylon%20Spinel.jpg", alt: "2.95ct Ceylon Flame Red Spinel" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00008",
+    slug: "ceylon-vivid-mandarin-orange-sapphire-3-40ct",
+    name: "Ceylon Vivid Mandarin Orange Sapphire Oval",
+    variety: "Orange Sapphire",
+    carat: 3.40,
+    origin: "Balangoda, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "9.10 x 7.30 x 5.10 mm",
+    color: "Intense Fire Mandarin Orange",
+    treatment: "None / Unheated",
+    clarity: "Eye Clean / VVS1",
+    price: 13500.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A rare and fiery unheated Ceylon fancy sapphire displaying pure mandarin orange brilliance without any brown overtone, cut to optimal optical proportions.",
+    certificate_lab: "GRS & NGJA",
+    certificate_number: "GRS2024-ORG8812",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/Orange%20Sapphire.jpg", alt: "3.40ct Ceylon Mandarin Orange Sapphire" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00009",
+    slug: "ceylon-electric-light-blue-sapphire-cushion-2-42ct",
+    name: "Ceylon Electric Light Blue Sapphire Cushion",
+    variety: "Cornflower Blue Sapphire",
+    carat: 2.42,
+    origin: "Elahera, Sri Lanka",
+    cut: "Cushion Brilliant",
+    dimensions: "8.10 x 7.35 x 4.88 mm",
+    color: "Electric Sky Blue",
+    treatment: "None / Unheated Natural",
+    clarity: "Eye Clean / VVS1",
+    price: 8800.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "An electric light blue Ceylon sapphire cushion demonstrating intense diamond-like dispersion and exceptional crystalline clarity.",
+    certificate_lab: "GIA & GRS",
+    certificate_number: "GIA-6218903120",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/lightblue.jpg", alt: "2.42ct Ceylon Light Blue Sapphire Cushion" },
+      { url: "/isuru_images/blue2.jpg", alt: "Macro facet view" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00010",
+    slug: "ceylon-forest-green-sapphire-oval-3-10ct",
+    name: "Ceylon Forest Green Sapphire Oval",
+    variety: "Green Sapphire",
+    carat: 3.10,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "9.20 x 7.40 x 5.10 mm",
+    color: "Deep Forest Olive Green",
+    treatment: "None / Unheated (Natural Earth Mined)",
+    clarity: "Eye Clean / VS1",
+    price: 7600.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A deep olive and forest green natural corundum mined from Pelmadulla, presenting vivid golden-green flashes under direct illumination.",
+    certificate_lab: "GIA & NGJA",
+    certificate_number: "GIA-7741908",
+    certificate_pdf_url: null,
+    images: [
+      { url: "/isuru_images/green.jpg", alt: "3.10ct Ceylon Forest Green Sapphire" }
+    ]
+  },
+
+  // --- Real Stock: Single Gems (from Isuru Gems Atelier Photography) ---
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00011",
+    slug: "blue-oval-gem-square-box",
+    name: "Cornflower Blue Oval Gemstone",
+    variety: "Cornflower Blue Sapphire",
+    carat: 2.35,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Oval Mixed Cut",
+    dimensions: "8.40 x 6.80 x 4.60 mm",
+    color: "Vivid Cornflower Blue",
+    treatment: "None / Unheated (Certified 100% Natural)",
+    clarity: "Eye Clean / VVS1",
+    price: 4850.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A lively cornflower blue oval with bright, even saturation and open crystal transparency. Photographed in its gem display box at our Ratnapura atelier.",
+    certificate_lab: "GRS & NGJA",
+    certificate_number: "GRS-2024-BLU892",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Blue/04_blue_gem_square_display.jpeg`, alt: "Cornflower Blue Oval Gemstone in box" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00012",
+    slug: "blue-elongated-oval-gem",
+    name: "Soft Blue Elongated Oval Gemstone",
+    variety: "Ceylon Blue Sapphire",
+    carat: 1.85,
+    origin: "Elahera, Sri Lanka",
+    cut: "Elongated Oval Mixed Cut",
+    dimensions: "8.90 x 5.90 x 3.95 mm",
+    color: "Soft Pastel Ceylon Blue",
+    treatment: "Traditional Gentle Heat Only",
+    clarity: "VVS2",
+    price: 2650.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "An elongated oval in a soft, open blue tone with lively facet play across the crown, ideal for bespoke pendant or three-stone ring settings.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-C7821",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Blue/05_blue_gem_small_display.jpeg`, alt: "Soft Blue Elongated Oval Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00013",
+    slug: "small-blue-oval-gem",
+    name: "Small Vivid Blue Oval Gemstone",
+    variety: "Royal Blue Sapphire",
+    carat: 0.95,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Oval Mixed Cut",
+    dimensions: "6.40 x 5.10 x 3.40 mm",
+    color: "Vivid Royal Blue",
+    treatment: "None / Unheated (Certified 100% Natural)",
+    clarity: "Eye Clean / VVS1",
+    price: 1450.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A compact oval with saturated royal blue colour and excellent optical purity, directly from our active stock.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-B4019",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Blue/07_small_blue_gem_display.jpeg`, alt: "Small Vivid Blue Oval Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00014",
+    slug: "forest-green-oval-gem",
+    name: "Forest Green Oval Gemstone",
+    variety: "Green Sapphire",
+    carat: 2.80,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "9.20 x 7.40 x 5.10 mm",
+    color: "Deep Forest Olive Green",
+    treatment: "None / Unheated (Natural Earth Mined)",
+    clarity: "Eye Clean / VS1",
+    price: 3200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A deep forest green oval displaying bright yellow-green flashes through the pavilion facets. 100% natural and unheated.",
+    certificate_lab: "GIA & NGJA",
+    certificate_number: "GIA-2024-GRN441",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Green/10_olive_green_gem_display.jpeg`, alt: "Forest Green Oval Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00015",
+    slug: "olive-green-oval-gem",
+    name: "Olive Green Oval Gemstone",
+    variety: "Green Sapphire",
+    carat: 1.65,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "7.50 x 5.80 x 4.10 mm",
+    color: "Golden Olive Green",
+    treatment: "None / Unheated (Natural Earth Mined)",
+    clarity: "VVS2",
+    price: 1850.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "An olive green oval with lively golden-green sparkle and excellent clarity, held in our gem display cassette.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-G3102",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Green/09_small_green_gem_display.jpeg`, alt: "Olive Green Oval Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00016",
+    slug: "vivid-pink-cushion-gem",
+    name: "Vivid Pink Cushion Gemstone",
+    variety: "Pink Sapphire",
+    carat: 2.45,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Cushion Brilliant",
+    dimensions: "7.80 x 7.30 x 4.80 mm",
+    color: "Vivid Hot Magenta Pink",
+    treatment: "None / Unheated (Certified 100% Natural)",
+    clarity: "Eye Clean / VVS1",
+    price: 6400.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A bright hot-pink cushion with strong, even saturation and brilliant fire. Fully certified unheated natural corundum.",
+    certificate_lab: "GRS & NGJA",
+    certificate_number: "GRS-2024-PNK140",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Pink_and_Purple/01_pink_gem_square_display.jpeg`, alt: "Vivid Pink Cushion Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00017",
+    slug: "pale-peach-pink-cushion-gem",
+    name: "Pale Peach-Pink Cushion Gemstone",
+    variety: "Padparadscha Sapphire",
+    carat: 1.90,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Cushion Cut",
+    dimensions: "7.10 x 6.90 x 4.25 mm",
+    color: "Pastel Lotus Blossom Peach-Pink",
+    treatment: "None / Unheated (100% Natural)",
+    clarity: "Eye Clean / VVS2",
+    price: 5200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A delicate pastel pink cushion with soft peach undertones, reminiscent of authentic Ceylon Padparadscha hues.",
+    certificate_lab: "SSEF & NGJA",
+    certificate_number: "SSEF-2024-8841",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Pink_and_Purple/06_pale_pink_gem_display.jpeg`, alt: "Pale Peach-Pink Cushion Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00018",
+    slug: "violet-purple-oval-gem",
+    name: "Violet Purple Oval Gemstone",
+    variety: "Purple Sapphire",
+    carat: 2.75,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Oval Mixed Cut",
+    dimensions: "8.60 x 7.10 x 4.90 mm",
+    color: "Royal Violet Purple",
+    treatment: "None / Unheated (100% Natural)",
+    clarity: "Eye Clean / VVS1",
+    price: 4100.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A rich violet-purple oval with deep, velvety saturation and sharp crystal luster, mined in Ratnapura.",
+    certificate_lab: "GIA & NGJA",
+    certificate_number: "GIA-5591024",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Pink_and_Purple/08_purple_gem_display.jpeg`, alt: "Violet Purple Oval Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00019",
+    slug: "deep-red-oval-gem",
+    name: "Deep Red Oval Gemstone",
+    variety: "Ceylon Ruby",
+    carat: 2.15,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "7.90 x 6.40 x 4.50 mm",
+    color: "Pigeon Blood Crimson Red",
+    treatment: "None / Unheated (Natural Fluorescence)",
+    clarity: "VS1",
+    price: 8900.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A deep red to maroon oval with bright crimson flashes and high natural daylight fluorescence. Mined in Pelmadulla.",
+    certificate_lab: "GRS Certified",
+    certificate_number: "GRS-RUB-2024-912",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Red_and_Maroon/02_dark_red_oval_gem_display.jpeg`, alt: "Deep Red Oval Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00020",
+    slug: "golden-yellow-oval-gem",
+    name: "Golden Yellow Oval Gemstone",
+    variety: "Yellow Sapphire (Pushparaga)",
+    carat: 3.80,
+    origin: "Balangoda, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "9.80 x 7.90 x 5.40 mm",
+    color: "Imperial Honey Gold",
+    treatment: "None / Unheated (100% Natural)",
+    clarity: "Eye Clean / VVS1",
+    price: 5600.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A golden honey-yellow oval with strong brilliance through the pavilion, showing radiant warm amber fire.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-Y8801",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${SINGLE}/Yellow_and_Gold/03_yellow_gold_oval_gem_display.jpeg`, alt: "Golden Yellow Oval Gemstone" }
+    ]
+  },
+
+  // --- Real Stock: Individually Labelled Gems (Stock Card Verification) ---
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00021",
+    slug: "natural-blue-sapphire-oval-0-60ct",
+    name: "Natural Blue Sapphire Oval (0.60ct)",
+    variety: "Blue Sapphire",
+    carat: 0.60,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Oval Mixed Cut",
+    dimensions: "5.50 x 4.40 x 3.00 mm",
+    color: "Royal Blue",
+    treatment: "None / Unheated (Natural)",
+    clarity: "Eye Clean VVS",
+    price: 950.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A saturated royal blue natural sapphire verified with atelier stock label 'B/S (N) 0.60'. Untreated Ceylon origin.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-060BS",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${INDIVIDUAL}/Blue/26_blue_round_gem_white_background_01.jpeg`, alt: "Natural Blue Sapphire Oval 0.60ct" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00022",
+    slug: "blue-oval-gem-1-20ct",
+    name: "Medium Blue Oval Gemstone (1.20ct)",
+    variety: "Blue Sapphire",
+    carat: 1.20,
+    origin: "Elahera, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "7.10 x 5.60 x 3.70 mm",
+    color: "Medium Ceylon Blue",
+    treatment: "Traditional Gentle Heat Only",
+    clarity: "VVS2",
+    price: 1650.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A medium blue oval with a bright, open table facet and lively brilliance under both daylight and evening light.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-120BS",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${INDIVIDUAL}/Blue/30_blue_round_gem_white_background_02.jpeg`, alt: "Blue Oval Gemstone 1.20ct" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00023",
+    slug: "cornflower-blue-oval-gem-1-50ct",
+    name: "Cornflower Blue Oval Gemstone (1.50ct)",
+    variety: "Cornflower Blue Sapphire",
+    carat: 1.50,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Oval Mixed Cut",
+    dimensions: "7.60 x 6.10 x 4.10 mm",
+    color: "Cornflower Blue",
+    treatment: "None / Unheated",
+    clarity: "Eye Clean / VVS1",
+    price: 2750.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A bright cornflower blue oval with excellent sparkle and no dark extinguishment zones, unheated natural corundum.",
+    certificate_lab: "GIA & NGJA",
+    certificate_number: "GIA-2024-150CF",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${INDIVIDUAL}/Blue/32_light_blue_round_gem_white_background.jpeg`, alt: "Cornflower Blue Oval Gemstone 1.50ct" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00024",
+    slug: "deep-blue-oval-gem-1-10ct",
+    name: "Deep Blue Oval Gemstone (1.10ct)",
+    variety: "Blue Sapphire",
+    carat: 1.10,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Oval Mixed Cut",
+    dimensions: "6.90 x 5.40 x 3.60 mm",
+    color: "Deep Velvety Blue",
+    treatment: "None / Unheated",
+    clarity: "Eye Clean",
+    price: 1950.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A deep blue oval with strong colour saturation and lively facets, mined from Ratnapura gravels.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-110DB",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${INDIVIDUAL}/Blue/33_deep_blue_oval_gem_white_background.jpeg`, alt: "Deep Blue Oval Gemstone 1.10ct" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00025",
+    slug: "pale-blue-oval-gem",
+    name: "Pale Blue Oval Gemstone",
+    variety: "Ceylon Blue Sapphire",
+    carat: 1.75,
+    origin: "Elahera, Sri Lanka",
+    cut: "Oval Mixed Cut",
+    dimensions: "8.10 x 6.20 x 4.00 mm",
+    color: "Pale Sky Pastel Blue",
+    treatment: "None / Unheated",
+    clarity: "VVS1",
+    price: 2100.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A soft pastel blue oval photographed across multiple lighting angles on dark velvet, showcasing gentle crystal fire.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-PB175",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${INDIVIDUAL}/Blue/34_pale_blue_gem_dark_fabric_01.jpeg`, alt: "Pale Blue Oval Gemstone on dark fabric" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00026",
+    slug: "violet-blue-oval-gem",
+    name: "Violet-Blue Oval Gemstone",
+    variety: "Violet Blue Sapphire",
+    carat: 2.10,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Oval Mixed Cut",
+    dimensions: "8.30 x 6.60 x 4.40 mm",
+    color: "Intense Violet Blue",
+    treatment: "None / Unheated",
+    clarity: "VVS1",
+    price: 3450.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A violet-blue oval with rich, saturated indigo and violet secondary tones, capturing rare natural pleochroism.",
+    certificate_lab: "GRS & NGJA",
+    certificate_number: "GRS-2024-VB210",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${INDIVIDUAL}/Blue/40_blue_gem_dark_fabric.jpeg`, alt: "Violet-Blue Oval Gemstone" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00027",
+    slug: "pink-cushion-gem-1-30ct",
+    name: "Pink Cushion Gemstone (1.30ct)",
+    variety: "Pink Sapphire",
+    carat: 1.30,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Cushion Cut",
+    dimensions: "6.50 x 6.20 x 3.80 mm",
+    color: "Luminous Rose Pink",
+    treatment: "None / Unheated",
+    clarity: "Eye Clean / VVS1",
+    price: 2250.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A lovely natural pink cushion with stock verification label, shown under ambient and concentrated inspection light.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-2024-PNK130",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${INDIVIDUAL}/Pink_and_Red/41_pink_gem_with_label_02.jpeg`, alt: "Pink Cushion Gemstone with label" },
+      { url: `${INDIVIDUAL}/Pink_and_Red/39_pink_gem_with_label.jpeg`, alt: "Pink Cushion Gemstone view 2" }
+    ]
+  },
+
+  // --- Real Stock: Collections & Parcels (Lots for Connoisseurs & Jewellers) ---
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00028",
+    slug: "multicolour-round-gem-tray",
+    name: "Multicolour Round Gem Tray (42 Brilliant Stones)",
+    variety: "Precious Gem Parcel",
+    carat: 18.50,
+    origin: "Ratnapura & Balangoda",
+    cut: "Round Brilliant (42 Stones)",
+    dimensions: "Calibrated 3.0 - 4.5 mm",
+    color: "Golden, Champagne, Rose & Cognac",
+    treatment: "Natural Earth Mined Ceylon",
+    clarity: "Mixed VVS - Eye Clean",
+    price: 6800.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "Forty-two calibrated round brilliants in warm golden, champagne, cognac, and rose tones. Ideal for luxury eternity bands, cluster earrings, or boutique bespoke ateliers.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-42RD",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/15_multicolor_round_gems_tray.jpeg`, alt: "Multicolour Round Gem Tray of 42 stones" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00029",
+    slug: "mixed-round-gem-tray",
+    name: "Mixed Round Gem Tray",
+    variety: "Assorted Round Gemstones Lot",
+    carat: 14.60,
+    origin: "Ratnapura, Sri Lanka",
+    cut: "Round Brilliant (Assorted Parcel)",
+    dimensions: "Assorted calibrated rounds",
+    color: "Mixed Spectral Colors",
+    treatment: "Natural Earth Mined",
+    clarity: "Eye Clean to VVS",
+    price: 5200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A precision tray of round-cut Ceylon gems in assorted colours. Suitable for jewellers seeking matching and multi-color gradient suites.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-RND17",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/17_mixed_round_gems_tray.jpeg`, alt: "Mixed Round Gem Tray" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00030",
+    slug: "multicolour-gem-grid-collection",
+    name: "Multicolour Gem Grid Collection",
+    variety: "Collector Gem Grid Parcel",
+    carat: 24.20,
+    origin: "Sri Lanka Alluvial Mines",
+    cut: "Assorted Faceted Cushion, Oval & Round",
+    dimensions: "Tray dimensions 120 x 80 mm",
+    color: "Complete Ceylon Color Spectrum",
+    treatment: "100% Earth Mined Natural",
+    clarity: "Eye Clean to VS",
+    price: 8500.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A neatly arranged master grid of assorted coloured Ceylon gemstones. Perfect investment suite or boutique showroom showcase.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-GRID47",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/47_multicolor_gem_grid_collection.jpeg`, alt: "Multicolour Gem Grid Collection" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00031",
+    slug: "mixed-colour-gem-arrangement",
+    name: "Mixed Colour Gem Arrangement",
+    variety: "Connoisseur's Showcase Parcel",
+    carat: 11.50,
+    origin: "Ratnapura & Pelmadulla",
+    cut: "Assorted Mixed Cut Parcel",
+    dimensions: "Assorted sizes 4 to 8 mm",
+    color: "Mixed Colours",
+    treatment: "Natural Earth Mined",
+    clarity: "Eye Clean",
+    price: 4500.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "An artistic arrangement of fine gemstones across several colors and cuts from our primary inventory.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-ARR12",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/12_mixed_color_gem_arrangement.jpeg`, alt: "Mixed Colour Gem Arrangement" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00032",
+    slug: "dark-and-brown-gem-tray",
+    name: "Dark & Brown Gem Tray",
+    variety: "Natural Zircon & Brown Sapphire Parcel",
+    carat: 19.40,
+    origin: "Balangoda, Sri Lanka",
+    cut: "Assorted Oval & Cushion Parcel",
+    dimensions: "Assorted 5 to 9 mm",
+    color: "Dark Chocolate, Cognac & Honey",
+    treatment: "Natural Earth Mined",
+    clarity: "VS to Eye Clean",
+    price: 3800.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A tray of deep-toned, chocolate, and cognac natural gemstones exhibiting fiery singly-refractive and high-dispersion flashes.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-BRN19",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/19_dark_and_brown_gems_tray.jpeg`, alt: "Dark & Brown Gem Tray" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00033",
+    slug: "gem-trays-and-necklace-arrangement",
+    name: "Gem Trays & High-Jewelry Arrangement",
+    variety: "Atelier Suite & Loose Gems",
+    carat: 35.00,
+    origin: "Ratnapura Mines",
+    cut: "Mixed Faceted Suite",
+    dimensions: "Master Atelier Display Tray",
+    color: "Multi-Color Royal Ceylon",
+    treatment: "Natural Earth Mined",
+    clarity: "VVS to Eye Clean",
+    price: 16500.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "Multiple gemstone trays presented alongside finished high-jewelry specimens in our private salon.",
+    certificate_lab: "NGJA Atelier Certified",
+    certificate_number: "NGJA-ATELIER-20",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/20_gem_trays_and_necklace_arrangement.jpeg`, alt: "Gem Trays & Necklace Arrangement" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00034",
+    slug: "mixed-gem-display-boxes",
+    name: "Mixed Gem Display Boxes",
+    variety: "Curated Single-Box Collection",
+    carat: 8.90,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Assorted Oval and Cushion",
+    dimensions: "Individual display boxes",
+    color: "Mixed Rainbow Spectrum",
+    treatment: "Natural Untreated",
+    clarity: "Eye Clean",
+    price: 4200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A selection of individual gem boxes holding loose collector gems across a variety of colors.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-BOXES-21",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/21_mixed_gem_display_boxes.jpeg`, alt: "Mixed Gem Display Boxes" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00035",
+    slug: "two-mixed-gem-trays",
+    name: "Two Mixed Gem Trays Selection",
+    variety: "Dual Master Trays Selection",
+    carat: 22.00,
+    origin: "Elahera & Ratnapura",
+    cut: "Assorted Faceted Lot",
+    dimensions: "Dual standard gemological trays",
+    color: "Vibrant Mixed Sapphire & Spinel",
+    treatment: "Natural 100% Earth Mined",
+    clarity: "Eye Clean to VS",
+    price: 8900.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "Two master trays containing loose gemstones in mixed colours, suitable for wholesale collectors and designers.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-DUAL-24",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/24_two_gem_trays_mixed_collection.jpeg`, alt: "Two Mixed Gem Trays" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00036",
+    slug: "mixed-colour-handheld-gem-tray",
+    name: "Mixed Colour Handheld Gem Tray",
+    variety: "Vibrant Mixed Lot Hand Tray",
+    carat: 14.20,
+    origin: "Ratnapura, Sri Lanka",
+    cut: "Assorted Cut Parcel",
+    dimensions: "Handheld gem tray",
+    color: "Mixed Colours",
+    treatment: "Natural Earth Mined",
+    clarity: "Eye Clean",
+    price: 5400.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A handheld tray holding a lively collection of mixed-colour natural gemstones held under natural daylight.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-HAND-27",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Mixed_Colors/27_mixed_color_gems_handheld_tray.jpeg`, alt: "Mixed Colour Handheld Gem Tray" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00037",
+    slug: "blue-and-clear-gem-tray",
+    name: "Blue & Clear Gem Tray",
+    variety: "Blue & Colourless Sapphire Lot",
+    carat: 16.40,
+    origin: "Ratnapura (City of Gems)",
+    cut: "Assorted Mixed Cut Lot",
+    dimensions: "Tray dimensions 100 x 60 mm",
+    color: "Royal Blue & White Sapphire",
+    treatment: "Natural Earth Mined",
+    clarity: "Eye Clean VVS",
+    price: 7400.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A tray of sparkling Ceylon blue and colourless natural sapphires with crystal transparency and sharp facet edges.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-BC11",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Blue_and_Clear/11_blue_clear_gems_tray.jpeg`, alt: "Blue & Clear Gem Tray" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00038",
+    slug: "blue-clear-and-green-gem-trays",
+    name: "Blue, Clear & Green Gem Trays",
+    variety: "Jeweller's Multi-Tray Ceylon Lot",
+    carat: 28.50,
+    origin: "Ratnapura & Pelmadulla",
+    cut: "Assorted Brilliant & Mixed Cuts",
+    dimensions: "Triple inspection trays",
+    color: "Blue, Clear & Olive Green",
+    treatment: "Natural Earth Mined",
+    clarity: "Eye Clean",
+    price: 11200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "Trays of blue, colourless, and green gemstones arranged for side-by-side selection and grading.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-BCG25",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Blue_and_Clear/25_blue_clear_and_green_gem_trays.jpeg`, alt: "Blue Clear and Green Gem Trays" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00039",
+    slug: "small-blue-gem-collection",
+    name: "Small Blue Gem Collection",
+    variety: "Calibrated Blue Sapphires Lot",
+    carat: 6.80,
+    origin: "Ratnapura, Sri Lanka",
+    cut: "Assorted Oval and Cushion",
+    dimensions: "Calibrated 4 to 6 mm",
+    color: "Vivid Ceylon Blue",
+    treatment: "Natural Unheated",
+    clarity: "Eye Clean",
+    price: 3600.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A compact curated collection of five vivid blue Ceylon sapphires with uniform tone.",
+    certificate_lab: "NGJA Certified",
+    certificate_number: "NGJA-SM-BLU46",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Blue_and_Clear/46_blue_gems_small_collection.jpeg`, alt: "Small Blue Gem Collection" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00040",
+    slug: "blue-and-yellow-gem-tray",
+    name: "Blue & Yellow Gem Tray",
+    variety: "Dual-Tone Blue & Pushparaga Parcel",
+    carat: 13.50,
+    origin: "Ratnapura & Balangoda",
+    cut: "Assorted Mixed Cut Parcel",
+    dimensions: "Tray dimensions 90 x 50 mm",
+    color: "Royal Blue & Imperial Honey Gold",
+    treatment: "Natural Earth Mined",
+    clarity: "VVS to Eye Clean",
+    price: 6200.00,
+    currency: "USD",
+    in_stock: true,
+    featured: false,
+    description: "A striking parcel pairing Ceylon blue sapphires and golden yellow Pushparaga gems.",
+    certificate_lab: "NGJA Lot Certificate",
+    certificate_number: "NGJA-LOT-BY16",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Blue_and_Yellow/16_blue_yellow_gems_small_tray.jpeg`, alt: "Blue & Yellow Gem Tray" }
+    ]
+  },
+  {
+    id: "e7f53941-86a0-4352-87f5-234208a00041",
+    slug: "pink-and-red-gem-tray",
+    name: "Pink & Red Gem Tray",
+    variety: "Pink Sapphire & Ruby Parcel",
+    carat: 12.80,
+    origin: "Pelmadulla, Sri Lanka",
+    cut: "Assorted Mixed Cuts (Lot)",
+    dimensions: "Tray dimensions 90 x 50 mm",
+    color: "Hot Magenta Pink & Pigeon Blood Red",
+    treatment: "None / Unheated (Natural Fluorescence)",
+    clarity: "Eye Clean",
+    price: 9600.00,
+    currency: "USD",
+    in_stock: true,
+    featured: true,
+    description: "A premier tray of pink sapphires and natural Ceylon rubies displaying intense crimson luminescence under ultraviolet light.",
+    certificate_lab: "GRS & NGJA Lot Certificate",
+    certificate_number: "GRS-LOT-PR13",
+    certificate_pdf_url: null,
+    images: [
+      { url: `${TRAYS}/Pink_and_Red/13_pink_red_gems_tray.jpeg`, alt: "Pink & Red Gem Tray" }
+    ]
+  }
+];
+
+export const REAL_ORDERS = [
+  {
+    id: "ISU-984102",
+    customer_name: "Lord Julian Hastings",
+    email: "julian.hastings@mayfairholdings.co.uk",
+    phone: "+44 20 7946 0912",
+    shipping_address: "Flat 4B, 18 Grosvenor Square",
+    city: "London",
+    country: "United Kingdom",
+    total_amount: 22800.00,
+    currency: "USD",
+    status: "customs_clearance",
+    notes: "VIP Client requested arm-to-arm courier handover at Heathrow Vault facility for 'Tear of Serendib'."
+  },
+  {
+    id: "ISU-983940",
+    customer_name: "Elena Vane-Tempest",
+    email: "elena.vane@genevafamilyoffice.ch",
+    phone: "+41 22 555 0198",
+    shipping_address: "Quai du Mont-Blanc 23",
+    city: "Geneva",
+    country: "Switzerland",
+    total_amount: 24000.00,
+    currency: "USD",
+    status: "escrow_funded",
+    notes: "Escrow funds confirmed in Zurich trust account. Preparing NGJA export gemological seal for Ceylon Padparadscha."
+  },
+  {
+    id: "ISU-982855",
+    customer_name: "Kenjiro Takahashi",
+    email: "k.takahashi@ginzagems.tokyo.jp",
+    phone: "+81 3 5555 0142",
+    shipping_address: "7-8-12 Ginza, Chuo-ku",
+    city: "Tokyo",
+    country: "Japan",
+    total_amount: 16200.00,
+    currency: "USD",
+    status: "dispatched",
+    notes: "Dispatched via Malca-Amit express route for Natural Ceylon Ruby. Tracking FX-NRT-9941203."
+  },
+  {
+    id: "ISU-981120",
+    customer_name: "Dr. Tariq Al-Mansoor",
+    email: "tariq.mansoor@almansoor-jewels.ae",
+    phone: "+971 4 332 9901",
+    shipping_address: "DIFC Gate Precinct 4, Office 802",
+    city: "Dubai",
+    country: "United Arab Emirates",
+    total_amount: 28500.00,
+    currency: "USD",
+    status: "delivered",
+    notes: "Delivered to Dubai Gold & Commodity Exchange vault. Verified Ceylon Alexandrite with client inspection."
+  },
+  {
+    id: "ISU-980045",
+    customer_name: "Henrietta Dupont",
+    email: "h.dupont@place-vendome.fr",
+    phone: "+33 1 42 68 00 22",
+    shipping_address: "14 Place Vendôme",
+    city: "Paris",
+    country: "France",
+    total_amount: 11400.00,
+    currency: "USD",
+    status: "pending_verification",
+    notes: "Wire transfer initiated for Ceylon Golden Pushparaga Yellow Sapphire."
+  }
+];
+
+export const REAL_INQUIRIES = [
+  {
+    gem_id: "e7f53941-86a0-4352-87f5-234208a00001",
+    gem_name: "Ceylon Royal Blue Sapphire 'Tear of Serendib'",
+    full_name: "Marcus Vance",
+    email: "marcus.vance@vancecap.com",
+    phone: "+1 212 555 0149",
+    country: "United States",
+    message: "Interested in acquiring this 4.15ct royal blue pear for an engagement ring commission. Could you provide a 4K video showing facet extinction under daylight?",
+    preferred_currency: "USD",
+    status: "pending"
+  },
+  {
+    gem_id: "e7f53941-86a0-4352-87f5-234208a00002",
+    gem_name: "Ceylon Padparadscha Sapphire (Lotus Blossom)",
+    full_name: "Lady Penelope Sterling",
+    email: "p.sterling@mayfair-invest.co.uk",
+    phone: "+44 7700 900342",
+    country: "United Kingdom",
+    message: "Requesting SSEF origin verification report and appointment details for private viewing in Colombo during late October.",
+    preferred_currency: "USD",
+    status: "replied"
+  },
+  {
+    gem_id: "e7f53941-86a0-4352-87f5-234208a00028",
+    gem_name: "Multicolour Round Gem Tray (42 Brilliant Stones)",
+    full_name: "Takashi Miyamoto",
+    email: "miyamoto@tokyo-finegems.jp",
+    phone: "+81 90 1234 5678",
+    country: "Japan",
+    message: "We are an atelier in Ginza looking for calibrated 3.0-4.5mm round lots. What are the export duties and NGJA seal turnaround time for Tokyo delivery?",
+    preferred_currency: "USD",
+    status: "in_progress"
+  }
+];
+
+async function seedDatabase() {
+  console.log("Starting Supabase seeding with REAL Isuru Gems products...");
+
+  // 1. Seed Gemstones
+  console.log(`Upserting ${REAL_PRODUCTS.length} gemstones into public.gemstones...`);
+  const { data: gemData, error: gemError } = await supabase
+    .from("gemstones")
+    .upsert(REAL_PRODUCTS, { onConflict: "slug" })
+    .select("id, slug, name, price, carat");
+
+  if (gemError) {
+    console.error("Gemstones seed error:", gemError);
+  } else {
+    console.log(`Successfully seeded ${gemData?.length || REAL_PRODUCTS.length} gemstones!`);
+    const totalVal = REAL_PRODUCTS.reduce((acc, g) => acc + g.price, 0);
+    const totalCt = REAL_PRODUCTS.reduce((acc, g) => acc + g.carat, 0);
+    console.log(`Vault Valuation: $${totalVal.toLocaleString()} across ${totalCt.toFixed(2)} carats!`);
+  }
+
+  // 2. Seed Orders
+  console.log(`Upserting ${REAL_ORDERS.length} orders into public.orders...`);
+  const { error: ordError } = await supabase
+    .from("orders")
+    .upsert(REAL_ORDERS, { onConflict: "id" });
+
+  if (ordError) {
+    console.warn("Orders seed note:", ordError.message);
+  } else {
+    console.log(`Successfully seeded ${REAL_ORDERS.length} orders!`);
+  }
+
+  // 3. Seed Inquiries
+  console.log(`Inserting inquiries into public.inquiries...`);
+  const { count: inqCount } = await supabase.from("inquiries").select("*", { count: "exact", head: true });
+  if (!inqCount || inqCount === 0) {
+    const { error: inqError } = await supabase.from("inquiries").insert(REAL_INQUIRIES);
+    if (inqError) {
+      console.warn("Inquiries seed note:", inqError.message);
+    } else {
+      console.log(`Successfully seeded ${REAL_INQUIRIES.length} inquiries!`);
+    }
+  } else {
+    console.log(`Inquiries already present (${inqCount} rows).`);
+  }
+
+  console.log("Database update with real products completed successfully!");
+}
+
+seedDatabase();

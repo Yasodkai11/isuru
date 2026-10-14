@@ -117,6 +117,7 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
             pdfUrl: row.certificate_pdf_url || undefined,
           },
           images: Array.isArray(row.images) ? (row.images as unknown as GemImage[]) : [],
+          category: row.category || undefined,
         }));
 
         return {
@@ -256,6 +257,7 @@ export async function getGemBySlug(slug: string): Promise<Gemstone | null> {
             pdfUrl: data.certificate_pdf_url || undefined,
           },
           images: Array.isArray(data.images) ? (data.images as unknown as GemImage[]) : [],
+          category: data.category || undefined,
         };
       }
     } catch (err) {

@@ -38,6 +38,7 @@ export interface AdminState {
   settings: AdminSettingsData;
 
   // Products CRUD
+  setGemstones: (gemstones: Gemstone[]) => void;
   addGemstone: (gem: Gemstone) => void;
   updateGemstone: (id: string, partial: Partial<Gemstone>) => void;
   deleteGemstone: (id: string) => void;
@@ -50,12 +51,14 @@ export interface AdminState {
   deleteCategory: (id: string) => void;
 
   // Orders Workflow
+  setOrders: (orders: AdminOrder[]) => void;
   updateOrderStatus: (orderId: string, status: OrderStatus) => void;
   updateOrderTracking: (orderId: string, carrier: string, trackingNumber: string) => void;
   addOrder: (order: AdminOrder) => void;
   deleteOrder: (orderId: string) => void;
 
   // Enquiries Workflow
+  setEnquiries: (enquiries: AdminEnquiry[]) => void;
   updateEnquiryStatus: (id: string, status: EnquiryStatus, replyNotes?: string) => void;
   deleteEnquiry: (id: string) => void;
 
@@ -99,6 +102,10 @@ export const useAdminStore = create<AdminState>()(
       staff: [...INITIAL_ADMIN_STAFF],
 
       // Gemstones CRUD
+      setGemstones: (gemstones) => {
+        set({ gemstones });
+      },
+
       addGemstone: (gem) => {
         set((state) => ({
           gemstones: [gem, ...state.gemstones],
@@ -153,6 +160,10 @@ export const useAdminStore = create<AdminState>()(
       },
 
       // Orders
+      setOrders: (orders) => {
+        set({ orders });
+      },
+
       updateOrderStatus: (orderId, status) => {
         set((state) => ({
           orders: state.orders.map((o) => (o.id === orderId ? { ...o, status } : o)),
@@ -187,6 +198,10 @@ export const useAdminStore = create<AdminState>()(
       },
 
       // Enquiries
+      setEnquiries: (enquiries) => {
+        set({ enquiries });
+      },
+
       updateEnquiryStatus: (id, status, replyNotes) => {
         set((state) => ({
           enquiries: state.enquiries.map((e) =>
@@ -314,7 +329,7 @@ export const useAdminStore = create<AdminState>()(
       },
     }),
     {
-      name: "isuru-gems-admin-store-v2",
+      name: "isuru-gems-admin-store-v3",
       storage: createJSONStorage(() => (typeof window !== "undefined" ? localStorage : ({} as Storage))),
     }
   )

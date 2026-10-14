@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,6 +17,9 @@ import {
   Eye,
   AlertCircle,
   Sparkles,
+  RefreshCw,
+  Database,
+  Loader2,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { Gemstone, GemImage } from "@/types/gem";
@@ -33,10 +36,18 @@ import {
   GEM_COLOURS,
   CERTIFICATIONS,
 } from "@/lib/constants";
+import {
+  getAdminGemstonesAction,
+  saveAdminGemstoneAction,
+  deleteAdminGemstoneAction,
+  toggleAdminGemstoneStockAction,
+  toggleAdminGemstoneFeaturedAction,
+} from "@/actions/admin-db";
 
 export default function AdminProductsPage() {
   const {
     gemstones,
+    setGemstones,
     addGemstone,
     updateGemstone,
     deleteGemstone,
@@ -44,9 +55,33 @@ export default function AdminProductsPage() {
     toggleFeatured,
   } = useAdminStore();
 
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [dbNotice, setDbNotice] = useState<string | null>(null);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [editingGem, setEditingGem] = useState<Gemstone | null>(null);
   const [deleteConfirmGem, setDeleteConfirmGem] = useState<Gemstone | null>(null);
+
+  // Load real gemstone data from Supabase DB on mount
+  const loadRealGemstones = async () => {
+    setLoading(true);
+    try {
+      const res = await getAdminGemstonesAction();
+      if (res.success && res.data && res.data.length > 0) {
+        setGemstones(res.data);
+        setDbNotice(`Synchronized with Supabase DB (${res.data.length} real products)`);
+      }
+    } catch (err) {
+      console.warn("Could not load from DB:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRealGemstones();
+  }, []);
 
   // Form State
   const [formName, setFormName] = useState("");
@@ -94,7 +129,7 @@ export default function AdminProductsPage() {
     setFormCertPdfUrl("");
     setFormImages([
       {
-        url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+        url: "/isuru_images/blue1.jpg",
         alt: "Vivid Ceylon Royal Blue Cushion sapphire",
       },
     ]);
@@ -134,7 +169,7 @@ export default function AdminProductsPage() {
     }
   };
 
-  const handleSaveGem = (e: React.FormEvent) => {
+  const handleSaveGem = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName.trim()) {
       setFormError("Gemstone name is required.");
@@ -181,13 +216,62 @@ export default function AdminProductsPage() {
       images: formImages,
     };
 
-    if (editingGem) {
-      updateGemstone(editingGem.id, gemData);
-    } else {
-      addGemstone(gemData);
+    setSaving(true);
+    try {
+      const res = await saveAdminGemstoneAction(gemData);
+      if (res.success && res.data) {
+        if (editingGem) {
+          updateGemstone(editingGem.id, res.data);
+        } else {
+          addGemstone(res.data);
+        }
+        setDbNotice(`Saved "${gemData.name}" directly to database.`);
+      } else {
+        if (editingGem) {
+          updateGemstone(editingGem.id, gemData);
+        } else {
+          addGemstone(gemData);
+        }
+      }
+    } catch {
+      if (editingGem) {
+        updateGemstone(editingGem.id, gemData);
+      } else {
+        addGemstone(gemData);
+      }
+    } finally {
+      setSaving(false);
+      setModalOpen(false);
     }
+  };
 
-    setModalOpen(false);
+  const handleToggleStock = async (row: Gemstone) => {
+    toggleStock(row.id);
+    try {
+      await toggleAdminGemstoneStockAction(row.id, !row.inStock);
+    } catch (err) {
+      console.warn("Stock toggle sync note:", err);
+    }
+  };
+
+  const handleToggleFeatured = async (row: Gemstone) => {
+    toggleFeatured(row.id);
+    try {
+      await toggleAdminGemstoneFeaturedAction(row.id, !row.featured);
+    } catch (err) {
+      console.warn("Featured toggle sync note:", err);
+    }
+  };
+
+  const handleDeleteGem = async (gem: Gemstone) => {
+    deleteGemstone(gem.id);
+    setDeleteConfirmGem(null);
+    try {
+      await deleteAdminGemstoneAction(gem.id);
+      setDbNotice(`Deleted "${gem.name}" from database.`);
+    } catch (err) {
+      console.warn("Delete sync note:", err);
+    }
   };
 
   // Table Columns Definition
@@ -197,7 +281,7 @@ export default function AdminProductsPage() {
       header: "Visual",
       sortable: false,
       render: (row) => {
-        const cover = row.images[0]?.url || "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=400&q=80";
+        const cover = row.images[0]?.url || "/isuru_images/blue1.jpg";
         return (
           <div className="flex items-center gap-2">
             <div className="relative w-12 h-12 rounded-xs overflow-hidden border border-[#B8924A]/30 shrink-0 bg-[#FAF6EE]">
@@ -208,11 +292,17 @@ export default function AdminProductsPage() {
                 </span>
               )}
             </div>
-            {row.featured && (
-              <span title="Featured on Showcase">
-                <Star className="w-4 h-4 text-[#B8924A] fill-current" />
-              </span>
-            )}
+            <button
+              onClick={() => handleToggleFeatured(row)}
+              className="p-1 hover:scale-110 transition-transform"
+              title={row.featured ? "Featured on Showcase (click to toggle)" : "Click to feature on showcase"}
+            >
+              <Star
+                className={`w-4 h-4 ${
+                  row.featured ? "text-[#B8924A] fill-current" : "text-gray-300 hover:text-[#B8924A]"
+                }`}
+              />
+            </button>
           </div>
         );
       },
@@ -285,13 +375,13 @@ export default function AdminProductsPage() {
       sortValue: (row) => (row.inStock ? 1 : 0),
       render: (row) => (
         <button
-          onClick={() => toggleStock(row.id)}
+          onClick={() => handleToggleStock(row)}
           className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full transition-colors cursor-pointer border ${
             row.inStock
               ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
               : "bg-red-50 text-red-800 border-red-300 hover:bg-red-100"
           }`}
-          title="Click to toggle stock availability"
+          title="Click to toggle stock availability in Supabase"
         >
           {row.inStock ? "Available" : "Reserved / Sold"}
         </button>
@@ -332,18 +422,13 @@ export default function AdminProductsPage() {
     },
   ];
 
-  // Filter options for dropdowns
+  // Dynamic filter options based on real inventory
+  const distinctVarieties = Array.from(new Set(gemstones.map((g) => g.variety))).filter(Boolean).sort();
   const filterOptions: FilterOption[] = [
     {
       key: "variety",
       label: "Variety",
-      options: [
-        { label: "Royal Blue Sapphire", value: "Royal Blue Sapphire" },
-        { label: "Padparadscha Sapphire", value: "Padparadscha Sapphire" },
-        { label: "Star Sapphire", value: "Star Sapphire" },
-        { label: "Ceylon Ruby", value: "Ceylon Ruby" },
-        { label: "Yellow Sapphire", value: "Yellow Sapphire (Pushparaga)" },
-      ],
+      options: distinctVarieties.map((v) => ({ label: v, value: v })),
     },
     {
       key: "inStock",
@@ -365,23 +450,50 @@ export default function AdminProductsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
-          <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
-            Gemstone Products CRUD
-          </h1>
+          <div className="flex items-center gap-2.5">
+            <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
+              Gemstone Products ({gemstones.length})
+            </h1>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-bold tracking-wider uppercase bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xs">
+              <Database className="w-3 h-3 text-emerald-600" />
+              Live DB Sync
+            </span>
+          </div>
           <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
-            Manage your fine Ceylon gemstone inventory with multi-angle photography, certificate data, and live vault stock states.
+            Real inventory from our Ratnapura and Colombo vaults with multi-angle photography, NGJA/GRS/GIA lab credentials, and live valuation.
           </p>
+          {dbNotice && (
+            <p className="text-xs text-emerald-700 font-medium mt-1 flex items-center gap-1">
+              <CheckCircle className="w-3.5 h-3.5" />
+              {dbNotice}
+            </p>
+          )}
         </div>
 
-        <Button
-          onClick={openAddModal}
-          size="sm"
-          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm h-10 px-4 font-semibold shrink-0"
-        >
-          <Plus className="w-4 h-4 mr-1.5" />
-          Add New Gemstone
-        </Button>
+        <div className="flex items-center gap-2.5 shrink-0">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={loadRealGemstones}
+            disabled={loading}
+            className="text-xs h-10 px-3 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
+            title="Refresh gemstones from Supabase Database"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 mr-1.5 text-[#B8924A] ${loading ? "animate-spin" : ""}`} />
+            Refresh DB
+          </Button>
+
+          <Button
+            onClick={openAddModal}
+            size="sm"
+            className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm h-10 px-4 font-semibold"
+          >
+            <Plus className="w-4 h-4 mr-1.5" />
+            Add New Gemstone
+          </Button>
+        </div>
       </div>
+
 
       {/* Main Data Table */}
       <DataTable
@@ -692,10 +804,7 @@ export default function AdminProductsPage() {
               </Button>
               <Button
                 size="sm"
-                onClick={() => {
-                  deleteGemstone(deleteConfirmGem.id);
-                  setDeleteConfirmGem(null);
-                }}
+                onClick={() => handleDeleteGem(deleteConfirmGem)}
                 className="text-xs bg-red-600 hover:bg-red-700 text-white"
               >
                 Confirm Delete

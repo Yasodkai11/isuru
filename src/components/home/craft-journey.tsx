@@ -23,10 +23,10 @@ const STEPS = [
   },
   {
     no: "03",
-    title: "Independently Certified",
-    desc: "Every stone documented by NGJA, GIA, GRS or SSEF, so origin and treatment are verified rather than just promised.",
+    title: "Meticulously Inspected",
+    desc: "Every gem personally examined under high-magnification microscopy to verify authentic natural crystal growth and zero artificial enhancement.",
     image: "/isuru_images/examining.jpg",
-    alt: "Polished oval Ceylon royal blue sapphire displayed on a carved wooden stand",
+    alt: "Expert gemological examination of natural Ceylon sapphire rough and cut gems",
   },
   {
     no: "04",

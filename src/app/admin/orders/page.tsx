@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   ShoppingBag,
@@ -18,6 +18,8 @@ import {
   DollarSign,
   Send,
   Plane,
+  RefreshCw,
+  Database,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { AdminOrder, OrderStatus } from "@/types/admin";
@@ -26,6 +28,10 @@ import { formatCurrency, formatCarats } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
+import {
+  getAdminOrdersAction,
+  updateAdminOrderStatusAction,
+} from "@/actions/admin-db";
 
 const WORKFLOW_STEPS: { status: OrderStatus; label: string; desc: string }[] = [
   {
@@ -56,13 +62,32 @@ const WORKFLOW_STEPS: { status: OrderStatus; label: string; desc: string }[] = [
 ];
 
 export default function AdminOrdersPage() {
-  const { orders, updateOrderStatus, updateOrderTracking } = useAdminStore();
+  const { orders, setOrders, updateOrderStatus, updateOrderTracking } = useAdminStore();
+  const [loading, setLoading] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
 
   // Tracking form inputs
   const [carrierInput, setCarrierInput] = useState("");
   const [trackingNumberInput, setTrackingNumberInput] = useState("");
   const [customsNumberInput, setCustomsNumberInput] = useState("");
+
+  const loadRealOrders = async () => {
+    setLoading(true);
+    try {
+      const res = await getAdminOrdersAction();
+      if (res.success && res.data && res.data.length > 0) {
+        setOrders(res.data);
+      }
+    } catch (err) {
+      console.warn("Could not load orders:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRealOrders();
+  }, []);
 
   const openOrderDetail = (order: AdminOrder) => {
     setSelectedOrder(order);
@@ -71,7 +96,7 @@ export default function AdminOrdersPage() {
     setCustomsNumberInput(order.customsDeclarationNumber || `LK-CUSTOMS-2026-EXP-${order.id.slice(-4)}`);
   };
 
-  const advanceWorkflow = (currentStatus: OrderStatus) => {
+  const advanceWorkflow = async (currentStatus: OrderStatus) => {
     if (!selectedOrder) return;
     let nextStatus: OrderStatus = currentStatus;
 
@@ -82,6 +107,12 @@ export default function AdminOrdersPage() {
 
     updateOrderStatus(selectedOrder.id, nextStatus);
     setSelectedOrder({ ...selectedOrder, status: nextStatus });
+
+    try {
+      await updateAdminOrderStatusAction(selectedOrder.id, nextStatus);
+    } catch (err) {
+      console.warn("Order status sync note:", err);
+    }
   };
 
   const handleSaveTracking = (e: React.FormEvent) => {
@@ -234,13 +265,28 @@ export default function AdminOrdersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
-          <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
-            Acquisition Orders & Dispatch Workflow
-          </h1>
+          <div className="flex items-center gap-2.5">
+            <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
+              Acquisition Orders & Dispatch Workflow
+            </h1>
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300">
+              <Database className="w-3 h-3 text-emerald-600" />
+              Live DB Sync
+            </span>
+          </div>
           <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Progress high-value client gem acquisitions from escrow funding through NGJA export sealing and armored courier flight dispatch.
           </p>
         </div>
+        <Button
+          onClick={loadRealOrders}
+          disabled={loading}
+          variant="outline"
+          className="border-[#B8924A]/50 text-[#5E0F1E] hover:bg-[#FAF6EE] flex items-center gap-2"
+        >
+          <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+          <span>{loading ? "Syncing..." : "Refresh DB"}</span>
+        </Button>
       </div>
 
       {/* Orders Data Table */}

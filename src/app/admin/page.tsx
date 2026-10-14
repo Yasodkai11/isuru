@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   DollarSign,
@@ -18,14 +18,62 @@ import {
   Eye,
   AlertTriangle,
   Flame,
+  RefreshCw,
+  Database,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { formatCurrency, formatCarats } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  getAdminGemstonesAction,
+  getAdminOrdersAction,
+  getAdminInquiriesAction,
+} from "@/actions/admin-db";
 
 export default function AdminDashboardPage() {
-  const { gemstones, orders, enquiries, categories } = useAdminStore();
+  const {
+    gemstones,
+    setGemstones,
+    orders,
+    setOrders,
+    enquiries,
+    setEnquiries,
+    categories,
+  } = useAdminStore();
+
+  const [loading, setLoading] = useState(false);
+  const [syncNotice, setSyncNotice] = useState<string | null>(null);
+
+  const loadRealAdminData = async () => {
+    setLoading(true);
+    try {
+      const [gemsRes, ordersRes, inqRes] = await Promise.all([
+        getAdminGemstonesAction(),
+        getAdminOrdersAction(),
+        getAdminInquiriesAction(),
+      ]);
+
+      if (gemsRes.success && gemsRes.data) {
+        setGemstones(gemsRes.data);
+      }
+      if (ordersRes.success && ordersRes.data) {
+        setOrders(ordersRes.data);
+      }
+      if (inqRes.success && inqRes.data) {
+        setEnquiries(inqRes.data);
+      }
+      setSyncNotice(`Synced live with Supabase DB: ${gemsRes.data?.length || gemstones.length} gemstones, ${ordersRes.data?.length || orders.length} orders.`);
+    } catch (err) {
+      console.warn("Admin sync note:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRealAdminData();
+  }, []);
 
   // Metrics
   const totalVaultValue = gemstones.reduce((sum, g) => sum + g.price, 0);
@@ -75,16 +123,35 @@ export default function AdminDashboardPage() {
             <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
               Vault Overview
             </h1>
-            <span className="px-2.5 py-0.5 text-xs uppercase font-bold tracking-widest bg-[#B8924A]/20 text-[#5E0F1E] border border-[#B8924A]/40 rounded-xs">
-              Live
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-bold tracking-wider uppercase bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xs">
+              <Database className="w-3 h-3 text-emerald-600" />
+              Supabase Live
             </span>
           </div>
           <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Executive cockpit for Ceylon sapphire acquisitions, high-value vault inventory, and NGJA export logistics.
           </p>
+          {syncNotice && (
+            <p className="text-xs text-emerald-700 font-medium mt-1 flex items-center gap-1">
+              <CheckCircle className="w-3.5 h-3.5" />
+              {syncNotice}
+            </p>
+          )}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 shrink-0">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={loadRealAdminData}
+            disabled={loading}
+            className="text-xs h-10 px-3 border-[#B8924A]/40 text-[#5E0F1E] hover:bg-[#B8924A]/10 font-semibold"
+            title="Refresh overview from Supabase Database"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 mr-1.5 text-[#B8924A] ${loading ? "animate-spin" : ""}`} />
+            Refresh
+          </Button>
+
           <Link href="/admin/products">
             <Button
               variant="outline"

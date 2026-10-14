@@ -11,7 +11,6 @@ const EXPLORE_LINKS = [
   { label: "Gemstones Catalog", href: "/gems" },
   { label: "Our Story & Heritage", href: "/about" },
   { label: "Wholesale & B2B", href: "/wholesale" },
-  { label: "Certificates", href: "/certificates" },
   { label: "Contact Concierge", href: "/contact" },
 ];
 

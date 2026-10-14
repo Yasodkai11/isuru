@@ -97,7 +97,7 @@ export async function getCustomersAction(): Promise<CustomerActionResult<AdminCu
         row.last_acquisition_date ||
         (row.updated_at ? new Date(row.updated_at).toISOString().split("T")[0] : "Recent"),
       preferredVarieties: Array.isArray(row.preferred_varieties)
-        ? row.preferred_varieties
+        ? (row.preferred_varieties as string[])
         : ["Royal Blue Sapphire"],
       notes: row.notes || undefined,
     }));
@@ -177,7 +177,7 @@ export async function getCustomerProfileAction(
       ordersCount: Number(data.orders_count) || 0,
       firstAcquisitionDate: data.first_acquisition_date,
       lastAcquisitionDate: data.last_acquisition_date,
-      preferredVarieties: Array.isArray(data.preferred_varieties) ? data.preferred_varieties : [],
+      preferredVarieties: Array.isArray(data.preferred_varieties) ? (data.preferred_varieties as string[]) : [],
       notes: data.notes,
     };
 
@@ -231,7 +231,7 @@ export async function updateCustomerProfileAction(
 
     const { error } = await supabase
       .from("profiles")
-      .update(updateFields)
+      .update(updateFields as any)
       .or(`user_id.eq.${authData.user.id},id.eq.${authData.user.id}`);
 
     if (error) {
@@ -280,7 +280,7 @@ export async function adminUpdateCustomerAction(
 
     const { error } = await supabase
       .from("profiles")
-      .update(updatePayload)
+      .update(updatePayload as any)
       .eq("id", customerId);
 
     if (error) {
@@ -372,7 +372,7 @@ export async function adminCreateCustomerAction(
       ordersCount: Number(data.orders_count) || 0,
       firstAcquisitionDate: data.first_acquisition_date || new Date().toISOString().split("T")[0],
       lastAcquisitionDate: data.last_acquisition_date || new Date().toISOString().split("T")[0],
-      preferredVarieties: Array.isArray(data.preferred_varieties) ? data.preferred_varieties : [],
+      preferredVarieties: Array.isArray(data.preferred_varieties) ? (data.preferred_varieties as string[]) : [],
       notes: data.notes || undefined,
     };
 

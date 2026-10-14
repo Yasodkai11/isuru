@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Inbox,
@@ -15,6 +15,8 @@ import {
   ArrowRight,
   Send,
   Trash2,
+  RefreshCw,
+  Database,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { AdminEnquiry, EnquiryStatus } from "@/types/admin";
@@ -22,6 +24,11 @@ import { DataTable, ColumnDef, FilterOption } from "@/components/admin/data-tabl
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
+import {
+  getAdminInquiriesAction,
+  updateAdminInquiryStatusAction,
+  deleteAdminInquiryAction,
+} from "@/actions/admin-db";
 
 const CANNED_TEMPLATES = [
   {
@@ -39,10 +46,29 @@ const CANNED_TEMPLATES = [
 ];
 
 export default function AdminEnquiriesPage() {
-  const { enquiries, updateEnquiryStatus, deleteEnquiry } = useAdminStore();
+  const { enquiries, setEnquiries, updateEnquiryStatus, deleteEnquiry } = useAdminStore();
+  const [loading, setLoading] = useState(false);
   const [selectedEnquiry, setSelectedEnquiry] = useState<AdminEnquiry | null>(null);
   const [replyText, setReplyText] = useState("");
   const [replyStatus, setReplyStatus] = useState<EnquiryStatus>("replied");
+
+  const loadRealInquiries = async () => {
+    setLoading(true);
+    try {
+      const res = await getAdminInquiriesAction();
+      if (res.success && res.data && res.data.length > 0) {
+        setEnquiries(res.data);
+      }
+    } catch (err) {
+      console.warn("Could not load inquiries from DB:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRealInquiries();
+  }, []);
 
   const openEnquiry = (enq: AdminEnquiry) => {
     setSelectedEnquiry(enq);
@@ -50,12 +76,29 @@ export default function AdminEnquiriesPage() {
     setReplyStatus(enq.status === "pending" ? "in_progress" : enq.status);
   };
 
-  const handleSaveReply = (e: React.FormEvent) => {
+  const handleSaveReply = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedEnquiry) return;
 
     updateEnquiryStatus(selectedEnquiry.id, replyStatus, replyText);
+    const targetId = selectedEnquiry.id;
     setSelectedEnquiry(null);
+
+    try {
+      await updateAdminInquiryStatusAction(targetId, replyStatus, replyText);
+    } catch (err) {
+      console.warn("Inquiry DB sync note:", err);
+    }
+  };
+
+  const handleDeleteEnquiry = async (id: string) => {
+    if (!confirm("Are you sure you want to remove this inquiry dossier?")) return;
+    deleteEnquiry(id);
+    try {
+      await deleteAdminInquiryAction(id);
+    } catch (err) {
+      console.warn("Inquiry deletion sync note:", err);
+    }
   };
 
   const getStatusBadge = (status: EnquiryStatus) => {
@@ -155,7 +198,7 @@ export default function AdminEnquiriesPage() {
             <ArrowRight className="w-3.5 h-3.5 ml-1" />
           </Button>
           <button
-            onClick={() => deleteEnquiry(row.id)}
+            onClick={() => handleDeleteEnquiry(row.id)}
             className="p-1 text-red-500 hover:text-red-700"
             title="Delete Enquiry"
           >
@@ -194,13 +237,28 @@ export default function AdminEnquiriesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B8924A]/25">
         <div>
-          <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
-            Concierge Enquiries Inbox
-          </h1>
+          <div className="flex items-center gap-2.5">
+            <h1 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-medium tracking-wide">
+              Concierge Enquiries Inbox
+            </h1>
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300">
+              <Database className="w-3 h-3 text-emerald-600" />
+              Live DB Sync
+            </span>
+          </div>
           <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
             Private client dossiers, bespoke gem inquiries, and international high jewellery wholesale parcel requests.
           </p>
         </div>
+        <Button
+          onClick={loadRealInquiries}
+          disabled={loading}
+          variant="outline"
+          className="border-[#B8924A]/50 text-[#5E0F1E] hover:bg-[#FAF6EE] flex items-center gap-2"
+        >
+          <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+          <span>{loading ? "Syncing..." : "Refresh DB"}</span>
+        </Button>
       </div>
 
       {/* Enquiries Data Table */}
