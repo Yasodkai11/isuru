@@ -5,10 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCartStore } from "@/stores/cart-store";
-import { ShoppingBag, User, Menu, Search, X, Phone, ShieldCheck } from "lucide-react";
+import { ShoppingBag, User, Menu, Search, X, Phone, ShieldCheck, LogOut, Sparkles, ChevronDown } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 import { Input } from "@/components/ui/input";
 import { BRAND } from "@/lib/constants";
+import { getCurrentUserAction, logoutAction, CurrentUserSession } from "@/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -27,6 +29,12 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [session, setSession] = useState<CurrentUserSession>({
+    isAuthenticated: false,
+    isAdmin: false,
+    user: null,
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -34,6 +42,32 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadUser() {
+      try {
+        const res = await getCurrentUserAction();
+        if (isMounted) setSession(res);
+      } catch {}
+    }
+    loadUser();
+
+    const supabase = createClient();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async () => {
+      if (isMounted) {
+        const res = await getCurrentUserAction();
+        setSession(res);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, [pathname]);
 
   if (pathname?.startsWith("/admin")) {
     return null;
@@ -130,13 +164,98 @@ export function Header() {
             <Search className="w-5 h-5" />
           </button>
 
-          <Link
-            href="/login"
-            className="p-2 text-[#2B2B2B] hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 transition-colors"
-            aria-label="Account"
-          >
-            <User className="w-5 h-5" />
-          </Link>
+          {/* Account Menu / Login Button */}
+          {session.isAuthenticated && session.user ? (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-1.5 p-1.5 hover:bg-[#B8924A]/10 rounded-xs transition-colors cursor-pointer text-left"
+                aria-label="User account menu"
+              >
+                <div className="w-7 h-7 rounded-full bg-[#5E0F1E] text-[#FAF6EE] flex items-center justify-center font-serif font-bold text-xs border border-[#B8924A]/40 shadow-xs relative">
+                  {session.user.fullName
+                    ? session.user.fullName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .slice(0, 2)
+                        .toUpperCase()
+                    : "P"}
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-[#FAF6EE]" />
+                </div>
+                <ChevronDown className="w-3.5 h-3.5 text-[#B8924A] hidden sm:block" />
+              </button>
+
+              {userMenuOpen && (
+                <div className="absolute right-0 mt-2 w-64 bg-[#FAF6EE] border border-[#B8924A]/40 shadow-xl p-3 text-xs z-50 animate-gentle-fade rounded-xs">
+                  <div className="pb-2.5 mb-2 border-b border-[#B8924A]/20">
+                    <p className="font-semibold text-[#5E0F1E] truncate">
+                      {session.user.fullName}
+                    </p>
+                    <p className="text-[11px] text-[#2B2B2B]/70 truncate">
+                      {session.user.email}
+                    </p>
+                    {session.isAdmin ? (
+                      <span className="inline-block mt-1 text-[9px] uppercase tracking-wider bg-[#5E0F1E] text-[#FAF6EE] px-2 py-0.5 rounded-xs font-semibold">
+                        Staff Administrator
+                      </span>
+                    ) : (
+                      <span className="inline-block mt-1 text-[9px] uppercase tracking-wider bg-[#B8924A]/20 text-[#5E0F1E] px-2 py-0.5 rounded-xs font-semibold">
+                        Registered Patron
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-1">
+                    <Link
+                      href="/account"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="block px-2.5 py-1.5 text-[#2B2B2B] hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors font-medium"
+                    >
+                      My Collector Vault
+                    </Link>
+
+                    {session.isAdmin && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 text-[#5E0F1E] hover:bg-[#5E0F1E]/10 rounded-xs transition-colors font-semibold"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-[#B8924A]" />
+                        <span>Admin Vault Console</span>
+                      </Link>
+                    )}
+                  </div>
+
+                  <div className="pt-2 mt-2 border-t border-[#B8924A]/20">
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        setUserMenuOpen(false);
+                        const supabase = createClient();
+                        await supabase.auth.signOut();
+                        await logoutAction();
+                      }}
+                      className="w-full text-left px-2.5 py-1.5 text-xs text-red-700 hover:bg-red-50 flex items-center gap-2 rounded-xs transition-colors font-medium cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="p-2 text-[#2B2B2B] hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 transition-colors"
+              aria-label="Account sign in"
+              title="Patron Sign In"
+            >
+              <User className="w-5 h-5" />
+            </Link>
+          )}
 
           <button
             onClick={() => setOpen(true)}
@@ -185,7 +304,11 @@ export function Header() {
         </div>
       )}
 
-      <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      <MobileNav
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        session={session}
+      />
     </header>
     </>
   );

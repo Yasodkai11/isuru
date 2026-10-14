@@ -18,18 +18,32 @@ import {
   ChevronRight,
   Sparkles,
   X,
+  UserCheck,
+  LogOut,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { BRAND } from "@/lib/constants";
+import { logoutAction } from "@/actions/auth";
 
 interface AdminSidebarProps {
   mobileOpen?: boolean;
   onCloseMobile?: () => void;
+  currentUser?: {
+    id: string;
+    email: string;
+    fullName: string;
+    role?: string;
+    department?: string;
+  } | null;
 }
 
-export function AdminSidebar({ mobileOpen = false, onCloseMobile }: AdminSidebarProps) {
+export function AdminSidebar({
+  mobileOpen = false,
+  onCloseMobile,
+  currentUser,
+}: AdminSidebarProps) {
   const pathname = usePathname();
-  const { gemstones, orders, enquiries } = useAdminStore();
+  const { gemstones, orders, enquiries, staff } = useAdminStore();
 
   const pendingOrdersCount = orders.filter((o) => o.status === "pending_verification").length;
   const pendingEnquiriesCount = enquiries.filter((e) => e.status === "pending").length;
@@ -75,6 +89,13 @@ export function AdminSidebar({ mobileOpen = false, onCloseMobile }: AdminSidebar
     {
       title: "Management",
       items: [
+        {
+          label: "Staff & Access",
+          href: "/admin/staff",
+          icon: UserCheck,
+          badge: staff?.length,
+          badgeColor: "bg-[#B8924A]/30 text-[#FAF6EE]",
+        },
         {
           label: "Customers & VIPs",
           href: "/admin/customers",
@@ -217,6 +238,17 @@ export function AdminSidebar({ mobileOpen = false, onCloseMobile }: AdminSidebar
           </span>
           <ExternalLink className="w-3.5 h-3.5 text-white/40" />
         </Link>
+
+        <button
+          type="button"
+          onClick={async () => {
+            await logoutAction();
+          }}
+          className="flex items-center gap-2 w-full px-3 py-2 text-xs font-medium text-red-300 hover:text-red-200 bg-red-950/30 hover:bg-red-900/40 border border-red-500/20 rounded-xs transition-colors cursor-pointer text-left"
+        >
+          <LogOut className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">Sign Out of Vault</span>
+        </button>
       </div>
     </div>
   );

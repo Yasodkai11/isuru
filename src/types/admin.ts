@@ -153,3 +153,30 @@ export interface AdminSettingsData {
   vatGstRate: number;
   customsExportFeeUsd: number;
 }
+
+export type StaffRole =
+  | "super_admin"
+  | "vault_custodian"
+  | "gemologist"
+  | "concierge_agent"
+  | "inventory_clerk";
+
+export type StaffStatus = "active" | "inactive" | "suspended";
+
+export interface AdminStaffMember {
+  id: string;
+  authUserId?: string;
+  fullName: string;
+  email: string;
+  role: StaffRole;
+  department: string;
+  phone?: string;
+  status: StaffStatus;
+  canManageGems: boolean;
+  canManageOrders: boolean;
+  canManageStaff: boolean;
+  canExportData: boolean;
+  lastLogin?: string;
+  createdAt: string;
+  notes?: string;
+}

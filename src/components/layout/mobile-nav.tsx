@@ -4,17 +4,20 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { X, Search, ShieldCheck, Phone, Mail } from "lucide-react";
+import { X, Search, ShieldCheck, Phone, Mail, User, LogOut, Sparkles } from "lucide-react";
 import { BRAND } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { CurrentUserSession, logoutAction } from "@/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
 interface MobileNavProps {
   isOpen: boolean;
   onClose: () => void;
+  session?: CurrentUserSession;
 }
 
-export function MobileNav({ isOpen, onClose }: MobileNavProps) {
+export function MobileNav({ isOpen, onClose, session }: MobileNavProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -96,6 +99,56 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 {link.label}
               </Link>
             ))}
+
+            {/* Account / Vault Access */}
+            {session?.isAuthenticated && session.user ? (
+              <div className="pt-2 space-y-1 border-t border-[#B8924A]/30">
+                <Link
+                  href="/account"
+                  onClick={onClose}
+                  className="flex items-center gap-2 py-2.5 px-3 text-xs uppercase tracking-[0.2em] font-semibold text-[#5E0F1E] bg-[#F2EADB]/70 rounded-xs"
+                >
+                  <User className="w-4 h-4 text-[#B8924A]" />
+                  <span>My Collector Vault</span>
+                </Link>
+
+                {session.isAdmin && (
+                  <Link
+                    href="/admin"
+                    onClick={onClose}
+                    className="flex items-center gap-2 py-2.5 px-3 text-xs uppercase tracking-[0.2em] font-semibold text-[#FAF6EE] bg-[#5E0F1E] rounded-xs"
+                  >
+                    <Sparkles className="w-4 h-4 text-[#D4AF67]" />
+                    <span>Admin Vault Console</span>
+                  </Link>
+                )}
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    onClose();
+                    const supabase = createClient();
+                    await supabase.auth.signOut();
+                    await logoutAction();
+                  }}
+                  className="flex items-center gap-2 w-full text-left py-2 px-3 text-xs text-red-700 hover:bg-red-50 rounded-xs transition-colors cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out ({session.user.fullName})</span>
+                </button>
+              </div>
+            ) : (
+              <div className="pt-2 border-t border-[#B8924A]/30">
+                <Link
+                  href="/login"
+                  onClick={onClose}
+                  className="flex items-center justify-center gap-2 py-3 px-3 text-xs uppercase tracking-[0.22em] font-semibold text-[#FAF6EE] bg-[#5E0F1E] hover:bg-[#420A15] transition-colors rounded-xs shadow-xs"
+                >
+                  <User className="w-4 h-4 text-[#D4AF67]" />
+                  <span>Collector Sign In</span>
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
 

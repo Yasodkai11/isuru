@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   Settings,
   Shield,
@@ -13,17 +14,21 @@ import {
   Phone,
   Mail,
   RefreshCw,
+  UserCheck,
+  Key,
+  ArrowRight,
+  ShieldAlert,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function AdminSettingsPage() {
-  const { settings, updateSettings } = useAdminStore();
+  const { settings, updateSettings, staff } = useAdminStore();
 
   const [formData, setFormData] = useState({ ...settings });
   const [savedSuccess, setSavedSuccess] = useState(false);
-  const [activeTab, setActiveTab] = useState<"general" | "currency" | "logistics" | "notifications">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "currency" | "logistics" | "notifications" | "staff">("general");
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,6 +110,16 @@ export default function AdminSettingsPage() {
           }`}
         >
           Concierge Notifications
+        </button>
+        <button
+          onClick={() => setActiveTab("staff")}
+          className={`pb-3 px-3 transition-colors border-b-2 ${
+            activeTab === "staff"
+              ? "border-[#5E0F1E] text-[#5E0F1E]"
+              : "border-transparent text-[#2B2B2B]/60 hover:text-[#5E0F1E]"
+          }`}
+        >
+          Staff & Access Governance
         </button>
       </div>
 
@@ -351,6 +366,73 @@ export default function AdminSettingsPage() {
                   <p className="text-[11px] text-[#2B2B2B]/60">Notify when natural sapphire reserve drops below configured thresholds.</p>
                 </div>
               </label>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 5: Staff & Access Governance */}
+        {activeTab === "staff" && (
+          <div className="p-6 bg-white border border-[#B8924A]/30 rounded-xs shadow-xs space-y-5 animate-gentle-fade">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#B8924A]/20 pb-3">
+              <div>
+                <h2 className="font-serif text-lg font-medium text-[#5E0F1E]">
+                  Staff Accounts & Credential Governance
+                </h2>
+                <p className="text-[11px] text-[#2B2B2B]/70 mt-0.5">
+                  Manage administrator logins, reset passwords, update staff email addresses, and audit access keys.
+                </p>
+              </div>
+
+              <Link href="/admin/staff">
+                <Button
+                  type="button"
+                  className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold py-2 px-3.5 flex items-center gap-1.5"
+                >
+                  <UserCheck className="w-4 h-4 text-[#D4AF67]" />
+                  <span>Open Full Staff Console</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Button>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-[#FAF6EE] border border-[#B8924A]/25 rounded-xs space-y-2">
+                <div className="flex items-center gap-2 text-xs font-semibold text-[#5E0F1E]">
+                  <Key className="w-4 h-4 text-[#B8924A]" />
+                  <span>Credential Security Policy</span>
+                </div>
+                <p className="text-[11px] text-[#2B2B2B]/80 leading-relaxed">
+                  Administrators can change the login email and reset passwords for any vault custodian or staff member. Changes propagate immediately to both the local console session and connected Supabase Auth service.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/admin/staff"
+                    className="text-xs font-semibold text-[#5E0F1E] hover:underline flex items-center gap-1"
+                  >
+                    <span>Manage Staff Emails & Passwords</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="p-4 bg-[#FAF6EE] border border-[#B8924A]/25 rounded-xs space-y-2">
+                <div className="flex items-center gap-2 text-xs font-semibold text-[#1B3A8A]">
+                  <ShieldAlert className="w-4 h-4 text-[#1B3A8A]" />
+                  <span>Current Active Staff Directory</span>
+                </div>
+                <p className="text-[11px] text-[#2B2B2B]/80 leading-relaxed">
+                  Currently {staff.length} staff member(s) enrolled across Gemology, Vault Logistics, Concierge, and Lapidary Intake departments.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/admin/staff"
+                    className="text-xs font-semibold text-[#1B3A8A] hover:underline flex items-center gap-1"
+                  >
+                    <span>View Role & Permission Matrix</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         )}

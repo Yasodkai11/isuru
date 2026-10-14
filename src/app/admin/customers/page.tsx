@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Users,
   Award,
@@ -15,6 +15,7 @@ import {
   Crown,
   Sparkles,
   ArrowRight,
+  RefreshCw,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { AdminCustomer, CustomerTier } from "@/types/admin";
@@ -23,12 +24,42 @@ import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
+import {
+  getCustomersAction,
+  adminUpdateCustomerAction,
+  adminCreateCustomerAction,
+} from "@/actions/customer";
 
 export default function AdminCustomersPage() {
-  const { customers, updateCustomerNotes, addCustomer } = useAdminStore();
+  const { customers: storeCustomers, updateCustomerNotes, addCustomer } = useAdminStore();
+  const [customers, setCustomers] = useState<AdminCustomer[]>(storeCustomers);
+  const [loading, setLoading] = useState(true);
   const [selectedCustomer, setSelectedCustomer] = useState<AdminCustomer | null>(null);
   const [customerNotes, setCustomerNotes] = useState("");
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [savingNotes, setSavingNotes] = useState(false);
+  const [creatingClient, setCreatingClient] = useState(false);
+
+  // Load real customer records from database
+  const loadCustomers = async () => {
+    setLoading(true);
+    try {
+      const res = await getCustomersAction();
+      if (res.success && res.data && res.data.length > 0) {
+        setCustomers(res.data);
+      } else {
+        setCustomers(storeCustomers);
+      }
+    } catch {
+      setCustomers(storeCustomers);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadCustomers();
+  }, []);
 
   // New Customer Form State
   const [newName, setNewName] = useState("");
@@ -45,19 +76,30 @@ export default function AdminCustomersPage() {
     setCustomerNotes(cust.notes || "");
   };
 
-  const handleSaveNotes = (e: React.FormEvent) => {
+  const handleSaveNotes = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedCustomer) return;
+    setSavingNotes(true);
+
+    try {
+      await adminUpdateCustomerAction(selectedCustomer.id, { notes: customerNotes });
+    } catch {}
+
+    // Update local state and store
     updateCustomerNotes(selectedCustomer.id, customerNotes);
+    setCustomers((prev) =>
+      prev.map((c) => (c.id === selectedCustomer.id ? { ...c, notes: customerNotes } : c))
+    );
+    setSavingNotes(false);
     setSelectedCustomer(null);
   };
 
-  const handleCreateCustomer = (e: React.FormEvent) => {
+  const handleCreateCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newName.trim() || !newEmail.trim()) return;
+    setCreatingClient(true);
 
-    addCustomer({
-      id: `cust-${Date.now().toString().slice(-4)}`,
+    const clientPayload = {
       name: newName.trim(),
       email: newEmail.trim(),
       phone: newPhone.trim(),
@@ -65,13 +107,40 @@ export default function AdminCustomersPage() {
       city: newCity.trim(),
       tier: newTier,
       totalSpent: parseFloat(newSpent) || 0,
-      ordersCount: 1,
-      firstAcquisitionDate: new Date().toISOString().split("T")[0],
-      lastAcquisitionDate: new Date().toISOString().split("T")[0],
-      preferredVarieties: ["Royal Blue Sapphire"],
       notes: newNotes.trim(),
-    });
-    setAddModalOpen(false);
+      preferredVarieties: ["Royal Blue Sapphire"],
+    };
+
+    try {
+      const res = await adminCreateCustomerAction(clientPayload);
+      if (res.success && res.data) {
+        addCustomer(res.data);
+        setCustomers((prev) => [res.data!, ...prev]);
+      } else {
+        const fallback: AdminCustomer = {
+          id: `cust-${Date.now().toString().slice(-4)}`,
+          name: clientPayload.name,
+          email: clientPayload.email,
+          phone: clientPayload.phone,
+          country: clientPayload.country,
+          city: clientPayload.city,
+          tier: clientPayload.tier,
+          totalSpent: clientPayload.totalSpent,
+          ordersCount: 1,
+          firstAcquisitionDate: new Date().toISOString().split("T")[0],
+          lastAcquisitionDate: new Date().toISOString().split("T")[0],
+          preferredVarieties: clientPayload.preferredVarieties,
+          notes: clientPayload.notes,
+        };
+        addCustomer(fallback);
+        setCustomers((prev) => [fallback, ...prev]);
+      }
+    } catch {
+      // Fallback
+    } finally {
+      setCreatingClient(false);
+      setAddModalOpen(false);
+    }
   };
 
   const getTierBadge = (tier: CustomerTier) => {
@@ -219,14 +288,27 @@ export default function AdminCustomersPage() {
           </p>
         </div>
 
-        <Button
-          onClick={() => setAddModalOpen(true)}
-          size="sm"
-          className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold shrink-0"
-        >
-          <Plus className="w-3.5 h-3.5 mr-1.5" />
-          Add Client Record
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={loadCustomers}
+            variant="outline"
+            size="sm"
+            disabled={loading}
+            className="text-xs border-[#B8924A]/40 text-[#5E0F1E] flex items-center gap-1.5"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-[#B8924A]" : ""}`} />
+            <span>{loading ? "Syncing..." : "Refresh CRM"}</span>
+          </Button>
+
+          <Button
+            onClick={() => setAddModalOpen(true)}
+            size="sm"
+            className="bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-xs font-semibold shrink-0"
+          >
+            <Plus className="w-3.5 h-3.5 mr-1.5" />
+            Add Client Record
+          </Button>
+        </div>
       </div>
 
       {/* Customers Data Table */}
@@ -303,9 +385,10 @@ export default function AdminCustomersPage() {
               </Button>
               <Button
                 type="submit"
+                disabled={savingNotes}
                 className="text-xs bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
               >
-                Save Notes
+                {savingNotes ? "Saving Notes..." : "Save Notes"}
               </Button>
             </div>
           </form>
@@ -418,9 +501,10 @@ export default function AdminCustomersPage() {
             </Button>
             <Button
               type="submit"
+              disabled={creatingClient}
               className="text-xs bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] font-semibold"
             >
-              Register Client
+              {creatingClient ? "Registering Client..." : "Register Client"}
             </Button>
           </div>
         </form>

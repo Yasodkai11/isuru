@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { LoginForm } from "@/components/auth/login-form";
 import { GoldDivider } from "@/components/layout/gold-divider";
@@ -29,7 +30,9 @@ export default function LoginPage() {
 
           <GoldDivider className="my-4" />
 
-          <LoginForm />
+          <Suspense fallback={<div className="py-8 text-center text-xs text-[#B8924A]">Loading authentication vault...</div>}>
+            <LoginForm />
+          </Suspense>
         </div>
       </div>
     </div>

@@ -9,7 +9,9 @@ import { formatCurrency, formatCarats } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldCheck, Lock, CheckCircle2, AlertCircle, ArrowLeft } from "lucide-react";
+import { ShieldCheck, Lock, CheckCircle2, AlertCircle, ArrowLeft, Sparkles, User } from "lucide-react";
+import { getCurrentUserAction } from "@/actions/auth";
+import { getCustomerProfileAction } from "@/actions/customer";
 
 export function CheckoutForm() {
   const { items, clearCart, totalAmount } = useCartStore();
@@ -27,12 +29,41 @@ export function CheckoutForm() {
   >("bank_wire");
 
   const [loading, setLoading] = useState(false);
+  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(false);
+  const [autofilledFromProfile, setAutofilledFromProfile] = useState(false);
   const [orderComplete, setOrderComplete] = useState<{
     orderId: string;
     message: string;
   } | null>(null);
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
   const [generalError, setGeneralError] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    async function loadUser() {
+      try {
+        const res = await getCurrentUserAction();
+        if (res.isAuthenticated && res.user) {
+          setIsAuthenticatedUser(true);
+          setFullName(res.user.fullName || "");
+          setEmail(res.user.email || "");
+
+          // Retrieve full profile details to autofill address & phone
+          const profileRes = await getCustomerProfileAction(res.user.id);
+          if (profileRes.success && profileRes.data) {
+            const p = profileRes.data;
+            if (p.fullName) setFullName(p.fullName);
+            if (p.phone) setPhone(p.phone);
+            if (p.shippingAddress) setAddress(p.shippingAddress);
+            if (p.city) setCity(p.city);
+            if (p.country) setCountry(p.country);
+            if (p.postalCode) setPostalCode(p.postalCode);
+            setAutofilledFromProfile(Boolean(p.shippingAddress || p.phone));
+          }
+        }
+      } catch {}
+    }
+    loadUser();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,6 +176,39 @@ export function CheckoutForm() {
               <span className="font-semibold block">Submission Error</span>
               <p className="mt-0.5">{generalError}</p>
             </div>
+          </div>
+        )}
+
+        {!isAuthenticatedUser ? (
+          <div className="mb-4 p-3 bg-[#F2EADB]/60 border border-[#B8924A]/25 rounded-xs flex items-center justify-between text-xs">
+            <span className="text-[#2B2B2B]/75 flex items-center gap-2">
+              <User className="w-3.5 h-3.5 text-[#B8924A]" />
+              Already an Isuru Gems patron?
+            </span>
+            <Link
+              href="/login?redirect=/checkout"
+              className="text-[#5E0F1E] font-semibold hover:underline"
+            >
+              Sign In to Autofill →
+            </Link>
+          </div>
+        ) : (
+          <div className="mb-4 p-3 bg-[#FAF6EE] border border-[#B8924A]/40 rounded-xs flex items-center justify-between text-xs animate-gentle-fade">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#B8924A] shrink-0" />
+              <span className="text-[#2B2B2B]/85">
+                Signed in as <strong>{fullName || email}</strong>.{" "}
+                {autofilledFromProfile
+                  ? "Delivery coordinates loaded from your Patron Profile."
+                  : "Complete your delivery coordinates below (they will be saved to your profile)."}
+              </span>
+            </div>
+            <Link
+              href="/account"
+              className="text-[#5E0F1E] font-semibold hover:underline text-[11px] shrink-0 ml-2"
+            >
+              Patron Vault →
+            </Link>
           </div>
         )}
 

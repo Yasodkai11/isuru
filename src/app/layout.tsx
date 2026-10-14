@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Jost } from "next/font/google";
+import { IBM_Plex_Serif, Jost } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 
-const bodoni = Bodoni_Moda({
+const ibmPlexSerif = IBM_Plex_Serif({
   subsets: ["latin"],
-  variable: "--font-bodoni",
+  weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
-  axes: ["opsz"],
+  variable: "--font-ibm-plex-serif",
   display: "swap",
 });
 
@@ -54,7 +54,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${bodoni.variable} ${jost.variable}`}>
+    <html lang="en" className={`${ibmPlexSerif.variable} ${jost.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#FAF6EE] text-[#2B2B2B] antialiased selection:bg-[#B8924A]/20 selection:text-[#5E0F1E]">
         <ScrollProgress />
         <Header />

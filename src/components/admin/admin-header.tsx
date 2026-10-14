@@ -15,18 +15,28 @@ import {
   CheckCircle2,
   AlertCircle,
   Gem,
+  LogOut,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { formatCurrency } from "@/lib/utils";
+import { logoutAction } from "@/actions/auth";
 
 interface AdminHeaderProps {
   onOpenMobile: () => void;
+  currentUser?: {
+    id: string;
+    email: string;
+    fullName: string;
+    role?: string;
+    department?: string;
+  } | null;
 }
 
-export function AdminHeader({ onOpenMobile }: AdminHeaderProps) {
+export function AdminHeader({ onOpenMobile, currentUser }: AdminHeaderProps) {
   const pathname = usePathname();
   const { orders, enquiries, resetToDefaults, gemstones } = useAdminStore();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
 
   const pendingOrders = orders.filter((o) => o.status === "pending_verification");
@@ -55,6 +65,8 @@ export function AdminHeader({ onOpenMobile }: AdminHeaderProps) {
         return "Media Library";
       case "seo":
         return "SEO Manager";
+      case "staff":
+        return "Staff & Access";
       case "settings":
         return "Settings";
       default:
@@ -220,19 +232,87 @@ export function AdminHeader({ onOpenMobile }: AdminHeaderProps) {
 
         <div className="h-6 w-px bg-[#B8924A]/30" />
 
-        {/* Admin Profile Pill */}
-        <div className="flex items-center gap-2 pl-1">
-          <div className="w-8 h-8 rounded-full bg-[#5E0F1E] text-[#FAF6EE] flex items-center justify-center font-serif font-bold text-xs border border-[#B8924A]/40 shadow-xs">
-            YG
-          </div>
-          <div className="hidden sm:block text-left">
-            <p className="text-xs font-semibold text-[#2B2B2B] leading-none">
-              Master Gemologist
-            </p>
-            <p className="text-[10px] text-[#B8924A] font-medium leading-none mt-1">
-              NGJA Custodian
-            </p>
-          </div>
+        {/* Admin Profile Pill & Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setProfileOpen(!profileOpen)}
+            className="flex items-center gap-2 pl-1 p-1 hover:bg-[#B8924A]/10 rounded-xs transition-colors cursor-pointer text-left"
+            aria-label="Staff account menu"
+          >
+            <div className="w-8 h-8 rounded-full bg-[#5E0F1E] text-[#FAF6EE] flex items-center justify-center font-serif font-bold text-xs border border-[#B8924A]/40 shadow-xs">
+              {currentUser?.fullName
+                ? currentUser.fullName
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .slice(0, 2)
+                    .toUpperCase()
+                : "YG"}
+            </div>
+            <div className="hidden sm:block text-left">
+              <p className="text-xs font-semibold text-[#2B2B2B] leading-none">
+                {currentUser?.fullName || "Yohan Gunawardena"}
+              </p>
+              <p className="text-[10px] text-[#B8924A] font-medium leading-none mt-1 capitalize">
+                {currentUser?.role?.replace("_", " ") || "Master Gemologist"}
+              </p>
+            </div>
+          </button>
+
+          {profileOpen && (
+            <div className="absolute right-0 mt-2 w-64 bg-[#FAF6EE] border border-[#B8924A]/40 shadow-xl p-3 text-xs z-50 animate-gentle-fade rounded-xs">
+              <div className="pb-2 mb-2 border-b border-[#B8924A]/20">
+                <p className="font-semibold text-[#5E0F1E] truncate">
+                  {currentUser?.fullName || "Yohan Gunawardena"}
+                </p>
+                <p className="text-[11px] text-[#2B2B2B]/70 truncate">
+                  {currentUser?.email || "yohan@isurugems.com"}
+                </p>
+                <span className="inline-block mt-1 text-[9px] uppercase tracking-wider bg-[#5E0F1E]/10 text-[#5E0F1E] px-2 py-0.5 rounded-xs font-semibold">
+                  {currentUser?.role?.replace("_", " ") || "Super Admin"}
+                </span>
+              </div>
+
+              <div className="space-y-1">
+                <Link
+                  href="/admin/staff"
+                  onClick={() => setProfileOpen(false)}
+                  className="block px-2.5 py-1.5 text-[#2B2B2B] hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
+                >
+                  Staff Management & Roles
+                </Link>
+                <Link
+                  href="/admin/settings"
+                  onClick={() => setProfileOpen(false)}
+                  className="block px-2.5 py-1.5 text-[#2B2B2B] hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
+                >
+                  Vault Console Settings
+                </Link>
+                <Link
+                  href="/"
+                  target="_blank"
+                  className="block px-2.5 py-1.5 text-[#2B2B2B] hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
+                >
+                  View Storefront ↗
+                </Link>
+              </div>
+
+              <div className="pt-2 mt-2 border-t border-[#B8924A]/20">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setProfileOpen(false);
+                    await logoutAction();
+                  }}
+                  className="w-full text-left px-2.5 py-1.5 text-xs text-red-700 hover:bg-red-50 flex items-center gap-2 rounded-xs transition-colors font-medium cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out of Vault</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>

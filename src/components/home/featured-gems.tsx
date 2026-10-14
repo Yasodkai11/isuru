@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Gemstone } from "@/types/gem";
-import { GoldDivider } from "@/components/layout/gold-divider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
@@ -22,36 +21,11 @@ interface FeaturedGemsProps {
 
 export function FeaturedGems({ gems }: FeaturedGemsProps) {
   const reduce = useReducedMotion();
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [selectedGemForEnquiry, setSelectedGemForEnquiry] = useState<Gemstone | null>(null);
   const [enquirySuccess, setEnquirySuccess] = useState(false);
   const [enquiryName, setEnquiryName] = useState("");
   const [enquiryEmail, setEnquiryEmail] = useState("");
   const [enquiryPhone, setEnquiryPhone] = useState("");
-
-  const filters = [
-    { label: "All Collections", key: "all" },
-    { label: "Royal Blue", key: "Royal Blue" },
-    { label: "Ceylon Rubies", key: "Ruby" },
-    { label: "Padparadscha & Fancy", key: "Padparadscha" },
-    { label: "Star & Rare Phenomenon", key: "rare" },
-  ];
-
-  const filteredGems = gems.filter((gem) => {
-    if (selectedFilter === "all") return true;
-    if (selectedFilter === "Royal Blue") return gem.variety.includes("Royal Blue") || gem.variety.includes("Blue");
-    if (selectedFilter === "Ruby") return gem.variety.includes("Ruby") || gem.variety.includes("Spinel");
-    if (selectedFilter === "Padparadscha") return gem.variety.includes("Padparadscha") || gem.variety.includes("Orange");
-    if (selectedFilter === "rare")
-      return (
-        gem.variety.includes("Star") ||
-        gem.variety.includes("Alexandrite") ||
-        gem.variety.includes("Pushparaga") ||
-        gem.variety.includes("Yellow") ||
-        gem.variety.includes("Spinel")
-      );
-    return true;
-  });
 
   const handleEnquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,9 +52,9 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
 
       <div className="relative container-luxe">
         {/* Section header */}
-        <div className="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-8 mb-12 lg:mb-16">
-          <Reveal className="max-w-2xl text-center xl:text-left mx-auto xl:mx-0">
-            <p className="flex items-center justify-center xl:justify-start gap-3 text-xs uppercase tracking-[0.35em] text-[#B8924A]">
+        <div className="mb-12 lg:mb-16">
+          <Reveal className="max-w-2xl text-center md:text-left mx-auto md:mx-0">
+            <p className="flex items-center justify-center md:justify-start gap-3 text-xs uppercase tracking-[0.35em] text-[#B8924A]">
               <span className="w-8 h-px bg-[#B8924A]" />
               The Vault Selection
             </p>
@@ -91,41 +65,13 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
               Hand-selected, laboratory-certified specimens from our Ratnapura atelier, each one traceable
               from mine head to final polish.
             </p>
-            <GoldDivider withOrnament className="mt-6 mb-0 max-w-xs mx-auto xl:mx-0 xl:hidden" />
-          </Reveal>
-
-          <Reveal delay={0.15} className="flex flex-wrap items-center justify-center xl:justify-end gap-2">
-            {filters.map((f) => {
-              const active = selectedFilter === f.key;
-              return (
-                <button
-                  key={f.key}
-                  onClick={() => setSelectedFilter(f.key)}
-                  aria-pressed={active}
-                  className={`relative text-xs uppercase tracking-[0.15em] px-5 py-2.5 border rounded-full transition-colors duration-300 cursor-pointer ${
-                    active
-                      ? "text-[#FAF6EE] border-[#5E0F1E]"
-                      : "bg-[#FDFBF7] text-[#2B2B2B] border-[#B8924A]/30 hover:border-[#B8924A] hover:text-[#5E0F1E]"
-                  }`}
-                >
-                  {active && (
-                    <motion.span
-                      layoutId="featured-filter-pill"
-                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                      className="absolute inset-0 rounded-full bg-[#5E0F1E]"
-                    />
-                  )}
-                  <span className="relative z-10">{f.label}</span>
-                </button>
-              );
-            })}
           </Reveal>
         </div>
 
         {/* Gemstones Grid */}
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8">
           <AnimatePresence mode="popLayout">
-          {filteredGems.slice(0, 8).map((gem, index) => {
+          {gems.slice(0, 8).map((gem, index) => {
             const primaryImage = gem.images[0] || {
               url: "/isuru_images/blue1.jpg",
               alt: `${gem.name}`,

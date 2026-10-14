@@ -16,10 +16,11 @@
   --color-sapphire-light: #2A51B8;
   --color-sapphire-dark: #12285E;
 
-  --font-serif: var(--font-bodoni), 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-serif: var(--font-ibm-plex-serif), 'IBM Plex Serif', Georgia, serif;
   --font-sans: var(--font-jost), 'Jost', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: var(--font-bodoni), 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-heading: var(--font-ibm-plex-serif), 'IBM Plex Serif', Georgia, serif;
   --font-body: var(--font-jost), 'Jost', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-bodoni: var(--font-ibm-plex-serif);
 
   --animate-marquee: marquee 45s linear infinite;
   --animate-marquee-reverse: marquee 55s linear infinite reverse;

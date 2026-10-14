@@ -104,6 +104,68 @@ export async function processOrderAction(data: CheckoutInput): Promise<CheckoutR
       console.warn("Supabase order insert note:", error.message);
     }
 
+    // Sync/update patron profile with latest delivery details & acquisition totals
+    try {
+      const authUserId = userAuth?.user?.id;
+      if (authUserId) {
+        const { data: currentProfile } = await supabase
+          .from("profiles")
+          .select("id, total_spent, orders_count, tier, first_acquisition_date")
+          .or(`user_id.eq.${authUserId},id.eq.${authUserId}`)
+          .maybeSingle();
+
+        const newTotalSpent = (Number(currentProfile?.total_spent) || 0) + totalAmount;
+        const newOrdersCount = (Number(currentProfile?.orders_count) || 0) + 1;
+        const todayIso = new Date().toISOString().split("T")[0];
+
+        let calculatedTier = currentProfile?.tier || "private_client";
+        if (newTotalSpent >= 50000) {
+          calculatedTier = "vip_collector";
+        } else if (newTotalSpent >= 20000) {
+          calculatedTier = "premier_connoisseur";
+        }
+
+        if (currentProfile?.id) {
+          await supabase
+            .from("profiles")
+            .update({
+              full_name: fullName,
+              phone,
+              shipping_address: address,
+              city,
+              country,
+              postal_code: postalCode || null,
+              total_spent: newTotalSpent,
+              orders_count: newOrdersCount,
+              tier: calculatedTier,
+              last_acquisition_date: todayIso,
+              first_acquisition_date: currentProfile.first_acquisition_date || todayIso,
+              updated_at: new Date().toISOString(),
+            })
+            .eq("id", currentProfile.id);
+        } else {
+          await supabase.from("profiles").insert({
+            id: authUserId,
+            user_id: authUserId,
+            full_name: fullName,
+            email,
+            phone,
+            shipping_address: address,
+            city,
+            country,
+            postal_code: postalCode || null,
+            total_spent: totalAmount,
+            orders_count: 1,
+            tier: calculatedTier,
+            first_acquisition_date: todayIso,
+            last_acquisition_date: todayIso,
+          });
+        }
+      }
+    } catch (profileErr) {
+      console.warn("Profile sync note:", profileErr);
+    }
+
     return {
       success: true,
       orderId: orderReference,

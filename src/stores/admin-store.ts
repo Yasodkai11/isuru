@@ -13,6 +13,7 @@ import {
   MediaAsset,
   AdminSEORecord,
   AdminSettingsData,
+  AdminStaffMember,
 } from "@/types/admin";
 import { SAMPLE_GEMS } from "@/lib/constants";
 import {
@@ -23,6 +24,7 @@ import {
   INITIAL_ADMIN_MEDIA,
   INITIAL_ADMIN_SEO,
   INITIAL_ADMIN_SETTINGS,
+  INITIAL_ADMIN_STAFF,
 } from "@/lib/admin-seed";
 
 export interface AdminState {
@@ -71,6 +73,14 @@ export interface AdminState {
   // Settings
   updateSettings: (partial: Partial<AdminSettingsData>) => void;
 
+  // Staff & Access Control
+  staff: AdminStaffMember[];
+  addStaffMember: (member: AdminStaffMember) => void;
+  updateStaffMember: (id: string, partial: Partial<AdminStaffMember>) => void;
+  updateStaffCredentials: (id: string, newEmail?: string, notes?: string) => void;
+  deleteStaffMember: (id: string) => void;
+  toggleStaffStatus: (id: string) => void;
+
   // Reset to initial defaults
   resetToDefaults: () => void;
 }
@@ -86,6 +96,7 @@ export const useAdminStore = create<AdminState>()(
       mediaAssets: [...INITIAL_ADMIN_MEDIA],
       seoRecords: [...INITIAL_ADMIN_SEO],
       settings: { ...INITIAL_ADMIN_SETTINGS },
+      staff: [...INITIAL_ADMIN_STAFF],
 
       // Gemstones CRUD
       addGemstone: (gem) => {
@@ -241,6 +252,52 @@ export const useAdminStore = create<AdminState>()(
         }));
       },
 
+      // Staff Management
+      addStaffMember: (member) => {
+        set((state) => ({
+          staff: [member, ...state.staff],
+        }));
+      },
+
+      updateStaffMember: (id, partial) => {
+        set((state) => ({
+          staff: state.staff.map((s) => (s.id === id ? { ...s, ...partial } : s)),
+        }));
+      },
+
+      updateStaffCredentials: (id, newEmail, notes) => {
+        set((state) => ({
+          staff: state.staff.map((s) =>
+            s.id === id
+              ? {
+                  ...s,
+                  ...(newEmail ? { email: newEmail } : {}),
+                  ...(notes ? { notes } : {}),
+                }
+              : s
+          ),
+        }));
+      },
+
+      deleteStaffMember: (id) => {
+        set((state) => ({
+          staff: state.staff.filter((s) => s.id !== id),
+        }));
+      },
+
+      toggleStaffStatus: (id) => {
+        set((state) => ({
+          staff: state.staff.map((s) =>
+            s.id === id
+              ? {
+                  ...s,
+                  status: s.status === "active" ? "suspended" : "active",
+                }
+              : s
+          ),
+        }));
+      },
+
       // Reset
       resetToDefaults: () => {
         set({
@@ -252,6 +309,7 @@ export const useAdminStore = create<AdminState>()(
           mediaAssets: [...INITIAL_ADMIN_MEDIA],
           seoRecords: [...INITIAL_ADMIN_SEO],
           settings: { ...INITIAL_ADMIN_SETTINGS },
+          staff: [...INITIAL_ADMIN_STAFF],
         });
       },
     }),

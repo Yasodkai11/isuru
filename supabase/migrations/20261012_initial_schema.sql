@@ -85,36 +85,42 @@ alter table public.orders enable row level security;
 alter table public.inquiries enable row level security;
 
 -- Gemstones: Anyone can read available catalog
+drop policy if exists "Public can view gemstones" on public.gemstones;
 create policy "Public can view gemstones"
   on public.gemstones
   for select
   using (true);
 
 -- Gemstones: Only service role / admin can mutate
+drop policy if exists "Admins can manage gemstones" on public.gemstones;
 create policy "Admins can manage gemstones"
   on public.gemstones
   for all
   using (auth.jwt() ->> 'role' = 'service_role');
 
 -- Orders: Users can view their own orders
+drop policy if exists "Users can view own orders" on public.orders;
 create policy "Users can view own orders"
   on public.orders
   for select
   using (auth.uid() = user_id);
 
 -- Orders: Public / client can insert an order during checkout
+drop policy if exists "Anyone can create order" on public.orders;
 create policy "Anyone can create order"
   on public.orders
   for insert
   with check (true);
 
 -- Inquiries: Anyone can submit an inquiry
+drop policy if exists "Anyone can submit inquiry" on public.inquiries;
 create policy "Anyone can submit inquiry"
   on public.inquiries
   for insert
   with check (true);
 
 -- Inquiries: Only service role / staff can view inquiries
+drop policy if exists "Admins can view inquiries" on public.inquiries;
 create policy "Admins can view inquiries"
   on public.inquiries
   for select
