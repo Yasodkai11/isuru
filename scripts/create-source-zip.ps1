@@ -16,12 +16,16 @@ $itemsToCopy = @(
     "src",
     "public",
     "scripts",
+    "components",
+    "supabase",
     "package.json",
     "package-lock.json",
     "next.config.ts",
     "tsconfig.json",
     "postcss.config.mjs",
     "eslint.config.mjs",
+    "ecosystem.config.cjs",
+    ".htaccess.example",
     ".env.example",
     "HOSTINGER_DEPLOYMENT_GUIDE.md"
 )

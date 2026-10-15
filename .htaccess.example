@@ -1,0 +1,14 @@
+# Reverse Proxy configuration for Hostinger Shared / Cloud hosting with LiteSpeed or Apache
+# If your Hostinger environment proxies incoming HTTP/HTTPS traffic to the internal Node.js port,
+# rename or copy this file to .htaccess in your application root (e.g. public_html).
+
+RewriteEngine On
+
+# Handle WebSocket connections
+RewriteCond %{HTTP:Upgrade} =websocket [NC]
+RewriteRule /(.*) ws://127.0.0.1:3000/$1 [P,L]
+
+# Proxy all normal requests to Next.js standalone server
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
