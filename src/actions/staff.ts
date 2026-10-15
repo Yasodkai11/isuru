@@ -3,6 +3,8 @@
 import { createAdminClient, createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { AdminStaffMember, StaffRole, StaffStatus } from "@/types/admin";
 import { INITIAL_ADMIN_STAFF } from "@/lib/admin-seed";
+import { requireAdminSession } from "@/lib/auth-checks";
+import { Database } from "@/types/supabase";
 
 export interface StaffActionResult<T = unknown> {
   success: boolean;
@@ -32,10 +34,39 @@ export interface UpdateCredentialsInput {
   password?: string;
 }
 
+interface DbStaffRow {
+  id: string;
+  auth_user_id: string | null;
+  full_name: string;
+  email: string;
+  role: string;
+  department: string;
+  phone: string | null;
+  status: string;
+  can_manage_gems: boolean;
+  can_manage_orders: boolean;
+  can_manage_staff: boolean;
+  can_export_data: boolean;
+  last_login: string | null;
+  created_at: string;
+  notes: string | null;
+}
+
 /**
  * Fetch staff members from Supabase, or return fallback demo staff.
+ * Requires verified administrator clearance.
  */
 export async function getStaffMembersAction(): Promise<StaffActionResult<AdminStaffMember[]>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      data: [],
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
@@ -59,22 +90,22 @@ export async function getStaffMembersAction(): Promise<StaffActionResult<AdminSt
       };
     }
 
-    const staff: AdminStaffMember[] = data.map((row: any) => ({
+    const staff: AdminStaffMember[] = (data as DbStaffRow[]).map((row) => ({
       id: row.id,
-      authUserId: row.auth_user_id,
+      authUserId: row.auth_user_id ?? undefined,
       fullName: row.full_name,
       email: row.email,
       role: row.role as StaffRole,
       department: row.department,
-      phone: row.phone,
+      phone: row.phone ?? undefined,
       status: row.status as StaffStatus,
       canManageGems: row.can_manage_gems,
       canManageOrders: row.can_manage_orders,
       canManageStaff: row.can_manage_staff,
       canExportData: row.can_export_data,
-      lastLogin: row.last_login,
+      lastLogin: row.last_login ?? undefined,
       createdAt: row.created_at,
-      notes: row.notes,
+      notes: row.notes ?? undefined,
     }));
 
     return {
@@ -94,10 +125,20 @@ export async function getStaffMembersAction(): Promise<StaffActionResult<AdminSt
 /**
  * Create a new staff member account.
  * When Supabase is configured with service role key, provisions auth.users and staff_members row.
+ * Requires verified administrator clearance.
  */
 export async function createStaffMemberAction(
   input: CreateStaffInput
 ): Promise<StaffActionResult<AdminStaffMember>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+    };
+  }
+
   const newStaffMember: AdminStaffMember = {
     id: `staff-${Date.now()}`,
     fullName: input.fullName.trim(),
@@ -199,10 +240,20 @@ export async function createStaffMemberAction(
 /**
  * Update staff email and/or password credentials.
  * Admins can change staff login email and set a new password.
+ * Requires verified administrator clearance.
  */
 export async function updateStaffCredentialsAction(
   input: UpdateCredentialsInput
 ): Promise<StaffActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+    };
+  }
+
   const { staffId, authUserId, email, password } = input;
 
   if (!email && !password) {
@@ -285,11 +336,21 @@ export async function updateStaffCredentialsAction(
 
 /**
  * Update general staff profile details (Role, Department, Permissions, Phone).
+ * Requires verified administrator clearance.
  */
 export async function updateStaffMemberAction(
   id: string,
   partial: Partial<AdminStaffMember>
 ): Promise<StaffActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
@@ -299,7 +360,7 @@ export async function updateStaffMemberAction(
 
   try {
     const adminSupabase = await createAdminClient();
-    const updatePayload: Record<string, any> = {
+    const updatePayload: Database["public"]["Tables"]["staff_members"]["Update"] = {
       updated_at: new Date().toISOString(),
     };
 
@@ -315,7 +376,10 @@ export async function updateStaffMemberAction(
     if (partial.canExportData !== undefined) updatePayload.can_export_data = partial.canExportData;
     if (partial.notes !== undefined) updatePayload.notes = partial.notes;
 
-    const { error } = await adminSupabase.from("staff_members").update(updatePayload as any).eq("id", id);
+    const { error } = await adminSupabase
+      .from("staff_members")
+      .update(updatePayload)
+      .eq("id", id);
 
     if (error) {
       return {
@@ -338,11 +402,21 @@ export async function updateStaffMemberAction(
 
 /**
  * Delete a staff member and revoke vault credentials.
+ * Requires verified administrator clearance.
  */
 export async function deleteStaffMemberAction(
   id: string,
   authUserId?: string
 ): Promise<StaffActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       success: true,

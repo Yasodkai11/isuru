@@ -42,7 +42,7 @@ export default function AdminDashboardPage() {
     categories,
   } = useAdminStore();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [syncNotice, setSyncNotice] = useState<string | null>(null);
 
   const loadRealAdminData = async () => {
@@ -63,7 +63,9 @@ export default function AdminDashboardPage() {
       if (inqRes.success && inqRes.data) {
         setEnquiries(inqRes.data);
       }
-      setSyncNotice(`Synced live with Supabase DB: ${gemsRes.data?.length || gemstones.length} gemstones, ${ordersRes.data?.length || orders.length} orders.`);
+      setSyncNotice(
+        `Synced live with Supabase DB: ${gemsRes.data?.length || 0} gemstones, ${ordersRes.data?.length || 0} orders.`
+      );
     } catch (err) {
       console.warn("Admin sync note:", err);
     } finally {
@@ -72,8 +74,38 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    loadRealAdminData();
-  }, []);
+    let active = true;
+
+    Promise.all([
+      getAdminGemstonesAction(),
+      getAdminOrdersAction(),
+      getAdminInquiriesAction(),
+    ])
+      .then(([gemsRes, ordersRes, inqRes]) => {
+        if (!active) return;
+        if (gemsRes.success && gemsRes.data) {
+          setGemstones(gemsRes.data);
+        }
+        if (ordersRes.success && ordersRes.data) {
+          setOrders(ordersRes.data);
+        }
+        if (inqRes.success && inqRes.data) {
+          setEnquiries(inqRes.data);
+        }
+        setSyncNotice(
+          `Synced live with Supabase DB: ${gemsRes.data?.length || 0} gemstones, ${ordersRes.data?.length || 0} orders.`
+        );
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.warn("Admin sync note:", err);
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [setGemstones, setOrders, setEnquiries]);
 
   // Metrics
   const totalVaultValue = gemstones.reduce((sum, g) => sum + g.price, 0);

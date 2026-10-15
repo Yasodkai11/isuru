@@ -4,6 +4,8 @@ import { createAdminClient, createClient, isSupabaseConfigured } from "@/lib/sup
 import { AdminCustomer, CustomerTier } from "@/types/admin";
 import { INITIAL_ADMIN_CUSTOMERS } from "@/lib/admin-seed";
 import { revalidatePath } from "next/cache";
+import { requireAdminSession } from "@/lib/auth-checks";
+import { Database } from "@/types/supabase";
 
 export interface CustomerActionResult<T = unknown> {
   success: boolean;
@@ -54,9 +56,19 @@ export interface CreateCustomerInput {
 
 /**
  * Fetch all customers for the Executive CRM table.
- * Merges Supabase profiles with local fallbacks if offline.
+ * Requires verified administrator clearance.
  */
 export async function getCustomersAction(): Promise<CustomerActionResult<AdminCustomer[]>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      data: [],
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
@@ -66,8 +78,8 @@ export async function getCustomersAction(): Promise<CustomerActionResult<AdminCu
   }
 
   try {
-    const supabase = await createClient();
-    const { data, error } = await supabase
+    const adminSupabase = await createAdminClient();
+    const { data, error } = await adminSupabase
       .from("profiles")
       .select("*")
       .order("created_at", { ascending: false });
@@ -117,7 +129,7 @@ export async function getCustomersAction(): Promise<CustomerActionResult<AdminCu
 }
 
 /**
- * Retrieve the profile of the currently logged-in patron (or specified user ID).
+ * Retrieve the profile of the currently logged-in patron (or specified user ID for admins).
  */
 export async function getCustomerProfileAction(
   targetUserId?: string
@@ -132,19 +144,27 @@ export async function getCustomerProfileAction(
 
   try {
     const supabase = await createClient();
-    let queryUserId = targetUserId;
+    const { data: authData } = await supabase.auth.getUser();
 
-    if (!queryUserId) {
-      const { data: authData } = await supabase.auth.getUser();
-      queryUserId = authData?.user?.id;
-    }
-
-    if (!queryUserId) {
+    if (!authData?.user) {
       return {
         success: false,
         message: "Unauthenticated.",
         data: null,
       };
+    }
+
+    let queryUserId = authData.user.id;
+
+    // Only allow querying another user's profile if the caller is a verified admin
+    if (targetUserId && targetUserId !== authData.user.id) {
+      try {
+        await requireAdminSession();
+        queryUserId = targetUserId;
+      } catch {
+        // Fallback to own profile if unauthorized
+        queryUserId = authData.user.id;
+      }
     }
 
     // Query profiles by user_id or id
@@ -218,7 +238,7 @@ export async function updateCustomerProfileAction(
       };
     }
 
-    const updateFields: Record<string, unknown> = {
+    const updateFields: Database["public"]["Tables"]["profiles"]["Update"] = {
       updated_at: new Date().toISOString(),
     };
 
@@ -231,7 +251,7 @@ export async function updateCustomerProfileAction(
 
     const { error } = await supabase
       .from("profiles")
-      .update(updateFields as any)
+      .update(updateFields)
       .or(`user_id.eq.${authData.user.id},id.eq.${authData.user.id}`);
 
     if (error) {
@@ -258,11 +278,21 @@ export async function updateCustomerProfileAction(
 
 /**
  * Staff CRM action to update customer notes or VIP tier.
+ * Requires verified administrator clearance.
  */
 export async function adminUpdateCustomerAction(
   customerId: string,
   data: { tier?: CustomerTier; notes?: string }
 ): Promise<CustomerActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
@@ -271,16 +301,16 @@ export async function adminUpdateCustomerAction(
   }
 
   try {
-    const supabase = await createClient();
-    const updatePayload: Record<string, unknown> = {
+    const adminSupabase = await createAdminClient();
+    const updatePayload: Database["public"]["Tables"]["profiles"]["Update"] = {
       updated_at: new Date().toISOString(),
     };
     if (data.tier) updatePayload.tier = data.tier;
     if (data.notes !== undefined) updatePayload.notes = data.notes;
 
-    const { error } = await supabase
+    const { error } = await adminSupabase
       .from("profiles")
-      .update(updatePayload as any)
+      .update(updatePayload)
       .eq("id", customerId);
 
     if (error) {
@@ -305,10 +335,20 @@ export async function adminUpdateCustomerAction(
 
 /**
  * Staff CRM action to create a new VIP client record in profiles.
+ * Requires verified administrator clearance.
  */
 export async function adminCreateCustomerAction(
   input: CreateCustomerInput
 ): Promise<CustomerActionResult<AdminCustomer>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     const fallbackCustomer: AdminCustomer = {
       id: `cust-${Date.now().toString().slice(-4)}`,
@@ -333,8 +373,8 @@ export async function adminCreateCustomerAction(
   }
 
   try {
-    const supabase = await createClient();
-    const { data, error } = await supabase
+    const adminSupabase = await createAdminClient();
+    const { data, error } = await adminSupabase
       .from("profiles")
       .insert({
         full_name: input.name,

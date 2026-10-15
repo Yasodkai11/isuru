@@ -7,6 +7,8 @@ import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import { INITIAL_ADMIN_ORDERS, INITIAL_ADMIN_ENQUIRIES } from "@/lib/admin-seed";
 import { mapDbRowToGemstone } from "@/lib/map-gemstone";
 import { revalidatePath } from "next/cache";
+import { requireAdminSession } from "@/lib/auth-checks";
+import { Database, Json } from "@/types/supabase";
 
 export interface AdminActionResult<T = unknown> {
   success: boolean;
@@ -15,10 +17,51 @@ export interface AdminActionResult<T = unknown> {
   error?: string;
 }
 
+interface DbOrderRow {
+  id: string;
+  created_at: string;
+  customer_name: string;
+  email: string;
+  phone: string;
+  shipping_address: string;
+  city: string;
+  country: string;
+  total_amount: number | string;
+  currency?: string | null;
+  status: string;
+  notes?: string | null;
+}
+
+interface DbInquiryRow {
+  id: string;
+  created_at: string;
+  gem_id?: string | null;
+  gem_name?: string | null;
+  full_name: string;
+  email: string;
+  phone?: string | null;
+  country: string;
+  message: string;
+  preferred_currency?: string | null;
+  status: string;
+}
+
 /**
  * Fetch all real gemstones directly from Supabase for the Admin Panel.
+ * Requires verified administrator clearance.
  */
 export async function getAdminGemstonesAction(): Promise<AdminActionResult<Gemstone[]>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+      data: [],
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
@@ -63,8 +106,19 @@ export async function getAdminGemstonesAction(): Promise<AdminActionResult<Gemst
 
 /**
  * Insert or update a gemstone in Supabase.
+ * Requires verified administrator clearance.
  */
 export async function saveAdminGemstoneAction(gem: Gemstone): Promise<AdminActionResult<Gemstone>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
@@ -79,7 +133,7 @@ export async function saveAdminGemstoneAction(gem: Gemstone): Promise<AdminActio
     // Check if ID is a valid UUID
     const isValidUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(gem.id);
 
-    const dbPayload = {
+    const dbPayload: Database["public"]["Tables"]["gemstones"]["Insert"] = {
       ...(isValidUuid ? { id: gem.id } : {}),
       slug: gem.slug,
       name: gem.name,
@@ -99,12 +153,12 @@ export async function saveAdminGemstoneAction(gem: Gemstone): Promise<AdminActio
       certificate_lab: gem.certificate.lab || "NGJA",
       certificate_number: gem.certificate.number || "NGJA-PENDING",
       certificate_pdf_url: gem.certificate.pdfUrl || null,
-      images: (gem.images || []) as unknown as any,
+      images: (gem.images || []) as unknown as Json,
     };
 
     const { data, error } = await supabase
       .from("gemstones")
-      .upsert(dbPayload as any, { onConflict: "slug" })
+      .upsert(dbPayload, { onConflict: "slug" })
       .select()
       .single();
 
@@ -138,8 +192,19 @@ export async function saveAdminGemstoneAction(gem: Gemstone): Promise<AdminActio
 
 /**
  * Delete a gemstone from Supabase.
+ * Requires verified administrator clearance.
  */
 export async function deleteAdminGemstoneAction(idOrSlug: string): Promise<AdminActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Deleted locally." };
   }
@@ -169,8 +234,19 @@ export async function deleteAdminGemstoneAction(idOrSlug: string): Promise<Admin
 
 /**
  * Toggle stock availability directly in Supabase.
+ * Requires verified administrator clearance.
  */
 export async function toggleAdminGemstoneStockAction(idOrSlug: string, inStock: boolean): Promise<AdminActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Toggled stock locally." };
   }
@@ -198,8 +274,19 @@ export async function toggleAdminGemstoneStockAction(idOrSlug: string, inStock: 
 
 /**
  * Toggle featured showcase status directly in Supabase.
+ * Requires verified administrator clearance.
  */
 export async function toggleAdminGemstoneFeaturedAction(idOrSlug: string, featured: boolean): Promise<AdminActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Toggled featured locally." };
   }
@@ -228,8 +315,20 @@ export async function toggleAdminGemstoneFeaturedAction(idOrSlug: string, featur
 
 /**
  * Fetch real orders from Supabase.
+ * Requires verified administrator clearance.
  */
 export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrder[]>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+      data: [],
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Using local orders seed.", data: INITIAL_ADMIN_ORDERS };
   }
@@ -245,8 +344,7 @@ export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrd
       return { success: true, message: "Default seed fallback.", data: INITIAL_ADMIN_ORDERS };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const orders: AdminOrder[] = data.map((row: any) => ({
+    const orders: AdminOrder[] = (data as DbOrderRow[]).map((row) => ({
       id: row.id,
       createdAt: row.created_at,
       customerName: row.customer_name,
@@ -286,8 +384,19 @@ export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrd
 
 /**
  * Update order status in Supabase.
+ * Requires verified administrator clearance.
  */
 export async function updateAdminOrderStatusAction(orderId: string, status: OrderStatus): Promise<AdminActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+    };
+  }
+
   if (!isSupabaseConfigured) return { success: true, message: "Updated locally." };
 
   try {
@@ -305,8 +414,20 @@ export async function updateAdminOrderStatusAction(orderId: string, status: Orde
 
 /**
  * Fetch real customer inquiries from Supabase.
+ * Requires verified administrator clearance.
  */
 export async function getAdminInquiriesAction(): Promise<AdminActionResult<AdminEnquiry[]>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+      data: [],
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Using local enquiries seed.", data: INITIAL_ADMIN_ENQUIRIES };
   }
@@ -322,8 +443,7 @@ export async function getAdminInquiriesAction(): Promise<AdminActionResult<Admin
       return { success: true, message: "Default inquiries seed fallback.", data: INITIAL_ADMIN_ENQUIRIES };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const enquiries: AdminEnquiry[] = data.map((row: any) => ({
+    const enquiries: AdminEnquiry[] = (data as DbInquiryRow[]).map((row) => ({
       id: row.id,
       createdAt: row.created_at,
       gemId: row.gem_id || undefined,
@@ -351,8 +471,19 @@ export async function getAdminInquiriesAction(): Promise<AdminActionResult<Admin
 
 /**
  * Update inquiry status in Supabase.
+ * Requires verified administrator clearance.
  */
 export async function updateAdminInquiryStatusAction(id: string, status: EnquiryStatus, replyNotes?: string): Promise<AdminActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+    };
+  }
+
   if (!isSupabaseConfigured) return { success: true, message: "Updated locally." };
 
   try {
@@ -377,8 +508,19 @@ export async function updateAdminInquiryStatusAction(id: string, status: Enquiry
 
 /**
  * Delete inquiry from Supabase.
+ * Requires verified administrator clearance.
  */
 export async function deleteAdminInquiryAction(id: string): Promise<AdminActionResult> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+    };
+  }
+
   if (!isSupabaseConfigured) return { success: true, message: "Deleted locally." };
 
   try {
@@ -397,8 +539,11 @@ export async function deleteAdminInquiryAction(id: string): Promise<AdminActionR
 
 /**
  * Get dashboard overview metrics calculated from real database gemstones, orders, and inquiries.
+ * Requires verified administrator clearance.
  */
 export async function getAdminOverviewMetricsAction() {
+  await requireAdminSession();
+
   const [gemsRes, ordersRes, inqRes] = await Promise.all([
     getAdminGemstonesAction(),
     getAdminOrdersAction(),

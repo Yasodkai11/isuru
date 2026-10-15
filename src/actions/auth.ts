@@ -137,68 +137,32 @@ export async function loginAction(formData: FormData | LoginInput): Promise<Acti
 
   try {
     const supabase = await createClient();
-    let { data: authData, error } = await supabase.auth.signInWithPassword({
+    const { data: authData, error } = await supabase.auth.signInWithPassword({
       email: resolvedEmail,
       password,
     });
-
-    // If credentials failed and this is a seeded staff member, attempt auto-provisioning via admin client
-    if (error && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      const isSeedStaff = INITIAL_ADMIN_STAFF.some(
-        (s) => s.email.toLowerCase() === resolvedEmail
-      );
-
-      if (isSeedStaff) {
-        try {
-          const adminSupabase = await createAdminClient();
-          // Find or create the user in Supabase Auth
-          const { data: listData } = await adminSupabase.auth.admin.listUsers();
-          const existingUser = listData?.users?.find(
-            (u) => u.email?.toLowerCase() === resolvedEmail
-          );
-
-          if (!existingUser) {
-            const seedMember = INITIAL_ADMIN_STAFF.find(
-              (s) => s.email.toLowerCase() === resolvedEmail
-            );
-            await adminSupabase.auth.admin.createUser({
-              email: resolvedEmail,
-              password,
-              email_confirm: true,
-              user_metadata: {
-                full_name: seedMember?.fullName || "Staff Administrator",
-                role: seedMember?.role || "super_admin",
-              },
-            });
-          } else {
-            // Update password for seamless access
-            await adminSupabase.auth.admin.updateUserById(existingUser.id, {
-              password,
-              email_confirm: true,
-            });
-          }
-
-          // Retry authentication after provisioning
-          const retry = await supabase.auth.signInWithPassword({
-            email: resolvedEmail,
-            password,
-          });
-
-          if (!retry.error) {
-            authData = retry.data;
-            error = null;
-          }
-        } catch {
-          // Ignore admin fallback error
-        }
-      }
-    }
 
     if (error || !authData?.user) {
       return {
         success: false,
         message: error?.message || "Invalid username or password.",
       };
+    }
+
+    // When staff logs in successfully, sync last_login and ensure auth_user_id is linked
+    if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const adminSupabase = await createAdminClient();
+        await adminSupabase
+          .from("staff_members")
+          .update({
+            auth_user_id: authData.user.id,
+            last_login: new Date().toISOString(),
+          })
+          .eq("email", resolvedEmail);
+      } catch {
+        // Non-fatal background sync
+      }
     }
 
     // Verify staff/admin status

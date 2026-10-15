@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loginAction } from "@/actions/auth";
@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle, CheckCircle2, ShieldCheck, Eye, EyeOff, Lock, User, Sparkles } from "lucide-react";
+import { AlertCircle, CheckCircle2, ShieldCheck, Eye, EyeOff, User, Sparkles } from "lucide-react";
 
 export function LoginForm() {
   const router = useRouter();
@@ -34,12 +34,6 @@ export function LoginForm() {
   const [success, setSuccess] = useState<string | null>(
     registeredParam ? "Account registered successfully. Please sign in to access your vault." : null
   );
-
-  useEffect(() => {
-    if (roleParam === "admin" || (redirectParam && redirectParam.startsWith("/admin"))) {
-      setMode("admin");
-    }
-  }, [roleParam, redirectParam]);
 
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);

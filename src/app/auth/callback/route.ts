@@ -14,7 +14,11 @@ export async function GET(request: Request) {
     if (!error && data.user) {
       const isAdmin = await verifyIsAdmin(data.user.email, data.user.id);
 
-      let target = next || (isAdmin ? "/admin" : "/account");
+      // Validate target is a local relative URL, preventing open redirect
+      let target = next;
+      if (!target || !target.startsWith("/") || target.startsWith("//") || target.includes("\\")) {
+        target = isAdmin ? "/admin" : "/account";
+      }
       if (isAdmin && !target.startsWith("/admin") && target === "/account") {
         target = "/admin";
       }

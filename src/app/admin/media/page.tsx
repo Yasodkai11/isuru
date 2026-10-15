@@ -8,13 +8,13 @@ import {
   Copy,
   Check,
   Trash2,
-  ExternalLink,
   Plus,
   LayoutGrid,
   Table as TableIcon,
   FileText,
   Video,
   Sparkles,
+  Loader2,
 } from "lucide-react";
 import { useAdminStore } from "@/stores/admin-store";
 import { MediaAsset, MediaType } from "@/types/admin";
@@ -22,12 +22,14 @@ import { DataTable, ColumnDef, FilterOption } from "@/components/admin/data-tabl
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
+import { uploadGemMediaAction } from "@/actions/storage";
 
 export default function AdminMediaPage() {
   const { mediaAssets, addMediaAsset, deleteMediaAsset } = useAdminStore();
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [modalOpen, setModalOpen] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   // New Media Form
   const [assetName, setAssetName] = useState("");
@@ -63,9 +65,25 @@ export default function AdminMediaPage() {
     setAssetName("");
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await uploadGemMediaAction(formData);
+      if (res.success && res.url) {
+        setAssetUrl(res.url);
+        setAssetName(file.name);
+        setAssetSize(`${(file.size / (1024 * 1024)).toFixed(1)} MB`);
+        setUploading(false);
+        return;
+      }
+    } catch {
+      // Fallback
+    }
 
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -75,6 +93,7 @@ export default function AdminMediaPage() {
         setAssetName(file.name);
         setAssetSize(`${(file.size / (1024 * 1024)).toFixed(1)} MB`);
       }
+      setUploading(false);
     };
     reader.readAsDataURL(file);
   };

@@ -62,8 +62,6 @@ export default function AdminProductsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingGem, setEditingGem] = useState<Gemstone | null>(null);
   const [deleteConfirmGem, setDeleteConfirmGem] = useState<Gemstone | null>(null);
-
-  // Load real gemstone data from Supabase DB on mount
   const loadRealGemstones = async () => {
     setLoading(true);
     try {
@@ -71,7 +69,9 @@ export default function AdminProductsPage() {
       if (res.data) {
         setGemstones(res.data);
       }
-      setDbNotice(res.message);
+      if (res.message) {
+        setDbNotice(res.message);
+      }
     } catch (err) {
       console.warn("Could not load from DB:", err);
     } finally {
@@ -80,8 +80,27 @@ export default function AdminProductsPage() {
   };
 
   useEffect(() => {
-    loadRealGemstones();
-  }, []);
+    let active = true;
+    getAdminGemstonesAction()
+      .then((res) => {
+        if (!active) return;
+        if (res.data) {
+          setGemstones(res.data);
+        }
+        if (res.message) {
+          setDbNotice(res.message);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.warn("Could not load from DB:", err);
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [setGemstones]);
 
   // Form State
   const [formName, setFormName] = useState("");

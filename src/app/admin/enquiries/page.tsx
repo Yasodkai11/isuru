@@ -47,13 +47,12 @@ const CANNED_TEMPLATES = [
 
 export default function AdminEnquiriesPage() {
   const { enquiries, setEnquiries, updateEnquiryStatus, deleteEnquiry } = useAdminStore();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedEnquiry, setSelectedEnquiry] = useState<AdminEnquiry | null>(null);
   const [replyText, setReplyText] = useState("");
   const [replyStatus, setReplyStatus] = useState<EnquiryStatus>("replied");
 
   const loadRealInquiries = async () => {
-    setLoading(true);
     try {
       const res = await getAdminInquiriesAction();
       if (res.success && res.data && res.data.length > 0) {

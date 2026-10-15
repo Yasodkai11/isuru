@@ -40,25 +40,37 @@ export default function AdminCustomersPage() {
   const [savingNotes, setSavingNotes] = useState(false);
   const [creatingClient, setCreatingClient] = useState(false);
 
-  // Load real customer records from database
   const loadCustomers = async () => {
     setLoading(true);
     try {
       const res = await getCustomersAction();
       if (res.success && res.data && res.data.length > 0) {
         setCustomers(res.data);
-      } else {
-        setCustomers(storeCustomers);
       }
     } catch {
-      setCustomers(storeCustomers);
+      // Keep existing customers
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadCustomers();
+    let active = true;
+    getCustomersAction()
+      .then((res) => {
+        if (!active) return;
+        if (res.success && res.data && res.data.length > 0) {
+          setCustomers(res.data);
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   // New Customer Form State

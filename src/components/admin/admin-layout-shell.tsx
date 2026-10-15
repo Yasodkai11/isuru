@@ -12,15 +12,15 @@ import { useAdminStore } from "@/stores/admin-store";
 
 export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const isLoginPage = pathname === "/admin/login";
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [checkingAuth, setCheckingAuth] = useState(!isLoginPage);
   const [session, setSession] = useState<CurrentUserSession>({
     isAuthenticated: false,
     isAdmin: false,
     user: null,
   });
 
-  const isLoginPage = pathname === "/admin/login";
   const setGemstones = useAdminStore((state) => state.setGemstones);
 
   useEffect(() => {
@@ -40,7 +40,6 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (isLoginPage) {
-      setCheckingAuth(false);
       return;
     }
 

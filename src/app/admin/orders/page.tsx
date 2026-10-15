@@ -63,7 +63,7 @@ const WORKFLOW_STEPS: { status: OrderStatus; label: string; desc: string }[] = [
 
 export default function AdminOrdersPage() {
   const { orders, setOrders, updateOrderStatus, updateOrderTracking } = useAdminStore();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
 
   // Tracking form inputs
@@ -72,7 +72,6 @@ export default function AdminOrdersPage() {
   const [customsNumberInput, setCustomsNumberInput] = useState("");
 
   const loadRealOrders = async () => {
-    setLoading(true);
     try {
       const res = await getAdminOrdersAction();
       if (res.success && res.data && res.data.length > 0) {

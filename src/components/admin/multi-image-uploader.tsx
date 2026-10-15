@@ -9,13 +9,13 @@ import {
   ArrowLeft,
   ArrowRight,
   Star,
-  Link as LinkIcon,
   Sparkles,
-  Check,
+  Loader2,
 } from "lucide-react";
 import { GemImage } from "@/types/gem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { uploadGemMediaAction } from "@/actions/storage";
 
 interface MultiImageUploaderProps {
   images: GemImage[];
@@ -107,28 +107,51 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
     setAltInput("");
   };
 
-  // File upload simulation (reads as base64 Data URL)
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [uploading, setUploading] = useState(false);
+
+  // File upload to Supabase Storage (with graceful data URL fallback)
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        if (result) {
-          onChange([
-            ...images,
-            {
-              url: result,
-              alt: file.name.replace(/\.[^/.]+$/, ""),
-            },
-          ]);
+    setUploading(true);
+    const uploadedImages: GemImage[] = [];
+
+    for (const file of Array.from(files)) {
+      let resolvedUrl: string | null = null;
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await uploadGemMediaAction(formData);
+        if (res.success && res.url) {
+          resolvedUrl = res.url;
         }
-      };
-      reader.readAsDataURL(file);
-    });
-    // Reset file input
+      } catch {
+        // Fallback to local data URL
+      }
+
+      if (!resolvedUrl) {
+        resolvedUrl = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            resolve((event.target?.result as string) || "");
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      if (resolvedUrl) {
+        uploadedImages.push({
+          url: resolvedUrl,
+          alt: file.name.replace(/\.[^/.]+$/, ""),
+        });
+      }
+    }
+
+    if (uploadedImages.length > 0) {
+      onChange([...images, ...uploadedImages]);
+    }
+    setUploading(false);
     e.target.value = "";
   };
 
@@ -308,13 +331,23 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
 
         {/* File input button */}
         <div className="flex flex-wrap items-center gap-3">
-          <label className="cursor-pointer inline-flex items-center gap-2 px-3.5 py-2 bg-[#5E0F1E] hover:bg-[#420A15] text-[#FAF6EE] text-sm font-semibold rounded-xs shadow-xs transition-colors">
-            <Upload className="w-4 h-4" />
-            <span>Upload Device Files</span>
+          <label className={`cursor-pointer inline-flex items-center gap-2 px-3.5 py-2 text-[#FAF6EE] text-sm font-semibold rounded-xs shadow-xs transition-colors ${uploading ? "bg-[#5E0F1E]/70 cursor-wait" : "bg-[#5E0F1E] hover:bg-[#420A15]"}`}>
+            {uploading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin text-[#D4AF67]" />
+                <span>Uploading to Vault...</span>
+              </>
+            ) : (
+              <>
+                <Upload className="w-4 h-4" />
+                <span>Upload Device Files</span>
+              </>
+            )}
             <input
               type="file"
               accept="image/*"
               multiple
+              disabled={uploading}
               onChange={handleFileUpload}
               className="hidden"
             />
