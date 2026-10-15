@@ -86,7 +86,7 @@ export const CATEGORIES_CONFIG: Record<
     tagline: "Signature Ceylon Blue",
     description:
       "Natural blue gemstones from our Sri Lankan stock - from saturated royal blue to soft pastel cornflower tones.",
-    image: `${CATALOG_IMAGES}/03_Individual_Gem_Photos/Blue/32_light_blue_round_gem_white_background.jpeg`,
+    image: `${CATALOG_IMAGES}/03_Individual_Gem_Photos/Blue/32_light_blue_round_gem_white_background.webp`,
     match: { column: "color", value: "Blue" },
   },
   "pink-purple-gems": {
@@ -95,7 +95,7 @@ export const CATEGORIES_CONFIG: Record<
     tagline: "Romantic Hues",
     description:
       "Pink and purple gemstones ranging from vivid hot pink cushions to soft pastel and deep violet ovals.",
-    image: `${CATALOG_IMAGES}/01_Single_Gems/Pink_and_Purple/01_pink_gem_square_display.jpeg`,
+    image: `${CATALOG_IMAGES}/01_Single_Gems/Pink_and_Purple/01_pink_gem_square_display.webp`,
     match: { column: "color", value: "Pink" },
   },
   "red-gems": {
@@ -103,7 +103,7 @@ export const CATEGORIES_CONFIG: Record<
     subtitle: "Deep Crimson & Maroon",
     tagline: "Fiery Red",
     description: "Deep red and maroon gemstones with bright crimson flashes.",
-    image: `${CATALOG_IMAGES}/01_Single_Gems/Red_and_Maroon/02_dark_red_oval_gem_display.jpeg`,
+    image: `${CATALOG_IMAGES}/01_Single_Gems/Red_and_Maroon/02_dark_red_oval_gem_display.webp`,
     match: { column: "color", value: "Red" },
   },
   "yellow-gems": {
@@ -111,7 +111,7 @@ export const CATEGORIES_CONFIG: Record<
     subtitle: "Golden Honey & Amber",
     tagline: "Golden Brilliance",
     description: "Golden yellow and honey-toned gemstones with strong natural brilliance.",
-    image: `${CATALOG_IMAGES}/01_Single_Gems/Yellow_and_Gold/03_yellow_gold_oval_gem_display.jpeg`,
+    image: `${CATALOG_IMAGES}/01_Single_Gems/Yellow_and_Gold/03_yellow_gold_oval_gem_display.webp`,
     match: { column: "color", value: "Yellow" },
   },
   "green-gems": {
@@ -119,7 +119,7 @@ export const CATEGORIES_CONFIG: Record<
     subtitle: "Forest & Olive Green",
     tagline: "Natural Green",
     description: "Forest green and olive green gemstones with lively golden-green sparkle.",
-    image: `${CATALOG_IMAGES}/01_Single_Gems/Green/10_olive_green_gem_display.jpeg`,
+    image: `${CATALOG_IMAGES}/01_Single_Gems/Green/10_olive_green_gem_display.webp`,
     match: { column: "color", value: "Green" },
   },
   "gem-collections": {
@@ -128,7 +128,7 @@ export const CATEGORIES_CONFIG: Record<
     tagline: "Trade Parcels",
     description:
       "Trays and parcels of loose natural gemstones in mixed and matched colours - available as lots or individually.",
-    image: `${CATALOG_IMAGES}/02_Gem_Collections_and_Trays/Mixed_Colors/15_multicolor_round_gems_tray.jpeg`,
+    image: `${CATALOG_IMAGES}/02_Gem_Collections_and_Trays/Mixed_Colors/15_multicolor_round_gems_tray.webp`,
     match: { column: "variety", value: "Parcel" },
   },
 };

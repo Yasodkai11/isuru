@@ -19,19 +19,19 @@ const MODERN_CATEGORIES: ModernCategory[] = [
   {
     title: "Blue Sapphires",
     subtitle: "Royal & Cornflower Ceylon Sapphires",
-    image: "/images/concept03/category-blue-sapphires.jpg",
+    image: "/images/concept03/category-blue-sapphires.webp",
     link: "/gems?colour=Blue",
   },
   {
     title: "Coloured Gemstones",
     subtitle: "Rubies, Padparadschas & Fancy Gems",
-    image: "/images/concept03/category-coloured-gems.jpg",
+    image: "/images/concept03/category-coloured-gems.webp",
     link: "/gems?category=coloured",
   },
   {
     title: "Rough Gemstones",
     subtitle: "Natural Crystalline Specimens & Minerals",
-    image: "/images/concept03/category-rough-gems.jpg",
+    image: "/images/concept03/category-rough-gems.webp",
     link: "/gems?category=rough",
   },
 ];

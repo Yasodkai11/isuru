@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: "/",
       images: [
         {
-          url: "/isuru_images/blue1.jpg",
+          url: "/isuru_images/blue1.webp",
           width: 1200,
           height: 630,
           alt: "Isuru Ceylon - Fine Ceylon Blue Sapphire",

@@ -30,7 +30,7 @@ const workSlides: WorkSlide[] = [
     title: "Traditional Shaft Mining",
     subtitle: "Ratnapura Gem Pit • 40ft Alluvial Shaft",
     tag: "Mine Site",
-    src: "/isuru_images/work/work-pit-mining.jpeg",
+    src: "/isuru_images/work/work-pit-mining.webp",
     alt: "Authentic gem miner inside a deep timbered shaft in Ratnapura Sri Lanka",
     position: "object-cover object-center",
   },
@@ -39,7 +39,7 @@ const workSlides: WorkSlide[] = [
     title: "River Illam Washing",
     subtitle: "Artisanal Woven Wattiya Baskets",
     tag: "Ethical Sourcing",
-    src: "/isuru_images/work/work-river-washing.jpeg",
+    src: "/isuru_images/work/work-river-washing.webp",
     alt: "Traditional alluvial gem washing in Sri Lankan river with conical bamboo basket",
     position: "object-cover object-center",
   },
@@ -48,7 +48,7 @@ const workSlides: WorkSlide[] = [
     title: "Hand-Grading Gem Parcels",
     subtitle: "Unheated Ceylon Sapphires & Spinels",
     tag: "Inspection",
-    src: "/isuru_images/work/work-gem-selection.jpeg",
+    src: "/isuru_images/work/work-gem-selection.webp",
     alt: "Gemologist reviewing parcels of genuine cut and raw gemstones on display trays",
     position: "object-cover object-center",
   },
@@ -57,7 +57,7 @@ const workSlides: WorkSlide[] = [
     title: "Three Generations of Craft",
     subtitle: "Family Legacy in Ratnapura Atelier",
     tag: "Heritage",
-    src: "/isuru_images/work/work-three-generations.jpeg",
+    src: "/isuru_images/work/work-three-generations.webp",
     alt: "Three generations of Sri Lankan gem merchants and family craftsmen",
     position: "object-cover object-top",
   },
@@ -66,7 +66,7 @@ const workSlides: WorkSlide[] = [
     title: "Direct Miner Partnerships",
     subtitle: "Certified Origin & Fair Trade",
     tag: "100% Direct",
-    src: "/isuru_images/work/work-partnership.jpeg",
+    src: "/isuru_images/work/work-partnership.webp",
     alt: "Direct trade and certification exchange with local miners",
     position: "object-cover object-center",
   },
@@ -520,7 +520,7 @@ export function OurStory() {
                   <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full p-1 bg-[#FAF6EE] border-2 border-[#B8924A] shadow-[0_12px_32px_rgba(43,43,43,0.22)] transition-transform duration-300 group-hover:scale-105">
                     <div className="relative w-full h-full rounded-full overflow-hidden bg-[#1A1410]">
                       <Image
-                        src="/isuru_images/work/work-river-washing.jpeg"
+                        src="/isuru_images/work/work-river-washing.webp"
                         alt="River washing with traditional conical wicker basket in Ratnapura"
                         fill
                         sizes="(max-width: 768px) 80px, 120px"
@@ -581,7 +581,7 @@ export function OurStory() {
                   <div className="relative aspect-square p-2 sm:p-2.5 bg-[#FAF6EE] border border-[#B8924A]/50 shadow-[0_22px_55px_rgba(43,43,43,0.22)] transition-transform duration-300 group-hover:scale-[1.03]">
                     <div className="relative w-full h-full overflow-hidden bg-[#1A1410] border border-[#B8924A]/30">
                       <Image
-                        src="/isuru_images/work/work-gem-selection.jpeg"
+                        src="/isuru_images/work/work-gem-selection.webp"
                         alt="Hand-grading natural rough and cut gemstones on display trays"
                         fill
                         sizes="(max-width: 768px) 48vw, 260px"

@@ -129,7 +129,7 @@ export default function AdminProductsPage() {
     setFormCertPdfUrl("");
     setFormImages([
       {
-        url: "/isuru_images/blue1.jpg",
+        url: "/isuru_images/blue1.webp",
         alt: "Vivid Ceylon Royal Blue Cushion sapphire",
       },
     ]);
@@ -281,7 +281,7 @@ export default function AdminProductsPage() {
       header: "Visual",
       sortable: false,
       render: (row) => {
-        const cover = row.images[0]?.url || "/isuru_images/blue1.jpg";
+        const cover = row.images[0]?.url || "/isuru_images/blue1.webp";
         return (
           <div className="flex items-center gap-2">
             <div className="relative w-12 h-12 rounded-xs overflow-hidden border border-[#B8924A]/30 shrink-0 bg-[#FAF6EE]">

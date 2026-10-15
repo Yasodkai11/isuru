@@ -39,8 +39,8 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS2024-089921",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/natural%20heart.jpg", alt: "4.15ct Ceylon Royal Blue Sapphire Tear of Serendib" },
-      { url: "/isuru_images/blue1.jpg", alt: "Facet brilliance under daylight" }
+      { url: "/isuru_images/natural%20heart.webp", alt: "4.15ct Ceylon Royal Blue Sapphire Tear of Serendib" },
+      { url: "/isuru_images/blue1.webp", alt: "Facet brilliance under daylight" }
     ]
   },
   {
@@ -64,7 +64,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "SSEF-118492",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/Padparadscha%20Sapphire.jpg", alt: "3.15ct Ceylon Padparadscha Sapphire" }
+      { url: "/isuru_images/Padparadscha%20Sapphire.webp", alt: "3.15ct Ceylon Padparadscha Sapphire" }
     ]
   },
   {
@@ -88,7 +88,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GIA-5542198034",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/Star%20Sapphire.jpg", alt: "6.80ct Ceylon Asterism Star Sapphire Cabochon" }
+      { url: "/isuru_images/Star%20Sapphire.webp", alt: "6.80ct Ceylon Asterism Star Sapphire Cabochon" }
     ]
   },
   {
@@ -112,7 +112,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GUB-2024-9982",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/Alexandrite%20category.jpg", alt: "1.85ct Phenomenal Ceylon Alexandrite" }
+      { url: "/isuru_images/Alexandrite%20category.webp", alt: "1.85ct Phenomenal Ceylon Alexandrite" }
     ]
   },
   {
@@ -136,8 +136,8 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS-RUB-88412",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/Natural%20Ruby.jpg", alt: "2.05ct Natural Ceylon Ruby Cushion" },
-      { url: "/isuru_images/ruby%20category.jpg", alt: "Ceylon Ruby table reflection" }
+      { url: "/isuru_images/Natural%20Ruby.webp", alt: "2.05ct Natural Ceylon Ruby Cushion" },
+      { url: "/isuru_images/ruby%20category.webp", alt: "Ceylon Ruby table reflection" }
     ]
   },
   {
@@ -161,7 +161,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-C9081",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/yellow.jpg", alt: "5.60ct Ceylon Golden Pushparaga Emerald Cut" }
+      { url: "/isuru_images/yellow.webp", alt: "5.60ct Ceylon Golden Pushparaga Emerald Cut" }
     ]
   },
   {
@@ -185,7 +185,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GIA-SPN-77401",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/Red%20Ceylon%20Spinel.jpg", alt: "2.95ct Ceylon Flame Red Spinel" }
+      { url: "/isuru_images/Red%20Ceylon%20Spinel.webp", alt: "2.95ct Ceylon Flame Red Spinel" }
     ]
   },
   {
@@ -209,7 +209,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS2024-ORG8812",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/Orange%20Sapphire.jpg", alt: "3.40ct Ceylon Mandarin Orange Sapphire" }
+      { url: "/isuru_images/Orange%20Sapphire.webp", alt: "3.40ct Ceylon Mandarin Orange Sapphire" }
     ]
   },
   {
@@ -233,8 +233,8 @@ export const REAL_PRODUCTS = [
     certificate_number: "GIA-6218903120",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/lightblue.jpg", alt: "2.42ct Ceylon Light Blue Sapphire Cushion" },
-      { url: "/isuru_images/blue2.jpg", alt: "Macro facet view" }
+      { url: "/isuru_images/lightblue.webp", alt: "2.42ct Ceylon Light Blue Sapphire Cushion" },
+      { url: "/isuru_images/blue2.webp", alt: "Macro facet view" }
     ]
   },
   {
@@ -258,7 +258,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GIA-7741908",
     certificate_pdf_url: null,
     images: [
-      { url: "/isuru_images/green.jpg", alt: "3.10ct Ceylon Forest Green Sapphire" }
+      { url: "/isuru_images/green.webp", alt: "3.10ct Ceylon Forest Green Sapphire" }
     ]
   },
 
@@ -284,7 +284,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS-2024-BLU892",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Blue/04_blue_gem_square_display.jpeg`, alt: "Cornflower Blue Oval Gemstone in box" }
+      { url: `${SINGLE}/Blue/04_blue_gem_square_display.webp`, alt: "Cornflower Blue Oval Gemstone in box" }
     ]
   },
   {
@@ -308,7 +308,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-C7821",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Blue/05_blue_gem_small_display.jpeg`, alt: "Soft Blue Elongated Oval Gemstone" }
+      { url: `${SINGLE}/Blue/05_blue_gem_small_display.webp`, alt: "Soft Blue Elongated Oval Gemstone" }
     ]
   },
   {
@@ -332,7 +332,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-B4019",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Blue/07_small_blue_gem_display.jpeg`, alt: "Small Vivid Blue Oval Gemstone" }
+      { url: `${SINGLE}/Blue/07_small_blue_gem_display.webp`, alt: "Small Vivid Blue Oval Gemstone" }
     ]
   },
   {
@@ -356,7 +356,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GIA-2024-GRN441",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Green/10_olive_green_gem_display.jpeg`, alt: "Forest Green Oval Gemstone" }
+      { url: `${SINGLE}/Green/10_olive_green_gem_display.webp`, alt: "Forest Green Oval Gemstone" }
     ]
   },
   {
@@ -380,7 +380,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-G3102",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Green/09_small_green_gem_display.jpeg`, alt: "Olive Green Oval Gemstone" }
+      { url: `${SINGLE}/Green/09_small_green_gem_display.webp`, alt: "Olive Green Oval Gemstone" }
     ]
   },
   {
@@ -404,7 +404,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS-2024-PNK140",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Pink_and_Purple/01_pink_gem_square_display.jpeg`, alt: "Vivid Pink Cushion Gemstone" }
+      { url: `${SINGLE}/Pink_and_Purple/01_pink_gem_square_display.webp`, alt: "Vivid Pink Cushion Gemstone" }
     ]
   },
   {
@@ -428,7 +428,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "SSEF-2024-8841",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Pink_and_Purple/06_pale_pink_gem_display.jpeg`, alt: "Pale Peach-Pink Cushion Gemstone" }
+      { url: `${SINGLE}/Pink_and_Purple/06_pale_pink_gem_display.webp`, alt: "Pale Peach-Pink Cushion Gemstone" }
     ]
   },
   {
@@ -452,7 +452,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GIA-5591024",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Pink_and_Purple/08_purple_gem_display.jpeg`, alt: "Violet Purple Oval Gemstone" }
+      { url: `${SINGLE}/Pink_and_Purple/08_purple_gem_display.webp`, alt: "Violet Purple Oval Gemstone" }
     ]
   },
   {
@@ -476,7 +476,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS-RUB-2024-912",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Red_and_Maroon/02_dark_red_oval_gem_display.jpeg`, alt: "Deep Red Oval Gemstone" }
+      { url: `${SINGLE}/Red_and_Maroon/02_dark_red_oval_gem_display.webp`, alt: "Deep Red Oval Gemstone" }
     ]
   },
   {
@@ -500,7 +500,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-Y8801",
     certificate_pdf_url: null,
     images: [
-      { url: `${SINGLE}/Yellow_and_Gold/03_yellow_gold_oval_gem_display.jpeg`, alt: "Golden Yellow Oval Gemstone" }
+      { url: `${SINGLE}/Yellow_and_Gold/03_yellow_gold_oval_gem_display.webp`, alt: "Golden Yellow Oval Gemstone" }
     ]
   },
 
@@ -526,7 +526,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-060BS",
     certificate_pdf_url: null,
     images: [
-      { url: `${INDIVIDUAL}/Blue/26_blue_round_gem_white_background_01.jpeg`, alt: "Natural Blue Sapphire Oval 0.60ct" }
+      { url: `${INDIVIDUAL}/Blue/26_blue_round_gem_white_background_01.webp`, alt: "Natural Blue Sapphire Oval 0.60ct" }
     ]
   },
   {
@@ -550,7 +550,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-120BS",
     certificate_pdf_url: null,
     images: [
-      { url: `${INDIVIDUAL}/Blue/30_blue_round_gem_white_background_02.jpeg`, alt: "Blue Oval Gemstone 1.20ct" }
+      { url: `${INDIVIDUAL}/Blue/30_blue_round_gem_white_background_02.webp`, alt: "Blue Oval Gemstone 1.20ct" }
     ]
   },
   {
@@ -574,7 +574,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GIA-2024-150CF",
     certificate_pdf_url: null,
     images: [
-      { url: `${INDIVIDUAL}/Blue/32_light_blue_round_gem_white_background.jpeg`, alt: "Cornflower Blue Oval Gemstone 1.50ct" }
+      { url: `${INDIVIDUAL}/Blue/32_light_blue_round_gem_white_background.webp`, alt: "Cornflower Blue Oval Gemstone 1.50ct" }
     ]
   },
   {
@@ -598,7 +598,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-110DB",
     certificate_pdf_url: null,
     images: [
-      { url: `${INDIVIDUAL}/Blue/33_deep_blue_oval_gem_white_background.jpeg`, alt: "Deep Blue Oval Gemstone 1.10ct" }
+      { url: `${INDIVIDUAL}/Blue/33_deep_blue_oval_gem_white_background.webp`, alt: "Deep Blue Oval Gemstone 1.10ct" }
     ]
   },
   {
@@ -622,7 +622,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-PB175",
     certificate_pdf_url: null,
     images: [
-      { url: `${INDIVIDUAL}/Blue/34_pale_blue_gem_dark_fabric_01.jpeg`, alt: "Pale Blue Oval Gemstone on dark fabric" }
+      { url: `${INDIVIDUAL}/Blue/34_pale_blue_gem_dark_fabric_01.webp`, alt: "Pale Blue Oval Gemstone on dark fabric" }
     ]
   },
   {
@@ -646,7 +646,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS-2024-VB210",
     certificate_pdf_url: null,
     images: [
-      { url: `${INDIVIDUAL}/Blue/40_blue_gem_dark_fabric.jpeg`, alt: "Violet-Blue Oval Gemstone" }
+      { url: `${INDIVIDUAL}/Blue/40_blue_gem_dark_fabric.webp`, alt: "Violet-Blue Oval Gemstone" }
     ]
   },
   {
@@ -670,8 +670,8 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-2024-PNK130",
     certificate_pdf_url: null,
     images: [
-      { url: `${INDIVIDUAL}/Pink_and_Red/41_pink_gem_with_label_02.jpeg`, alt: "Pink Cushion Gemstone with label" },
-      { url: `${INDIVIDUAL}/Pink_and_Red/39_pink_gem_with_label.jpeg`, alt: "Pink Cushion Gemstone view 2" }
+      { url: `${INDIVIDUAL}/Pink_and_Red/41_pink_gem_with_label_02.webp`, alt: "Pink Cushion Gemstone with label" },
+      { url: `${INDIVIDUAL}/Pink_and_Red/39_pink_gem_with_label.webp`, alt: "Pink Cushion Gemstone view 2" }
     ]
   },
 
@@ -697,7 +697,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-42RD",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/15_multicolor_round_gems_tray.jpeg`, alt: "Multicolour Round Gem Tray of 42 stones" }
+      { url: `${TRAYS}/Mixed_Colors/15_multicolor_round_gems_tray.webp`, alt: "Multicolour Round Gem Tray of 42 stones" }
     ]
   },
   {
@@ -721,7 +721,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-RND17",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/17_mixed_round_gems_tray.jpeg`, alt: "Mixed Round Gem Tray" }
+      { url: `${TRAYS}/Mixed_Colors/17_mixed_round_gems_tray.webp`, alt: "Mixed Round Gem Tray" }
     ]
   },
   {
@@ -745,7 +745,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-GRID47",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/47_multicolor_gem_grid_collection.jpeg`, alt: "Multicolour Gem Grid Collection" }
+      { url: `${TRAYS}/Mixed_Colors/47_multicolor_gem_grid_collection.webp`, alt: "Multicolour Gem Grid Collection" }
     ]
   },
   {
@@ -769,7 +769,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-ARR12",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/12_mixed_color_gem_arrangement.jpeg`, alt: "Mixed Colour Gem Arrangement" }
+      { url: `${TRAYS}/Mixed_Colors/12_mixed_color_gem_arrangement.webp`, alt: "Mixed Colour Gem Arrangement" }
     ]
   },
   {
@@ -793,7 +793,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-BRN19",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/19_dark_and_brown_gems_tray.jpeg`, alt: "Dark & Brown Gem Tray" }
+      { url: `${TRAYS}/Mixed_Colors/19_dark_and_brown_gems_tray.webp`, alt: "Dark & Brown Gem Tray" }
     ]
   },
   {
@@ -817,7 +817,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-ATELIER-20",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/20_gem_trays_and_necklace_arrangement.jpeg`, alt: "Gem Trays & Necklace Arrangement" }
+      { url: `${TRAYS}/Mixed_Colors/20_gem_trays_and_necklace_arrangement.webp`, alt: "Gem Trays & Necklace Arrangement" }
     ]
   },
   {
@@ -841,7 +841,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-BOXES-21",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/21_mixed_gem_display_boxes.jpeg`, alt: "Mixed Gem Display Boxes" }
+      { url: `${TRAYS}/Mixed_Colors/21_mixed_gem_display_boxes.webp`, alt: "Mixed Gem Display Boxes" }
     ]
   },
   {
@@ -865,7 +865,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-DUAL-24",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/24_two_gem_trays_mixed_collection.jpeg`, alt: "Two Mixed Gem Trays" }
+      { url: `${TRAYS}/Mixed_Colors/24_two_gem_trays_mixed_collection.webp`, alt: "Two Mixed Gem Trays" }
     ]
   },
   {
@@ -889,7 +889,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-HAND-27",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Mixed_Colors/27_mixed_color_gems_handheld_tray.jpeg`, alt: "Mixed Colour Handheld Gem Tray" }
+      { url: `${TRAYS}/Mixed_Colors/27_mixed_color_gems_handheld_tray.webp`, alt: "Mixed Colour Handheld Gem Tray" }
     ]
   },
   {
@@ -913,7 +913,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-BC11",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Blue_and_Clear/11_blue_clear_gems_tray.jpeg`, alt: "Blue & Clear Gem Tray" }
+      { url: `${TRAYS}/Blue_and_Clear/11_blue_clear_gems_tray.webp`, alt: "Blue & Clear Gem Tray" }
     ]
   },
   {
@@ -937,7 +937,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-BCG25",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Blue_and_Clear/25_blue_clear_and_green_gem_trays.jpeg`, alt: "Blue Clear and Green Gem Trays" }
+      { url: `${TRAYS}/Blue_and_Clear/25_blue_clear_and_green_gem_trays.webp`, alt: "Blue Clear and Green Gem Trays" }
     ]
   },
   {
@@ -961,7 +961,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-SM-BLU46",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Blue_and_Clear/46_blue_gems_small_collection.jpeg`, alt: "Small Blue Gem Collection" }
+      { url: `${TRAYS}/Blue_and_Clear/46_blue_gems_small_collection.webp`, alt: "Small Blue Gem Collection" }
     ]
   },
   {
@@ -985,7 +985,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "NGJA-LOT-BY16",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Blue_and_Yellow/16_blue_yellow_gems_small_tray.jpeg`, alt: "Blue & Yellow Gem Tray" }
+      { url: `${TRAYS}/Blue_and_Yellow/16_blue_yellow_gems_small_tray.webp`, alt: "Blue & Yellow Gem Tray" }
     ]
   },
   {
@@ -1009,7 +1009,7 @@ export const REAL_PRODUCTS = [
     certificate_number: "GRS-LOT-PR13",
     certificate_pdf_url: null,
     images: [
-      { url: `${TRAYS}/Pink_and_Red/13_pink_red_gems_tray.jpeg`, alt: "Pink & Red Gem Tray" }
+      { url: `${TRAYS}/Pink_and_Red/13_pink_red_gems_tray.webp`, alt: "Pink & Red Gem Tray" }
     ]
   }
 ];

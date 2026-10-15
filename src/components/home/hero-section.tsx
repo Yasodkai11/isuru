@@ -30,7 +30,7 @@ interface HeroScene {
 const HERO_SCENES: HeroScene[] = [
   {
     id: "modern-ceylon",
-    src: "/images/concept03/hero-modern-ceylon.jpg",
+    src: "/images/concept03/hero-modern-ceylon.webp",
     alt: "Fine loose faceted Ceylon Blue Sapphire, Pink Sapphire and Yellow Sapphire staged on white travertine stone blocks",
     title: "Master Faceted Sapphires",
     subtitle: "Natural · Unheated · Certified Ceylon",
@@ -40,7 +40,7 @@ const HERO_SCENES: HeroScene[] = [
   },
   {
     id: "heritage-chest",
-    src: "/isuru_images/hero1.jpg",
+    src: "/isuru_images/hero1.webp",
     alt: "Ceylon royal sapphires and rubies displayed on an antique hand-carved mahogany chest in sunlight",
     title: "Sacred Heritage Salon",
     subtitle: "Ratnapura · Historic Alluvial Gravels Since 1984",
@@ -50,7 +50,7 @@ const HERO_SCENES: HeroScene[] = [
   },
   {
     id: "highland-blues",
-    src: "/isuru_images/hero2.jpg",
+    src: "/isuru_images/hero2.webp",
     alt: "Ceylon royal blue sapphires glistening in dawn light over mist-shrouded highland tea hills",
     title: "Highland Cornflower Blues",
     subtitle: "Sabaragamuwa · Electric Crystalline Brilliance",
@@ -60,7 +60,7 @@ const HERO_SCENES: HeroScene[] = [
   },
   {
     id: "sunset-padparadscha",
-    src: "/isuru_images/hero3.jpg",
+    src: "/isuru_images/hero3.webp",
     alt: "Rare fancy color sapphires and fiery gems catching the sunset at a luxury panoramic salon",
     title: "Twilight Lotus Padparadscha",
     subtitle: "Sunset Fire · Legendary Ceylon King of Sapphires",
@@ -70,7 +70,7 @@ const HERO_SCENES: HeroScene[] = [
   },
   {
     id: "collector-parcels",
-    src: "/isuru_images/hero4.jpg",
+    src: "/isuru_images/hero4.webp",
     alt: "Master collection of natural precious sapphires and collector gems overlooking a calm lake and mountains",
     title: "Master Lapidary Parcels",
     subtitle: "Certified Investment Gems · Independent Dossiers",
@@ -97,7 +97,7 @@ const FLOATING_PODS: FloatingGemPodData[] = [
     name: "Royal Blue Sapphire",
     carat: "4.28 cts",
     tag: "Unheated Ceylon",
-    image: "/isuru_images/blue1.jpg",
+    image: "/isuru_images/blue1.webp",
     href: "/gems?category=blue-sapphires",
     positionClasses: "-top-5 sm:-top-7 -left-3 sm:-left-7",
     animationDelay: "0s",
@@ -107,7 +107,7 @@ const FLOATING_PODS: FloatingGemPodData[] = [
     name: "Lotus Padparadscha",
     carat: "3.15 cts",
     tag: "Rare Collector Specimen",
-    image: "/isuru_images/pink1.jpg",
+    image: "/isuru_images/pink1.webp",
     href: "/gems?category=padparadscha",
     positionClasses: "-bottom-5 sm:-bottom-7 -right-3 sm:-right-7",
     animationDelay: "-3.5s",

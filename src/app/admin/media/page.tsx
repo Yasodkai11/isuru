@@ -48,12 +48,12 @@ export default function AdminMediaPage() {
 
     addMediaAsset({
       id: `media-${Date.now().toString().slice(-5)}`,
-      name: assetName.trim() || `gem-asset-${Date.now().toString().slice(-4)}.jpg`,
+      name: assetName.trim() || `gem-asset-${Date.now().toString().slice(-4)}.webp`,
       url: assetUrl.trim(),
       type: assetType,
       size: assetSize,
       dimensions: "3840 x 2560",
-      format: assetType === "certificate_pdf" ? "PDF" : "JPEG",
+      format: assetType === "certificate_pdf" ? "PDF" : "WEBP",
       createdAt: new Date().toISOString().split("T")[0],
       tag: assetTag,
     });
@@ -355,7 +355,7 @@ export default function AdminMediaPage() {
             <Input
               value={assetName}
               onChange={(e) => setAssetName(e.target.value)}
-              placeholder="ceylon-blue-sapphire-facet.jpg"
+              placeholder="ceylon-blue-sapphire-facet.webp"
             />
           </div>
 

@@ -11,7 +11,7 @@ interface GemCardProps {
 
 export function GemCard({ gem }: GemCardProps) {
   const primaryImage = gem.images[0] || {
-    url: "/isuru_images/blue1.jpg",
+    url: "/isuru_images/blue1.webp",
     alt: `Natural Ceylon ${gem.variety} gemstone`,
   };
 

@@ -86,7 +86,7 @@ export function EnquiryCTA() {
         <div className="relative order-1 lg:order-2 min-h-[320px] overflow-hidden bg-[#120F0D]">
           <motion.div style={reduce ? undefined : { y: imageY }} className="absolute -inset-y-[10%] inset-x-0">
             <Image
-              src="/isuru_images/bucket.jpg"
+              src="/isuru_images/bucket.webp"
               alt="Oval Ceylon blue sapphire set in an ornate handcrafted gold ring with sapphire pavé"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

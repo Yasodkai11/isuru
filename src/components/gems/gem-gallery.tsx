@@ -25,7 +25,7 @@ export function GemGallery({
   const [isHovering, setIsHovering] = useState(false);
 
   const fallbackImage: GemImage = {
-    url: "/isuru_images/blue1.jpg",
+    url: "/isuru_images/blue1.webp",
     alt: `${gemName} macro gemstone view`,
   };
 

@@ -267,7 +267,7 @@ export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrd
           variety: "Ceylon Sapphire",
           carat: 3.5,
           price: Number(row.total_amount),
-          image: "/isuru_images/blue1.jpg",
+          image: "/isuru_images/blue1.webp",
           certificateLab: "GRS & NGJA",
           certificateNumber: "NGJA-2024",
         },

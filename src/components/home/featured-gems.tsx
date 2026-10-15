@@ -73,7 +73,7 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
           <AnimatePresence mode="popLayout">
           {gems.slice(0, 8).map((gem, index) => {
             const primaryImage = gem.images[0] || {
-              url: "/isuru_images/blue1.jpg",
+              url: "/isuru_images/blue1.webp",
               alt: `${gem.name}`,
             };
 

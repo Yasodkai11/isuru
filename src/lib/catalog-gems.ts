@@ -29,8 +29,8 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A monumental Ceylon royal blue sapphire mined from the alluvial gravels of Kalu Ganga, Ratnapura. Displays velvety blue saturation with intense scintillation and zero thermal treatment.",
     certificate: { lab: "GRS & NGJA", number: "GRS2024-089921" },
     images: [
-      { url: "/isuru_images/natural%20heart.jpg", alt: "4.15ct Ceylon Royal Blue Sapphire Tear of Serendib" },
-      { url: "/isuru_images/blue1.jpg", alt: "Facet brilliance under daylight" }
+      { url: "/isuru_images/natural%20heart.webp", alt: "4.15ct Ceylon Royal Blue Sapphire Tear of Serendib" },
+      { url: "/isuru_images/blue1.webp", alt: "Facet brilliance under daylight" }
     ]
   },
   {
@@ -53,7 +53,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A breathtaking natural Ceylon Padparadscha capturing the exact equilibrium between soft lotus petal pink and sunset gold. Completely unheated with Swiss SSEF certification.",
     certificate: { lab: "SSEF & NGJA", number: "SSEF-118492" },
     images: [
-      { url: "/isuru_images/Padparadscha%20Sapphire.jpg", alt: "3.15ct Ceylon Padparadscha Sapphire" }
+      { url: "/isuru_images/Padparadscha%20Sapphire.webp", alt: "3.15ct Ceylon Padparadscha Sapphire" }
     ]
   },
   {
@@ -76,7 +76,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A rare phenomenon gem displaying a crisp, centered six-ray asterism star that glides seamlessly under direct lighting. Mined from the historic pit mines of Ratnapura.",
     certificate: { lab: "GIA & NGJA", number: "GIA-5542198034" },
     images: [
-      { url: "/isuru_images/Star%20Sapphire.jpg", alt: "6.80ct Ceylon Asterism Star Sapphire Cabochon" }
+      { url: "/isuru_images/Star%20Sapphire.webp", alt: "6.80ct Ceylon Asterism Star Sapphire Cabochon" }
     ]
   },
   {
@@ -99,7 +99,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "Emerald by day, ruby by night. This exceptional untreated Ceylon chrysoberyl alexandrite displays dramatic optical color transformation between natural sunlight and incandescent warm light.",
     certificate: { lab: "Gubelin & NGJA", number: "GUB-2024-9982" },
     images: [
-      { url: "/isuru_images/Alexandrite%20category.jpg", alt: "1.85ct Phenomenal Ceylon Alexandrite" }
+      { url: "/isuru_images/Alexandrite%20category.webp", alt: "1.85ct Phenomenal Ceylon Alexandrite" }
     ]
   },
   {
@@ -122,8 +122,8 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "Sourced from the deep gravels of Pelmadulla. Celebrated for high chromium content giving intense internal scarlet luminescence and natural fluorescence under daylight.",
     certificate: { lab: "GRS Certified", number: "GRS-RUB-88412" },
     images: [
-      { url: "/isuru_images/Natural%20Ruby.jpg", alt: "2.05ct Natural Ceylon Ruby Cushion" },
-      { url: "/isuru_images/ruby%20category.jpg", alt: "Ceylon Ruby table reflection" }
+      { url: "/isuru_images/Natural%20Ruby.webp", alt: "2.05ct Natural Ceylon Ruby Cushion" },
+      { url: "/isuru_images/ruby%20category.webp", alt: "Ceylon Ruby table reflection" }
     ]
   },
   {
@@ -146,7 +146,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "Revered in Vedic gemology as Pushparaga for auspicious fortune. Cut in a stately emerald step profile with fiery amber brilliance from the decomposed granite gravels of Balangoda.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-C9081" },
     images: [
-      { url: "/isuru_images/yellow.jpg", alt: "5.60ct Ceylon Golden Pushparaga Emerald Cut" }
+      { url: "/isuru_images/yellow.webp", alt: "5.60ct Ceylon Golden Pushparaga Emerald Cut" }
     ]
   },
   {
@@ -169,7 +169,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "An extraordinary singly-refractive untreated natural red spinel showcasing pure crimson fire. Zero heat or synthetic treatment, certified by GIA and NGJA.",
     certificate: { lab: "GIA & NGJA", number: "GIA-SPN-77401" },
     images: [
-      { url: "/isuru_images/Red%20Ceylon%20Spinel.jpg", alt: "2.95ct Ceylon Flame Red Spinel" }
+      { url: "/isuru_images/Red%20Ceylon%20Spinel.webp", alt: "2.95ct Ceylon Flame Red Spinel" }
     ]
   },
   {
@@ -192,7 +192,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A rare and fiery unheated Ceylon fancy sapphire displaying pure mandarin orange brilliance without any brown overtone, cut to optimal optical proportions.",
     certificate: { lab: "GRS & NGJA", number: "GRS2024-ORG8812" },
     images: [
-      { url: "/isuru_images/Orange%20Sapphire.jpg", alt: "3.40ct Ceylon Mandarin Orange Sapphire" }
+      { url: "/isuru_images/Orange%20Sapphire.webp", alt: "3.40ct Ceylon Mandarin Orange Sapphire" }
     ]
   },
   {
@@ -215,8 +215,8 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "An electric light blue Ceylon sapphire cushion demonstrating intense diamond-like dispersion and exceptional crystalline clarity.",
     certificate: { lab: "GIA & GRS", number: "GIA-6218903120" },
     images: [
-      { url: "/isuru_images/lightblue.jpg", alt: "2.42ct Ceylon Light Blue Sapphire Cushion" },
-      { url: "/isuru_images/blue2.jpg", alt: "Macro facet view" }
+      { url: "/isuru_images/lightblue.webp", alt: "2.42ct Ceylon Light Blue Sapphire Cushion" },
+      { url: "/isuru_images/blue2.webp", alt: "Macro facet view" }
     ]
   },
   {
@@ -239,7 +239,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A deep olive and forest green natural corundum mined from Pelmadulla, presenting vivid golden-green flashes under direct illumination.",
     certificate: { lab: "GIA & NGJA", number: "GIA-7741908" },
     images: [
-      { url: "/isuru_images/green.jpg", alt: "3.10ct Ceylon Forest Green Sapphire" }
+      { url: "/isuru_images/green.webp", alt: "3.10ct Ceylon Forest Green Sapphire" }
     ]
   },
 
@@ -264,7 +264,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A lively cornflower blue oval with bright, even saturation and open crystal transparency. Photographed in its gem display box at our Ratnapura atelier.",
     certificate: { lab: "GRS & NGJA", number: "GRS-2024-BLU892" },
     images: [
-      { url: `${SINGLE}/Blue/04_blue_gem_square_display.jpeg`, alt: "Cornflower Blue Oval Gemstone in box" }
+      { url: `${SINGLE}/Blue/04_blue_gem_square_display.webp`, alt: "Cornflower Blue Oval Gemstone in box" }
     ]
   },
   {
@@ -287,7 +287,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "An elongated oval in a soft, open blue tone with lively facet play across the crown, ideal for bespoke pendant or three-stone ring settings.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-C7821" },
     images: [
-      { url: `${SINGLE}/Blue/05_blue_gem_small_display.jpeg`, alt: "Soft Blue Elongated Oval Gemstone" }
+      { url: `${SINGLE}/Blue/05_blue_gem_small_display.webp`, alt: "Soft Blue Elongated Oval Gemstone" }
     ]
   },
   {
@@ -310,7 +310,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A compact oval with saturated royal blue colour and excellent optical purity, directly from our active stock.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-B4019" },
     images: [
-      { url: `${SINGLE}/Blue/07_small_blue_gem_display.jpeg`, alt: "Small Vivid Blue Oval Gemstone" }
+      { url: `${SINGLE}/Blue/07_small_blue_gem_display.webp`, alt: "Small Vivid Blue Oval Gemstone" }
     ]
   },
   {
@@ -333,7 +333,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A deep forest green oval displaying bright yellow-green flashes through the pavilion facets. 100% natural and unheated.",
     certificate: { lab: "GIA & NGJA", number: "GIA-2024-GRN441" },
     images: [
-      { url: `${SINGLE}/Green/10_olive_green_gem_display.jpeg`, alt: "Forest Green Oval Gemstone" }
+      { url: `${SINGLE}/Green/10_olive_green_gem_display.webp`, alt: "Forest Green Oval Gemstone" }
     ]
   },
   {
@@ -356,7 +356,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "An olive green oval with lively golden-green sparkle and excellent clarity, held in our gem display cassette.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-G3102" },
     images: [
-      { url: `${SINGLE}/Green/09_small_green_gem_display.jpeg`, alt: "Olive Green Oval Gemstone" }
+      { url: `${SINGLE}/Green/09_small_green_gem_display.webp`, alt: "Olive Green Oval Gemstone" }
     ]
   },
   {
@@ -379,7 +379,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A bright hot-pink cushion with strong, even saturation and brilliant fire. Fully certified unheated natural corundum.",
     certificate: { lab: "GRS & NGJA", number: "GRS-2024-PNK140" },
     images: [
-      { url: `${SINGLE}/Pink_and_Purple/01_pink_gem_square_display.jpeg`, alt: "Vivid Pink Cushion Gemstone" }
+      { url: `${SINGLE}/Pink_and_Purple/01_pink_gem_square_display.webp`, alt: "Vivid Pink Cushion Gemstone" }
     ]
   },
   {
@@ -402,7 +402,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A delicate pastel pink cushion with soft peach undertones, reminiscent of authentic Ceylon Padparadscha hues.",
     certificate: { lab: "SSEF & NGJA", number: "SSEF-2024-8841" },
     images: [
-      { url: `${SINGLE}/Pink_and_Purple/06_pale_pink_gem_display.jpeg`, alt: "Pale Peach-Pink Cushion Gemstone" }
+      { url: `${SINGLE}/Pink_and_Purple/06_pale_pink_gem_display.webp`, alt: "Pale Peach-Pink Cushion Gemstone" }
     ]
   },
   {
@@ -425,7 +425,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A rich violet-purple oval with deep, velvety saturation and sharp crystal luster, mined in Ratnapura.",
     certificate: { lab: "GIA & NGJA", number: "GIA-5591024" },
     images: [
-      { url: `${SINGLE}/Pink_and_Purple/08_purple_gem_display.jpeg`, alt: "Violet Purple Oval Gemstone" }
+      { url: `${SINGLE}/Pink_and_Purple/08_purple_gem_display.webp`, alt: "Violet Purple Oval Gemstone" }
     ]
   },
   {
@@ -448,7 +448,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A deep red to maroon oval with bright crimson flashes and high natural daylight fluorescence. Mined in Pelmadulla.",
     certificate: { lab: "GRS Certified", number: "GRS-RUB-2024-912" },
     images: [
-      { url: `${SINGLE}/Red_and_Maroon/02_dark_red_oval_gem_display.jpeg`, alt: "Deep Red Oval Gemstone" }
+      { url: `${SINGLE}/Red_and_Maroon/02_dark_red_oval_gem_display.webp`, alt: "Deep Red Oval Gemstone" }
     ]
   },
   {
@@ -471,7 +471,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A golden honey-yellow oval with strong brilliance through the pavilion, showing radiant warm amber fire.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-Y8801" },
     images: [
-      { url: `${SINGLE}/Yellow_and_Gold/03_yellow_gold_oval_gem_display.jpeg`, alt: "Golden Yellow Oval Gemstone" }
+      { url: `${SINGLE}/Yellow_and_Gold/03_yellow_gold_oval_gem_display.webp`, alt: "Golden Yellow Oval Gemstone" }
     ]
   },
 
@@ -496,7 +496,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A saturated royal blue natural sapphire verified with atelier stock label 'B/S (N) 0.60'. Untreated Ceylon origin.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-060BS" },
     images: [
-      { url: `${INDIVIDUAL}/Blue/26_blue_round_gem_white_background_01.jpeg`, alt: "Natural Blue Sapphire Oval 0.60ct" }
+      { url: `${INDIVIDUAL}/Blue/26_blue_round_gem_white_background_01.webp`, alt: "Natural Blue Sapphire Oval 0.60ct" }
     ]
   },
   {
@@ -519,7 +519,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A medium blue oval with a bright, open table facet and lively brilliance under both daylight and evening light.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-120BS" },
     images: [
-      { url: `${INDIVIDUAL}/Blue/30_blue_round_gem_white_background_02.jpeg`, alt: "Blue Oval Gemstone 1.20ct" }
+      { url: `${INDIVIDUAL}/Blue/30_blue_round_gem_white_background_02.webp`, alt: "Blue Oval Gemstone 1.20ct" }
     ]
   },
   {
@@ -542,7 +542,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A bright cornflower blue oval with excellent sparkle and no dark extinguishment zones, unheated natural corundum.",
     certificate: { lab: "GIA & NGJA", number: "GIA-2024-150CF" },
     images: [
-      { url: `${INDIVIDUAL}/Blue/32_light_blue_round_gem_white_background.jpeg`, alt: "Cornflower Blue Oval Gemstone 1.50ct" }
+      { url: `${INDIVIDUAL}/Blue/32_light_blue_round_gem_white_background.webp`, alt: "Cornflower Blue Oval Gemstone 1.50ct" }
     ]
   },
   {
@@ -565,7 +565,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A deep blue oval with strong colour saturation and lively facets, mined from Ratnapura gravels.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-110DB" },
     images: [
-      { url: `${INDIVIDUAL}/Blue/33_deep_blue_oval_gem_white_background.jpeg`, alt: "Deep Blue Oval Gemstone 1.10ct" }
+      { url: `${INDIVIDUAL}/Blue/33_deep_blue_oval_gem_white_background.webp`, alt: "Deep Blue Oval Gemstone 1.10ct" }
     ]
   },
   {
@@ -588,7 +588,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A soft pastel blue oval photographed across multiple lighting angles on dark velvet, showcasing gentle crystal fire.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-PB175" },
     images: [
-      { url: `${INDIVIDUAL}/Blue/34_pale_blue_gem_dark_fabric_01.jpeg`, alt: "Pale Blue Oval Gemstone on dark fabric" }
+      { url: `${INDIVIDUAL}/Blue/34_pale_blue_gem_dark_fabric_01.webp`, alt: "Pale Blue Oval Gemstone on dark fabric" }
     ]
   },
   {
@@ -611,7 +611,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A violet-blue oval with rich, saturated indigo and violet secondary tones, capturing rare natural pleochroism.",
     certificate: { lab: "GRS & NGJA", number: "GRS-2024-VB210" },
     images: [
-      { url: `${INDIVIDUAL}/Blue/40_blue_gem_dark_fabric.jpeg`, alt: "Violet-Blue Oval Gemstone" }
+      { url: `${INDIVIDUAL}/Blue/40_blue_gem_dark_fabric.webp`, alt: "Violet-Blue Oval Gemstone" }
     ]
   },
   {
@@ -634,8 +634,8 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A lovely natural pink cushion with stock verification label, shown under ambient and concentrated inspection light.",
     certificate: { lab: "NGJA Certified", number: "NGJA-2024-PNK130" },
     images: [
-      { url: `${INDIVIDUAL}/Pink_and_Red/41_pink_gem_with_label_02.jpeg`, alt: "Pink Cushion Gemstone with label" },
-      { url: `${INDIVIDUAL}/Pink_and_Red/39_pink_gem_with_label.jpeg`, alt: "Pink Cushion Gemstone view 2" }
+      { url: `${INDIVIDUAL}/Pink_and_Red/41_pink_gem_with_label_02.webp`, alt: "Pink Cushion Gemstone with label" },
+      { url: `${INDIVIDUAL}/Pink_and_Red/39_pink_gem_with_label.webp`, alt: "Pink Cushion Gemstone view 2" }
     ]
   },
 
@@ -660,7 +660,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "Forty-two calibrated round brilliants in warm golden, champagne, cognac, and rose tones. Ideal for luxury eternity bands, cluster earrings, or boutique bespoke ateliers.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-42RD" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/15_multicolor_round_gems_tray.jpeg`, alt: "Multicolour Round Gem Tray of 42 stones" }
+      { url: `${TRAYS}/Mixed_Colors/15_multicolor_round_gems_tray.webp`, alt: "Multicolour Round Gem Tray of 42 stones" }
     ]
   },
   {
@@ -683,7 +683,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A precision tray of round-cut Ceylon gems in assorted colours. Suitable for jewellers seeking matching and multi-color gradient suites.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-RND17" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/17_mixed_round_gems_tray.jpeg`, alt: "Mixed Round Gem Tray" }
+      { url: `${TRAYS}/Mixed_Colors/17_mixed_round_gems_tray.webp`, alt: "Mixed Round Gem Tray" }
     ]
   },
   {
@@ -706,7 +706,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A neatly arranged master grid of assorted coloured Ceylon gemstones. Perfect investment suite or boutique showroom showcase.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-GRID47" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/47_multicolor_gem_grid_collection.jpeg`, alt: "Multicolour Gem Grid Collection" }
+      { url: `${TRAYS}/Mixed_Colors/47_multicolor_gem_grid_collection.webp`, alt: "Multicolour Gem Grid Collection" }
     ]
   },
   {
@@ -729,7 +729,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "An artistic arrangement of fine gemstones across several colors and cuts from our primary inventory.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-ARR12" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/12_mixed_color_gem_arrangement.jpeg`, alt: "Mixed Colour Gem Arrangement" }
+      { url: `${TRAYS}/Mixed_Colors/12_mixed_color_gem_arrangement.webp`, alt: "Mixed Colour Gem Arrangement" }
     ]
   },
   {
@@ -752,7 +752,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A tray of deep-toned, chocolate, and cognac natural gemstones exhibiting fiery singly-refractive and high-dispersion flashes.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-BRN19" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/19_dark_and_brown_gems_tray.jpeg`, alt: "Dark & Brown Gem Tray" }
+      { url: `${TRAYS}/Mixed_Colors/19_dark_and_brown_gems_tray.webp`, alt: "Dark & Brown Gem Tray" }
     ]
   },
   {
@@ -775,7 +775,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "Multiple gemstone trays presented alongside finished high-jewelry specimens in our private salon.",
     certificate: { lab: "NGJA Atelier Certified", number: "NGJA-ATELIER-20" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/20_gem_trays_and_necklace_arrangement.jpeg`, alt: "Gem Trays & Necklace Arrangement" }
+      { url: `${TRAYS}/Mixed_Colors/20_gem_trays_and_necklace_arrangement.webp`, alt: "Gem Trays & Necklace Arrangement" }
     ]
   },
   {
@@ -798,7 +798,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A selection of individual gem boxes holding loose collector gems across a variety of colors.",
     certificate: { lab: "NGJA Certified", number: "NGJA-BOXES-21" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/21_mixed_gem_display_boxes.jpeg`, alt: "Mixed Gem Display Boxes" }
+      { url: `${TRAYS}/Mixed_Colors/21_mixed_gem_display_boxes.webp`, alt: "Mixed Gem Display Boxes" }
     ]
   },
   {
@@ -821,7 +821,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "Two master trays containing loose gemstones in mixed colours, suitable for wholesale collectors and designers.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-DUAL-24" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/24_two_gem_trays_mixed_collection.jpeg`, alt: "Two Mixed Gem Trays" }
+      { url: `${TRAYS}/Mixed_Colors/24_two_gem_trays_mixed_collection.webp`, alt: "Two Mixed Gem Trays" }
     ]
   },
   {
@@ -844,7 +844,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A handheld tray holding a lively collection of mixed-colour natural gemstones held under natural daylight.",
     certificate: { lab: "NGJA Certified", number: "NGJA-HAND-27" },
     images: [
-      { url: `${TRAYS}/Mixed_Colors/27_mixed_color_gems_handheld_tray.jpeg`, alt: "Mixed Colour Handheld Gem Tray" }
+      { url: `${TRAYS}/Mixed_Colors/27_mixed_color_gems_handheld_tray.webp`, alt: "Mixed Colour Handheld Gem Tray" }
     ]
   },
   {
@@ -867,7 +867,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A tray of sparkling Ceylon blue and colourless natural sapphires with crystal transparency and sharp facet edges.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-BC11" },
     images: [
-      { url: `${TRAYS}/Blue_and_Clear/11_blue_clear_gems_tray.jpeg`, alt: "Blue & Clear Gem Tray" }
+      { url: `${TRAYS}/Blue_and_Clear/11_blue_clear_gems_tray.webp`, alt: "Blue & Clear Gem Tray" }
     ]
   },
   {
@@ -890,7 +890,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "Trays of blue, colourless, and green gemstones arranged for side-by-side selection and grading.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-BCG25" },
     images: [
-      { url: `${TRAYS}/Blue_and_Clear/25_blue_clear_and_green_gem_trays.jpeg`, alt: "Blue Clear and Green Gem Trays" }
+      { url: `${TRAYS}/Blue_and_Clear/25_blue_clear_and_green_gem_trays.webp`, alt: "Blue Clear and Green Gem Trays" }
     ]
   },
   {
@@ -913,7 +913,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A compact curated collection of five vivid blue Ceylon sapphires with uniform tone.",
     certificate: { lab: "NGJA Certified", number: "NGJA-SM-BLU46" },
     images: [
-      { url: `${TRAYS}/Blue_and_Clear/46_blue_gems_small_collection.jpeg`, alt: "Small Blue Gem Collection" }
+      { url: `${TRAYS}/Blue_and_Clear/46_blue_gems_small_collection.webp`, alt: "Small Blue Gem Collection" }
     ]
   },
   {
@@ -936,7 +936,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A striking parcel pairing Ceylon blue sapphires and golden yellow Pushparaga gems.",
     certificate: { lab: "NGJA Lot Certificate", number: "NGJA-LOT-BY16" },
     images: [
-      { url: `${TRAYS}/Blue_and_Yellow/16_blue_yellow_gems_small_tray.jpeg`, alt: "Blue & Yellow Gem Tray" }
+      { url: `${TRAYS}/Blue_and_Yellow/16_blue_yellow_gems_small_tray.webp`, alt: "Blue & Yellow Gem Tray" }
     ]
   },
   {
@@ -959,7 +959,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     description: "A premier tray of pink sapphires and natural Ceylon rubies displaying intense crimson luminescence under ultraviolet light.",
     certificate: { lab: "GRS & NGJA Lot Certificate", number: "GRS-LOT-PR13" },
     images: [
-      { url: `${TRAYS}/Pink_and_Red/13_pink_red_gems_tray.jpeg`, alt: "Pink & Red Gem Tray" }
+      { url: `${TRAYS}/Pink_and_Red/13_pink_red_gems_tray.webp`, alt: "Pink & Red Gem Tray" }
     ]
   }
 ];
