@@ -3,15 +3,74 @@
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   motion,
   useInView,
   useScroll,
   useTransform,
   useReducedMotion,
+  AnimatePresence,
   type Variants,
 } from "framer-motion";
+
+interface WorkSlide {
+  id: string;
+  title: string;
+  subtitle: string;
+  tag: string;
+  src: string;
+  alt: string;
+  position: string;
+}
+
+const workSlides: WorkSlide[] = [
+  {
+    id: "pit-mining",
+    title: "Traditional Shaft Mining",
+    subtitle: "Ratnapura Gem Pit • 40ft Alluvial Shaft",
+    tag: "Mine Site",
+    src: "/isuru_images/work/work-pit-mining.jpeg",
+    alt: "Authentic gem miner inside a deep timbered shaft in Ratnapura Sri Lanka",
+    position: "object-cover object-center",
+  },
+  {
+    id: "river-washing",
+    title: "River Illam Washing",
+    subtitle: "Artisanal Woven Wattiya Baskets",
+    tag: "Ethical Sourcing",
+    src: "/isuru_images/work/work-river-washing.jpeg",
+    alt: "Traditional alluvial gem washing in Sri Lankan river with conical bamboo basket",
+    position: "object-cover object-center",
+  },
+  {
+    id: "gem-selection",
+    title: "Hand-Grading Gem Parcels",
+    subtitle: "Unheated Ceylon Sapphires & Spinels",
+    tag: "Inspection",
+    src: "/isuru_images/work/work-gem-selection.jpeg",
+    alt: "Gemologist reviewing parcels of genuine cut and raw gemstones on display trays",
+    position: "object-cover object-center",
+  },
+  {
+    id: "three-generations",
+    title: "Three Generations of Craft",
+    subtitle: "Family Legacy in Ratnapura Atelier",
+    tag: "Heritage",
+    src: "/isuru_images/work/work-three-generations.jpeg",
+    alt: "Three generations of Sri Lankan gem merchants and family craftsmen",
+    position: "object-cover object-top",
+  },
+  {
+    id: "partnership",
+    title: "Direct Miner Partnerships",
+    subtitle: "Certified Origin & Fair Trade",
+    tag: "100% Direct",
+    src: "/isuru_images/work/work-partnership.jpeg",
+    alt: "Direct trade and certification exchange with local miners",
+    position: "object-cover object-center",
+  },
+];
 
 interface CountUpProps {
   end: number;
@@ -77,6 +136,20 @@ export function OurStory() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Slide state and auto-play for real work showcase
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (isHovered || shouldReduceMotion || !isInView) return;
+    const timer = setInterval(() => {
+      setCurrentSlideIndex((prev) => (prev + 1) % workSlides.length);
+    }, 4600);
+    return () => clearInterval(timer);
+  }, [isHovered, shouldReduceMotion, isInView]);
+
+  const currentSlide = workSlides[currentSlideIndex];
 
   // Parallax configuration for desktop
   const { scrollYProgress } = useScroll({
@@ -211,12 +284,18 @@ export function OurStory() {
           <div className="order-2 lg:order-1 lg:col-span-6 xl:col-span-6">
             <div className="relative max-w-md sm:max-w-lg lg:max-w-none mx-auto pt-6 pb-10 sm:py-8 px-3 sm:px-6">
               
-              {/* Parallax wrapper for main craftsman image */}
+              {/* Subtle ambient warm gold glow behind the collage */}
+              <div 
+                aria-hidden="true" 
+                className="absolute -inset-4 bg-gradient-to-tr from-[#B8924A]/15 via-transparent to-[#5E0F1E]/10 rounded-3xl blur-2xl pointer-events-none -z-10" 
+              />
+
+              {/* Parallax wrapper for main showcase */}
               <motion.div
                 style={isDesktop && !shouldReduceMotion ? { y: mainParallaxY } : undefined}
                 className="relative z-10"
               >
-                {/* 16px offset decorative gold border with corner marks & shimmer */}
+                {/* Decorative gold border with corner marks & recurring shimmer sweep */}
                 <div
                   aria-hidden="true"
                   className="absolute inset-0 translate-x-3.5 translate-y-3.5 sm:translate-x-4 sm:translate-y-4 border border-[#B8924A]/45 pointer-events-none z-0 overflow-hidden"
@@ -233,17 +312,18 @@ export function OurStory() {
                   <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b border-l border-[#B8924A]" />
                   <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b border-r border-[#B8924A]" />
 
-                  {/* One-time gold shimmer sweep across the image border */}
+                  {/* Periodic gold shimmer sweep across the image border */}
                   <motion.div
                     initial={shouldReduceMotion ? { opacity: 0 } : { x: "-100%", opacity: 0 }}
                     animate={
                       isInView && !shouldReduceMotion
-                        ? { x: ["-100%", "200%"], opacity: [0, 0.75, 0] }
+                        ? { x: ["-100%", "220%"], opacity: [0, 0.85, 0] }
                         : { opacity: 0 }
                     }
                     transition={{
-                      duration: 1.8,
-                      delay: 0.7,
+                      duration: 2.2,
+                      repeat: Infinity,
+                      repeatDelay: 4.5,
                       ease: "easeInOut",
                     }}
                     className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-[#F7E7A9]/75 to-transparent pointer-events-none"
@@ -251,42 +331,143 @@ export function OurStory() {
                 </div>
 
                 {/* Main image container with 4:5 tall portrait ratio */}
-                <div className="relative z-10 aspect-[4/5] w-full bg-[#1A1410] shadow-[0_20px_50px_rgba(43,43,43,0.14)] overflow-hidden">
-                  {/* Framer-motion clip-path wipe from bottom to top & scale from 1.1 to 1 */}
-                  <motion.div
-                    initial={
-                      shouldReduceMotion
-                        ? { clipPath: "inset(0% 0% 0% 0%)", scale: 1 }
-                        : { clipPath: "inset(100% 0% 0% 0%)", scale: 1.1 }
-                    }
-                    animate={
-                      isInView
-                        ? { clipPath: "inset(0% 0% 0% 0%)", scale: 1 }
-                        : shouldReduceMotion
-                        ? { clipPath: "inset(0% 0% 0% 0%)", scale: 1 }
-                        : { clipPath: "inset(100% 0% 0% 0%)", scale: 1.1 }
-                    }
-                    transition={{
-                      duration: shouldReduceMotion ? 0 : 0.9,
-                      ease: [0.16, 1, 0.3, 1] as const,
-                    }}
-                    className="group relative w-full h-full overflow-hidden"
-                  >
-                    <Image
-                      src="/images/story/image2.jpg"
-                      alt="Master Ceylon gem cutter in Ratnapura hand-faceting a natural Ceylon blue sapphire on a traditional lapidary wheel"
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 92vw, (max-width: 1200px) 48vw, 560px"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                    {/* Subtle warm vignette on edges */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
-                  </motion.div>
+                <div 
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  className="group relative z-10 aspect-[4/5] w-full bg-[#1A1410] shadow-[0_20px_50px_rgba(43,43,43,0.18)] overflow-hidden rounded-xs border border-[#B8924A]/30 select-none"
+                >
+                  {/* Real work images with smooth animated crossfade and Ken Burns motion */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentSlide.id}
+                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.06 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+                      transition={{
+                        duration: shouldReduceMotion ? 0 : 0.7,
+                        ease: [0.16, 1, 0.3, 1] as const,
+                      }}
+                      className="relative w-full h-full overflow-hidden"
+                    >
+                      <Image
+                        src={currentSlide.src}
+                        alt={currentSlide.alt}
+                        fill
+                        priority={currentSlideIndex === 0}
+                        sizes="(max-width: 768px) 92vw, (max-width: 1200px) 48vw, 560px"
+                        className={`${currentSlide.position} transition-transform duration-1000 ease-out group-hover:scale-105`}
+                      />
+
+                      {/* Luxury cinematic gradients */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/35 pointer-events-none" />
+                      <div className="absolute inset-0 bg-radial from-transparent via-transparent to-black/30 pointer-events-none" />
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Top Badges */}
+                  <div className="absolute top-3.5 inset-x-3.5 z-20 flex items-center justify-between pointer-events-none">
+                    {/* Live field archive indicator */}
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-[#B8924A]/40 text-[#FAF6EE] text-[10px] sm:text-[11px] font-medium tracking-wider uppercase shadow-md pointer-events-auto">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF67] opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4AF67]" />
+                      </span>
+                      <span>Ratnapura Field Work</span>
+                    </div>
+
+                    {/* Stage Tag */}
+                    <motion.div
+                      key={currentSlide.tag}
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="px-2.5 py-1 rounded-sm bg-[#5E0F1E]/90 backdrop-blur-md border border-[#B8924A]/50 text-[#F7E7A9] text-[10px] font-semibold tracking-widest uppercase shadow-md"
+                    >
+                      {currentSlide.tag}
+                    </motion.div>
+                  </div>
+
+                  {/* Bottom glassmorphic interactive caption & control bar */}
+                  <div className="absolute bottom-0 inset-x-0 z-20 p-3.5 sm:p-4.5 bg-gradient-to-t from-black/95 via-black/75 to-transparent backdrop-blur-[2px]">
+                    <div className="flex items-end justify-between gap-3 mb-2.5">
+                      <div className="min-w-0">
+                        <span className="text-[10px] uppercase font-mono tracking-widest text-[#D4AF67] block">
+                          0{currentSlideIndex + 1} / 0{workSlides.length} • Genuine Field Archive
+                        </span>
+                        <h4 className="text-sm sm:text-base font-serif font-medium text-white tracking-wide leading-tight truncate">
+                          {currentSlide.title}
+                        </h4>
+                        <p className="text-[11px] text-white/75 truncate mt-0.5">
+                          {currentSlide.subtitle}
+                        </p>
+                      </div>
+
+                      {/* Tactile navigation arrows */}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentSlideIndex((prev) => (prev - 1 + workSlides.length) % workSlides.length);
+                          }}
+                          aria-label="Previous work photo"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-[#5E0F1E] border border-[#B8924A]/40 text-white flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
+                        >
+                          <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F7E7A9]" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentSlideIndex((prev) => (prev + 1) % workSlides.length);
+                          }}
+                          aria-label="Next work photo"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-[#5E0F1E] border border-[#B8924A]/40 text-white flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
+                        >
+                          <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F7E7A9]" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Segmented interactive progress indicators */}
+                    <div className="grid grid-cols-5 gap-1.5 pt-1">
+                      {workSlides.map((slide, idx) => {
+                        const isActive = idx === currentSlideIndex;
+                        const isPast = idx < currentSlideIndex;
+                        return (
+                          <button
+                            key={slide.id}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentSlideIndex(idx);
+                            }}
+                            title={slide.title}
+                            aria-label={`Switch to ${slide.title}`}
+                            className="group/seg relative h-1.5 w-full bg-white/20 hover:bg-white/40 rounded-full overflow-hidden cursor-pointer transition-colors"
+                          >
+                            {isActive ? (
+                              <motion.div
+                                key={`progress-${currentSlideIndex}`}
+                                initial={shouldReduceMotion ? { width: "100%" } : { width: "0%" }}
+                                animate={{ width: "100%" }}
+                                transition={{
+                                  duration: shouldReduceMotion || isHovered ? 0 : 4.6,
+                                  ease: "linear",
+                                }}
+                                className="h-full bg-gradient-to-r from-[#D4AF67] to-[#F7E7A9]"
+                              />
+                            ) : isPast ? (
+                              <div className="h-full w-full bg-[#B8924A]" />
+                            ) : null}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
 
-              {/* OVERLAPPING IMAGE 1: Ring Image Accent (Top-Left) */}
+              {/* OVERLAPPING THUMBNAIL 1: River Gem Washing Accent (Top-Left) with gentle continuous floating */}
               <motion.div
                 style={isDesktop && !shouldReduceMotion ? { y: ringParallaxY } : undefined}
                 initial={
@@ -303,25 +484,59 @@ export function OurStory() {
                 }
                 transition={{
                   duration: shouldReduceMotion ? 0 : 0.7,
-                  delay: shouldReduceMotion ? 0 : 0.25, // 0.25s stagger
+                  delay: shouldReduceMotion ? 0 : 0.25,
                   ease: [0.16, 1, 0.3, 1] as const,
                 }}
                 className="absolute z-20 -top-3 -left-2 sm:-top-6 sm:-left-6 lg:-top-8 lg:-left-8"
               >
-                <div className="group relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full p-1 bg-[#FAF6EE] border-2 border-[#B8924A] shadow-[0_12px_32px_rgba(43,43,43,0.18)]">
-                  <div className="relative w-full h-full rounded-full overflow-hidden bg-[#1A1410]">
-                    <Image
-                      src="/images/story/image3.jpg"
-                      alt="Handcrafted artisanal gold ring set with an ethically mined Ceylon royal blue sapphire"
-                      fill
-                      sizes="(max-width: 768px) 80px, 120px"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    />
+                {/* Continuous floating micro-animation */}
+                <motion.div
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          y: [-4, 4, -4],
+                          rotate: [-1.5, 1.5, -1.5],
+                        }
+                  }
+                  transition={{
+                    duration: 4.8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  onClick={() => setCurrentSlideIndex(1)}
+                  title="Click to view River Illam Washing"
+                  className="group relative cursor-pointer"
+                >
+                  {/* Rotating ornamental dashed gold ring */}
+                  <motion.div
+                    aria-hidden="true"
+                    animate={shouldReduceMotion ? {} : { rotate: 360 }}
+                    transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+                    className="absolute -inset-1.5 rounded-full border border-dashed border-[#B8924A]/70 pointer-events-none"
+                  />
+
+                  {/* Circular image badge */}
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full p-1 bg-[#FAF6EE] border-2 border-[#B8924A] shadow-[0_12px_32px_rgba(43,43,43,0.22)] transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative w-full h-full rounded-full overflow-hidden bg-[#1A1410]">
+                      <Image
+                        src="/isuru_images/work/work-river-washing.jpeg"
+                        alt="River washing with traditional conical wicker basket in Ratnapura"
+                        fill
+                        sizes="(max-width: 768px) 80px, 120px"
+                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-115"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                      {/* Mini pill badge */}
+                      <span className="absolute bottom-1 inset-x-0 text-center text-[8px] sm:text-[9px] font-semibold text-[#F7E7A9] tracking-wider uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                        River Wash
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
 
-              {/* OVERLAPPING IMAGE 2: Sapphire on Stand (Bottom-Right) */}
+              {/* OVERLAPPING THUMBNAIL 2: Natural Gem Parcels Card (Bottom-Right) with twinkling facet stars */}
               <motion.div
                 style={isDesktop && !shouldReduceMotion ? { y: sapphireParallaxY } : undefined}
                 initial={
@@ -338,59 +553,86 @@ export function OurStory() {
                 }
                 transition={{
                   duration: shouldReduceMotion ? 0 : 0.75,
-                  delay: shouldReduceMotion ? 0 : 0.5, // 0.25s stagger after ring
+                  delay: shouldReduceMotion ? 0 : 0.5,
                   ease: [0.16, 1, 0.3, 1] as const,
                 }}
                 className="absolute z-20 -bottom-5 -right-2 sm:-bottom-8 sm:-right-6 lg:-bottom-10 lg:-right-8 w-[52%] sm:w-[48%] max-w-[280px]"
               >
-                <div className="group relative aspect-square p-2 sm:p-2.5 bg-[#FAF6EE] border border-[#B8924A]/40 shadow-[0_22px_55px_rgba(43,43,43,0.22)]">
-                  <div className="relative w-full h-full overflow-hidden bg-[#1A1410]">
-                    <Image
-                      src="/images/story/image1.jpg"
-                      alt="Unheated Ceylon oval blue sapphire with royal blue brilliance displayed on an antique carved wooden stand"
-                      fill
-                      sizes="(max-width: 768px) 48vw, 260px"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
+                {/* Continuous floating micro-animation out-of-phase */}
+                <motion.div
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          y: [5, -5, 5],
+                          rotate: [0.8, -0.8, 0.8],
+                        }
+                  }
+                  transition={{
+                    duration: 5.6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.6,
+                  }}
+                  onClick={() => setCurrentSlideIndex(2)}
+                  title="Click to view Gem Parcel Grading"
+                  className="group relative cursor-pointer"
+                >
+                  <div className="relative aspect-square p-2 sm:p-2.5 bg-[#FAF6EE] border border-[#B8924A]/50 shadow-[0_22px_55px_rgba(43,43,43,0.22)] transition-transform duration-300 group-hover:scale-[1.03]">
+                    <div className="relative w-full h-full overflow-hidden bg-[#1A1410] border border-[#B8924A]/30">
+                      <Image
+                        src="/isuru_images/work/work-gem-selection.jpeg"
+                        alt="Hand-grading natural rough and cut gemstones on display trays"
+                        fill
+                        sizes="(max-width: 768px) 48vw, 260px"
+                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+                      />
 
-                    {/* 3-4 subtle sparkle dots near the blue sapphire pulsing slowly */}
-                    {sparkles.map((s, idx) => (
-                      <motion.svg
-                        key={idx}
-                        aria-hidden="true"
-                        style={{ top: s.top, left: s.left }}
-                        className="absolute pointer-events-none text-[#F7E7A9] drop-shadow-[0_0_8px_rgba(212,175,103,0.95)] z-20"
-                        width={s.size}
-                        height={s.size}
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        initial={{ opacity: 0.2, scale: 0.6 }}
-                        animate={
-                          shouldReduceMotion
-                            ? { opacity: 0.7, scale: 1 }
-                            : {
-                                opacity: [0.2, 1, 0.2],
-                                scale: [0.6, 1.25, 0.6],
-                                rotate: [0, 45, 0],
-                              }
-                        }
-                        transition={
-                          shouldReduceMotion
-                            ? { duration: 0 }
-                            : {
-                                duration: 3.2,
-                                repeat: Infinity,
-                                delay: s.delay,
-                                ease: "easeInOut",
-                              }
-                        }
-                      >
-                        {/* 4-pointed diamond sparkle star */}
-                        <path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z" />
-                      </motion.svg>
-                    ))}
+                      {/* Bottom gold label */}
+                      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-1.5 sm:p-2 text-center">
+                        <span className="text-[8px] sm:text-[10px] font-semibold text-[#F7E7A9] tracking-wider uppercase block truncate">
+                          Gem Parcels • Hand-Sorted
+                        </span>
+                      </div>
+
+                      {/* Animated sparkle stars dancing over the natural gem parcels */}
+                      {sparkles.map((s, idx) => (
+                        <motion.svg
+                          key={idx}
+                          aria-hidden="true"
+                          style={{ top: s.top, left: s.left }}
+                          className="absolute pointer-events-none text-[#F7E7A9] drop-shadow-[0_0_8px_rgba(212,175,103,0.95)] z-20"
+                          width={s.size}
+                          height={s.size}
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          initial={{ opacity: 0.2, scale: 0.6 }}
+                          animate={
+                            shouldReduceMotion
+                              ? { opacity: 0.7, scale: 1 }
+                              : {
+                                  opacity: [0.2, 1, 0.2],
+                                  scale: [0.6, 1.25, 0.6],
+                                  rotate: [0, 45, 0],
+                                }
+                          }
+                          transition={
+                            shouldReduceMotion
+                              ? { duration: 0 }
+                              : {
+                                  duration: 3.2,
+                                  repeat: Infinity,
+                                  delay: s.delay,
+                                  ease: "easeInOut",
+                                }
+                          }
+                        >
+                          <path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z" />
+                        </motion.svg>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
 
             </div>

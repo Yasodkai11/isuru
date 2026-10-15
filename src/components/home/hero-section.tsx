@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
-  ShieldCheck,
   Sparkles,
   ChevronLeft,
   ChevronRight,
@@ -238,15 +237,11 @@ export function HeroSection() {
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.55 }}
-              className="pt-7 border-t border-[#B8924A]/25 grid grid-cols-3 gap-4 sm:gap-6 max-w-lg"
+              className="pt-7 border-t border-[#B8924A]/25 grid grid-cols-2 gap-4 sm:gap-6 max-w-md"
             >
               <div>
                 <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Est. 1984</span>
                 <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] block mt-0.5">Ratnapura, Ceylon</span>
-              </div>
-              <div>
-                <span className="block font-serif text-lg sm:text-xl font-medium text-[#0E2A20]">NGJA & GIA</span>
-                <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] block mt-0.5">Govt. Certified</span>
               </div>
               <div>
                 <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Mine Direct</span>
@@ -268,17 +263,6 @@ export function HeroSection() {
               aria-label="Ceylon Gemstones Staged Gallery"
               className="relative focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8924A] rounded-2xl"
             >
-              {/* Floating Trust Pill Badge (Top-Right of Main Showcase) */}
-              <div
-                className="absolute -top-4 sm:-top-5 right-2 sm:right-6 z-30 bg-[#FAF8F5]/95 backdrop-blur-md border border-[#B8924A]/40 shadow-lg px-3.5 py-1.5 rounded-full flex items-center gap-2 animate-float-gentle select-none pointer-events-none"
-                style={{ animationDelay: "-1.5s" }}
-              >
-                <div className="w-2 h-2 rounded-full bg-[#B8924A] animate-ping" />
-                <span className="text-[10px] sm:text-[11px] font-medium tracking-wider uppercase text-[#1D1B18] flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#0E2A20]" />
-                  <span>100% Mine Direct · Ratnapura</span>
-                </span>
-              </div>
 
               {/* Floating Gem Pod 1: Royal Blue Sapphire (Top Left) */}
               <Link

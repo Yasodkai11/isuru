@@ -158,19 +158,31 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-[#FAF6EE]/10 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] sm:text-xs text-[#FAF6EE]/50">
-          <p>© {new Date().getFullYear()} {BRAND.name}. All Rights Reserved.</p>
+        <div className="mt-8 pt-6 border-t border-[#FAF6EE]/10 flex flex-col lg:flex-row items-center justify-between gap-4 text-[11px] sm:text-xs text-[#FAF6EE]/50">
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-center lg:text-left">
+            <span>© {new Date().getFullYear()} {BRAND.name}. All Rights Reserved.</span>
+            <span className="hidden sm:inline text-[#FAF6EE]/20">•</span>
+            <span>
+              Designed and Developed by{" "}
+              <a
+                href="https://premierdigital.lk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4AF67] hover:text-[#F3DFA2] underline-offset-2 hover:underline transition-colors"
+              >
+                Premier Digital Pvt Ltd
+              </a>
+            </span>
+          </div>
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 tracking-wide">
             <span>100% Conflict-Free Natural Mined</span>
-            <span className="text-[#D4AF67]" aria-hidden="true">✦</span>
-            <span>NGJA Registered Exporter</span>
             <span className="text-[#D4AF67]" aria-hidden="true">✦</span>
             <span>Zero Synthetic Policy</span>
           </div>
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group inline-flex items-center gap-2 uppercase tracking-[0.2em] text-[#D4AF67] hover:text-[#F3DFA2] cursor-pointer"
+            className="group inline-flex items-center gap-2 uppercase tracking-[0.2em] text-[#D4AF67] hover:text-[#F3DFA2] cursor-pointer shrink-0"
           >
             Back to top
             <span className="w-7 h-7 rounded-full border border-[#D4AF67]/40 flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-0.5">
