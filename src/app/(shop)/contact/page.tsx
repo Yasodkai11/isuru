@@ -24,21 +24,32 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   const resolvedParams = await searchParams;
 
   return (
-    <div className="py-16 bg-[#FAF6EE] min-h-screen">
+    <div className="py-10 sm:py-14 bg-cream min-h-screen">
       <div className="container-luxe">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
-          <span className="text-[11px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold">
-            Private Commissions & Viewings
-          </span>
-          {/* Strictly the single H1 on this page */}
-          <h1 className="font-serif text-4xl sm:text-5xl text-[#5E0F1E] font-normal leading-tight">
-            Bespoke Commissions & Island Concierge
-          </h1>
-          <p className="text-base text-[#2B2B2B]/75 leading-relaxed">
-            Whether seeking an unheated royal blue sapphire for an heirloom ring or arranging an insured international viewing, our master gemologists attend to every detail personally.
-          </p>
-          <GoldDivider withOrnament className="my-6 max-w-xs mx-auto" />
+        <div className="relative mb-12 sm:mb-14 overflow-hidden border border-gold/30 bg-cream-light">
+          <div className="relative aspect-3/2 lg:aspect-16/10">
+            <Image
+              src="/isuru_images/contactus.webp"
+              alt="Ceylon sapphires and fine gemstones beside the historic Galle lighthouse"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 92vw"
+              className="object-cover object-center"
+            />
+          </div>
+          <div className="relative px-6 py-8 sm:px-10 sm:py-10 lg:absolute lg:inset-y-0 lg:left-0 lg:flex lg:w-[48%] lg:flex-col lg:justify-center lg:bg-linear-to-r lg:from-cream-light/95 lg:via-cream-light/85 lg:to-transparent lg:px-12 xl:px-16">
+            <span className="text-[10px] uppercase tracking-[0.28em] text-gold-dark font-semibold">
+              Private Commissions & Viewings
+            </span>
+            {/* Strictly the single H1 on this page */}
+            <h1 className="mt-3 font-serif text-3xl sm:text-4xl xl:text-5xl text-maroon font-normal leading-tight">
+              Let’s find your piece of Ceylon
+            </h1>
+            <p className="mt-4 max-w-xl text-sm sm:text-base text-charcoal/80 leading-relaxed">
+              From a remarkable loose sapphire to a one-of-a-kind heirloom, every good story begins with a conversation. Tell us what you have in mind; our gemologists will guide you personally, from the first question to the final detail.
+            </p>
+            <GoldDivider withOrnament className="mt-5 max-w-xs" />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">

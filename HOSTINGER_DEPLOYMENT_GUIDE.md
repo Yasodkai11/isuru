@@ -10,7 +10,7 @@ The deployment zip is a clean deployment package configured specifically for Hos
 - `server.js` — The production Node.js HTTP server runtime launcher
 - `src/` & `public/` — Application source code and static assets (gemstones, logos, UI)
 - `package.json` — Pre-configured with:
-   - `"start": "next build --webpack"` (The platform's one-time build step)
+  - `"start": "next build"` (The platform's one-time build step)
   - `"serve": "node server.js"` (The runtime server launcher)
 - `ecosystem.config.cjs` — PM2 process manager configuration (runs `node server.js` directly)
 - `.htaccess.example` — Reverse proxy configuration for Apache / LiteSpeed web servers
@@ -26,9 +26,9 @@ The deployment zip is a clean deployment package configured specifically for Hos
 
 Understanding how Hostinger processes the application prevents deployment timeouts:
 
-1. **Build Step (`npm run start` -> `next build --webpack`)**:
+1. **Build Step (`npm run start` -> `next build`)**:
    - Hostinger's deployment pipeline runs `npm run start` as its build command.
-   - Because `start` is set to `next build --webpack`, Next.js compiles the project with Webpack, creates the `.next/` directory, and **exits with code 0**.
+   - Because `start` is set to `next build`, Next.js compiles the project, creates the `.next/` directory, and **exits with code 0**.
    - It does *not* launch a persistent server during the build phase.
 
 2. **Runtime Launcher (`node server.js`)**:
@@ -91,7 +91,7 @@ unzip isuru-gems-hostinger-deploy.zip
 ### Step 2: Install Dependencies & Run Build Step
 ```bash
 npm install
-npm run start # Executes "next build --webpack" and exits cleanly producing .next/
+npm run start # Executes "next build" and exits cleanly producing .next/
 ```
 
 ### Step 3: Configure Environment Variables
@@ -157,7 +157,7 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 ## ❓ Frequently Asked Questions & Troubleshooting
 
 ### Why was my deployment timing out previously after 15 minutes?
-Many platforms execute `npm run start` as their automated build phase. If `package.json` had `start: "node server.js"`, it launched a long-running HTTP server during the build phase that never exited, causing the platform build runner to hit the 15-minute timeout. Setting `"start": "next build --webpack"` ensures the build step compiles the application with Webpack and exits cleanly, while `"serve": "node server.js"` and `ecosystem.config.cjs` launch the runtime server separately.
+Many platforms execute `npm run start` as their automated build phase. If `package.json` had `start: "node server.js"`, it launched a long-running HTTP server during the build phase that never exited, causing the platform build runner to hit the 15-minute timeout. Setting `"start": "next build"` ensures the build step compiles the application and exits cleanly, while `"serve": "node server.js"` and `ecosystem.config.cjs` launch the runtime server separately.
 
 ### Where can I check logs if something doesn't load?
 - **In hPanel:** In the Node.js manager, click the **Logs** tab or check `stderr.log` / `stdout.log` in your application root directory.
