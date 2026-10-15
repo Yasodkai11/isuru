@@ -132,10 +132,10 @@ export function AdminSidebar({
         >
           <div className="w-11 h-11 rounded-xs bg-gradient-to-br from-[#5E0F1E] via-[#3A0812] to-[#18191B] border border-[#B8924A]/60 flex items-center justify-center p-1.5 shadow-lg group-hover:border-[#B8924A] transition-all">
             <Image
-              src="/isuru_images/logo-isuru-symbol.png"
+              src="/isuru_images/logo-isuru-symbol.webp"
               alt="Isuru Ceylon"
               width={36}
-              height={20}
+              height={36}
               className="w-full h-auto object-contain brightness-110"
             />
           </div>

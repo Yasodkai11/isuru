@@ -118,22 +118,16 @@ export function Header() {
             <Menu className="w-6 h-6" />
           </button>
 
-          <Link href="/" className="group flex flex-col items-center leading-none">
+          <Link href="/" className="group flex items-center py-1" aria-label="Isuru Ceylon Home">
             <Image
-              src="/isuru_images/logo-isuru-symbol.png"
-              alt="Isuru Ceylon Sri Lanka"
-              width={64}
-              height={35}
-              sizes="64px"
-              className="w-11 sm:w-13 h-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              src="/isuru_images/logo-isuru.webp"
+              alt="Isuru Ceylon"
+              width={200}
+              height={62}
+              sizes="(max-width: 640px) 140px, 180px"
+              className="h-9 sm:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
               priority
             />
-            <span className="font-serif text-xl sm:text-2xl tracking-[0.12em] text-[#5E0F1E] font-medium group-hover:text-[#420A15] transition-colors">
-              ISURU CEYLON
-            </span>
-            <span className="text-[9px] uppercase tracking-[0.4em] text-[#B8924A] font-medium mt-0.5">
-              Sri Lanka
-            </span>
           </Link>
         </div>
 

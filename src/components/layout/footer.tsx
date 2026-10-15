@@ -87,16 +87,15 @@ export function Footer() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pt-8 lg:pt-10">
           <div className="space-y-3.5 lg:col-span-4">
-            <div className="flex items-center gap-3">
+            <Link href="/" className="inline-block" aria-label="Isuru Ceylon Home">
               <Image
-                src="/isuru_images/logo-isuru-symbol.png"
+                src="/isuru_images/logo-isuru-light.webp"
                 alt="Isuru Ceylon"
-                width={44}
-                height={24}
-                className="w-9 h-auto object-contain brightness-110"
+                width={190}
+                height={59}
+                className="h-10 sm:h-11 w-auto object-contain"
               />
-              <h3 className="font-serif text-2xl tracking-[0.12em] font-normal">ISURU CEYLON</h3>
-            </div>
+            </Link>
             <p className="text-xs sm:text-sm font-light text-[#FAF6EE]/65 leading-relaxed max-w-sm">
               Ethically sourced, unheated Ceylon sapphires and precious island gemstones directly from the alluvial riverbeds and historic pits of Ratnapura, Sri Lanka.
             </p>

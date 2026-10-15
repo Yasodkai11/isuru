@@ -53,22 +53,19 @@ export function MobileNav({ isOpen, onClose, session }: MobileNavProps) {
         <div className="space-y-6">
           {/* Header & Close */}
           <div className="flex items-center justify-between pb-4 border-b border-[#B8924A]/25">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/isuru_images/logo-isuru-symbol.png"
-                alt="Isuru Ceylon"
-                width={48}
-                height={26}
-                className="w-10 h-auto object-contain"
-              />
-              <div>
-                <span className="text-[9px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold block">
-                  Serendib Legacy • Est. 1984
-                </span>
-                <span className="font-serif text-xl text-[#5E0F1E] font-medium tracking-wide">
-                  ISURU CEYLON
-                </span>
-              </div>
+            <div>
+              <Link href="/" onClick={onClose} className="block">
+                <Image
+                  src="/isuru_images/logo-isuru.webp"
+                  alt="Isuru Ceylon"
+                  width={180}
+                  height={56}
+                  className="h-9 w-auto object-contain"
+                />
+              </Link>
+              <span className="text-[9px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold block mt-1.5">
+                Serendib Legacy • Est. 1984
+              </span>
             </div>
             <button
               onClick={onClose}

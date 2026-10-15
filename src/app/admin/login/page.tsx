@@ -41,13 +41,13 @@ export default function AdminLoginPage() {
 
         {/* Brand Crest */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center mb-2">
+          <div className="inline-flex items-center justify-center mb-3">
             <Image
-              src="/isuru_images/logo-isuru-symbol.png"
-              alt="Isuru Gems"
-              width={72}
-              height={40}
-              className="w-16 h-auto object-contain brightness-110 drop-shadow-md"
+              src="/isuru_images/logo-isuru-light.webp"
+              alt="Isuru Ceylon Gems"
+              width={220}
+              height={68}
+              className="h-12 w-auto object-contain drop-shadow-md"
               priority
             />
           </div>
