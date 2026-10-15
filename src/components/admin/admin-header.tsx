@@ -252,7 +252,7 @@ export function AdminHeader({ onOpenMobile, currentUser }: AdminHeaderProps) {
             </div>
             <div className="hidden sm:block text-left">
               <p className="text-sm font-semibold text-[#2B2B2B] leading-none">
-                {currentUser?.fullName || "Yohan Gunawardena"}
+                {currentUser?.fullName || "Isuru"}
               </p>
               <p className="text-xs text-[#B8924A] font-medium leading-none mt-1 capitalize">
                 {currentUser?.role?.replace("_", " ") || "Master Gemologist"}
@@ -264,10 +264,10 @@ export function AdminHeader({ onOpenMobile, currentUser }: AdminHeaderProps) {
             <div className="absolute right-0 mt-2 w-72 bg-[#FAF6EE] border border-[#B8924A]/40 shadow-xl p-3.5 text-sm z-50 animate-gentle-fade rounded-xs">
               <div className="pb-2.5 mb-2.5 border-b border-[#B8924A]/20">
                 <p className="font-semibold text-base text-[#5E0F1E] truncate">
-                  {currentUser?.fullName || "Yohan Gunawardena"}
+                  {currentUser?.fullName || "Isuru"}
                 </p>
                 <p className="text-xs text-[#2B2B2B]/75 truncate mt-0.5">
-                  {currentUser?.email || "yohan@isurugems.com"}
+                  {currentUser?.email || "isuru@isurugems.com"}
                 </p>
                 <span className="inline-block mt-1.5 text-xs uppercase tracking-wider bg-[#5E0F1E]/10 text-[#5E0F1E] px-2.5 py-0.5 rounded-xs font-semibold">
                   {currentUser?.role?.replace("_", " ") || "Super Admin"}

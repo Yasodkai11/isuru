@@ -627,8 +627,8 @@ export const INITIAL_ADMIN_SETTINGS: AdminSettingsData = {
 export const INITIAL_ADMIN_STAFF: AdminStaffMember[] = [
   {
     id: "staff-01",
-    fullName: "Yohan Gunawardena",
-    email: "yohan@isurugems.com",
+    fullName: "Isuru",
+    email: "isuru@isurugems.com",
     role: "super_admin",
     department: "Executive & Board of Gemologists",
     phone: "+94 77 123 4567",

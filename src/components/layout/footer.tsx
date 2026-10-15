@@ -90,12 +90,12 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <Image
                 src="/isuru_images/logo-isuru-symbol.png"
-                alt="Isuru Gems"
+                alt="Isuru Ceylon"
                 width={44}
                 height={24}
                 className="w-9 h-auto object-contain brightness-110"
               />
-              <h3 className="font-serif text-2xl tracking-[0.12em] font-normal">ISURU GEMS</h3>
+              <h3 className="font-serif text-2xl tracking-[0.12em] font-normal">ISURU CEYLON</h3>
             </div>
             <p className="text-xs sm:text-sm font-light text-[#FAF6EE]/65 leading-relaxed max-w-sm">
               Ethically sourced, unheated Ceylon sapphires and precious island gemstones directly from the alluvial riverbeds and historic pits of Ratnapura, Sri Lanka.

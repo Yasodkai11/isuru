@@ -1,5 +1,5 @@
 export const BRAND = {
-  name: "Isuru Gems",
+  name: "Isuru Ceylon",
   tagline: "Treasures of Serendib",
   subheading: "Finest Natural Ceylon Sapphires & Precious Island Gemstones",
   established: 1984,

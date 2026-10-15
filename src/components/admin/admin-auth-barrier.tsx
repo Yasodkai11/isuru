@@ -41,7 +41,7 @@ export function AdminAuthBarrier({ onBypassDemo }: AdminAuthBarrierProps) {
             <span>Authorized Staff Credentials</span>
           </div>
           <p className="text-[#2B2B2B]/70 text-xs">
-            Staff accounts use registered company emails (e.g., <code className="bg-white/80 px-1.5 py-0.5 border border-[#B8924A]/30 font-mono">yohan@isurugems.com</code>) or staff usernames.
+            Staff accounts use registered company emails (e.g., <code className="bg-white/80 px-1.5 py-0.5 border border-[#B8924A]/30 font-mono">isuru@isurugems.com</code>) or staff usernames.
           </p>
         </div>
 

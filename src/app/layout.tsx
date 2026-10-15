@@ -23,8 +23,8 @@ const jost = Jost({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Isuru Gems Ceylon",
-    default: "Isuru Gems | Natural Ceylon Sapphires & Precious Island Gemstones",
+    template: "%s | Isuru Ceylon",
+    default: "Isuru Ceylon | Natural Ceylon Sapphires & Precious Island Gemstones",
   },
   description:
     "Direct from the historic gem gravels of Ratnapura, Sri Lanka. Unheated Royal Blue Sapphires, Padparadscha, Rubies, and Star Sapphires certified by NGJA, GRS & GIA.",
@@ -37,12 +37,12 @@ export const metadata: Metadata = {
     "Natural Gemstones Sri Lanka",
     "National Gem and Jewellery Authority NGJA",
   ],
-  authors: [{ name: "Isuru Gems Ceylon" }],
+  authors: [{ name: "Isuru Ceylon" }],
   metadataBase: new URL("https://isurugems.com"),
   openGraph: {
-    title: "Isuru Gems | Natural Ceylon Sapphires & Fine Island Gemstones",
+    title: "Isuru Ceylon | Natural Ceylon Sapphires & Fine Island Gemstones",
     description: "Ethically mined, unheated certified Ceylon gemstones direct from Ratnapura.",
-    siteName: "Isuru Gems",
+    siteName: "Isuru Ceylon",
     locale: "en_US",
     type: "website",
   },

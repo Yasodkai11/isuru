@@ -121,7 +121,7 @@ export function Header() {
           <Link href="/" className="group flex flex-col items-center leading-none">
             <Image
               src="/isuru_images/logo-isuru-symbol.png"
-              alt="Isuru Gems Sri Lanka"
+              alt="Isuru Ceylon Sri Lanka"
               width={64}
               height={35}
               sizes="64px"
@@ -129,7 +129,7 @@ export function Header() {
               priority
             />
             <span className="font-serif text-xl sm:text-2xl tracking-[0.12em] text-[#5E0F1E] font-medium group-hover:text-[#420A15] transition-colors">
-              ISURU GEMS
+              ISURU CEYLON
             </span>
             <span className="text-[9px] uppercase tracking-[0.4em] text-[#B8924A] font-medium mt-0.5">
               Sri Lanka

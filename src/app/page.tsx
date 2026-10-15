@@ -17,14 +17,14 @@ import {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Isuru Gems | The Timeless Beauty of Ceylon Sapphires & Rare Precious Stones",
+    title: "Isuru Ceylon | The Timeless Beauty of Ceylon Sapphires & Rare Precious Stones",
     description:
       "Curators of unheated Ceylon Royal Blue Sapphires, rare Padparadschas, and natural gemstones direct from the alluvial gravels of Ratnapura, Sri Lanka since 1984. Authenticated by NGJA, GRS, and GIA.",
     alternates: {
       canonical: "/",
     },
     openGraph: {
-      title: "Isuru Gems | The Timeless Beauty of Ceylon",
+      title: "Isuru Ceylon | The Timeless Beauty of Ceylon",
       description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
       url: "/",
       images: [
@@ -32,13 +32,13 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "/isuru_images/blue1.jpg",
           width: 1200,
           height: 630,
-          alt: "Isuru Gems - Fine Ceylon Blue Sapphire",
+          alt: "Isuru Ceylon - Fine Ceylon Blue Sapphire",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Isuru Gems | Natural Ceylon Sapphires & Rare Gems",
+      title: "Isuru Ceylon | Natural Ceylon Sapphires & Rare Gems",
       description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
     },
   };

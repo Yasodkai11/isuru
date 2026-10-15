@@ -133,7 +133,7 @@ export function AdminSidebar({
           <div className="w-11 h-11 rounded-xs bg-gradient-to-br from-[#5E0F1E] via-[#3A0812] to-[#18191B] border border-[#B8924A]/60 flex items-center justify-center p-1.5 shadow-lg group-hover:border-[#B8924A] transition-all">
             <Image
               src="/isuru_images/logo-isuru-symbol.png"
-              alt="Isuru Gems"
+              alt="Isuru Ceylon"
               width={36}
               height={20}
               className="w-full h-auto object-contain brightness-110"
@@ -142,7 +142,7 @@ export function AdminSidebar({
           <div>
             <div className="flex items-center gap-2">
               <span className="font-serif text-xl tracking-wider text-[#FAF6EE] font-medium leading-none">
-                ISURU GEMS
+                ISURU CEYLON
               </span>
               <span className="text-xs uppercase tracking-wider px-2 py-0.5 rounded-xs bg-[#B8924A]/25 text-[#D4AF67] border border-[#B8924A]/40 font-bold">
                 ADMIN

@@ -99,7 +99,7 @@ export function LoginForm() {
   };
 
   const handleFillDemoAdmin = () => {
-    setIdentifier("yohan@isurugems.com");
+    setIdentifier("isuru@isurugems.com");
     setPassword("MasterGem2026!");
     setError(null);
   };
@@ -212,7 +212,7 @@ export function LoginForm() {
             autoComplete="username"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
-            placeholder={mode === "admin" ? "yohan or yohan@isurugems.com" : "collector_ceylon or client@private.com"}
+            placeholder={mode === "admin" ? "isuru or isuru@isurugems.com" : "collector_ceylon or client@private.com"}
           />
         </div>
 
@@ -268,7 +268,7 @@ export function LoginForm() {
               className="text-xs text-[#B8924A] hover:text-[#5E0F1E] underline inline-flex items-center gap-1.5 transition-colors font-medium cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#B8924A]" />
-              <span>Use Executive Seed Credentials (Yohan Gunawardena)</span>
+              <span>Use Executive Seed Credentials (Isuru)</span>
             </button>
           </div>
         )}
