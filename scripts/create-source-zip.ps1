@@ -25,6 +25,7 @@ $itemsToCopy = @(
     "postcss.config.mjs",
     "eslint.config.mjs",
     "ecosystem.config.cjs",
+    "server.js",
     ".htaccess.example",
     ".env.example",
     "HOSTINGER_DEPLOYMENT_GUIDE.md"
@@ -36,6 +37,12 @@ foreach ($item in $itemsToCopy) {
         $destPath = Join-Path $tempFolder $item
         Copy-Item -Path $srcPath -Destination $destPath -Recurse -Force
     }
+}
+
+# Verify .next and node_modules are NOT in tempFolder
+Get-ChildItem -Path $tempFolder -Include "node_modules", ".next" -Recurse -Directory -Force -ErrorAction SilentlyContinue | ForEach-Object {
+    Remove-Item -Path $_.FullName -Recurse -Force
+    Write-Host "Safeguard: Removed $($_.Name) from staging."
 }
 
 [System.IO.Compression.ZipFile]::CreateFromDirectory(

@@ -6,9 +6,11 @@
     "dev": "next dev -p 3000 -H 0.0.0.0",
     "build": "next build",
     "postbuild": "node scripts/copy-standalone-assets.mjs",
-    "start": "next start -H 0.0.0.0",
+    "start": "next build --webpack",
+    "serve": "node server.js",
     "lint": "eslint",
-    "images:process": "node scripts/process-gem-images.mjs"
+    "images:process": "node scripts/process-gem-images.mjs",
+    "pack:deploy": "powershell -ExecutionPolicy Bypass -File scripts/create-deploy-zip.ps1"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
@@ -28,13 +30,12 @@
   "devDependencies": {
     "@imgly/background-removal-node": "^1.4.5",
     "@tailwindcss/postcss": "^4.3.3",
-    "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
-    "postcss": "^8.5.29",
+    "postcss": "^8.5.30",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "^5"

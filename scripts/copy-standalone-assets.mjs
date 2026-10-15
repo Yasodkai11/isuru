@@ -15,6 +15,7 @@ cpSync(".next/static", `${standaloneDir}/.next/static`, { recursive: true });
 const filesToCopy = [
   ".env.example",
   "ecosystem.config.cjs",
+  "server.js",
   ".htaccess.example",
   "HOSTINGER_DEPLOYMENT_GUIDE.md",
 ];
@@ -25,13 +26,14 @@ for (const file of filesToCopy) {
   }
 }
 
-// 3. Ensure package.json inside standalone uses "node server.js" for npm start
+// 3. Ensure package.json inside standalone uses "next build" for build step and "node server.js" for serve
 const pkgPath = `${standaloneDir}/package.json`;
 if (existsSync(pkgPath)) {
   try {
     const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
     pkg.scripts = {
-      start: "node server.js",
+      start: "next build",
+      serve: "node server.js",
     };
     writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), "utf8");
   } catch (err) {
