@@ -26,13 +26,13 @@ for (const file of filesToCopy) {
   }
 }
 
-// 3. Ensure package.json inside standalone uses "next build" for build step and "node server.js" for serve
+// 3. Ensure package.json inside standalone uses "node server.js" for start and serve
 const pkgPath = `${standaloneDir}/package.json`;
 if (existsSync(pkgPath)) {
   try {
     const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
     pkg.scripts = {
-      start: "next build",
+      start: "node server.js",
       serve: "node server.js",
     };
     writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), "utf8");
