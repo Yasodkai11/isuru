@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCartStore } from "@/stores/cart-store";
-import { ShoppingBag, User, Menu, Search, X, Phone, ShieldCheck, LogOut, Sparkles, ChevronDown } from "lucide-react";
+import { ShoppingBag, User, Menu, Search, X, Phone, LogOut, Sparkles, ChevronDown } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 import { Input } from "@/components/ui/input";
 import { BRAND } from "@/lib/constants";
@@ -87,8 +87,7 @@ export function Header() {
     <div className="hidden md:block bg-[#120F0D] text-[#FAF6EE]/75 text-[11px] tracking-[0.18em] uppercase border-b border-[#B8924A]/20">
       <div className="container-luxe h-9 flex items-center justify-between gap-6">
         <span className="flex items-center gap-2">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF67]" />
-          NGJA Licensed · 100% Natural Ceylon Gemstones
+          100% Natural Ceylon Gemstones
         </span>
         <span className="hidden lg:block text-[#D4AF67]">Fully insured worldwide shipping</span>
         <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2 hover:text-[#D4AF67] transition-colors">

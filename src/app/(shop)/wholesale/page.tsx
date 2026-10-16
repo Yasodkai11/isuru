@@ -77,7 +77,7 @@ export default function WholesalePage() {
             Wholesale Ceylon Gemstone Parcels
           </h1>
           <p className="text-sm sm:text-base text-[#2B2B2B]/80 leading-relaxed">
-            Direct-from-pit calibrated lots, suites of matching blue sapphires, and rough stone parcels for jewelers, fine watch dials, and international gem merchants. Licensed by the National Gem and Jewellery Authority of Sri Lanka.
+            Direct-from-pit calibrated lots, suites of matching blue sapphires, and rough stone parcels for jewelers, fine watch dials, and international gem merchants.
           </p>
           <GoldDivider withOrnament className="my-5" />
         </div>

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { X, Search, ShieldCheck, Phone, Mail, User, LogOut, Sparkles } from "lucide-react";
+import { X, Search, Phone, Mail, User, LogOut, Sparkles } from "lucide-react";
 import { BRAND } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -160,11 +160,6 @@ export function MobileNav({ isOpen, onClose, session }: MobileNavProps) {
 
         {/* Drawer Footer & Concierge Info */}
         <div className="pt-6 mt-6 border-t border-[#B8924A]/25 space-y-4">
-          <div className="flex items-center gap-2 text-[10px] text-[#5E0F1E] uppercase tracking-wider font-semibold">
-            <ShieldCheck className="w-4 h-4 text-[#B8924A] shrink-0" />
-            <span>NGJA Govt. Licensed Gem Exporter</span>
-          </div>
-
           <div className="space-y-2 text-xs text-[#2B2B2B]/80">
             <a
               href={`tel:${BRAND.phone}`}

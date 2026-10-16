@@ -5,7 +5,7 @@ import { submitInquiryAction } from "@/actions/inquiries";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2, AlertCircle, Send } from "lucide-react";
 
 interface InquiryFormProps {
   initialGemName?: string;
@@ -58,9 +58,9 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {feedback?.success && (
-        <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 flex items-start gap-3 text-xs">
+        <div role="status" aria-live="polite" className="flex items-start gap-3 border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-900">
           <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
           <div>
             <span className="font-semibold block">Inquiry Transmitted Securely</span>
@@ -70,7 +70,7 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
       )}
 
       {feedback && !feedback.success && (
-        <div className="p-4 bg-red-50 border border-red-300 text-red-900 flex items-start gap-3 text-xs">
+        <div role="alert" className="flex items-start gap-3 border border-red-300 bg-red-50 p-4 text-sm text-red-900">
           <AlertCircle className="w-5 h-5 text-red-700 shrink-0 mt-0.5" />
           <div>
             <span className="font-semibold block">Notice</span>
@@ -90,15 +90,16 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <Label htmlFor="fullName">Full Name *</Label>
           <Input
             id="fullName"
             required
+            autoComplete="name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            placeholder="Lord / Lady / Dr. / Name"
+            placeholder="Your full name"
           />
           {feedback?.errors?.fullName && (
             <p className="text-[11px] text-red-700 mt-1">{feedback.errors.fullName[0]}</p>
@@ -111,9 +112,10 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
             id="email"
             type="email"
             required
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="collector@domain.com"
+            placeholder="you@example.com"
           />
           {feedback?.errors?.email && (
             <p className="text-[11px] text-red-700 mt-1">{feedback.errors.email[0]}</p>
@@ -121,14 +123,16 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <Label htmlFor="phone">Direct Phone / WhatsApp</Label>
           <Input
             id="phone"
+            type="tel"
+            autoComplete="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+1 / +44 / +94 ..."
+            placeholder="Include your country code"
           />
         </div>
 
@@ -137,9 +141,10 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
           <Input
             id="country"
             required
+            autoComplete="country-name"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            placeholder="Switzerland, United Kingdom, USA..."
+            placeholder="Country or region"
           />
           {feedback?.errors?.country && (
             <p className="text-[11px] text-red-700 mt-1">{feedback.errors.country[0]}</p>
@@ -148,28 +153,28 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
       </div>
 
       <div>
-        <Label htmlFor="currency">Preferred Currency Reference</Label>
+        <Label htmlFor="currency">Preferred currency</Label>
         <select
           id="currency"
           value={currency}
           onChange={(e) => setCurrency(e.target.value as "USD" | "LKR")}
-          className="w-full bg-transparent border border-[#B8924A]/40 px-3.5 py-2 text-sm text-[#2B2B2B] focus:outline-none focus:border-[#B8924A]"
+          className="h-11 w-full border border-gold/40 bg-cream-light px-3.5 text-sm text-charcoal focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
         >
-          <option value="USD">USD ($ - United States Dollar)</option>
-          <option value="LKR">LKR (Rs - Sri Lankan Rupee)</option>
+          <option value="USD">USD - US Dollar</option>
+          <option value="LKR">LKR - Sri Lankan Rupee</option>
         </select>
       </div>
 
       <div>
-        <Label htmlFor="message">Inquiry Details / Bespoke Requests *</Label>
+        <Label htmlFor="message">What would you like to discuss? *</Label>
         <textarea
           id="message"
-          rows={4}
+          rows={5}
           required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Please describe your requirements (e.g. platinum ring setting, loose investment stone, certificate preference)..."
-          className="w-full bg-transparent border border-[#B8924A]/40 px-3.5 py-2 text-sm text-[#2B2B2B] placeholder:text-[#2B2B2B]/40 focus:border-[#B8924A] focus:outline-none"
+          placeholder="Tell us about the gemstone, commission, or visit you have in mind."
+          className="min-h-32 w-full resize-y border border-gold/40 bg-cream-light px-3.5 py-3 text-sm leading-relaxed text-charcoal placeholder:text-charcoal/40 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
         />
         {feedback?.errors?.message && (
           <p className="text-[11px] text-red-700 mt-1">{feedback.errors.message[0]}</p>
@@ -180,9 +185,9 @@ export function InquiryForm({ initialGemName, initialGemId }: InquiryFormProps) 
         type="submit"
         variant="primary"
         disabled={loading}
-        className="w-full py-4 text-xs uppercase tracking-[0.2em]"
+        className="w-full gap-2 py-4 text-xs uppercase tracking-[0.16em]"
       >
-        {loading ? "Transmitting to Concierge..." : "Send Private Inquiry"}
+        {loading ? "Sending inquiry..." : <><Send className="h-4 w-4" aria-hidden="true" /> Send inquiry</>}
       </Button>
     </form>
   );

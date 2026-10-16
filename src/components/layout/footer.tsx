@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { BRAND, CATEGORIES_CONFIG } from "@/lib/constants";
-import { Award, MapPin, Mail, Phone, CheckCircle2, ArrowUp, ArrowRight } from "lucide-react";
+import { MapPin, Mail, Phone, CheckCircle2, ArrowUp, ArrowRight } from "lucide-react";
 
 const EXPLORE_LINKS = [
   { label: "Home", href: "/" },
@@ -99,10 +99,6 @@ export function Footer() {
             <p className="text-xs sm:text-sm font-light text-[#FAF6EE]/65 leading-relaxed max-w-sm">
               Ethically sourced, unheated Ceylon sapphires and precious island gemstones directly from the alluvial riverbeds and historic pits of Ratnapura, Sri Lanka.
             </p>
-            <div className="flex items-center gap-2 text-xs text-[#D4AF67] pt-0.5">
-              <Award className="w-3.5 h-3.5 shrink-0" />
-              <span>National Gem & Jewellery Authority #NGJA-8419</span>
-            </div>
           </div>
 
           <nav aria-label="Explore" className="lg:col-span-2 lg:col-start-6">

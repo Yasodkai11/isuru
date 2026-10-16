@@ -1,8 +1,8 @@
-import { Award, Gem, Truck } from "lucide-react";
+import { MapPin, Gem, Truck } from "lucide-react";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 
 const PILLARS = [
-  { icon: Award, title: "NGJA Licensed", desc: "Registered exporter with the National Gem & Jewellery Authority, Govt. of Sri Lanka." },
+  { icon: MapPin, title: "Sri Lankan Heritage", desc: "Rooted in Ratnapura, the historic heart of Ceylon’s gem trade." },
   { icon: Gem, title: "100% Natural", desc: "Earth-mined Ceylon gemstones only. We have a zero-synthetic policy, always." },
   { icon: Truck, title: "Insured Shipping", desc: "Fully insured, tracked, door-to-door delivery to collectors worldwide." },
 ];

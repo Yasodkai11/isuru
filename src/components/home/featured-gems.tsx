@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
 import { formatGemCarats, formatGemPrice } from "@/lib/utils";
-import { ArrowRight, Eye, CheckCircle2, ShieldCheck } from "lucide-react";
+import { ArrowRight, Eye, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Reveal } from "@/components/motion/reveal";
 
@@ -271,11 +271,7 @@ export function FeaturedGems({ gems }: FeaturedGemsProps) {
                 />
               </div>
 
-              <div className="pt-2 flex items-center justify-between gap-3 border-t border-[#B8924A]/20">
-                <span className="text-[10px] text-[#2B2B2B]/60 flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#B8924A]" />
-                  <span>NGJA Licensed Custody</span>
-                </span>
+              <div className="pt-2 flex justify-end border-t border-[#B8924A]/20">
                 <Button type="submit" variant="primary" size="sm">
                   Send Enquiry
                 </Button>
