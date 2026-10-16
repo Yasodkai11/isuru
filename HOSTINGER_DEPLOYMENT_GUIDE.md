@@ -10,7 +10,7 @@ The deployment zip is a clean deployment package configured specifically for Hos
 - `server.js` — The production Node.js HTTP server runtime launcher
 - `src/` & `public/` — Application source code and static assets (gemstones, logos, UI)
 - `package.json` — Pre-configured with:
-  - `"build": "next build"` (Compiles the application into production standalone bundle)
+  - `"build": "next build --webpack"` (Webpack production build; avoids Hostinger Turbopack PostCSS worker crashes)
   - `"start": "node server.js"` (Starts the production HTTP server)
   - `"serve": "node server.js"` (Alternative runtime server launcher)
 - `ecosystem.config.cjs` — PM2 process manager configuration (runs `node server.js` directly)
@@ -19,7 +19,7 @@ The deployment zip is a clean deployment package configured specifically for Hos
 - `next.config.ts`, `tsconfig.json`, `postcss.config.mjs` — Build configuration files
 
 > [!IMPORTANT]
-> **No Stale `.next` Directory**: The uploaded archive intentionally excludes `.next/` and `node_modules/`. When Hostinger deploys, it runs `npm install` and executes `npm run build` (`next build`) to compile a completely fresh, native `.next/` build directly on Hostinger's Linux environment.
+> **Clean Linux install**: The uploaded archive intentionally excludes `.next/` and `node_modules/`. Use Node.js `22.x` and run `npm ci` on the Linux host before `npm run build`; this installs the exact dependency versions in `package-lock.json`, including the matching native binaries. If deploying over an existing application directory, remove its old `node_modules/` and `.next/` first.
 
 ---
 
@@ -27,9 +27,9 @@ The deployment zip is a clean deployment package configured specifically for Hos
 
 Understanding how Hostinger processes the application:
 
-1. **Build Step (`npm run build` -> `next build`)**:
+1. **Build Step (`npm run build` -> `next build --webpack`)**:
    - Hostinger's deployment pipeline runs `npm run build` as its build command.
-   - Next.js compiles the project, creates the production standalone bundle in `.next/`, and **exits with code 0**.
+   - Next.js compiles with Webpack (not Turbopack), creates the production standalone bundle in `.next/`, and **exits with code 0**.
 
 2. **Runtime Launcher (`node server.js` or `npm run start`)**:
    - Once the build succeeds, Hostinger's LiteSpeed node engine (`lsnode.js`) or PM2 launches the HTTP server using `node server.js` directly (or `npm run start`).
@@ -52,7 +52,7 @@ Understanding how Hostinger processes the application:
 
 ### Step 2: Configure Node.js in hPanel
 1. In hPanel, navigate to **Websites** > **Dashboard** or **Node.js**:
-   - **Node.js version:** `20.x` or `22.x`.
+   - **Node.js version:** `22.x`.
    - **Application mode:** `Production`.
    - **Application startup file:** `server.js`.
 2. In the **Environment variables** section, add your production keys:
@@ -64,8 +64,9 @@ Understanding how Hostinger processes the application:
    - `SUPABASE_SERVICE_ROLE_KEY` = `your_supabase_service_role_key`
    - `GEMINI_API_KEY` = `your_gemini_api_key`
    *(Alternatively, create a file named `.env` in the folder alongside `server.js` with these values)*.
-3. Click **Redeploy** (or Start / Restart Application).
-4. Visit your domain in the browser to verify the site is live.
+3. If the deployment settings expose install and build commands, use `npm ci` and `npm run build` respectively. If they do not, ensure the platform's install step uses `package-lock.json` and performs a clean install; remove any existing `node_modules/` and `.next/` before redeploying over an existing application directory.
+4. Click **Redeploy** (or Start / Restart Application).
+5. Visit your domain in the browser to verify the site is live.
 
 ---
 
@@ -83,7 +84,7 @@ unzip isuru-gems-hostinger-deploy.zip
 
 ### Step 2: Install Dependencies & Run Build Step
 ```bash
-npm install
+npm ci
 npm run build # Compiles the Next.js standalone application into .next/
 ```
 
@@ -150,11 +151,11 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 ## ❓ Frequently Asked Questions & Troubleshooting
 
 ### Build fails inside Turbopack while processing `globals.css` (PostCSS child process exit 0)
-- **Cause**: Occurs if `node_modules` from a different OS (e.g. Windows) was included in the upload, causing native binary mismatches (such as `lightningcss`), or if the CSS toolchain packages are out of sync.
-- **Fix**:
-  1. The deployment archive (`isuru-gems-hostinger-deploy.zip`) excludes `node_modules` and `.next`.
-  2. The server must run `npm install` on Linux so native binaries (`lightningcss`, `sharp`) match the Linux architecture.
-  3. Ensure `postcss.config.mjs` references only `@tailwindcss/postcss`.
+- **Cause**: Next.js 16 defaults to Turbopack for `next build`. On Hostinger, Turbopack's PostCSS worker often fails to spawn (`node process exited before we could connect`), which surfaces as a fatal error on `src/app/globals.css`. Stale cross-OS `node_modules` can make this worse.
+- **Fix** (already applied in this package):
+  1. Build with Webpack: `"build": "next build --webpack"` in `package.json`.
+  2. Keep CSS toolchain packages (`@tailwindcss/postcss`, `tailwindcss`, `postcss`, `lightningcss`) in `dependencies` so they install even when `NODE_ENV=production`.
+  3. The deployment archive excludes `node_modules` and `.next`. Remove any stale copies on the server, then redeploy / `npm ci` with Node.js `22.x`.
 
 ### Where can I check logs if something doesn't load?
 - **In hPanel:** In the Node.js manager, click the **Logs** tab or check `stderr.log` / `stdout.log` in your application root directory.
