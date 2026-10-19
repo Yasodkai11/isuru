@@ -3,6 +3,7 @@ import { IBM_Plex_Serif, Jost } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { SiteFooterVisibility } from "@/components/layout/site-footer-visibility";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 
@@ -69,7 +70,9 @@ export default function RootLayout({
         <ScrollProgress />
         <Header />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <SiteFooterVisibility>
+          <Footer />
+        </SiteFooterVisibility>
         <CartSheet />
       </body>
     </html>

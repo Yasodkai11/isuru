@@ -447,13 +447,14 @@ export function OurStory() {
                             {isActive ? (
                               <motion.div
                                 key={`progress-${currentSlideIndex}`}
-                                initial={shouldReduceMotion ? { width: "100%" } : { width: "0%" }}
-                                animate={{ width: "100%" }}
+                                initial={shouldReduceMotion ? { scaleX: 1 } : { scaleX: 0 }}
+                                animate={{ scaleX: 1 }}
                                 transition={{
                                   duration: shouldReduceMotion || isHovered ? 0 : 4.6,
                                   ease: "linear",
                                 }}
-                                className="h-full bg-gradient-to-r from-[#D4AF67] to-[#F7E7A9]"
+                                style={{ transformOrigin: "left" }}
+                                className="h-full w-full bg-gradient-to-r from-[#D4AF67] to-[#F7E7A9]"
                               />
                             ) : isPast ? (
                               <div className="h-full w-full bg-[#B8924A]" />

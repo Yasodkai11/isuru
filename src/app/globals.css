@@ -120,22 +120,14 @@
 /* Animated gold foil text */
 .text-gold-gradient {
   background: linear-gradient(110deg, #B8924A 0%, #F3DFA2 25%, #D4AF67 45%, #FFF3CF 55%, #B8924A 75%, #D4AF67 100%);
-  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: goldShine 6s linear infinite;
   /* background-clip only paints inside the box, so extend it to cover italic descenders and overhangs */
   padding: 0.05em 0.12em 0.22em 0;
   margin: -0.05em -0.12em -0.22em 0;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-
-@keyframes goldShine {
-  to {
-    background-position: -200% center;
-  }
 }
 
 @keyframes heroProgress {
@@ -145,6 +137,13 @@
   to {
     transform: scaleX(1);
   }
+}
+
+.scroll-progress {
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: heroProgress linear both;
+  animation-timeline: scroll(root block);
 }
 
 .hero-progress {
@@ -404,6 +403,36 @@
   animation: floatGentle 5s ease-in-out infinite;
 }
 
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-hero-fade-up {
+  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-hero-scale-in {
+  animation: heroScaleIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-gem-float,
   .animate-gem-turn,
@@ -414,10 +443,17 @@
   .animate-hero-pan-4,
   .animate-hero-pan-5,
   .animate-float-gentle,
+  .animate-hero-fade-up,
+  .animate-hero-scale-in,
   .animate-marquee,
-  .animate-marquee-reverse,
-  .text-gold-gradient {
+  .animate-marquee-reverse {
     animation: none !important;
+  }
+
+  .animate-hero-fade-up,
+  .animate-hero-scale-in {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .shine-sweep::after {

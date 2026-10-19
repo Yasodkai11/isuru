@@ -1,5 +1,4 @@
 import { MapPin, Gem, Truck } from "lucide-react";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 
 const PILLARS = [
   { icon: MapPin, title: "Sri Lankan Heritage", desc: "Rooted in Ratnapura, the historic heart of Ceylon’s gem trade." },
@@ -11,16 +10,16 @@ export function TrustMarkers() {
   return (
     <section className="relative bg-[#F2EADB] border-y border-[#B8924A]/25 py-20 lg:py-28 overflow-hidden">
       <div className="container-luxe">
-        <Reveal className="text-center max-w-2xl mx-auto mb-14 lg:mb-16">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#B8924A]">The Isuru Promise</p>
+        <div className="text-center max-w-2xl mx-auto mb-14 lg:mb-16">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#80601C]">The Isuru Promise</p>
           <h2 className="mt-4 font-serif text-4xl sm:text-5xl text-[#5E0F1E] font-normal leading-tight">
-            Trusted by collectors <em className="text-[#B8924A]">worldwide</em>
+            Trusted by collectors <em className="text-[#80601C]">worldwide</em>
           </h2>
-        </Reveal>
+        </div>
 
-        <Stagger className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#B8924A]/20 border border-[#B8924A]/20">
+        <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#B8924A]/20 border border-[#B8924A]/20">
           {PILLARS.map(({ icon: Icon, title, desc }) => (
-            <StaggerItem key={title} className="h-full">
+            <div key={title} className="h-full">
               <div className="group h-full bg-[#F2EADB] hover:bg-[#FDFBF7] p-8 xl:p-10 transition-colors duration-500 text-center">
                 <span className="relative mx-auto w-16 h-16 xl:w-20 xl:h-20 flex items-center justify-center">
                   <span className="absolute inset-0 rounded-full border border-[#B8924A]/40 transition-transform duration-700 group-hover:scale-110" />
@@ -32,9 +31,9 @@ export function TrustMarkers() {
                   {desc}
                 </p>
               </div>
-            </StaggerItem>
+            </div>
           ))}
-        </Stagger>
+        </div>
       </div>
     </section>
   );

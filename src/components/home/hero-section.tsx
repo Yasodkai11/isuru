@@ -11,9 +11,19 @@ import {
   Play,
   Pause,
 } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+function usePrefersReducedMotion() {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setMatches(mediaQuery.matches);
+    const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+    mediaQuery.addEventListener("change", listener);
+    return () => mediaQuery.removeEventListener("change", listener);
+  }, []);
+  return matches;
+}
+
 const SLIDE_DURATION_MS = 6500;
 
 interface HeroScene {
@@ -115,7 +125,7 @@ const FLOATING_PODS: FloatingGemPodData[] = [
 ];
 
 export function HeroSection() {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -170,49 +180,30 @@ export function HeroSection() {
           <div className="lg:col-span-6 xl:col-span-6 space-y-7 sm:space-y-8 relative">
             
             {/* Eyebrow Tag with Fine Gold Line */}
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: EASE }}
-              className="flex items-center gap-3.5"
-            >
-              <span className="text-[11px] sm:text-xs uppercase tracking-[0.28em] text-[#B8924A] font-semibold">
+            <div className="flex items-center gap-3.5 animate-hero-fade-up">
+              <span className="text-[11px] sm:text-xs uppercase tracking-[0.28em] text-[#80601C] font-semibold">
                 Fine Gemstones From Sri Lanka
               </span>
               <div className="h-px w-14 bg-gradient-to-r from-[#B8924A] to-transparent" />
-            </motion.div>
+            </div>
 
             {/* Main Headline - Concept 03: Modern Ceylon */}
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
-            >
+            <div className="animate-hero-fade-up [animation-delay:100ms]">
               <h1 className="font-serif font-normal text-4xl sm:text-5xl lg:text-[3.65rem] xl:text-[4.25rem] text-[#1D1B18] leading-[1.12] tracking-tight">
                 Extraordinary Gems.<br />
                 <span className="text-[#0E2A20] font-normal italic font-serif">
                   Beautiful Possibilities.
                 </span>
               </h1>
-            </motion.div>
+            </div>
 
             {/* Subtext */}
-            <motion.p
-              initial={reduce ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
-              className="text-base sm:text-lg text-[#554E46] font-light leading-relaxed max-w-xl"
-            >
+            <p className="text-base sm:text-lg text-[#554E46] font-light leading-relaxed max-w-xl animate-hero-fade-up [animation-delay:200ms]">
               Direct from the historic gem gravels of Ratnapura, Sri Lanka. Curators of natural, unheated Royal Blue Sapphires, fiery Padparadschas, and certified collector gemstones.
-            </motion.p>
+            </p>
 
             {/* Pill CTA Buttons */}
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
-              className="flex flex-wrap items-center gap-4 pt-1"
-            >
+            <div className="flex flex-wrap items-center gap-4 pt-1 animate-hero-fade-up [animation-delay:300ms]">
               <Link href="/gems" className="modern-pill-primary group">
                 <span>Explore Collection</span>
                 <ArrowRight className="w-4 h-4 text-[#D4AF67] transition-transform duration-300 group-hover:translate-x-1" />
@@ -220,7 +211,7 @@ export function HeroSection() {
               <Link href="/contact" className="modern-pill-secondary">
                 <span>Enquire Now</span>
               </Link>
-            </motion.div>
+            </div>
 
             {/* Botanical Leaf Vector Flourish */}
             <div className="absolute -bottom-6 right-8 w-28 h-28 pointer-events-none opacity-40 hidden xl:block">
@@ -233,12 +224,7 @@ export function HeroSection() {
             </div>
 
             {/* Credibility Markers */}
-            <motion.div
-              initial={reduce ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.55 }}
-              className="pt-7 border-t border-[#B8924A]/25 grid grid-cols-2 gap-4 sm:gap-6 max-w-md"
-            >
+            <div className="pt-7 border-t border-[#B8924A]/25 grid grid-cols-2 gap-4 sm:gap-6 max-w-md animate-hero-fade-up [animation-delay:400ms]">
               <div>
                 <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Est. 1984</span>
                 <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] block mt-0.5">Ratnapura, Ceylon</span>
@@ -247,7 +233,7 @@ export function HeroSection() {
                 <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Mine Direct</span>
                 <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] block mt-0.5">Ethical Traceability</span>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Column: High-Jewelry Staged Photography with Floating Gemstones & Hero Gallery */}
@@ -325,12 +311,7 @@ export function HeroSection() {
               </Link>
 
               {/* Main Staged Photography Showcase Frame */}
-              <motion.div
-                initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, delay: 0.2, ease: EASE }}
-                className="relative rounded-2xl overflow-hidden border border-[#B8924A]/30 bg-[#F4EFEA] shadow-[0_20px_50px_-15px_rgba(25,20,15,0.18)] group"
-              >
+              <div className="relative rounded-2xl overflow-hidden border border-[#B8924A]/30 bg-[#F4EFEA] shadow-[0_20px_50px_-15px_rgba(25,20,15,0.18)] group animate-hero-scale-in [animation-delay:150ms]">
                 {/* Subtle top edge gold highlight */}
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D4AF67]/70 to-transparent z-20 pointer-events-none" />
 
@@ -338,6 +319,9 @@ export function HeroSection() {
                 <div className="relative aspect-[16/11] sm:aspect-[16/11] lg:aspect-[16/11] w-full overflow-hidden bg-[#1D1B18]">
                   {HERO_SCENES.map((scene, index) => {
                     const isActive = index === currentSlide;
+                    const isNext = index === (currentSlide + 1) % HERO_SCENES.length;
+                    const shouldRenderImage = index === 0 || isActive || isNext;
+
                     return (
                       <div
                         key={scene.id}
@@ -351,14 +335,17 @@ export function HeroSection() {
                             isActive && !reduce ? scene.panClass : ""
                           }`}
                         >
-                          <Image
-                            src={scene.src}
-                            alt={scene.alt}
-                            fill
-                            priority={index === 0}
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-cover object-center"
-                          />
+                          {shouldRenderImage && (
+                            <Image
+                              src={scene.src}
+                              alt={scene.alt}
+                              fill
+                              preload={index === 0}
+                              fetchPriority={index === 0 ? "high" : undefined}
+                              sizes="(max-width: 1023px) calc(100vw - clamp(2rem, 8vw, 10rem)), 50vw"
+                              className="object-cover object-center"
+                            />
+                          )}
                         </div>
                       </div>
                     );
@@ -395,33 +382,26 @@ export function HeroSection() {
                       <Sparkles className="w-4 h-4 text-[#D4AF67]" />
                     </div>
                     <div>
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={activeScene.id}
-                          initial={reduce ? false : { opacity: 0, y: 4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={reduce ? undefined : { opacity: 0, y: -4 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <h3 className="font-serif text-sm sm:text-base font-medium text-[#1D1B18] leading-tight">
-                            {activeScene.title}
-                          </h3>
-                          <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] mt-0.5">
-                            {activeScene.subtitle}
-                          </p>
-                        </motion.div>
-                      </AnimatePresence>
+                      <div key={activeScene.id} className="animate-gentle-fade">
+                        <h3 className="font-serif text-sm sm:text-base font-medium text-[#1D1B18] leading-tight">
+                          {activeScene.title}
+                        </h3>
+                        <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] mt-0.5">
+                          {activeScene.subtitle}
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <Link
                     href="/gems"
                     className="inline-flex items-center gap-1.5 text-xs text-[#0E2A20] font-semibold hover:text-[#B8924A] transition-colors shrink-0 ml-2"
+                    aria-label="Explore gemstones"
                   >
                     <span className="hidden sm:inline">Explore Gems</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Floating Scene Thumbnails Selector (Floating along the bottom of the showcase) */}
               <div className="mt-4 sm:mt-5 p-2.5 sm:p-3 bg-[#FAF8F5]/90 backdrop-blur-md border border-[#B8924A]/30 rounded-xl shadow-sm flex items-center justify-between gap-3">
@@ -446,6 +426,7 @@ export function HeroSection() {
                             alt=""
                             fill
                             sizes="56px"
+                            loading="lazy"
                             className="object-cover"
                           />
                         </div>

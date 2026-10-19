@@ -1,19 +1,30 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/home/hero-section";
 import { CategoryCards } from "@/components/home/category-cards";
 import { FeaturedGems } from "@/components/home/featured-gems";
-import { TrustMarkers } from "@/components/home/trust-markers";
-import { OurStory } from "@/components/home/OurStory";
-import { EnquiryCTA } from "@/components/home/enquiry-cta";
 import { GemMarquee } from "@/components/home/gem-marquee";
-import { CraftJourney } from "@/components/home/craft-journey";
+import { TrustMarkers } from "@/components/home/trust-markers";
 import { getGemstones } from "@/actions/gems";
+
+const CraftJourney = dynamic(
+  () => import("@/components/home/craft-journey").then((m) => m.CraftJourney)
+);
+const OurStory = dynamic(
+  () => import("@/components/home/OurStory").then((m) => m.OurStory)
+);
+const EnquiryCTA = dynamic(
+  () => import("@/components/home/enquiry-cta").then((m) => m.EnquiryCTA)
+);
 import {
   JsonLd,
   getOrganizationSchema,
   getWebSiteSchema,
   getBreadcrumbListSchema,
 } from "@/lib/seo/schema";
+
+// ISR: Statically prerender and cache page for 1 hour, avoiding no-store headers in production
+export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

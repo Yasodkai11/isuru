@@ -1,12 +1,7 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface ModernCategory {
   title: string;
@@ -37,8 +32,6 @@ const MODERN_CATEGORIES: ModernCategory[] = [
 ];
 
 export function CategoryCards() {
-  const reduce = useReducedMotion();
-
   return (
     <section className="bg-[#FAF8F5] pb-20 sm:pb-28 pt-2">
       <div className="container-luxe">
@@ -59,14 +52,8 @@ export function CategoryCards() {
 
         {/* 3 Modern Ceylon Category Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {MODERN_CATEGORIES.map((cat, index) => (
-            <motion.div
-              key={cat.title}
-              initial={reduce ? false : { opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.8, delay: index * 0.15, ease: EASE }}
-            >
+          {MODERN_CATEGORIES.map((cat) => (
+            <div key={cat.title}>
               <Link
                 href={cat.link}
                 className="group block bg-[#F5EFEB] rounded-xl overflow-hidden border border-[#B8924A]/25 transition-all duration-500 hover:-translate-y-1.5 hover:border-[#B8924A]/70 hover:shadow-[0_20px_40px_-15px_rgba(25,20,15,0.14)]"
@@ -77,7 +64,7 @@ export function CategoryCards() {
                     src={cat.image}
                     alt={cat.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    sizes="(max-width: 767px) calc(100vw - clamp(2rem, 8vw, 10rem)), 33vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 </div>
@@ -97,7 +84,7 @@ export function CategoryCards() {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

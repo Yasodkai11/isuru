@@ -1,11 +1,8 @@
-"use client";
-
-import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { BRAND, CATEGORIES_CONFIG } from "@/lib/constants";
-import { MapPin, Mail, Phone, CheckCircle2, ArrowUp, ArrowRight } from "lucide-react";
+import { MapPin, Mail, Phone, ArrowRight } from "lucide-react";
+import { BackToTop, NewsletterSignup } from "./newsletter-signup";
 
 const EXPLORE_LINKS = [
   { label: "Home", href: "/" },
@@ -21,22 +18,6 @@ const VARIETY_LINKS = Object.entries(CATEGORIES_CONFIG).map(([slug, config]) => 
 }));
 
 export function Footer() {
-  const pathname = usePathname();
-  const [subscribed, setSubscribed] = useState(false);
-  const [email, setEmail] = useState("");
-
-  if (pathname?.startsWith("/admin")) {
-    return null;
-  }
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubscribed(true);
-      setEmail("");
-    }
-  };
-
   return (
     <footer className="relative overflow-hidden bg-[#120F0D] text-[#FAF6EE] border-t border-[#B8924A]/30">
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-[#D4AF67] to-transparent" />
@@ -53,36 +34,7 @@ export function Footer() {
               Private previews of newly cut stones from our Ratnapura atelier, sent to you before they reach the public catalogue.
             </p>
           </div>
-          <div>
-            {subscribed ? (
-              <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D4AF67] border border-[#B8924A]/30 p-3">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>Thank you. You are enrolled for confidential acquisitions.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex border-b border-[#D4AF67]/50 focus-within:border-[#D4AF67] transition-colors">
-                <label htmlFor="footer-email" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="footer-email"
-                  type="email"
-                  required
-                  placeholder="Your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-transparent py-2.5 text-sm sm:text-base font-light text-[#FAF6EE] placeholder:text-[#FAF6EE]/35 focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#D4AF67] hover:text-[#F3DFA2] pl-3 cursor-pointer"
-                >
-                  Subscribe
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
-              </form>
-            )}
-          </div>
+          <NewsletterSignup />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pt-8 lg:pt-10">
@@ -102,7 +54,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Explore" className="lg:col-span-2 lg:col-start-6">
-            <h4 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Explore</h4>
+            <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Explore</h2>
             <ul className="space-y-2 text-xs sm:text-sm font-light text-[#FAF6EE]/70">
               {EXPLORE_LINKS.map((l) => (
                 <li key={l.href}>
@@ -115,7 +67,7 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Gem varieties" className="lg:col-span-2">
-            <h4 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Shop by Colour</h4>
+            <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Shop by Colour</h2>
             <ul className="space-y-2 text-xs sm:text-sm font-light text-[#FAF6EE]/70">
               {VARIETY_LINKS.map((l) => (
                 <li key={l.href}>
@@ -128,7 +80,7 @@ export function Footer() {
           </nav>
 
           <div className="lg:col-span-3 lg:col-start-10">
-            <h4 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Salons & Concierge</h4>
+            <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Salons & Concierge</h2>
             <div className="space-y-2.5 text-xs sm:text-sm font-light text-[#FAF6EE]/70">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-3.5 h-3.5 text-[#D4AF67] shrink-0 mt-0.5" />
@@ -163,7 +115,7 @@ export function Footer() {
                 href="https://premierdigital.lk/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D4AF67] hover:text-[#F3DFA2] underline-offset-2 hover:underline transition-colors"
+                className="text-[#D4AF67] hover:text-[#F3DFA2] underline underline-offset-2 transition-colors"
               >
                 Premier Digital Pvt Ltd
               </a>
@@ -174,16 +126,7 @@ export function Footer() {
             <span className="text-[#D4AF67]" aria-hidden="true">✦</span>
             <span>Zero Synthetic Policy</span>
           </div>
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group inline-flex items-center gap-2 uppercase tracking-[0.2em] text-[#D4AF67] hover:text-[#F3DFA2] cursor-pointer shrink-0"
-          >
-            Back to top
-            <span className="w-7 h-7 rounded-full border border-[#D4AF67]/40 flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-0.5">
-              <ArrowUp className="w-3 h-3" />
-            </span>
-          </button>
+          <BackToTop />
         </div>
       </div>
     </footer>
