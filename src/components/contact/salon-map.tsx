@@ -11,6 +11,7 @@ interface SalonLocation {
   hours: string;
   query: string;
   mapEmbedUrl: string;
+  directionsUrl?: string;
 }
 
 const SALONS: SalonLocation[] = [
@@ -18,11 +19,13 @@ const SALONS: SalonLocation[] = [
     id: "colombo",
     title: "Colombo Private Salon",
     shortLabel: "Colombo Flagship",
-    address: "42 York Street, Fort, Colombo 01, Sri Lanka",
+    address: "Colombo 00500, Sri Lanka",
     hours: "Monday – Saturday: 09:30 – 18:30 (By Appointment)",
-    query: "42+York+Street,+Fort,+Colombo+01,+Sri+Lanka",
+    query: "Colombo+00500,+Sri+Lanka",
     mapEmbedUrl:
-      "https://maps.google.com/maps?q=42%20York%20Street%2C%20Fort%2C%20Colombo%2001%2C%20Sri%20Lanka&t=&z=16&ie=UTF8&iwloc=&output=embed",
+      "https://maps.google.com/maps?q=Colombo%2000500%2C%20Sri%20Lanka&t=&z=16&ie=UTF8&iwloc=&output=embed",
+    directionsUrl:
+      "https://maps.google.com/maps/search/Colombo%2000500%2C%20Sri%20Lanka/@7.0338,79.8994,17z?hl=en",
   },
   {
     id: "ratnapura",
@@ -100,7 +103,10 @@ export function SalonMap() {
             <span>{selectedSalon.hours}</span>
           </div>
           <a
-            href={`https://www.google.com/maps/search/?api=1&query=${selectedSalon.query}`}
+            href={
+              selectedSalon.directionsUrl ||
+              `https://www.google.com/maps/search/?api=1&query=${selectedSalon.query}`
+            }
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-gold-dark transition-colors hover:text-maroon sm:self-auto"

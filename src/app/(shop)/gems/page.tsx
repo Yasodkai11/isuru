@@ -8,6 +8,11 @@ import { GoldDivider } from "@/components/layout/gold-divider";
 import { CARAT_PRESETS, PRICE_PRESETS } from "@/lib/constants";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  JsonLd,
+  getBreadcrumbListSchema,
+  getCollectionPageSchema,
+} from "@/lib/seo/schema";
 
 interface GemsPageProps {
   searchParams: Promise<{
@@ -34,9 +39,12 @@ export async function generateMetadata({ searchParams }: GemsPageProps): Promise
   const prefix = parts.length > 0 ? `${parts.join(" ")} - ` : "";
 
   return {
-    title: `${prefix}Ceylon Gemstone Vault | Isuru Gems`,
+    title: `${prefix}Natural Gemstones Vault`,
     description:
       "Explore certified unheated Ceylon Royal Blue Sapphires, Padparadschas, Rubies, and precious island gemstones with full laboratory certification from NGJA, GIA, and GRS.",
+    alternates: {
+      canonical: "/gems",
+    },
   };
 }
 
@@ -85,8 +93,22 @@ export default async function GemsPage({ searchParams }: GemsPageProps) {
     limit: itemsPerPage,
   });
 
+  const breadcrumbSchema = getBreadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Gemstones Vault", url: "/gems" },
+  ]);
+
+  const collectionSchema = getCollectionPageSchema({
+    title: "Natural Ceylon Gemstones Vault",
+    description:
+      "Explore certified unheated Ceylon Royal Blue Sapphires, Padparadschas, Rubies, and precious island gemstones with laboratory certifications.",
+    url: "/gems",
+    gems,
+  });
+
   return (
     <div className="py-10 sm:py-14 bg-[#FAF8F5] min-h-screen">
+      <JsonLd data={[breadcrumbSchema, collectionSchema]} />
       <div className="container-luxe">
         {/* Concept 03: Modern Ceylon Gemstone Collection Header */}
         <div className="relative pb-8 mb-8 border-b border-[#B8924A]/25 flex flex-col sm:flex-row sm:items-end justify-between gap-6">

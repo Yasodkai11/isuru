@@ -6,7 +6,7 @@ $deployZipPath = Join-Path $root "isuru-gems-hostinger-deploy.zip"
 Write-Host "Creating clean Hostinger deployment zip (without stale .next directory)..."
 
 if (Test-Path $deployZipPath) {
-    Remove-Item $deployZipPath -Force
+    [System.IO.File]::Delete($deployZipPath)
 }
 
 $tempFolder = Join-Path $env:TEMP "isuru_deploy_$(Get-Random)"

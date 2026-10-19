@@ -33,7 +33,7 @@ import {
 const CANNED_TEMPLATES = [
   {
     title: "Schedule Private Colombo Salon Appointment",
-    text: "Thank you for reaching out to Isuru Gems Ceylon. We would be delighted to welcome you to our private viewing salon at 42 York Street, Colombo 01. Our Master Gemologist will have the selected crystals and gemological microscope prepared for your inspection.",
+    text: "Thank you for reaching out to Isuru Gems Ceylon. We would be delighted to welcome you to our private viewing salon in Colombo 00500. Our Master Gemologist will have the selected crystals and gemological microscope prepared for your inspection.",
   },
   {
     title: "High-Res 360° Video & GRS/NGJA Certificate Scan",

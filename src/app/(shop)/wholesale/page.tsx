@@ -16,9 +16,12 @@ import { ShieldCheck, Truck, Briefcase, FileCheck } from "lucide-react";
 import { WholesaleForm } from "@/components/wholesale/wholesale-form";
 
 export const metadata: Metadata = {
-  title: "Wholesale & B2B Gemstone Parcels | Isuru Gems Ceylon",
+  title: "Wholesale & B2B Gemstone Parcels",
   description:
     "Direct source calibrated parcels, layout pairs, and high-volume unheated Ceylon sapphires for international jewelry ateliers, watchmakers, and gem merchants.",
+  alternates: {
+    canonical: "/wholesale",
+  },
 };
 
 export default function WholesalePage() {

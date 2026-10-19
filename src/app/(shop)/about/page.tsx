@@ -5,9 +5,12 @@ import { Compass, HeartHandshake, Shield } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Heritage & Mining Provenance | Isuru Gems Ceylon",
+    title: "Heritage & Mining Provenance",
     description:
       "Four decades of ethical, artisanal gemstone discovery in Ratnapura, Sri Lanka. Learn about our traditional sustainable pit mining and unheated sapphire heritage.",
+    alternates: {
+      canonical: "/about",
+    },
   };
 }
 

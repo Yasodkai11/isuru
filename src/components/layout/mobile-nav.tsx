@@ -162,7 +162,7 @@ export function MobileNav({ isOpen, onClose, session }: MobileNavProps) {
         <div className="pt-6 mt-6 border-t border-[#B8924A]/25 space-y-4">
           <div className="space-y-2 text-xs text-[#2B2B2B]/80">
             <a
-              href={`tel:${BRAND.phone}`}
+              href={`tel:${BRAND.phone.replace(/[^\d+]/g, "")}`}
               className="flex items-center gap-2.5 hover:text-[#5E0F1E] transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-[#B8924A]" />

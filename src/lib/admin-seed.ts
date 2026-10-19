@@ -296,7 +296,7 @@ export const INITIAL_ADMIN_ENQUIRIES: AdminEnquiry[] = [
     gemId: "gem-002",
     gemName: "Ceylon Padparadscha Sapphire (Lotus Blossom)",
     type: "private_viewing",
-    message: "I will be visiting Colombo next month. Could we arrange a private appointment at your York Street salon to inspect this unheated Padparadscha alongside any unlisted 5ct+ rough stones in your vault?",
+    message: "I will be visiting Colombo next month. Could we arrange a private appointment at your Colombo salon to inspect this unheated Padparadscha alongside any unlisted 5ct+ rough stones in your vault?",
     preferredCurrency: "USD",
     status: "replied",
     replyNotes: "Confirmed private appointment at Colombo Showroom for Nov 14th with Master Gemologist.",
@@ -593,10 +593,10 @@ export const INITIAL_ADMIN_SETTINGS: AdminSettingsData = {
   tagline: "Treasures of Serendib • Fine Natural Ceylon Gemstones",
   ngjaLicense: "NGJA-8419 / EXP-DL-402",
   ratnapuraVaultAddress: "No. 128 Main Street, Ratnapura, Sabaragamuwa Province, Sri Lanka",
-  colomboShowroomAddress: "42 York Street, Colombo 01, Western Province, Sri Lanka",
-  primaryEmail: "concierge@isurugems.com",
-  conciergePhone: "+94 (11) 244-8899",
-  whatsappNumber: "+94 (77) 389-1200",
+  colomboShowroomAddress: "Colombo 00500, Sri Lanka",
+  primaryEmail: "uththiyaisurudewamendis@gmail.com",
+  conciergePhone: "+94 76 273 5153",
+  whatsappNumber: "+94 76 273 5153",
   baseCurrency: "USD",
   exchangeRates: {
     USD: 1.0,
@@ -625,6 +625,22 @@ export const INITIAL_ADMIN_SETTINGS: AdminSettingsData = {
 };
 
 export const INITIAL_ADMIN_STAFF: AdminStaffMember[] = [
+  {
+    id: "staff-00",
+    fullName: "Isuru (Atelier Principal)",
+    email: "uththiyaisurudewamendis@gmail.com",
+    role: "super_admin",
+    department: "Executive & Board of Gemologists",
+    phone: "+94 76 273 5153",
+    status: "active",
+    canManageGems: true,
+    canManageOrders: true,
+    canManageStaff: true,
+    canExportData: true,
+    lastLogin: "2026-10-19 16:00",
+    createdAt: "2024-01-01",
+    notes: "Atelier founder, owner & primary Google administrator.",
+  },
   {
     id: "staff-01",
     fullName: "Isuru",

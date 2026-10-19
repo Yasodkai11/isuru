@@ -90,7 +90,7 @@ export function Header() {
           100% Natural Ceylon Gemstones
         </span>
         <span className="hidden lg:block text-[#D4AF67]">Fully insured worldwide shipping</span>
-        <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2 hover:text-[#D4AF67] transition-colors">
+        <a href={`tel:${BRAND.phone.replace(/[^\d+]/g, "")}`} className="flex items-center gap-2 hover:text-[#D4AF67] transition-colors">
           <Phone className="w-3.5 h-3.5 text-[#D4AF67]" />
           {BRAND.phone}
         </a>

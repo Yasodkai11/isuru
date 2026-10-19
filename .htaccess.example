@@ -8,11 +8,15 @@
 
 RewriteEngine On
 
-# Handle WebSocket connections (if any)
+# 1. Enforce HTTPS Redirection (301 Moved Permanently)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Handle WebSocket connections (if any)
 RewriteCond %{HTTP:Upgrade} =websocket [NC]
 RewriteRule /(.*) ws://127.0.0.1:3000/$1 [P,L]
 
-# Proxy all normal requests to Next.js server launched via node server.js
+# 3. Proxy all normal requests to Next.js server launched via node server.js
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]

@@ -28,7 +28,9 @@ export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Isuru Ceylon | The Timeless Beauty of Ceylon Sapphires & Rare Precious Stones",
+    title: {
+      absolute: "Isuru Ceylon | Natural Ceylon Sapphires & Rare Precious Island Gemstones",
+    },
     description:
       "Curators of unheated Ceylon Royal Blue Sapphires, rare Padparadschas, and natural gemstones direct from the alluvial gravels of Ratnapura, Sri Lanka since 1984. Authenticated by NGJA, GRS, and GIA.",
     alternates: {

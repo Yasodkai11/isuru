@@ -54,7 +54,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Explore" className="lg:col-span-2 lg:col-start-6">
-            <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Explore</h2>
+            <h3 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Explore</h3>
             <ul className="space-y-2 text-xs sm:text-sm font-light text-[#FAF6EE]/70">
               {EXPLORE_LINKS.map((l) => (
                 <li key={l.href}>
@@ -67,7 +67,7 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Gem varieties" className="lg:col-span-2">
-            <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Shop by Colour</h2>
+            <h3 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Shop by Colour</h3>
             <ul className="space-y-2 text-xs sm:text-sm font-light text-[#FAF6EE]/70">
               {VARIETY_LINKS.map((l) => (
                 <li key={l.href}>
@@ -80,13 +80,18 @@ export function Footer() {
           </nav>
 
           <div className="lg:col-span-3 lg:col-start-10">
-            <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Salons & Concierge</h2>
+            <h3 className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF67] mb-3">Salons & Concierge</h3>
             <div className="space-y-2.5 text-xs sm:text-sm font-light text-[#FAF6EE]/70">
-              <div className="flex items-start gap-2.5">
+              <a
+                href={BRAND.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2.5 hover:text-[#FAF6EE] transition-colors"
+              >
                 <MapPin className="w-3.5 h-3.5 text-[#D4AF67] shrink-0 mt-0.5" />
                 <span>{BRAND.headquarters}</span>
-              </div>
-              <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2.5 hover:text-[#FAF6EE] transition-colors">
+              </a>
+              <a href={`tel:${BRAND.phone.replace(/[^\d+]/g, "")}`} className="flex items-center gap-2.5 hover:text-[#FAF6EE] transition-colors">
                 <Phone className="w-3.5 h-3.5 text-[#D4AF67] shrink-0" />
                 <span>{BRAND.phone}</span>
               </a>

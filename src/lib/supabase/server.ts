@@ -49,8 +49,31 @@ export async function createClient() {
  * STRICT SECURITY: Never import in client components or leak to browser.
  */
 export async function createAdminClient() {
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mock-isuru-gems.supabase.co";
+  let serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://pexbwmaoyoelxzpiohlk.supabase.co";
+
+  // Fallback: If not in process.env (e.g. custom standalone runtime), read from .env.local on disk
+  if (!serviceRoleKey || !supabaseUrl) {
+    try {
+      const fs = await import("fs");
+      const path = await import("path");
+      const envPath = path.resolve(process.cwd(), ".env.local");
+      if (fs.existsSync(envPath)) {
+        const content = fs.readFileSync(envPath, "utf8");
+        const keyMatch = content.match(/SUPABASE_SERVICE_ROLE_KEY=(.*)/);
+        const urlMatch = content.match(/NEXT_PUBLIC_SUPABASE_URL=(.*)/);
+        if (keyMatch && !serviceRoleKey) {
+          serviceRoleKey = keyMatch[1].trim().replace(/^['"]|['"]$/g, "");
+          process.env["SUPABASE_SERVICE_ROLE_KEY"] = serviceRoleKey;
+        }
+        if (urlMatch && !supabaseUrl) {
+          supabaseUrl = urlMatch[1].trim().replace(/^['"]|['"]$/g, "");
+        }
+      }
+    } catch {
+      // Ignore fallback read errors
+    }
+  }
 
   if (!serviceRoleKey) {
     throw new Error("SUPABASE_SERVICE_ROLE_KEY is not set in server environment variables.");

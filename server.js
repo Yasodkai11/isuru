@@ -11,6 +11,40 @@ const fs = require("fs");
 
 process.env.NODE_ENV = "production";
 
+// Auto-load environment variables from .env.local, .env.production, and .env
+const envFiles = [
+  path.join(__dirname, ".env.local"),
+  path.join(__dirname, ".env.production"),
+  path.join(__dirname, ".env"),
+];
+for (const envFile of envFiles) {
+  if (fs.existsSync(envFile)) {
+    try {
+      const content = fs.readFileSync(envFile, "utf8");
+      content.split(/\r?\n/).forEach((line) => {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#")) return;
+        const equalIdx = trimmed.indexOf("=");
+        if (equalIdx > 0) {
+          const key = trimmed.slice(0, equalIdx).trim();
+          let val = trimmed.slice(equalIdx + 1).trim();
+          if (
+            (val.startsWith('"') && val.endsWith('"')) ||
+            (val.startsWith("'") && val.endsWith("'"))
+          ) {
+            val = val.slice(1, -1);
+          }
+          if (!(key in process.env)) {
+            process.env[key] = val;
+          }
+        }
+      });
+    } catch (e) {
+      console.warn("> Could not parse env file:", envFile, e);
+    }
+  }
+}
+
 const hostname = process.env.HOSTNAME || "0.0.0.0";
 const port = parseInt(process.env.PORT || "3000", 10);
 

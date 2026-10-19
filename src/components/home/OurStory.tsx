@@ -392,9 +392,9 @@ export function OurStory() {
                         <span className="text-[10px] uppercase font-mono tracking-widest text-[#D4AF67] block">
                           0{currentSlideIndex + 1} / 0{workSlides.length} • Genuine Field Archive
                         </span>
-                        <h4 className="text-sm sm:text-base font-serif font-medium text-white tracking-wide leading-tight truncate">
+                        <p className="text-sm sm:text-base font-serif font-medium text-white tracking-wide leading-tight truncate">
                           {currentSlide.title}
-                        </h4>
+                        </p>
                         <p className="text-[11px] text-white/75 truncate mt-0.5">
                           {currentSlide.subtitle}
                         </p>

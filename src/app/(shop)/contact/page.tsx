@@ -14,9 +14,12 @@ interface ContactPageProps {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Bespoke Commissions & Concierge | Isuru Gems Ceylon",
+    title: "Bespoke Commissions & Concierge",
     description:
       "Contact the gemological concierge at Isuru Gems for loose unheated Ceylon sapphire acquisition, custom ring commissions, or private viewings in Colombo and Ratnapura.",
+    alternates: {
+      canonical: "/contact",
+    },
   };
 }
 
@@ -24,7 +27,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   const resolvedParams = await searchParams;
 
   return (
-    <main className="min-h-screen bg-cream py-10 sm:py-14">
+    <div className="min-h-screen bg-cream py-10 sm:py-14">
       <div className="container-luxe">
         <div className="mx-auto max-w-7xl space-y-10 sm:space-y-14">
           <header className="grid items-center gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
@@ -117,6 +120,6 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

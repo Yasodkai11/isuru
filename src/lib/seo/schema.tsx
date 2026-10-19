@@ -33,16 +33,17 @@ export function getOrganizationSchema() {
     address: {
       "@type": "PostalAddress",
       streetAddress: BRAND.headquarters,
-      addressLocality: "Ratnapura",
-      addressRegion: "Sabaragamuwa Province",
-      postalCode: "70000",
+      addressLocality: "Colombo",
+      addressRegion: "Western Province",
+      postalCode: "00500",
       addressCountry: "LK",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 6.6828,
-      longitude: 80.4036,
+      latitude: 7.0338,
+      longitude: 79.8994,
     },
+    hasMap: BRAND.mapUrl,
     sameAs: [
       "https://www.instagram.com/isurugems",
       "https://www.facebook.com/isurugems",
@@ -98,16 +99,26 @@ export function getWebSiteSchema() {
  * Schema.org Product structured data for a Gemstone
  */
 export function getProductSchema(gem: Gemstone) {
-  const images = gem.images && gem.images.length > 0 
-    ? gem.images.map((img) => img.url)
-    : ["https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85"];
+  const images =
+    gem.images && gem.images.length > 0
+      ? gem.images.map((img) =>
+          img.url.startsWith("http") ? img.url : `${SITE_URL}${img.url}`
+        )
+      : [
+          "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+        ];
+
+  // International luxury courier supported destination country codes (ISO 3166-1 alpha-2)
+  const supportedCountries = [
+    "US", "GB", "CH", "AE", "AU", "SG", "LK", "FR", "DE", "JP", "HK", "CA", "IT"
+  ];
 
   const offers = {
     "@type": "Offer",
     "@id": `${SITE_URL}/gems/${gem.slug}#offer`,
     url: `${SITE_URL}/gems/${gem.slug}`,
     priceCurrency: gem.currency || "USD",
-    price: gem.price,
+    price: gem.price > 0 ? gem.price : 0,
     priceValidUntil: "2027-12-31",
     itemCondition: "https://schema.org/NewCondition",
     availability: gem.inStock
@@ -125,10 +136,10 @@ export function getProductSchema(gem: Gemstone) {
         value: "0.00",
         currency: gem.currency || "USD",
       },
-      shippingDestination: {
+      shippingDestination: supportedCountries.map((countryCode) => ({
         "@type": "DefinedRegion",
-        addressCountry: "Worldwide",
-      },
+        addressCountry: countryCode,
+      })),
       deliveryTime: {
         "@type": "ShippingDeliveryTime",
         handlingTime: {
@@ -147,7 +158,7 @@ export function getProductSchema(gem: Gemstone) {
     },
     hasMerchantReturnPolicy: {
       "@type": "MerchantReturnPolicy",
-      applicableCountry: "Worldwide",
+      applicableCountry: supportedCountries,
       returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
       merchantReturnDays: 14,
       returnMethod: "https://schema.org/ReturnByMail",
@@ -244,6 +255,47 @@ export function getBreadcrumbListSchema(
       name: item.name,
       item: item.url.startsWith("http") ? item.url : `${SITE_URL}${item.url}`,
     })),
+  };
+}
+
+/**
+ * Schema.org CollectionPage and ItemList structured data for catalog / category pages
+ */
+export function getCollectionPageSchema({
+  title,
+  description,
+  url,
+  gems,
+}: {
+  title: string;
+  description: string;
+  url: string;
+  gems?: Gemstone[];
+}) {
+  const pageUrl = url.startsWith("http") ? url : `${SITE_URL}${url}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${pageUrl}#collection`,
+    url: pageUrl,
+    name: title,
+    description,
+    isPartOf: {
+      "@id": `${SITE_URL}/#website`,
+    },
+    ...(gems && gems.length > 0
+      ? {
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: gems.slice(0, 24).map((gem, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              url: `${SITE_URL}/gems/${gem.slug}`,
+              name: gem.name,
+            })),
+          },
+        }
+      : {}),
   };
 }
 

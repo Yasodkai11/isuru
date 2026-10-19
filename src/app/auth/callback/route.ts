@@ -19,7 +19,18 @@ export async function GET(request: Request) {
       if (!target || !target.startsWith("/") || target.startsWith("//") || target.includes("\\")) {
         target = isAdmin ? "/admin" : "/account";
       }
-      if (isAdmin && !target.startsWith("/admin") && target === "/account") {
+
+      // STRICT ROLE VERIFICATION:
+      // If user attempted to access /admin but is not an authorized administrator,
+      // block them and redirect to login with a specific error notice.
+      if (target.startsWith("/admin") && !isAdmin) {
+        return NextResponse.redirect(
+          `${origin}/login?error=admin_unauthorized&role=admin&email=${encodeURIComponent(data.user.email || "")}`
+        );
+      }
+
+      // If an authorized admin signs in without an explicit target, direct to /admin
+      if (isAdmin && !next) {
         target = "/admin";
       }
 

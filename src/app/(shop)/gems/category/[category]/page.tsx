@@ -11,6 +11,17 @@ import { CATEGORIES_CONFIG, CARAT_PRESETS, PRICE_PRESETS } from "@/lib/constants
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Sparkles } from "lucide-react";
+import {
+  JsonLd,
+  getBreadcrumbListSchema,
+  getCollectionPageSchema,
+} from "@/lib/seo/schema";
+
+export async function generateStaticParams() {
+  return Object.keys(CATEGORIES_CONFIG).map((category) => ({
+    category,
+  }));
+}
 
 interface CategoryPageProps {
   params: Promise<{
@@ -34,15 +45,22 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
   if (!config) {
     return {
-      title: "Gemstone Category | Isuru Gems Ceylon",
+      title: "Gemstone Category",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
   return {
-    title: `${config.title} | ${config.subtitle} | Isuru Gems Ceylon`,
+    title: `${config.title} - ${config.subtitle}`,
     description: config.description,
+    alternates: {
+      canonical: `/gems/category/${category}`,
+    },
     openGraph: {
-      title: `${config.title} | Isuru Gems`,
+      title: `${config.title} - ${config.subtitle}`,
       description: config.description,
       images: [{ url: config.image, width: 1200, height: 630, alt: config.title }],
     },
@@ -105,8 +123,22 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     label: item.title,
   }));
 
+  const breadcrumbSchema = getBreadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Gemstones Vault", url: "/gems" },
+    { name: config.title, url: `/gems/category/${category}` },
+  ]);
+
+  const collectionSchema = getCollectionPageSchema({
+    title: `${config.title} - Natural Ceylon Gems`,
+    description: config.description,
+    url: `/gems/category/${category}`,
+    gems,
+  });
+
   return (
     <div className="py-12 bg-[#FAF6EE] min-h-screen">
+      <JsonLd data={[breadcrumbSchema, collectionSchema]} />
       <div className="container-luxe space-y-10">
         {/* Breadcrumb and Back */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

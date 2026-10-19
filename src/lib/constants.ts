@@ -4,10 +4,12 @@ export const BRAND = {
   subheading: "Finest Natural Ceylon Sapphires & Precious Island Gemstones",
   established: 1984,
   location: "Ratnapura, Sri Lanka",
-  headquarters: "42 York Street, Colombo 01 & Main Street, Ratnapura, Sri Lanka",
-  phone: "+94 (11) 244-8899",
-  whatsapp: "+94 (77) 389-1200",
-  email: "concierge@isurugems.com",
+  headquarters: "Colombo 00500 & Main Street, Ratnapura, Sri Lanka",
+  phone: "+94 76 273 5153",
+  whatsapp: "+94 76 273 5153",
+  email: "uththiyaisurudewamendis@gmail.com",
+  mapUrl:
+    "https://maps.google.com/maps/search/Colombo%2000500%2C%20Sri%20Lanka/@7.0338,79.8994,17z?hl=en",
 };
 
 export const CEYLON_ORIGINS = [
@@ -53,16 +55,16 @@ export const GEM_SHAPES = [
 export const CARAT_PRESETS = [
   { label: "All Weights", min: undefined, max: undefined },
   { label: "Under 2.00 cts", min: 0, max: 2.0 },
-  { label: "2.00 â€“ 4.00 cts", min: 2.0, max: 4.0 },
-  { label: "4.00 â€“ 7.00 cts", min: 4.0, max: 7.0 },
+  { label: "2.00 – 4.00 cts", min: 2.0, max: 4.0 },
+  { label: "4.00 – 7.00 cts", min: 4.0, max: 7.0 },
   { label: "7.00+ cts (Imperial)", min: 7.0, max: 99.0 },
 ] as const;
 
 export const PRICE_PRESETS = [
   { label: "All Prices", min: undefined, max: undefined },
   { label: "Under $10,000", min: 0, max: 10000 },
-  { label: "$10,000 â€“ $20,000", min: 10000, max: 20000 },
-  { label: "$20,000 â€“ $50,000", min: 20000, max: 50000 },
+  { label: "$10,000 – $20,000", min: 10000, max: 20000 },
+  { label: "$20,000 – $50,000", min: 20000, max: 50000 },
   { label: "Above $50,000", min: 50000, max: 999999 },
 ] as const;
 

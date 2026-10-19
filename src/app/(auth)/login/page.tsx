@@ -5,8 +5,12 @@ import { GoldDivider } from "@/components/layout/gold-divider";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Collector Sign In | Isuru Gems Ceylon",
+    title: "Collector Sign In",
     description: "Access your private gemstone orders, vault selections, and certification archives.",
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 

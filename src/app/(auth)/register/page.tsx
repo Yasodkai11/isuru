@@ -4,8 +4,12 @@ import { GoldDivider } from "@/components/layout/gold-divider";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Register Collector Account | Isuru Gems Ceylon",
+    title: "Register Collector Account",
     description: "Create your private account to manage unheated Ceylon gemstone acquisitions and provenance archives.",
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 

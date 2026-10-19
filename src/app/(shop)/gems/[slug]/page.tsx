@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
   const caratSuffix = gem.carat > 0 ? ` (${formatGemCarats(gem.carat)})` : "";
 
   return {
-    title: `${gem.name}${caratSuffix} | Isuru Gems Ceylon`,
+    title: `${gem.name}${caratSuffix}`,
     description: [
       `Natural ${gem.variety} from ${gem.origin}.`,
       gem.certificate.lab && `Certified by ${gem.certificate.lab}.`,
@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
       canonical: `/gems/${gem.slug}`,
     },
     openGraph: {
-      title: `${gem.name}${caratSuffix} | Isuru Gems`,
+      title: `${gem.name}${caratSuffix} | Isuru Ceylon`,
       description: gem.description,
       url: `/gems/${gem.slug}`,
       type: "website",
@@ -102,7 +102,7 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
     },
     twitter: {
       card: "summary_large_image",
-      title: `${gem.name} | Isuru Gems Ceylon`,
+      title: `${gem.name}${caratSuffix} | Isuru Ceylon`,
       description: gem.description,
       images: [ogImages[0].url],
     },

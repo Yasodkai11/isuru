@@ -6,7 +6,7 @@ $sourceZipPath = Join-Path $root "isuru-gems-source-code.zip"
 Write-Host "Creating clean source code zip..."
 
 if (Test-Path $sourceZipPath) {
-    Remove-Item $sourceZipPath -Force
+    [System.IO.File]::Delete($sourceZipPath)
 }
 
 $tempFolder = Join-Path $env:TEMP "isuru_source_$(Get-Random)"

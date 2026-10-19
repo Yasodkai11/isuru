@@ -22,6 +22,8 @@ const jost = Jost({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isurugems.com";
+
 export const metadata: Metadata = {
   title: {
     template: "%s | Isuru Ceylon",
@@ -39,13 +41,28 @@ export const metadata: Metadata = {
     "National Gem and Jewellery Authority NGJA",
   ],
   authors: [{ name: "Isuru Ceylon" }],
-  metadataBase: new URL("https://isurugems.com"),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: "Isuru Ceylon | Natural Ceylon Sapphires & Fine Island Gemstones",
     description: "Ethically mined, unheated certified Ceylon gemstones direct from Ratnapura.",
     siteName: "Isuru Ceylon",
+    url: siteUrl,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/isuru_images/blue1.webp",
+        width: 1200,
+        height: 630,
+        alt: "Isuru Ceylon - Certified Natural Gemstones",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Isuru Ceylon | Natural Ceylon Sapphires & Rare Gems",
+    description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
+    images: ["/isuru_images/blue1.webp"],
   },
   icons: {
     icon: [

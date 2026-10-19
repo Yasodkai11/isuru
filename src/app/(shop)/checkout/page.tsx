@@ -4,9 +4,13 @@ import { GoldDivider } from "@/components/layout/gold-divider";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Secure Acquisition & Insured Courier | Isuru Gems Ceylon",
+    title: "Secure Acquisition & Insured Courier",
     description:
       "Complete your Ceylon gemstone acquisition with fully insured international courier, certified gemological documentation, and escrow protection.",
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 

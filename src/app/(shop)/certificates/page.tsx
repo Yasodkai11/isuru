@@ -6,9 +6,12 @@ import { ShieldCheck, ArrowRight } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Gemstone Certification & Authenticity | Isuru Gems Ceylon",
+    title: "Gemstone Certification & Authenticity",
     description:
       "All Isuru Gems stones are certified natural corundum authenticated by the National Gem and Jewellery Authority of Sri Lanka (NGJA), GIA, and GRS Swisslab.",
+    alternates: {
+      canonical: "/certificates",
+    },
   };
 }
 
