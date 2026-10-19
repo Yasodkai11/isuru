@@ -353,7 +353,6 @@ export function OurStory() {
                         src={currentSlide.src}
                         alt={currentSlide.alt}
                         fill
-                        priority={currentSlideIndex === 0}
                         sizes="(max-width: 768px) 92vw, (max-width: 1200px) 48vw, 560px"
                         className={`${currentSlide.position} transition-transform duration-1000 ease-out group-hover:scale-105`}
                       />
