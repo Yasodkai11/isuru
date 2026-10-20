@@ -140,7 +140,7 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 |---|---|
 | `NODE_ENV` | Must be `production` |
 | `PORT` | Web server port (defaults to `3000` or Hostinger-assigned port) |
-| `NEXT_PUBLIC_SITE_URL` | Your public domain (e.g., `https://isurugems.com`) |
+| `NEXT_PUBLIC_SITE_URL` | Your public domain (`https://isuruceylon.com`) |
 | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL (`https://<project-ref>.supabase.co`) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public Supabase anon key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Secret Supabase service role key (for server actions/admin) |

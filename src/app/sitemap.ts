@@ -2,15 +2,17 @@ import type { MetadataRoute } from "next";
 import { getGemstones } from "@/actions/gems";
 import { CATEGORIES_CONFIG } from "@/lib/constants";
 
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isurugems.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
   // Base release timestamp to avoid spurious lastmod changes on static content
   const staticLastMod = new Date("2026-10-15T00:00:00.000Z");
 
   // 1. Core static marketing and institutional pages
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${baseUrl}`,
+      url: `${baseUrl}/`,
       lastModified: staticLastMod,
       changeFrequency: "daily",
       priority: 1.0,

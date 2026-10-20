@@ -76,13 +76,21 @@ export async function getStaffMembersAction(): Promise<StaffActionResult<AdminSt
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
     const { data, error } = await supabase
       .from("staff_members")
       .select("*")
       .order("created_at", { ascending: true });
 
-    if (error || !data) {
+    if (error) {
+      return {
+        success: false,
+        message: `Database error querying staff directory: ${error.message}`,
+        data: [],
+      };
+    }
+
+    if (!data || data.length === 0) {
       return {
         success: true,
         message: "Fallback to default staff seed.",
@@ -115,9 +123,9 @@ export async function getStaffMembersAction(): Promise<StaffActionResult<AdminSt
     };
   } catch (err: unknown) {
     return {
-      success: true,
+      success: false,
       message: err instanceof Error ? err.message : "Error querying staff directory.",
-      data: INITIAL_ADMIN_STAFF,
+      data: [],
     };
   }
 }
@@ -229,10 +237,10 @@ export async function createStaffMemberAction(
       data: newStaffMember,
     };
   } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
-      success: true,
-      message: "Staff member created in active session.",
-      data: newStaffMember,
+      success: false,
+      message: `Failed to create staff member: ${msg}`,
     };
   }
 }
@@ -393,9 +401,10 @@ export async function updateStaffMemberAction(
       message: "Staff permissions and profile updated.",
     };
   } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
-      success: true,
-      message: "Staff profile updated successfully.",
+      success: false,
+      message: `Failed to update staff profile: ${msg}`,
     };
   }
 }
@@ -444,9 +453,10 @@ export async function deleteStaffMemberAction(
       message: "Staff member access revoked and account deleted.",
     };
   } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
-      success: true,
-      message: "Staff member removed.",
+      success: false,
+      message: `Failed to remove staff member: ${msg}`,
     };
   }
 }

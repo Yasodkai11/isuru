@@ -1,5 +1,6 @@
 "use server";
 
+import { cache } from "react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { Gemstone, GemFilterOptions, PaginatedGemsResult } from "@/types/gem";
 import { CATEGORIES_CONFIG } from "@/lib/constants";
@@ -60,10 +61,10 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
         query = query.lte("price", filters.maxPrice);
       }
 
-      // Search query
+      // Search query (sanitized against PostgREST syntax delimiters)
       if (filters?.search && filters.search.trim()) {
-        const q = filters.search.trim();
-        query = query.or(`name.ilike.%${q}%,variety.ilike.%${q}%,description.ilike.%${q}%,origin.ilike.%${q}%`);
+        const cleanQ = filters.search.trim().replace(/[,()]/g, " ");
+        query = query.or(`name.ilike.%${cleanQ}%,variety.ilike.%${cleanQ}%,description.ilike.%${cleanQ}%,origin.ilike.%${cleanQ}%`);
       }
 
       // Sorting
@@ -205,7 +206,7 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
   };
 }
 
-export async function getGemBySlug(slug: string): Promise<Gemstone | null> {
+export const getGemBySlug = cache(async (slug: string): Promise<Gemstone | null> => {
   if (isSupabaseConfigured) {
     try {
       const supabase = await createClient();
@@ -213,7 +214,7 @@ export async function getGemBySlug(slug: string): Promise<Gemstone | null> {
         .from("gemstones")
         .select("*")
         .eq("slug", slug)
-        .single();
+        .maybeSingle();
 
       if (!error && data) {
         return mapDbRowToGemstone(data);
@@ -225,13 +226,35 @@ export async function getGemBySlug(slug: string): Promise<Gemstone | null> {
   }
 
   return CATALOG_GEMS.find((g) => g.slug === slug) || null;
-}
+});
 
 export async function getRelatedGems(currentSlug: string, limit: number = 3): Promise<Gemstone[]> {
   const current = await getGemBySlug(currentSlug);
-  const { gems } = await getGemstones({ limit: 100 });
 
-  return gems
+  if (isSupabaseConfigured) {
+    try {
+      const supabase = await createClient();
+      let query = supabase
+        .from("gemstones")
+        .select("*")
+        .neq("slug", currentSlug)
+        .eq("in_stock", true)
+        .limit(limit);
+
+      if (current?.variety) {
+        query = query.ilike("variety", `%${current.variety}%`);
+      }
+
+      const { data } = await query;
+      if (data && data.length > 0) {
+        return data.map(mapDbRowToGemstone);
+      }
+    } catch (err) {
+      console.warn("Related gems query note:", err);
+    }
+  }
+
+  return CATALOG_GEMS
     .filter((g) => g.slug !== currentSlug)
     .sort((a, b) => {
       // Prioritize same category, then same variety

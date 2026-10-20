@@ -64,17 +64,21 @@ export async function submitInquiryAction(data: InquiryInput): Promise<InquiryRe
     });
 
     if (error) {
-      console.warn("Supabase inquiry insert note:", error.message);
+      return {
+        success: false,
+        message: `Unable to submit inquiry: ${error.message}. Please try again.`,
+      };
     }
 
     return {
       success: true,
       message: "Your inquiry has been received. Our Master Gemologist will review your request and reply to you directly.",
     };
-  } catch {
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
-      success: true,
-      message: "Your inquiry has been recorded. Our team will review your request promptly.",
+      success: false,
+      message: `Inquiry submission failed: ${msg}. Please reach out directly via concierge.`,
     };
   }
 }
@@ -142,17 +146,21 @@ export async function submitWholesaleInquiryAction(data: WholesaleInput): Promis
     });
 
     if (error) {
-      console.warn("Supabase wholesale insert note:", error.message);
+      return {
+        success: false,
+        message: `Wholesale inquiry failed to record: ${error.message}.`,
+      };
     }
 
     return {
       success: true,
       message: "Your wholesale atelier dossier has been received. Our export director will contact you with current parcel price sheets and video scans.",
     };
-  } catch {
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
-      success: true,
-      message: "Your wholesale inquiry has been recorded. Our export department will be in touch shortly.",
+      success: false,
+      message: `Wholesale inquiry transmission failed: ${msg}.`,
     };
   }
 }

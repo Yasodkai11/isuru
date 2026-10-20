@@ -8,9 +8,10 @@
 
 RewriteEngine On
 
-# 1. Enforce HTTPS Redirection (301 Moved Permanently)
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# 1. Enforce HTTPS & Canonical Non-WWW Redirection (301 Moved Permanently)
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\.isuruceylon\.com$ [NC]
+RewriteRule ^(.*)$ https://isuruceylon.com/$1 [L,R=301]
 
 # 2. Handle WebSocket connections (if any)
 RewriteCond %{HTTP:Upgrade} =websocket [NC]

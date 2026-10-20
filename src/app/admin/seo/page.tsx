@@ -236,18 +236,18 @@ export default function AdminSEOPage() {
               <div className={`p-4 bg-white font-sans ${previewDevice === "mobile" ? "max-w-sm border rounded-lg p-3" : ""}`}>
                 <div className="flex items-center gap-2 text-xs text-[#202124] mb-1">
                   <span className="w-5 h-5 rounded-full bg-[#5E0F1E] text-white text-[10px] flex items-center justify-center font-serif font-bold">
-                    IG
+                    IC
                   </span>
                   <div className="leading-tight">
-                    <span className="font-semibold text-xs block text-[#202124]">isurugems.com</span>
+                    <span className="font-semibold text-xs block text-[#202124]">isuruceylon.com</span>
                     <span className="text-xs text-[#5f6368] font-mono">
-                      https://isurugems.com{selectedRecord.pagePath}
+                      https://isuruceylon.com{selectedRecord.pagePath}
                     </span>
                   </div>
                 </div>
 
                 <h4 className="text-lg sm:text-xl text-[#1a0dab] hover:underline cursor-pointer leading-snug font-normal line-clamp-1">
-                  {metaTitle || "Isuru Gems | Natural Ceylon Sapphires"}
+                  {metaTitle || "Isuru Ceylon | Natural Ceylon Sapphires"}
                 </h4>
 
                 <p className="text-sm sm:text-base text-[#4d5156] mt-1 leading-relaxed line-clamp-2">
@@ -310,7 +310,7 @@ export default function AdminSEOPage() {
                   <Input
                     value={canonicalUrl}
                     onChange={(e) => setCanonicalUrl(e.target.value)}
-                    placeholder="https://isurugems.com/gems"
+                    placeholder="https://isuruceylon.com/gems"
                   />
                 </div>
 

@@ -22,7 +22,7 @@ const jost = Jost({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isurugems.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
 
 export const metadata: Metadata = {
   title: {

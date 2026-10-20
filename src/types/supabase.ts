@@ -195,6 +195,57 @@ export interface Database {
         };
         Relationships: [];
       };
+      order_items: {
+        Row: {
+          id: string;
+          created_at: string;
+          order_id: string;
+          gem_id: string;
+          gem_name: string;
+          variety: string;
+          carat: number;
+          price: number;
+          currency: string;
+        };
+        Insert: {
+          id?: string;
+          created_at?: string;
+          order_id: string;
+          gem_id: string;
+          gem_name: string;
+          variety: string;
+          carat: number;
+          price: number;
+          currency?: string;
+        };
+        Update: {
+          id?: string;
+          created_at?: string;
+          order_id?: string;
+          gem_id?: string;
+          gem_name?: string;
+          variety?: string;
+          carat?: number;
+          price?: number;
+          currency?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey";
+            columns: ["order_id"];
+            isOneToOne: false;
+            referencedRelation: "orders";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "order_items_gem_id_fkey";
+            columns: ["gem_id"];
+            isOneToOne: false;
+            referencedRelation: "gemstones";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       inquiries: {
         Row: {
           id: string;
@@ -208,6 +259,8 @@ export interface Database {
           message: string;
           preferred_currency: string;
           status: string;
+          reply_notes?: string | null;
+          replied_at?: string | null;
         };
         Insert: {
           id?: string;
@@ -221,6 +274,8 @@ export interface Database {
           message: string;
           preferred_currency?: string;
           status?: string;
+          reply_notes?: string | null;
+          replied_at?: string | null;
         };
         Update: {
           id?: string;
@@ -234,6 +289,8 @@ export interface Database {
           message?: string;
           preferred_currency?: string;
           status?: string;
+          reply_notes?: string | null;
+          replied_at?: string | null;
         };
         Relationships: [];
       };
@@ -299,7 +356,25 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      process_checkout_order: {
+        Args: {
+          p_order_id: string;
+          p_user_id: string | null;
+          p_customer_name: string;
+          p_email: string;
+          p_phone: string;
+          p_shipping_address: string;
+          p_city: string;
+          p_country: string;
+          p_notes: string;
+          p_gem_ids: string[];
+        };
+        Returns: {
+          success: boolean;
+          order_id: string;
+          total_amount: number;
+        };
+      };
     };
     Enums: {
       [_ in never]: never;

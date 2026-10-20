@@ -99,13 +99,16 @@ export async function loginAction(formData: FormData | LoginInput): Promise<Acti
   if (!rawIdentifier.includes("@")) {
     const username = rawIdentifier.toLowerCase();
 
-    // Check seed staff for username matching email prefix or full name
-    const seedMatch = INITIAL_ADMIN_STAFF.find(
-      (s) =>
-        s.email.toLowerCase().startsWith(`${username}@`) ||
-        s.fullName.toLowerCase().replace(/\s+/g, "") === username ||
-        s.fullName.toLowerCase().startsWith(username)
-    );
+    // Check seed staff: prioritize email prefix match (e.g. isuru@ -> isuru@isurugems.com)
+    // before fuzzy name matching to prevent matching staff-00 (uththiyaisurudewamendis@gmail.com)
+    const seedMatch =
+      INITIAL_ADMIN_STAFF.find((s) => s.email.toLowerCase().startsWith(`${username}@`)) ||
+      INITIAL_ADMIN_STAFF.find(
+        (s) =>
+          s.fullName.toLowerCase().replace(/\s+/g, "") === username ||
+          s.fullName.toLowerCase() === username
+      ) ||
+      INITIAL_ADMIN_STAFF.find((s) => s.fullName.toLowerCase().startsWith(username));
 
     if (seedMatch) {
       resolvedEmail = seedMatch.email.toLowerCase();

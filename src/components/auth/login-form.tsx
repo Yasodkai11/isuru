@@ -1,18 +1,20 @@
+
 "use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { loginAction } from "@/actions/auth";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle, CheckCircle2, ShieldCheck, Eye, EyeOff, User, Sparkles } from "lucide-react";
+import { AlertCircle, CheckCircle2, Eye, EyeOff, Sparkles } from "lucide-react";
 import { BRAND } from "@/lib/constants";
 
 export function LoginForm() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const redirectParam = searchParams.get("redirect") || searchParams.get("next");
   const roleParam = searchParams.get("role");
@@ -20,10 +22,12 @@ export function LoginForm() {
   const emailParam = searchParams.get("email");
   const registeredParam = searchParams.get("registered");
 
-  // Mode: "collector" or "admin"
-  const [mode, setMode] = useState<"collector" | "admin">(
-    roleParam === "admin" || (redirectParam && redirectParam.startsWith("/admin")) ? "admin" : "collector"
-  );
+  // Mode: "collector" or "admin", automatically detected from route or query params
+  const isAdminPath =
+    pathname?.startsWith("/admin") ||
+    roleParam === "admin" ||
+    Boolean(redirectParam && redirectParam.startsWith("/admin"));
+  const mode: "collector" | "admin" = isAdminPath ? "admin" : "collector";
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -32,14 +36,13 @@ export function LoginForm() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(
     errorParam === "admin_unauthorized"
-      ? `Clearance required: The Google account ${
-          emailParam ? `(${emailParam}) ` : ""
-        }is authenticated, but is not registered with Staff Vault administrator privileges. Please sign in with an authorized staff Google account (e.g., ${BRAND.email}) or use staff credentials below.`
+      ? `Clearance required: The Google account ${emailParam ? `(${emailParam}) ` : ""
+      }is authenticated, but is not registered with Staff Vault administrator privileges. Please sign in with an authorized staff Google account (e.g., ${BRAND.email}) or use staff credentials below.`
       : errorParam === "oauth_exchange_failed"
-      ? "Google authentication was cancelled or could not be completed. Please try again or use your password."
-      : errorParam
-      ? "Authentication failed or session expired. Please sign in again."
-      : null
+        ? "Google authentication was cancelled or could not be completed. Please try again or use your password."
+        : errorParam
+          ? "Authentication failed or session expired. Please sign in again."
+          : null
   );
   const [success, setSuccess] = useState<string | null>(
     registeredParam ? "Account registered successfully. Please sign in to access your vault." : null
@@ -103,47 +106,13 @@ export function LoginForm() {
   };
 
   const handleFillDemoAdmin = () => {
-    setIdentifier("isuru@isurugems.com");
-    setPassword("MasterGem2026!");
+    setIdentifier("uththiyaisurudewamendis@gmail.com");
+    setPassword("Isuru2026!");
     setError(null);
   };
 
   return (
     <div className="space-y-6">
-      {/* Portal Selection Tabs */}
-      <div className="grid grid-cols-2 p-1 bg-[#F2EADB]/60 border border-[#B8924A]/30 rounded-xs text-sm font-medium">
-        <button
-          type="button"
-          onClick={() => {
-            setMode("collector");
-            setError(null);
-          }}
-          className={`py-2.5 px-3 rounded-xs flex items-center justify-center gap-2 transition-all ${
-            mode === "collector"
-              ? "bg-[#5E0F1E] text-[#FAF6EE] shadow-xs font-semibold"
-              : "text-[#2B2B2B]/70 hover:text-[#5E0F1E]"
-          }`}
-        >
-          <User className="w-4 h-4" />
-          <span>Collector Portal</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => {
-            setMode("admin");
-            setError(null);
-          }}
-          className={`py-2.5 px-3 rounded-xs flex items-center justify-center gap-2 transition-all ${
-            mode === "admin"
-              ? "bg-[#5E0F1E] text-[#FAF6EE] shadow-xs font-semibold"
-              : "text-[#2B2B2B]/70 hover:text-[#5E0F1E]"
-          }`}
-        >
-          <ShieldCheck className="w-4 h-4" />
-          <span>Staff Vault Admin</span>
-        </button>
-      </div>
 
       {/* Google Sign-in Button */}
       <div className="space-y-1.5">
@@ -179,8 +148,8 @@ export function LoginForm() {
             {googleLoading
               ? "Connecting to Google..."
               : mode === "admin"
-              ? "Staff Sign In with Google"
-              : "Continue with Google"}
+                ? "Staff Sign In with Google"
+                : "Continue with Google"}
           </span>
         </button>
         {mode === "admin" && (
@@ -269,8 +238,8 @@ export function LoginForm() {
           {loading
             ? "Verifying Credentials..."
             : mode === "admin"
-            ? "Authorize Vault Access"
-            : "Access Collector Portal"}
+              ? "Authorize Vault Access"
+              : "Access Collector Portal"}
         </Button>
 
         {mode === "admin" && (

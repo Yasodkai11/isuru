@@ -44,6 +44,8 @@ interface DbInquiryRow {
   message: string;
   preferred_currency?: string | null;
   status: string;
+  reply_notes?: string | null;
+  replied_at?: string | null;
 }
 
 /**
@@ -336,40 +338,55 @@ export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrd
     const supabase = await createAdminClient();
     const { data, error } = await supabase
       .from("orders")
-      .select("*")
+      .select("*, order_items(*)")
       .order("created_at", { ascending: false });
 
     if (error || !data || data.length === 0) {
       return { success: true, message: "Default seed fallback.", data: INITIAL_ADMIN_ORDERS };
     }
 
-    const orders: AdminOrder[] = (data as DbOrderRow[]).map((row) => ({
-      id: row.id,
-      createdAt: row.created_at,
-      customerName: row.customer_name,
-      email: row.email,
-      phone: row.phone,
-      shippingAddress: row.shipping_address,
-      city: row.city,
-      country: row.country,
-      totalAmount: Number(row.total_amount),
-      currency: (row.currency as "USD" | "LKR") || "USD",
-      status: row.status as OrderStatus,
-      paymentMethod: "Bank Escrow Wire Transfer",
-      notes: row.notes || undefined,
-      items: [
-        {
-          gemId: "gem-ceylon",
-          name: "Natural Ceylon Gemstone Acquisition",
-          variety: "Ceylon Sapphire",
-          carat: 3.5,
-          price: Number(row.total_amount),
-          image: "/isuru_images/blue1.webp",
-          certificateLab: "GRS & NGJA",
-          certificateNumber: "NGJA-2024",
-        },
-      ],
-    }));
+    const orders: AdminOrder[] = (data as unknown as Array<DbOrderRow & { order_items?: any[] }>).map((row) => {
+      const realItems = Array.isArray(row.order_items) && row.order_items.length > 0
+        ? row.order_items.map((item) => ({
+            gemId: item.gem_id || "gem-item",
+            name: item.gem_name || "Ceylon Gemstone",
+            variety: item.variety || "Ceylon Corundum",
+            carat: Number(item.carat) || 1.0,
+            price: Number(item.price) || 0,
+            image: "/isuru_images/blue1.webp",
+            certificateLab: "NGJA Certified",
+            certificateNumber: "NGJA-LOT",
+          }))
+        : [
+            {
+              gemId: "gem-ceylon",
+              name: row.notes?.split("|")[1]?.replace("Items:", "")?.trim() || "Natural Ceylon Gemstone Acquisition",
+              variety: "Ceylon Sapphire",
+              carat: 3.5,
+              price: Number(row.total_amount),
+              image: "/isuru_images/blue1.webp",
+              certificateLab: "GRS & NGJA",
+              certificateNumber: "NGJA-2024",
+            },
+          ];
+
+      return {
+        id: row.id,
+        createdAt: row.created_at,
+        customerName: row.customer_name,
+        email: row.email,
+        phone: row.phone,
+        shippingAddress: row.shipping_address,
+        city: row.city,
+        country: row.country,
+        totalAmount: Number(row.total_amount),
+        currency: (row.currency as "USD" | "LKR") || "USD",
+        status: row.status as OrderStatus,
+        paymentMethod: "Bank Escrow Wire Transfer",
+        notes: row.notes || undefined,
+        items: realItems,
+      };
+    });
 
     return {
       success: true,
@@ -455,7 +472,7 @@ export async function getAdminInquiriesAction(): Promise<AdminActionResult<Admin
       message: row.message,
       preferredCurrency: (row.preferred_currency as "USD" | "LKR") || "USD",
       status: (row.status as EnquiryStatus) || "pending",
-      replyNotes: undefined,
+      replyNotes: row.reply_notes || undefined,
     }));
 
     return {
@@ -487,12 +504,15 @@ export async function updateAdminInquiryStatusAction(id: string, status: Enquiry
 
   try {
     const supabase = await createAdminClient();
+    const updatePayload: Database["public"]["Tables"]["inquiries"]["Update"] = { status };
+    if (replyNotes) {
+      updatePayload.reply_notes = replyNotes;
+      updatePayload.replied_at = new Date().toISOString();
+    }
+
     const { error } = await supabase
       .from("inquiries")
-      .update({
-        status,
-        ...(replyNotes ? { message: `[Replied: ${replyNotes}]` } : {}),
-      })
+      .update(updatePayload)
       .eq("id", id);
 
     if (error) return { success: false, message: error.message, error: error.message };

@@ -55,6 +55,7 @@ interface InquirySummary {
   gem_name?: string;
   message: string;
   status: string;
+  reply_notes?: string | null;
 }
 
 export function AccountPortal() {
@@ -102,10 +103,10 @@ export function AccountPortal() {
             setOrders(userOrders as OrderSummary[]);
           }
 
-          // 2. Fetch user inquiries
+          // 2. Fetch user inquiries (now allowed for customer via updated RLS)
           const { data: userInquiries } = await supabase
             .from("inquiries")
-            .select("id, created_at, gem_name, message, status")
+            .select("id, created_at, gem_name, message, status, reply_notes")
             .eq("email", userSession.user.email)
             .order("created_at", { ascending: false });
 
@@ -460,6 +461,16 @@ export function AccountPortal() {
                   <p className="text-xs text-[#2B2B2B]/80 leading-relaxed italic bg-[#F2EADB]/40 p-3 rounded-xs border border-[#B8924A]/15">
                     &ldquo;{inq.message}&rdquo;
                   </p>
+                  {inq.reply_notes && (
+                    <div className="bg-[#FAF6EE] p-3 rounded-xs border-l-2 border-[#5E0F1E] space-y-1">
+                      <span className="text-[10px] uppercase tracking-wider text-[#5E0F1E] font-semibold block">
+                        Concierge Atelier Response:
+                      </span>
+                      <p className="text-xs text-[#2B2B2B]/90 font-medium">
+                        {inq.reply_notes}
+                      </p>
+                    </div>
+                  )}
                   <p className="text-[10px] text-[#2B2B2B]/60">
                     Logged: {new Date(inq.created_at).toLocaleString()}
                   </p>

@@ -2,7 +2,7 @@ import React from "react";
 import { Gemstone } from "@/types/gem";
 import { BRAND } from "@/lib/constants";
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://isurugems.com";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
 
 /**
  * Schema.org Organization (and JewelryStore) structured data
@@ -12,14 +12,15 @@ export function getOrganizationSchema() {
     "@context": "https://schema.org",
     "@type": ["JewelryStore", "Organization"],
     "@id": `${SITE_URL}/#organization`,
-    name: "Isuru Gems Ceylon",
-    legalName: "Isuru Gems (Pvt) Ltd",
+    name: "Isuru Ceylon",
+    alternateName: "Isuru Gems",
+    legalName: "Isuru Ceylon (Pvt) Ltd",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
       "@id": `${SITE_URL}/#logo`,
-      url: `${SITE_URL}/icon.png`,
-      caption: "Isuru Gems Ceylon Logo",
+      url: `${SITE_URL}/isuru_images/logo-isuru.webp`,
+      caption: "Isuru Ceylon Logo",
     },
     image: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
     description:
@@ -77,7 +78,7 @@ export function getWebSiteSchema() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     url: SITE_URL,
-    name: "Isuru Gems Ceylon",
+    name: "Isuru Ceylon",
     alternateName: "Isuru Gems",
     description: "Finest Natural Ceylon Sapphires & Precious Island Gemstones direct from Ratnapura.",
     publisher: {
@@ -126,7 +127,7 @@ export function getProductSchema(gem: Gemstone) {
       : "https://schema.org/OutOfStock",
     seller: {
       "@type": "Organization",
-      name: "Isuru Gems Ceylon",
+      name: "Isuru Ceylon",
       url: SITE_URL,
     },
     shippingDetails: {
@@ -177,7 +178,7 @@ export function getProductSchema(gem: Gemstone) {
     mpn: gem.certificate?.number || `ISURU-${gem.id}`,
     brand: {
       "@type": "Brand",
-      name: "Isuru Gems Ceylon",
+      name: "Isuru Ceylon",
     },
     category: gem.variety,
     countryOfOrigin: {
