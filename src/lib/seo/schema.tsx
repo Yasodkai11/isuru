@@ -24,7 +24,7 @@ export function getOrganizationSchema() {
     },
     image: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
     description:
-      "Curators of unheated natural Ceylon Royal Blue Sapphires, Padparadschas, and precious island gemstones directly from the historic gravels of Ratnapura, Sri Lanka since 1984.",
+      "Curators of unheated natural Ceylon Royal Blue Sapphires, Padparadschas, and precious island gemstones directly from the historic gravels of Ratnapura, Sri Lanka since 1964.",
     foundingDate: `${BRAND.established}`,
     telephone: BRAND.phone,
     email: BRAND.email,

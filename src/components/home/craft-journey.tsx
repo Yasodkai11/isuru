@@ -66,7 +66,7 @@ export function CraftJourney() {
           </Reveal>
           <Reveal delay={0.15} className="lg:col-span-5">
             <p className="text-base xl:text-lg font-light text-[#FAF6EE]/70 leading-relaxed">
-              Four decades of family expertise guide every stone from the riverbeds of Ratnapura to your hands.
+              Over six decades of family expertise guide every stone from the riverbeds of Ratnapura to your hands.
               Every step is transparent, traceable, and done by hand.
             </p>
             <Link

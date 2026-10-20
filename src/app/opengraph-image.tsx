@@ -51,7 +51,7 @@ export default async function Image() {
             fontWeight: 600,
           }}
         >
-          Treasures of Serendib • Established 1984
+          Treasures of Serendib • Established 1964
         </div>
 
         {/* Main Title */}

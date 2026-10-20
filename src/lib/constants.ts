@@ -1,8 +1,9 @@
 export const BRAND = {
   name: "Isuru Ceylon",
-  tagline: "Treasures of Serendib",
-  subheading: "Finest Natural Ceylon Sapphires & Precious Island Gemstones",
-  established: 1984,
+  tagline: "From Generational Heritage to the Digital World",
+  subheading: "A Legacy of Gems • A Future of Trust",
+  established: 1964,
+  ngjaLicense: "202610DL42288",
   location: "Ratnapura, Sri Lanka",
   headquarters: "Colombo 00500 & Main Street, Ratnapura, Sri Lanka",
   phone: "+94 76 273 5153",

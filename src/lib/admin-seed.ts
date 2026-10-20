@@ -578,8 +578,8 @@ export const INITIAL_ADMIN_SEO: AdminSEORecord[] = [
     id: "seo-06",
     pagePath: "/about",
     pageTitle: "Our Heritage & Provenance",
-    metaTitle: "Our Heritage & Serendib Legacy | Since 1984 | Isuru Ceylon",
-    metaDescription: "Over four decades of ethical gemstone mining in Ratnapura. Learn about our traditional sustainable pit mining, NGJA accreditation, and artisanal precision lapidary.",
+    metaTitle: "Our Heritage & Serendib Legacy | Since 1964 | Isuru Ceylon",
+    metaDescription: "Over six decades of ethical gemstone mining in Ratnapura. Learn about our traditional sustainable pit mining, NGJA accreditation, and artisanal precision lapidary.",
     keywords: ["Isuru Ceylon History", "Ratnapura Gem Mining", "Ceylon Gem Heritage", "NGJA Licensed Dealer Sri Lanka"],
     canonicalUrl: "https://isuruceylon.com/about",
     schemaType: "AboutPage",
@@ -589,9 +589,9 @@ export const INITIAL_ADMIN_SEO: AdminSEORecord[] = [
 ];
 
 export const INITIAL_ADMIN_SETTINGS: AdminSettingsData = {
-  storeName: "Isuru Gems Ceylon",
-  tagline: "Treasures of Serendib • Fine Natural Ceylon Gemstones",
-  ngjaLicense: "NGJA-8419 / EXP-DL-402",
+  storeName: "Isuru Ceylon",
+  tagline: "From Generational Heritage to the Digital World • A Legacy of Gems, A Future of Trust",
+  ngjaLicense: "202610DL42288",
   ratnapuraVaultAddress: "No. 128 Main Street, Ratnapura, Sabaragamuwa Province, Sri Lanka",
   colomboShowroomAddress: "Colombo 00500, Sri Lanka",
   primaryEmail: "uththiyaisurudewamendis@gmail.com",

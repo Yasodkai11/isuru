@@ -654,7 +654,7 @@ export function OurStory() {
               <motion.div variants={textItemVariants} className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rotate-45 bg-[#B8924A]" />
                 <span className="text-xs uppercase tracking-[0.3em] text-[#B8924A] font-semibold">
-                  OUR STORY
+                  OUR STORY • GENERATIONAL HERITAGE
                 </span>
               </motion.div>
 
@@ -664,7 +664,7 @@ export function OurStory() {
                 variants={textItemVariants}
                 className="font-serif text-4xl sm:text-5xl xl:text-6xl text-[#5E0F1E] font-normal leading-[1.08] tracking-tight"
               >
-                Four decades in the gem city of <em className="text-[#B8924A]">Ratnapura</em>
+                From Generational Heritage to the <em className="text-[#B8924A]">Digital World</em>
               </motion.h2>
 
               {/* Gold gradient divider with center diamond & shimmer sweep */}
@@ -703,23 +703,23 @@ export function OurStory() {
                 </div>
               </motion.div>
 
-              {/* Paragraph 1: Sourcing directly from miners with gold drop cap */}
+              {/* Paragraph 1: Real opening */}
               <motion.p
                 variants={textItemVariants}
                 className="text-base sm:text-[17px] text-[#2B2B2B]/85 leading-relaxed font-normal"
               >
                 <span className="float-left text-5xl sm:text-6xl font-serif text-[#B8924A] leading-[0.78] pr-3 pt-1.5 font-semibold select-none">
-                  F
+                  G
                 </span>
-                or over four decades, our family business has sourced rough stones directly from local miners across the historic alluvial gravels of Ratnapura—the legendary City of Gems. By bypassing brokers and selecting unheated rough crystals right at the mine head, we honor multi-generational mining traditions while ensuring total ethical traceability.
+                emstones are more than just precious stones. They represent generations of experience, knowledge, trust, and heritage. Founded on the deep-rooted mining legacies of my late grandfathers—Reginald Mendis (b. 1922) and plantation proprietor Premaratne Pathinayake—Isuru Gems bridges generations of traditional Sri Lankan gem trading with the opportunities of the modern digital world.
               </motion.p>
 
-              {/* Paragraph 2: Hand-cutting to classical proportions */}
+              {/* Paragraph 2: Professional knowledge and vision */}
               <motion.p
                 variants={textItemVariants}
                 className="text-base sm:text-[17px] text-[#2B2B2B]/85 leading-relaxed font-normal"
               >
-                In our atelier, ancient lapidary wisdom meets uncompromising precision. Rather than cutting for maximum raw carat weight at the expense of brilliance, our master artisans hand-cut every sapphire to classical proportions and optimal optical angles. This singular devotion allows light to dance through undisturbed crystalline lattices, producing the iconic royal blue brilliance celebrated by collectors worldwide.
+                As a registered gemstone dealer under the National Gem and Jewellery Authority of Sri Lanka (Registration Number: <strong>202610DL42288</strong>), we combine childhood passion with professional gemological science studied in depth since 2020. Our vision is to connect natural Ceylon treasures directly with collectors and buyers worldwide—reducing dependence on intermediaries with authenticity, transparency, and trust.
               </motion.p>
 
               {/* Stats Row with count-up numbers */}
@@ -731,14 +731,14 @@ export function OurStory() {
                 <div>
                   <div className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-semibold tracking-tight">
                     <CountUp
-                      end={40}
-                      suffix="+"
+                      end={3}
+                      suffix=" Gen"
                       isVisible={isInView}
                       shouldReduceMotion={shouldReduceMotion}
                     />
                   </div>
                   <div className="text-[11px] sm:text-xs uppercase tracking-wider text-[#4A4A4A] mt-1 font-medium">
-                    Years of Craft
+                    Family Heritage
                   </div>
                 </div>
 
@@ -746,14 +746,14 @@ export function OurStory() {
                 <div className="border-l border-[#B8924A]/20 pl-3 sm:pl-6">
                   <div className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-semibold tracking-tight">
                     <CountUp
-                      end={3}
+                      end={1922}
                       suffix=""
                       isVisible={isInView}
                       shouldReduceMotion={shouldReduceMotion}
                     />
                   </div>
                   <div className="text-[11px] sm:text-xs uppercase tracking-wider text-[#4A4A4A] mt-1 font-medium">
-                    Generations
+                    Ancestral Roots
                   </div>
                 </div>
 
@@ -768,7 +768,7 @@ export function OurStory() {
                     />
                   </div>
                   <div className="text-[11px] sm:text-xs uppercase tracking-wider text-[#4A4A4A] mt-1 font-medium">
-                    Direct from Miners
+                    Direct & NGJA Reg
                   </div>
                 </div>
               </motion.div>

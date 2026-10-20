@@ -64,7 +64,7 @@ export function MobileNav({ isOpen, onClose, session }: MobileNavProps) {
                 />
               </Link>
               <span className="text-[9px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold block mt-1.5">
-                Serendib Legacy • Est. 1984
+                Serendib Legacy • Est. 1964
               </span>
             </div>
             <button

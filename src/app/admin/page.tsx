@@ -403,7 +403,7 @@ export default function AdminDashboardPage() {
                 All shipments covered by Lloyd&apos;s of London 100% Specie Insurance & NGJA Assayed Seals.
               </span>
             </div>
-            <span className="text-xs sm:text-sm font-bold text-[#5E0F1E] shrink-0">Zero Loss Record Since 1984</span>
+            <span className="text-xs sm:text-sm font-bold text-[#5E0F1E] shrink-0">Zero Loss Record Since 1964</span>
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       absolute: "Isuru Ceylon | Natural Ceylon Sapphires & Rare Precious Island Gemstones",
     },
     description:
-      "Curators of unheated Ceylon Royal Blue Sapphires, rare Padparadschas, and natural gemstones direct from the alluvial gravels of Ratnapura, Sri Lanka since 1984. Authenticated by NGJA, GRS, and GIA.",
+      "Curators of unheated Ceylon Royal Blue Sapphires, rare Padparadschas, and natural gemstones direct from the alluvial gravels of Ratnapura, Sri Lanka since 1964. Authenticated by NGJA, GRS, and GIA.",
     alternates: {
       canonical: "/",
     },

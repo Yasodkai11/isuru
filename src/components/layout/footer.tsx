@@ -26,7 +26,7 @@ export function Footer() {
         {/* Newsletter band */}
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center pb-8 lg:pb-10 border-b border-[#FAF6EE]/10">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-[#D4AF67]">Ceylon Legacy · Since 1984</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[#D4AF67]">Ceylon Legacy · Since 1964</p>
             <h2 className="mt-2 font-serif text-2xl sm:text-3xl font-normal leading-tight">
               Be first to see <em className="text-gold-gradient">rare arrivals</em>
             </h2>

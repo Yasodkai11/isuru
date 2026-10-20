@@ -53,7 +53,7 @@ const HERO_SCENES: HeroScene[] = [
     src: "/isuru_images/hero1.webp",
     alt: "Ceylon royal sapphires and rubies displayed on an antique hand-carved mahogany chest in sunlight",
     title: "Sacred Heritage Salon",
-    subtitle: "Ratnapura · Historic Alluvial Gravels Since 1984",
+    subtitle: "Ratnapura · Historic Alluvial Gravels Since 1964",
     tag: "02 · Royal Chest",
     specimen: "Ancient Alluvial Sapphires & Deep Ceylon Rubies",
     panClass: "animate-hero-pan-2",
@@ -226,7 +226,7 @@ export function HeroSection() {
             {/* Credibility Markers */}
             <div className="pt-7 border-t border-[#B8924A]/25 grid grid-cols-2 gap-4 sm:gap-6 max-w-md animate-hero-fade-up [animation-delay:400ms]">
               <div>
-                <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Est. 1984</span>
+                <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Est. 1964</span>
                 <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] block mt-0.5">Ratnapura, Ceylon</span>
               </div>
               <div>
