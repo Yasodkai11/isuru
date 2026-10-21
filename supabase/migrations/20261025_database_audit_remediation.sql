@@ -298,6 +298,7 @@ on conflict (key) do nothing;
 create index if not exists idx_gemstones_name_trgm on public.gemstones using gin (name gin_trgm_ops);
 create index if not exists idx_gemstones_variety_trgm on public.gemstones using gin (variety gin_trgm_ops);
 create index if not exists idx_gemstones_origin_trgm on public.gemstones using gin (origin gin_trgm_ops);
+create index if not exists idx_gemstones_description_trgm on public.gemstones using gin (description gin_trgm_ops);
 
 -- --------------------------------------------------------
 -- 8. DATA-06: Database Aggregation Stored Procedure for Dashboard Metrics
@@ -348,3 +349,30 @@ begin
   );
 end;
 $$;
+
+-- --------------------------------------------------------
+-- 9. DATA-12: Prune Redundant Duplicate Indexes (Check 3.4)
+-- --------------------------------------------------------
+-- Unique constraints automatically maintain underlying b-tree indexes; explicit duplicates waste RAM and slow down writes.
+drop index if exists public.idx_gemstones_slug;
+drop index if exists public.idx_staff_email;
+drop index if exists public.idx_profiles_email;
+drop index if exists public.idx_profiles_user_id;
+drop index if exists public.idx_seo_records_page_path;
+drop index if exists public.idx_categories_slug;
+
+-- --------------------------------------------------------
+-- 10. Fix Broken RLS Policy on public.seo_records (user_id -> auth_user_id)
+-- --------------------------------------------------------
+drop policy if exists "Staff and service_role can manage seo_records" on public.seo_records;
+create policy "Staff and service_role can manage seo_records"
+  on public.seo_records
+  for all
+  using (
+    auth.jwt() ->> 'role' = 'service_role'
+    or exists (
+      select 1 from public.staff_members
+      where auth_user_id = auth.uid() and status = 'active'
+    )
+  );
+

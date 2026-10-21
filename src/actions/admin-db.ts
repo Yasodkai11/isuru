@@ -30,6 +30,16 @@ export interface AdminActionResult<T = unknown> {
   message: string;
   data?: T;
   error?: string;
+  total?: number;
+  page?: number;
+  limit?: number;
+  totalPages?: number;
+}
+
+export interface AdminPaginationOptions {
+  page?: number;
+  limit?: number;
+  search?: string;
 }
 
 interface DbOrderRow {
@@ -83,7 +93,9 @@ interface DbInquiryRow {
  * Fetch all real gemstones directly from Supabase for the Admin Panel.
  * Requires verified administrator clearance.
  */
-export async function getAdminGemstonesAction(): Promise<AdminActionResult<Gemstone[]>> {
+export async function getAdminGemstonesAction(
+  options?: AdminPaginationOptions
+): Promise<AdminActionResult<Gemstone[]>> {
   try {
     await requireAdminSession();
   } catch (authErr) {
@@ -95,20 +107,37 @@ export async function getAdminGemstonesAction(): Promise<AdminActionResult<Gemst
     };
   }
 
+  const page = options?.page ? Math.max(1, options.page) : 1;
+  const limit = options?.limit ? Math.max(1, options.limit) : 50;
+  const offset = (page - 1) * limit;
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
       message: "Supabase not configured, returning local catalog.",
       data: CATALOG_GEMS,
+      total: CATALOG_GEMS.length,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(CATALOG_GEMS.length / limit)),
     };
   }
 
   try {
     const supabase = await createAdminClient();
-    const { data, error } = await supabase
+    const projectedColumns =
+      "id, slug, name, variety, category, carat, origin, cut, dimensions, color, treatment, clarity, price, currency, in_stock, featured, description, certificate_lab, certificate_number, certificate_pdf_url, images, created_at, updated_at";
+
+    let q = supabase
       .from("gemstones")
-      .select("*")
+      .select(projectedColumns, { count: "exact" })
       .order("created_at", { ascending: false });
+
+    if (options?.limit || options?.page) {
+      q = q.range(offset, offset + limit - 1);
+    }
+
+    const { data, count, error } = await q;
 
     if (error) {
       console.warn("getAdminGemstonesAction Supabase query error:", error.message);
@@ -116,14 +145,24 @@ export async function getAdminGemstonesAction(): Promise<AdminActionResult<Gemst
         success: true,
         message: `Supabase query note: ${error.message}. Serving local catalog (${CATALOG_GEMS.length} items).`,
         data: CATALOG_GEMS,
+        total: CATALOG_GEMS.length,
+        page,
+        limit,
+        totalPages: 1,
       };
     }
 
     const gems = (data ?? []).map(mapDbRowToGemstone);
+    const total = count ?? gems.length;
+
     return {
       success: true,
       message: `Retrieved ${gems.length} gemstones from Supabase.`,
       data: gems.length > 0 ? gems : CATALOG_GEMS,
+      total,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(total / limit)),
     };
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
@@ -132,6 +171,10 @@ export async function getAdminGemstonesAction(): Promise<AdminActionResult<Gemst
       success: true,
       message: `Could not load from Supabase (${msg}). Serving local catalog (${CATALOG_GEMS.length} items).`,
       data: CATALOG_GEMS,
+      total: CATALOG_GEMS.length,
+      page,
+      limit,
+      totalPages: 1,
     };
   }
 }
@@ -395,7 +438,9 @@ export async function toggleAdminGemstoneFeaturedAction(idOrSlug: string, featur
  * Fetch real orders from Supabase.
  * Requires verified administrator clearance.
  */
-export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrder[]>> {
+export async function getAdminOrdersAction(
+  options?: AdminPaginationOptions
+): Promise<AdminActionResult<AdminOrder[]>> {
   try {
     await requireAdminSession();
   } catch (authErr) {
@@ -407,19 +452,45 @@ export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrd
     };
   }
 
+  const page = options?.page ? Math.max(1, options.page) : 1;
+  const limit = options?.limit ? Math.max(1, options.limit) : 50;
+  const offset = (page - 1) * limit;
+
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Using local orders seed.", data: INITIAL_ADMIN_ORDERS };
+    return {
+      success: true,
+      message: "Using local orders seed.",
+      data: INITIAL_ADMIN_ORDERS,
+      total: INITIAL_ADMIN_ORDERS.length,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(INITIAL_ADMIN_ORDERS.length / limit)),
+    };
   }
 
   try {
     const supabase = await createAdminClient();
-    const { data, error } = await supabase
+    let q = supabase
       .from("orders")
-      .select("*, order_items(*)")
+      .select("*, order_items(*)", { count: "exact" })
       .order("created_at", { ascending: false });
 
+    if (options?.limit || options?.page) {
+      q = q.range(offset, offset + limit - 1);
+    }
+
+    const { data, count, error } = await q;
+
     if (error || !data || data.length === 0) {
-      return { success: true, message: "Default seed fallback.", data: INITIAL_ADMIN_ORDERS };
+      return {
+        success: true,
+        message: "Default seed fallback.",
+        data: INITIAL_ADMIN_ORDERS,
+        total: INITIAL_ADMIN_ORDERS.length,
+        page,
+        limit,
+        totalPages: 1,
+      };
     }
 
     const orders: AdminOrder[] = (data as unknown as Array<DbOrderRow & { order_items?: DbOrderItemRow[] }>).map((row) => {
@@ -468,13 +539,27 @@ export async function getAdminOrdersAction(): Promise<AdminActionResult<AdminOrd
       };
     });
 
+    const total = count ?? orders.length;
+
     return {
       success: true,
       message: `Retrieved ${orders.length} real orders from Supabase database.`,
       data: orders,
+      total,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(total / limit)),
     };
   } catch {
-    return { success: true, message: "Fallback to local orders.", data: INITIAL_ADMIN_ORDERS };
+    return {
+      success: true,
+      message: "Fallback to local orders.",
+      data: INITIAL_ADMIN_ORDERS,
+      total: INITIAL_ADMIN_ORDERS.length,
+      page,
+      limit,
+      totalPages: 1,
+    };
   }
 }
 
@@ -557,7 +642,9 @@ export async function updateAdminOrderTrackingAction(
  * Fetch real customer inquiries from Supabase.
  * Requires verified administrator clearance.
  */
-export async function getAdminInquiriesAction(): Promise<AdminActionResult<AdminEnquiry[]>> {
+export async function getAdminInquiriesAction(
+  options?: AdminPaginationOptions
+): Promise<AdminActionResult<AdminEnquiry[]>> {
   try {
     await requireAdminSession();
   } catch (authErr) {
@@ -569,19 +656,45 @@ export async function getAdminInquiriesAction(): Promise<AdminActionResult<Admin
     };
   }
 
+  const page = options?.page ? Math.max(1, options.page) : 1;
+  const limit = options?.limit ? Math.max(1, options.limit) : 50;
+  const offset = (page - 1) * limit;
+
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Using local enquiries seed.", data: INITIAL_ADMIN_ENQUIRIES };
+    return {
+      success: true,
+      message: "Using local enquiries seed.",
+      data: INITIAL_ADMIN_ENQUIRIES,
+      total: INITIAL_ADMIN_ENQUIRIES.length,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(INITIAL_ADMIN_ENQUIRIES.length / limit)),
+    };
   }
 
   try {
     const supabase = await createAdminClient();
-    const { data, error } = await supabase
+    let q = supabase
       .from("inquiries")
-      .select("*")
+      .select("*", { count: "exact" })
       .order("created_at", { ascending: false });
 
+    if (options?.limit || options?.page) {
+      q = q.range(offset, offset + limit - 1);
+    }
+
+    const { data, count, error } = await q;
+
     if (error || !data || data.length === 0) {
-      return { success: true, message: "Default inquiries seed fallback.", data: INITIAL_ADMIN_ENQUIRIES };
+      return {
+        success: true,
+        message: "Default inquiries seed fallback.",
+        data: INITIAL_ADMIN_ENQUIRIES,
+        total: INITIAL_ADMIN_ENQUIRIES.length,
+        page,
+        limit,
+        totalPages: 1,
+      };
     }
 
     const enquiries: AdminEnquiry[] = (data as DbInquiryRow[]).map((row) => ({
@@ -600,13 +713,27 @@ export async function getAdminInquiriesAction(): Promise<AdminActionResult<Admin
       replyNotes: row.reply_notes || undefined,
     }));
 
+    const total = count ?? enquiries.length;
+
     return {
       success: true,
       message: `Retrieved ${enquiries.length} real inquiries from Supabase database.`,
       data: enquiries,
+      total,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(total / limit)),
     };
   } catch {
-    return { success: true, message: "Fallback to local enquiries.", data: INITIAL_ADMIN_ENQUIRIES };
+    return {
+      success: true,
+      message: "Fallback to local enquiries.",
+      data: INITIAL_ADMIN_ENQUIRIES,
+      total: INITIAL_ADMIN_ENQUIRIES.length,
+      page,
+      limit,
+      totalPages: 1,
+    };
   }
 }
 
@@ -805,6 +932,17 @@ export async function getAdminOverviewMetricsAction() {
  * Retrieve all categories directly from Supabase (DATA-02).
  */
 export async function getAdminCategoriesAction(): Promise<AdminActionResult<AdminCategory[]>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+      data: INITIAL_ADMIN_CATEGORIES,
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Using local category seed.", data: INITIAL_ADMIN_CATEGORIES };
   }
@@ -948,6 +1086,17 @@ export async function deleteAdminCategoryAction(idOrSlug: string): Promise<Admin
  * Retrieve all media assets directly from Supabase (DATA-02).
  */
 export async function getAdminMediaAssetsAction(): Promise<AdminActionResult<MediaAsset[]>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+      data: INITIAL_ADMIN_MEDIA,
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Using local media seed.", data: INITIAL_ADMIN_MEDIA };
   }
@@ -1078,6 +1227,17 @@ export async function deleteAdminMediaAssetAction(id: string): Promise<AdminActi
  * Retrieve store settings directly from Supabase (DATA-02).
  */
 export async function getAdminSettingsAction(): Promise<AdminActionResult<AdminSettingsData>> {
+  try {
+    await requireAdminSession();
+  } catch (authErr) {
+    return {
+      success: false,
+      message: authErr instanceof Error ? authErr.message : "Unauthorized",
+      error: "UNAUTHORIZED",
+      data: INITIAL_ADMIN_SETTINGS,
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return { success: true, message: "Using local settings seed.", data: INITIAL_ADMIN_SETTINGS };
   }

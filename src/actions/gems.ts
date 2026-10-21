@@ -16,8 +16,11 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
     try {
       const supabase = await createClient();
 
-      const buildQuery = (filterArchived: boolean) => {
-        let q = supabase.from("gemstones").select("*", { count: "exact" });
+      const buildQuery = (filterArchived: boolean, includeCategory: boolean = true) => {
+        const projectedColumns = includeCategory
+          ? "id, slug, name, variety, category, carat, origin, cut, dimensions, color, treatment, clarity, price, currency, in_stock, featured, description, certificate_lab, certificate_number, certificate_pdf_url, images, created_at"
+          : "id, slug, name, variety, carat, origin, cut, dimensions, color, treatment, clarity, price, currency, in_stock, featured, description, certificate_lab, certificate_number, certificate_pdf_url, images, created_at";
+        let q = (supabase.from("gemstones") as any).select(projectedColumns, { count: "exact" });
 
         // DATA-10: Exclude archived gemstones from customer catalog if column exists
         if (filterArchived) {
@@ -43,10 +46,14 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
         if (filters?.category && filters.category !== "all") {
           const resolvedKey = resolveCategoryKey(filters.category) || filters.category;
           const match = CATEGORIES_CONFIG[resolvedKey]?.match;
-          if (match) {
-            q = q.or(`category.eq.${resolvedKey},category.eq.${filters.category},${match.column}.ilike.%${match.value}%`);
-          } else {
-            q = q.or(`category.eq.${resolvedKey},category.eq.${filters.category}`);
+          if (includeCategory) {
+            if (match) {
+              q = q.or(`category.eq.${resolvedKey},category.eq.${filters.category},${match.column}.ilike.%${match.value}%`);
+            } else {
+              q = q.or(`category.eq.${resolvedKey},category.eq.${filters.category}`);
+            }
+          } else if (match) {
+            q = q.ilike(match.column, `%${match.value}%`);
           }
         }
 
@@ -104,11 +111,16 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
         return q.range(offset, offset + limit - 1);
       };
 
-      let { data, count, error } = await buildQuery(true);
+      let { data, count, error } = await buildQuery(true, true);
 
-      // Gracefully handle live DB where migration for is_archived is not yet applied
-      if (error && (error.message?.includes("is_archived") || error.code === "42703")) {
-        const retryResult = await buildQuery(false);
+      // Gracefully handle live DB where migration for is_archived or category is not yet applied
+      if (
+        error &&
+        (error.message?.includes("is_archived") ||
+          error.message?.includes("category") ||
+          error.code === "42703")
+      ) {
+        const retryResult = await buildQuery(false, false);
         data = retryResult.data;
         count = retryResult.count;
         error = retryResult.error;
@@ -320,10 +332,9 @@ export async function getSitemapGemstones(): Promise<SitemapGemRecord[]> {
     try {
       const supabase = await createClient();
 
-      const fetchSitemapGems = (filterArchived: boolean) => {
-        let q = supabase
-          .from("gemstones")
-          .select("slug, created_at, updated_at, images")
+      const fetchSitemapGems = (filterArchived: boolean, includeUpdatedAt: boolean = true) => {
+        let q = (supabase.from("gemstones") as any)
+          .select(includeUpdatedAt ? "slug, created_at, updated_at, images" : "slug, created_at, images")
           .eq("in_stock", true);
 
         if (filterArchived) {
@@ -333,11 +344,18 @@ export async function getSitemapGemstones(): Promise<SitemapGemRecord[]> {
         return q.order("created_at", { ascending: false });
       };
 
-      let { data, error } = await fetchSitemapGems(true);
+      let { data, error } = await fetchSitemapGems(true, true);
+
+      // Gracefully handle unmigrated updated_at column
+      if (error && (error.message?.includes("updated_at") || error.code === "42703")) {
+        const retryResult = await fetchSitemapGems(true, false);
+        data = retryResult.data;
+        error = retryResult.error;
+      }
 
       // Gracefully handle unmigrated is_archived column by retrying without it
       if (error && (error.message?.includes("is_archived") || error.code === "42703")) {
-        const retryResult = await fetchSitemapGems(false);
+        const retryResult = await fetchSitemapGems(false, false);
         data = retryResult.data;
         error = retryResult.error;
       }

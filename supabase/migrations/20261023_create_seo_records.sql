@@ -46,7 +46,7 @@ create policy "Staff and service_role can manage seo_records"
     auth.jwt() ->> 'role' = 'service_role'
     or exists (
       select 1 from public.staff_members
-      where user_id = auth.uid() and status = 'active'
+      where auth_user_id = auth.uid() and status = 'active'
     )
   );
 

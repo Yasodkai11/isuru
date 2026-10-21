@@ -12,6 +12,15 @@ export interface CustomerActionResult<T = unknown> {
   message: string;
   data?: T;
   errors?: Record<string, string[]>;
+  total?: number;
+  page?: number;
+  limit?: number;
+  totalPages?: number;
+}
+
+export interface CustomerPaginationOptions {
+  page?: number;
+  limit?: number;
 }
 
 export interface CustomerProfileData {
@@ -58,7 +67,9 @@ export interface CreateCustomerInput {
  * Fetch all customers for the Executive CRM table.
  * Requires verified administrator clearance.
  */
-export async function getCustomersAction(): Promise<CustomerActionResult<AdminCustomer[]>> {
+export async function getCustomersAction(
+  options?: CustomerPaginationOptions
+): Promise<CustomerActionResult<AdminCustomer[]>> {
   try {
     await requireAdminSession();
   } catch (authErr) {
@@ -69,26 +80,47 @@ export async function getCustomersAction(): Promise<CustomerActionResult<AdminCu
     };
   }
 
+  const page = options?.page ? Math.max(1, options.page) : 1;
+  const limit = options?.limit ? Math.max(1, options.limit) : 50;
+  const offset = (page - 1) * limit;
+
   if (!isSupabaseConfigured) {
     return {
       success: true,
       message: "Loaded customers from local store fallback.",
       data: INITIAL_ADMIN_CUSTOMERS,
+      total: INITIAL_ADMIN_CUSTOMERS.length,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(INITIAL_ADMIN_CUSTOMERS.length / limit)),
     };
   }
 
   try {
     const adminSupabase = await createAdminClient();
-    const { data, error } = await adminSupabase
+    const projectedColumns =
+      "id, full_name, email, phone, country, city, tier, total_spent, orders_count, first_acquisition_date, last_acquisition_date, preferred_varieties, notes, created_at, updated_at";
+
+    let q = adminSupabase
       .from("profiles")
-      .select("*")
+      .select(projectedColumns, { count: "exact" })
       .order("created_at", { ascending: false });
+
+    if (options?.limit || options?.page) {
+      q = q.range(offset, offset + limit - 1);
+    }
+
+    const { data, count, error } = await q;
 
     if (error || !data || data.length === 0) {
       return {
         success: true,
         message: "Fallback to default customer seed records.",
         data: INITIAL_ADMIN_CUSTOMERS,
+        total: INITIAL_ADMIN_CUSTOMERS.length,
+        page,
+        limit,
+        totalPages: 1,
       };
     }
 
@@ -114,16 +146,26 @@ export async function getCustomersAction(): Promise<CustomerActionResult<AdminCu
       notes: row.notes || undefined,
     }));
 
+    const total = count ?? mapped.length;
+
     return {
       success: true,
       message: "Customer CRM records retrieved.",
       data: mapped,
+      total,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(total / limit)),
     };
   } catch (err: unknown) {
     return {
       success: true,
       message: err instanceof Error ? err.message : "Error reading profiles, returning seed.",
       data: INITIAL_ADMIN_CUSTOMERS,
+      total: INITIAL_ADMIN_CUSTOMERS.length,
+      page,
+      limit,
+      totalPages: 1,
     };
   }
 }

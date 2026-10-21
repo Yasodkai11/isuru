@@ -74,6 +74,28 @@ export async function uploadGemMediaAction(formData: FormData): Promise<StorageU
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
+    // SEC-03: Verify file signature (magic bytes) to defend against MIME spoofing
+    const isPng =
+      buffer.length >= 4 &&
+      buffer[0] === 0x89 &&
+      buffer[1] === 0x50 &&
+      buffer[2] === 0x4e &&
+      buffer[3] === 0x47;
+    const isJpeg =
+      buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff;
+    const isWebp =
+      buffer.length >= 12 &&
+      buffer.subarray(0, 4).toString() === "RIFF" &&
+      buffer.subarray(8, 12).toString() === "WEBP";
+    const isPdf = buffer.length >= 4 && buffer.subarray(0, 4).toString() === "%PDF";
+
+    if (!isPng && !isJpeg && !isWebp && !isPdf) {
+      return {
+        success: false,
+        message: "Invalid file signature. File contents do not match permitted image/PDF format.",
+      };
+    }
+
     const { error: uploadError } = await adminSupabase.storage
       .from("gemstones")
       .upload(fileName, buffer, {

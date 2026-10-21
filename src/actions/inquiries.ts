@@ -51,8 +51,13 @@ export async function submitInquiryAction(data: InquiryInput): Promise<InquiryRe
   try {
     const supabase = await createClient();
 
+    const isUuid = Boolean(
+      gemId &&
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(gemId)
+    );
+
     const { error } = await supabase.from("inquiries").insert({
-      gem_id: gemId || null,
+      gem_id: isUuid ? gemId : null,
       gem_name: gemName || null,
       full_name: fullName,
       email,
