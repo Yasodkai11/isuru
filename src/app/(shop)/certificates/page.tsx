@@ -5,6 +5,7 @@ import { CERTIFICATIONS } from "@/lib/constants";
 import { ShieldCheck, ArrowRight } from "lucide-react";
 import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
 import { getSEORecordByPath } from "@/actions/seo";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEORecordByPath("/certificates");
@@ -21,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
+      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {

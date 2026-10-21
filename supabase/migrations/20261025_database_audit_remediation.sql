@@ -29,10 +29,11 @@ alter table public.orders
 create index if not exists idx_orders_tracking_number on public.orders (tracking_number) where tracking_number is not null;
 
 -- --------------------------------------------------------
--- 2. DATA-10: Gemstones Soft-Deletion Column
+-- 2. DATA-10: Gemstones Soft-Deletion & Timestamp Columns
 -- --------------------------------------------------------
 alter table public.gemstones
-  add column if not exists is_archived boolean default false not null;
+  add column if not exists is_archived boolean default false not null,
+  add column if not exists updated_at timestamp with time zone default timezone('utc'::text, now()) not null;
 
 create index if not exists idx_gemstones_is_archived on public.gemstones (is_archived);
 

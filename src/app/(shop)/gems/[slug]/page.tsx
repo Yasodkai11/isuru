@@ -14,6 +14,7 @@ import {
   getProductSchema,
   getBreadcrumbListSchema,
 } from "@/lib/seo/schema";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 import {
   Table,
   TableHeader,
@@ -98,6 +99,7 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
     description: metaDescription,
     alternates: {
       canonical: `/gems/${gem.slug}`,
+      languages: getHrefLangAlternates(`/gems/${gem.slug}`),
     },
     openGraph: {
       title: `${gem.name}${caratSuffix} | Isuru Ceylon`,

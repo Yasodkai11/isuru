@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { SiteFooterVisibility } from "@/components/layout/site-footer-visibility";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 const ibmPlexSerif = IBM_Plex_Serif({
   subsets: ["latin"],
@@ -47,6 +48,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   alternates: {
     canonical: "./",
+    languages: getHrefLangAlternates("/"),
   },
   robots: {
     index: true,

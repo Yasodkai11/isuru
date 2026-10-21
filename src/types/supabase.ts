@@ -34,6 +34,7 @@ export interface Database {
           images: Json;
           category: string | null;
           is_archived: boolean;
+          updated_at?: string;
         };
         Insert: {
           id?: string;
@@ -59,6 +60,7 @@ export interface Database {
           images?: Json;
           category?: string | null;
           is_archived?: boolean;
+          updated_at?: string;
         };
         Update: {
           id?: string;
@@ -84,6 +86,7 @@ export interface Database {
           images?: Json;
           category?: string | null;
           is_archived?: boolean;
+          updated_at?: string;
         };
         Relationships: [];
       };

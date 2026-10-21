@@ -7,6 +7,7 @@ import { Mail, Phone } from "lucide-react";
 import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
 
 import { getSEORecordByPath } from "@/actions/seo";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 interface ContactPageProps {
   searchParams: Promise<{
@@ -30,6 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
+      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {

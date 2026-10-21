@@ -18,6 +18,7 @@ import {
   getCollectionPageSchema,
 } from "@/lib/seo/schema";
 import { getSEORecordByPath } from "@/actions/seo";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 export async function generateStaticParams() {
   return Object.keys(CATEGORIES_CONFIG).map((category) => ({
@@ -85,6 +86,7 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
     description: baseDesc,
     alternates: {
       canonical: canonicalUrl,
+      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: (hasSearch || isFiltered)
       ? { index: false, follow: true }

@@ -14,6 +14,7 @@ import {
   getCollectionPageSchema,
 } from "@/lib/seo/schema";
 import { getSEORecordByPath } from "@/actions/seo";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 interface GemsPageProps {
   searchParams: Promise<{
@@ -68,6 +69,7 @@ export async function generateMetadata({ searchParams }: GemsPageProps): Promise
     description: baseDesc,
     alternates: {
       canonical: canonicalUrl,
+      languages: getHrefLangAlternates(canonicalUrl),
     },
 
     // When searching or applying faceted filter permutations, apply noindex, follow to protect crawl budget

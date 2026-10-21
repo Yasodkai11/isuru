@@ -24,6 +24,7 @@ import {
 } from "@/lib/seo/schema";
 
 import { getSEORecordByPath } from "@/actions/seo";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 // ISR: Statically prerender and cache page for 1 hour, avoiding no-store headers in production
 export const revalidate = 3600;
@@ -43,6 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
+      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {

@@ -16,6 +16,7 @@ import { ShieldCheck, Truck, Briefcase, FileCheck } from "lucide-react";
 import { WholesaleForm } from "@/components/wholesale/wholesale-form";
 import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
 import { getSEORecordByPath } from "@/actions/seo";
+import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEORecordByPath("/wholesale");
@@ -32,6 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
+      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {

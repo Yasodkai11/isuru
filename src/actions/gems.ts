@@ -15,110 +15,123 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
   if (isSupabaseConfigured) {
     try {
       const supabase = await createClient();
-      let query = supabase.from("gemstones").select("*", { count: "exact" });
 
-      // DATA-10: Exclude archived gemstones from customer catalog
-      query = query.eq("is_archived", false);
+      const buildQuery = (filterArchived: boolean) => {
+        let q = supabase.from("gemstones").select("*", { count: "exact" });
 
-      // Colour filter
-      if (filters?.colour && filters.colour !== "all") {
-        query = query.ilike("color", `%${filters.colour}%`);
-      }
-
-      // Shape/Cut filter
-      if (filters?.shape && filters.shape !== "all") {
-        query = query.ilike("cut", `%${filters.shape}%`);
-      }
-
-      // Variety filter
-      if (filters?.variety && filters.variety !== "all") {
-        query = query.ilike("variety", `%${filters.variety}%`);
-      }
-
-      // Category filter (supports indexed category column with config column fallback - DATA-03)
-      if (filters?.category && filters.category !== "all") {
-        const resolvedKey = resolveCategoryKey(filters.category) || filters.category;
-        const match = CATEGORIES_CONFIG[resolvedKey]?.match;
-        if (match) {
-          query = query.or(`category.eq.${resolvedKey},category.eq.${filters.category},${match.column}.ilike.%${match.value}%`);
-        } else {
-          query = query.or(`category.eq.${resolvedKey},category.eq.${filters.category}`);
+        // DATA-10: Exclude archived gemstones from customer catalog if column exists
+        if (filterArchived) {
+          q = q.eq("is_archived", false);
         }
+
+        // Colour filter
+        if (filters?.colour && filters.colour !== "all") {
+          q = q.ilike("color", `%${filters.colour}%`);
+        }
+
+        // Shape/Cut filter
+        if (filters?.shape && filters.shape !== "all") {
+          q = q.ilike("cut", `%${filters.shape}%`);
+        }
+
+        // Variety filter
+        if (filters?.variety && filters.variety !== "all") {
+          q = q.ilike("variety", `%${filters.variety}%`);
+        }
+
+        // Category filter (supports indexed category column with config column fallback - DATA-03)
+        if (filters?.category && filters.category !== "all") {
+          const resolvedKey = resolveCategoryKey(filters.category) || filters.category;
+          const match = CATEGORIES_CONFIG[resolvedKey]?.match;
+          if (match) {
+            q = q.or(`category.eq.${resolvedKey},category.eq.${filters.category},${match.column}.ilike.%${match.value}%`);
+          } else {
+            q = q.or(`category.eq.${resolvedKey},category.eq.${filters.category}`);
+          }
+        }
+
+        // Origin filter
+        if (filters?.origin && filters.origin !== "all") {
+          q = q.ilike("origin", `%${filters.origin}%`);
+        }
+
+        // Carat range filters
+        if (filters?.minCarat !== undefined) {
+          q = q.gte("carat", filters.minCarat);
+        }
+        if (filters?.maxCarat !== undefined) {
+          q = q.lte("carat", filters.maxCarat);
+        }
+
+        // Price range filters
+        if (filters?.minPrice !== undefined) {
+          q = q.gte("price", filters.minPrice);
+        }
+        if (filters?.maxPrice !== undefined) {
+          q = q.lte("price", filters.maxPrice);
+        }
+
+        // Search query (sanitized against PostgREST syntax delimiters and operator injection)
+        if (filters?.search && filters.search.trim()) {
+          const cleanQ = filters.search.trim().replace(/[,().%]/g, " ");
+          q = q.or(`name.ilike.%${cleanQ}%,variety.ilike.%${cleanQ}%,description.ilike.%${cleanQ}%,origin.ilike.%${cleanQ}%`);
+        }
+
+        // Sorting
+        switch (filters?.sort) {
+          case "price-asc":
+            q = q.order("price", { ascending: true });
+            break;
+          case "price-desc":
+            q = q.order("price", { ascending: false });
+            break;
+          case "carat-desc":
+            q = q.order("carat", { ascending: false });
+            break;
+          case "carat-asc":
+            q = q.order("carat", { ascending: true });
+            break;
+          case "newest":
+            q = q.order("created_at", { ascending: false });
+            break;
+          case "featured":
+          default:
+            q = q.order("featured", { ascending: false }).order("price", { ascending: false });
+            break;
+        }
+
+        // Server-side pagination range
+        return q.range(offset, offset + limit - 1);
+      };
+
+      let { data, count, error } = await buildQuery(true);
+
+      // Gracefully handle live DB where migration for is_archived is not yet applied
+      if (error && (error.message?.includes("is_archived") || error.code === "42703")) {
+        const retryResult = await buildQuery(false);
+        data = retryResult.data;
+        count = retryResult.count;
+        error = retryResult.error;
       }
 
-      // Origin filter
-      if (filters?.origin && filters.origin !== "all") {
-        query = query.ilike("origin", `%${filters.origin}%`);
-      }
+      if (!error && data) {
+        const gems = data.map(mapDbRowToGemstone);
+        const total = count ?? gems.length;
 
-      // Carat range filters
-      if (filters?.minCarat !== undefined) {
-        query = query.gte("carat", filters.minCarat);
+        return {
+          gems,
+          total,
+          page,
+          limit,
+          totalPages: Math.max(1, Math.ceil(total / limit)),
+        };
       }
-      if (filters?.maxCarat !== undefined) {
-        query = query.lte("carat", filters.maxCarat);
-      }
-
-      // Price range filters
-      if (filters?.minPrice !== undefined) {
-        query = query.gte("price", filters.minPrice);
-      }
-      if (filters?.maxPrice !== undefined) {
-        query = query.lte("price", filters.maxPrice);
-      }
-
-      // Search query (sanitized against PostgREST syntax delimiters)
-      if (filters?.search && filters.search.trim()) {
-        const cleanQ = filters.search.trim().replace(/[,()]/g, " ");
-        query = query.or(`name.ilike.%${cleanQ}%,variety.ilike.%${cleanQ}%,description.ilike.%${cleanQ}%,origin.ilike.%${cleanQ}%`);
-      }
-
-      // Sorting
-      switch (filters?.sort) {
-        case "price-asc":
-          query = query.order("price", { ascending: true });
-          break;
-        case "price-desc":
-          query = query.order("price", { ascending: false });
-          break;
-        case "carat-desc":
-          query = query.order("carat", { ascending: false });
-          break;
-        case "carat-asc":
-          query = query.order("carat", { ascending: true });
-          break;
-        case "newest":
-          query = query.order("created_at", { ascending: false });
-          break;
-        case "featured":
-        default:
-          query = query.order("featured", { ascending: false }).order("price", { ascending: false });
-          break;
-      }
-
-      // Server-side pagination range
-      query = query.range(offset, offset + limit - 1);
-
-      const { data, count, error } = await query;
 
       if (error) {
-        console.warn("Supabase gemstones query failed:", error.message);
-        return { gems: [], total: 0, page, limit, totalPages: 1 };
+        console.warn("Supabase gemstones query failed, falling back to local catalog:", error.message);
       }
-
-      const gems = (data ?? []).map(mapDbRowToGemstone);
-      const total = count ?? gems.length;
-
-      return {
-        gems,
-        total,
-        page,
-        limit,
-        totalPages: Math.max(1, Math.ceil(total / limit)),
-      };
     } catch (err) {
-      console.warn("Supabase gemstones query failed:", err);
-      return { gems: [], total: 0, page, limit, totalPages: 1 };
+      console.warn("Supabase gemstones query exception, falling back to local catalog:", err);
     }
   }
 
@@ -248,7 +261,6 @@ export const getGemBySlug = cache(async (slug: string): Promise<Gemstone | null>
     } catch (err) {
       console.warn("Supabase single gem fetch note:", err);
     }
-    return null;
   }
 
   return CATALOG_GEMS.find((g) => g.slug === slug) || null;
@@ -307,17 +319,34 @@ export async function getSitemapGemstones(): Promise<SitemapGemRecord[]> {
   if (isSupabaseConfigured) {
     try {
       const supabase = await createClient();
-      const { data, error } = await supabase
-        .from("gemstones")
-        .select("slug, created_at, images")
-        .eq("in_stock", true)
-        .eq("is_archived", false)
-        .order("created_at", { ascending: false });
+
+      const fetchSitemapGems = (filterArchived: boolean) => {
+        let q = supabase
+          .from("gemstones")
+          .select("slug, created_at, updated_at, images")
+          .eq("in_stock", true);
+
+        if (filterArchived) {
+          q = q.eq("is_archived", false);
+        }
+
+        return q.order("created_at", { ascending: false });
+      };
+
+      let { data, error } = await fetchSitemapGems(true);
+
+      // Gracefully handle unmigrated is_archived column by retrying without it
+      if (error && (error.message?.includes("is_archived") || error.code === "42703")) {
+        const retryResult = await fetchSitemapGems(false);
+        data = retryResult.data;
+        error = retryResult.error;
+      }
 
       if (!error && data) {
-        return data.map((d) => ({
+        return (data as Array<{ slug: string; created_at?: string; updated_at?: string; images?: unknown }>).map((d) => ({
           slug: d.slug,
           created_at: d.created_at,
+          updated_at: d.updated_at || d.created_at,
           images: Array.isArray(d.images) ? (d.images as unknown as Array<{ url: string; alt?: string }>) : [],
         }));
       }
@@ -326,8 +355,11 @@ export async function getSitemapGemstones(): Promise<SitemapGemRecord[]> {
     }
   }
 
+  const nowIso = new Date().toISOString();
   return CATALOG_GEMS.filter((g) => g.inStock !== false).map((g) => ({
     slug: g.slug,
+    created_at: nowIso,
+    updated_at: nowIso,
     images: g.images,
   }));
 }
