@@ -5,13 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   Play,
   Pause,
 } from "lucide-react";
-
 function subscribeReducedMotion(callback: () => void) {
   if (typeof window === "undefined" || !window.matchMedia) return () => {};
   const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -103,39 +101,6 @@ const HERO_SCENES: HeroScene[] = [
   },
 ];
 
-interface FloatingGemPodData {
-  id: string;
-  name: string;
-  carat: string;
-  tag: string;
-  image: string;
-  href: string;
-  positionClasses: string;
-  animationDelay: string;
-}
-
-const FLOATING_PODS: FloatingGemPodData[] = [
-  {
-    id: "royal-blue",
-    name: "Royal Blue Sapphire",
-    carat: "4.28 cts",
-    tag: "Unheated Ceylon",
-    image: "/isuru_images/blue1.webp",
-    href: "/gems/category/blue-gems",
-    positionClasses: "-top-5 sm:-top-7 -left-3 sm:-left-7",
-    animationDelay: "0s",
-  },
-  {
-    id: "padparadscha",
-    name: "Lotus Padparadscha",
-    carat: "3.15 cts",
-    tag: "Rare Collector Specimen",
-    image: "/isuru_images/pink1.webp",
-    href: "/gems/category/pink-purple-gems",
-    positionClasses: "-bottom-5 sm:-bottom-7 -right-3 sm:-right-7",
-    animationDelay: "-3.5s",
-  },
-];
 
 
 export function HeroSection() {
@@ -182,300 +147,211 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF8F5] text-[#2B2B2B] pt-10 sm:pt-14 lg:pt-16 pb-16 sm:pb-24 lg:pb-28">
-      {/* Subtle organic light & palm leaf ambient gradients */}
-      <div className="absolute top-0 right-0 w-[55vw] h-[55vw] max-w-[850px] max-h-[850px] bg-[radial-gradient(circle,rgba(212,175,103,0.08)_0%,rgba(14,42,32,0.03)_40%,transparent_70%)] pointer-events-none select-none blur-3xl" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[radial-gradient(circle,rgba(184,146,74,0.06)_0%,transparent_70%)] pointer-events-none blur-2xl" />
+    <section
+      ref={containerRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Ceylon Gemstones Showcase"
+      className="relative w-full overflow-hidden bg-[#071510] text-[#FAF6EE] min-h-[640px] lg:h-[calc(100vh-116px)] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF67]"
+    >
+      {/* Full-Bleed Edge-to-Edge Hero Image Slider */}
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        {HERO_SCENES.map((scene, index) => {
+          const isActive = index === currentSlide;
+          const isNext = index === (currentSlide + 1) % HERO_SCENES.length;
+          const shouldRenderImage = index === 0 || isActive || isNext;
 
-      <div className="container-luxe relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-14 items-center">
-          
-          {/* Left Column: Editorial Typography & Actions */}
-          <div className="lg:col-span-6 xl:col-span-6 space-y-7 sm:space-y-8 relative">
-            
-            {/* Eyebrow Tag with Fine Gold Line */}
-            <div className="flex items-center gap-3.5 animate-hero-fade-up">
-              <span className="text-[11px] sm:text-xs uppercase tracking-[0.28em] text-[#80601C] font-semibold">
-                Fine Gemstones From Sri Lanka
-              </span>
-              <div className="h-px w-14 bg-gradient-to-r from-[#B8924A] to-transparent" />
-            </div>
-
-            {/* Main Headline - Concept 03: Modern Ceylon */}
-            <div className="animate-hero-fade-up [animation-delay:100ms]">
-              <h1 className="font-serif font-normal text-4xl sm:text-5xl lg:text-[3.65rem] xl:text-[4.25rem] text-[#1D1B18] leading-[1.12] tracking-tight">
-                Extraordinary Gems.<br />
-                <span className="text-[#0E2A20] font-normal italic font-serif">
-                  Beautiful Possibilities.
-                </span>
-              </h1>
-            </div>
-
-            {/* Subtext */}
-            <p className="text-base sm:text-lg text-[#554E46] font-light leading-relaxed max-w-xl animate-hero-fade-up [animation-delay:200ms]">
-              Direct from the historic gem gravels of Ratnapura, Sri Lanka. Curators of natural, unheated Royal Blue Sapphires, fiery Padparadschas, and certified collector gemstones.
-            </p>
-
-            {/* Pill CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-1 animate-hero-fade-up [animation-delay:300ms]">
-              <Link href="/gems" className="modern-pill-primary group">
-                <span>Explore Collection</span>
-                <ArrowRight className="w-4 h-4 text-[#D4AF67] transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-              <Link href="/contact" className="modern-pill-secondary">
-                <span>Enquire Now</span>
-              </Link>
-            </div>
-
-            {/* Botanical Leaf Vector Flourish */}
-            <div className="absolute -bottom-6 right-8 w-28 h-28 pointer-events-none opacity-40 hidden xl:block">
-              <svg viewBox="0 0 100 100" fill="none" stroke="#B8924A" strokeWidth="1.2" className="w-full h-full">
-                <path d="M10 90 C 20 60, 45 35, 85 15 C 65 35, 50 60, 45 90" />
-                <path d="M45 40 C 35 30, 25 35, 20 45 C 30 45, 40 40, 45 40" />
-                <path d="M60 28 C 55 18, 45 20, 40 30 C 50 30, 55 28, 60 28" />
-                <path d="M30 60 C 20 55, 15 65, 18 75 C 25 70, 30 65, 30 60" />
-              </svg>
-            </div>
-
-            {/* Credibility Markers */}
-            <div className="pt-7 border-t border-[#B8924A]/25 grid grid-cols-2 gap-4 sm:gap-6 max-w-md animate-hero-fade-up [animation-delay:400ms]">
-              <div>
-                <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Est. 1964</span>
-                <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] block mt-0.5">Ratnapura, Ceylon</span>
-              </div>
-              <div>
-                <span className="block font-serif text-lg sm:text-xl font-medium text-[#1D1B18]">Mine Direct</span>
-                <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] block mt-0.5">Ethical Traceability</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: High-Jewelry Staged Photography with Floating Gemstones & Hero Gallery */}
-          <div className="lg:col-span-6 xl:col-span-6">
+          return (
             <div
-              ref={containerRef}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onKeyDown={handleKeyDown}
-              tabIndex={0}
-              role="region"
-              aria-roledescription="carousel"
-              aria-label="Ceylon Gemstones Staged Gallery"
-              className="relative focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8924A] rounded-2xl"
+              key={scene.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+              }`}
+              aria-hidden={!isActive}
             >
-
-              {/* Floating Gem Pod 1: Royal Blue Sapphire (Top Left) */}
-              <Link
-                href={FLOATING_PODS[0].href}
-                aria-label={`${FLOATING_PODS[0].name}, ${FLOATING_PODS[0].carat}`}
-                className={`hidden sm:flex absolute ${FLOATING_PODS[0].positionClasses} z-30 animate-gem-float group/pod items-center gap-3 bg-[#FAF8F5]/95 backdrop-blur-md border border-[#B8924A]/50 px-3.5 py-2.5 rounded-2xl shadow-[0_12px_30px_rgba(25,20,15,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#B8924A] hover:shadow-[0_16px_36px_rgba(184,146,74,0.3)] cursor-pointer`}
-                style={{ animationDelay: FLOATING_PODS[0].animationDelay }}
+              <div
+                className={`relative w-full h-full ${
+                  isActive && !reduce ? scene.panClass : ""
+                }`}
               >
-                <div className="relative w-11 h-11 rounded-full overflow-hidden border border-[#D4AF67] shadow-inner shrink-0 bg-[#0E2A20]">
+                {shouldRenderImage && (
                   <Image
-                    src={FLOATING_PODS[0].image}
-                    alt={FLOATING_PODS[0].name}
+                    src={scene.src}
+                    alt={scene.alt}
                     fill
-                    sizes="44px"
-                    className="object-cover transition-transform duration-500 group-hover/pod:scale-115"
+                    priority={index === 0}
+                    sizes="100vw"
+                    className="object-cover object-center"
                   />
-                  <div className="absolute top-1 right-1.5 w-1.5 h-1.5 rounded-full bg-white/90 blur-[0.5px]" />
-                </div>
-                <div className="text-left pr-1">
-                  <div className="text-[9px] uppercase tracking-wider text-[#B8924A] font-semibold">
-                    {FLOATING_PODS[0].tag}
-                  </div>
-                  <div className="font-serif text-xs font-medium text-[#1D1B18] leading-tight">
-                    {FLOATING_PODS[0].name}
-                  </div>
-                  <div className="text-[10px] font-mono text-[#736B63]">
-                    {FLOATING_PODS[0].carat}
-                  </div>
-                </div>
-              </Link>
-
-              {/* Floating Gem Pod 2: Lotus Padparadscha (Bottom Right) */}
-              <Link
-                href={FLOATING_PODS[1].href}
-                aria-label={`${FLOATING_PODS[1].name}, ${FLOATING_PODS[1].carat}`}
-                className={`hidden sm:flex absolute ${FLOATING_PODS[1].positionClasses} z-30 animate-gem-float group/pod items-center gap-3 bg-[#FAF8F5]/95 backdrop-blur-md border border-[#B8924A]/50 px-3.5 py-2.5 rounded-2xl shadow-[0_12px_30px_rgba(25,20,15,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#B8924A] hover:shadow-[0_16px_36px_rgba(184,146,74,0.3)] cursor-pointer`}
-                style={{ animationDelay: FLOATING_PODS[1].animationDelay }}
-              >
-                <div className="relative w-11 h-11 rounded-full overflow-hidden border border-[#D4AF67] shadow-inner shrink-0 bg-[#0E2A20]">
-                  <Image
-                    src={FLOATING_PODS[1].image}
-                    alt={FLOATING_PODS[1].name}
-                    fill
-                    sizes="44px"
-                    className="object-cover transition-transform duration-500 group-hover/pod:scale-115"
-                  />
-                  <div className="absolute top-1 right-1.5 w-1.5 h-1.5 rounded-full bg-white/90 blur-[0.5px]" />
-                </div>
-                <div className="text-left pr-1">
-                  <div className="text-[9px] uppercase tracking-wider text-[#B8924A] font-semibold">
-                    {FLOATING_PODS[1].tag}
-                  </div>
-                  <div className="font-serif text-xs font-medium text-[#1D1B18] leading-tight">
-                    {FLOATING_PODS[1].name}
-                  </div>
-                  <div className="text-[10px] font-mono text-[#736B63]">
-                    {FLOATING_PODS[1].carat}
-                  </div>
-                </div>
-              </Link>
-
-              {/* Main Staged Photography Showcase Frame */}
-              <div className="relative rounded-2xl overflow-hidden border border-[#B8924A]/30 bg-[#F4EFEA] shadow-[0_20px_50px_-15px_rgba(25,20,15,0.18)] group animate-hero-scale-in [animation-delay:150ms]">
-                {/* Subtle top edge gold highlight */}
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D4AF67]/70 to-transparent z-20 pointer-events-none" />
-
-                {/* Staged Imagery Stage with Ken Burns Floating Pan Motion */}
-                <div className="relative aspect-[16/11] sm:aspect-[16/11] lg:aspect-[16/11] w-full overflow-hidden bg-[#1D1B18]">
-                  {HERO_SCENES.map((scene, index) => {
-                    const isActive = index === currentSlide;
-                    const isNext = index === (currentSlide + 1) % HERO_SCENES.length;
-                    const shouldRenderImage = index === 0 || isActive || isNext;
-
-                    return (
-                      <div
-                        key={scene.id}
-                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                          isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-                        }`}
-                        aria-hidden={!isActive}
-                      >
-                        <div
-                          className={`relative w-full h-full ${
-                            isActive && !reduce ? scene.panClass : ""
-                          }`}
-                        >
-                          {shouldRenderImage && (
-                            <Image
-                              src={scene.src}
-                              alt={scene.alt}
-                              fill
-                              preload={index === 0}
-                              fetchPriority={index === 0 ? "high" : undefined}
-                              sizes="(max-width: 1023px) calc(100vw - clamp(2rem, 8vw, 10rem)), 50vw"
-                              className="object-cover object-center"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  {/* Soft bottom vignette for text contrast */}
-                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-15 pointer-events-none" />
-
-                  {/* Previous / Next Arrow Controls */}
-                  <div className="absolute inset-y-0 left-3 right-3 flex items-center justify-between z-20 pointer-events-none">
-                    <button
-                      type="button"
-                      onClick={prevSlide}
-                      aria-label="Previous gemstone scene"
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FAF8F5]/85 hover:bg-[#FAF8F5] text-[#1D1B18] border border-[#B8924A]/40 flex items-center justify-center transition-all duration-200 pointer-events-auto shadow-md opacity-80 hover:opacity-100 hover:scale-105 cursor-pointer"
-                    >
-                      <ChevronLeft className="w-4 h-4 text-[#1D1B18]" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={nextSlide}
-                      aria-label="Next gemstone scene"
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FAF8F5]/85 hover:bg-[#FAF8F5] text-[#1D1B18] border border-[#B8924A]/40 flex items-center justify-center transition-all duration-200 pointer-events-auto shadow-md opacity-80 hover:opacity-100 hover:scale-105 cursor-pointer"
-                    >
-                      <ChevronRight className="w-4 h-4 text-[#1D1B18]" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Refined Glassmorphism Badge */}
-                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-[#FAF8F5]/92 backdrop-blur-md border border-[#B8924A]/30 p-3.5 sm:p-4 rounded-xl flex items-center justify-between shadow-lg z-20">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#0E2A20] text-[#FAF8F5] flex items-center justify-center shrink-0 shadow-xs">
-                      <Sparkles className="w-4 h-4 text-[#D4AF67]" />
-                    </div>
-                    <div>
-                      <div key={activeScene.id} className="animate-gentle-fade">
-                        <h3 className="font-serif text-sm sm:text-base font-medium text-[#1D1B18] leading-tight">
-                          {activeScene.title}
-                        </h3>
-                        <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#736B63] mt-0.5">
-                          {activeScene.subtitle}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <Link
-                    href="/gems"
-                    className="inline-flex items-center gap-1.5 text-xs text-[#0E2A20] font-semibold hover:text-[#B8924A] transition-colors shrink-0 ml-2"
-                    aria-label="Explore gemstones"
-                  >
-                    <span className="hidden sm:inline">Explore Gems</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
+                )}
               </div>
-
-              {/* Floating Scene Thumbnails Selector (Floating along the bottom of the showcase) */}
-              <div className="mt-4 sm:mt-5 p-2.5 sm:p-3 bg-[#FAF8F5]/90 backdrop-blur-md border border-[#B8924A]/30 rounded-xl shadow-sm flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1">
-                  {HERO_SCENES.map((scene, idx) => {
-                    const isCurrent = idx === currentSlide;
-                    return (
-                      <button
-                        key={scene.id}
-                        type="button"
-                        onClick={() => goToSlide(idx)}
-                        aria-label={`View scene: ${scene.title}`}
-                        className={`group/thumb relative rounded-lg overflow-hidden border transition-all duration-300 shrink-0 cursor-pointer ${
-                          isCurrent
-                            ? "ring-2 ring-[#B8924A] border-transparent scale-105 shadow-[0_4px_12px_rgba(184,146,74,0.35)]"
-                            : "border-[#B8924A]/25 opacity-70 hover:opacity-100 hover:border-[#B8924A]/60"
-                        }`}
-                      >
-                        <div className="relative w-12 h-9 sm:w-14 sm:h-10">
-                          <Image
-                            src={scene.src}
-                            alt=""
-                            fill
-                            sizes="56px"
-                            loading="lazy"
-                            className="object-cover"
-                          />
-                        </div>
-                        {isCurrent && (
-                          <div className="absolute inset-0 bg-[#B8924A]/10 pointer-events-none" />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0 border-l border-[#B8924A]/25 pl-3">
-                  <button
-                    type="button"
-                    onClick={() => setIsPlaying((p) => !p)}
-                    aria-label={isPlaying ? "Pause hero rotation" : "Play hero rotation"}
-                    className="w-7 h-7 rounded-full border border-[#B8924A]/40 flex items-center justify-center text-[#0E2A20] hover:text-[#B8924A] hover:border-[#B8924A] transition-colors cursor-pointer"
-                  >
-                    {isPlaying ? (
-                      <Pause className="w-3.5 h-3.5" />
-                    ) : (
-                      <Play className="w-3.5 h-3.5 ml-0.5" />
-                    )}
-                  </button>
-                  <span className="text-[11px] font-mono tracking-wider text-[#736B63]">
-                    0{currentSlide + 1} / 0{HERO_SCENES.length}
-                  </span>
-                </div>
-              </div>
-
             </div>
+          );
+        })}
+      </div>
+
+      {/* Soft Gradient Overlay: Dark green/black on left fading to transparent on right */}
+      <div
+        className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-[#071510]/95 via-[#071510]/80 to-[#071510]/60 lg:bg-gradient-to-r lg:from-[#071510]/90 lg:via-[#0A1A14]/70 lg:via-50% lg:to-transparent"
+        aria-hidden="true"
+      />
+      {/* Secondary bottom vignette to ensure complete legibility for controls and badges */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-44 lg:h-36 bg-gradient-to-t from-[#071510]/85 via-[#071510]/35 to-transparent z-10 pointer-events-none"
+        aria-hidden="true"
+      />
+
+
+      {/* Previous / Next Arrow Controls (Sides) */}
+      <button
+        type="button"
+        onClick={prevSlide}
+        aria-label="Previous gemstone scene"
+        className="flex absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full bg-black/40 hover:bg-black/75 text-[#FAF6EE] border border-white/25 hover:border-[#D4AF67] items-center justify-center transition-all duration-200 backdrop-blur-md shadow-xl opacity-75 hover:opacity-100 hover:scale-105 cursor-pointer"
+      >
+        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-[#FAF6EE]" />
+      </button>
+      <button
+        type="button"
+        onClick={nextSlide}
+        aria-label="Next gemstone scene"
+        className="flex absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full bg-black/40 hover:bg-black/75 text-[#FAF6EE] border border-white/25 hover:border-[#D4AF67] items-center justify-center transition-all duration-200 backdrop-blur-md shadow-xl opacity-75 hover:opacity-100 hover:scale-105 cursor-pointer"
+      >
+        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#FAF6EE]" />
+      </button>
+
+      {/* Left Column: Hero Text Layered Over Image */}
+      <div className="container-luxe relative z-20 w-full py-16 sm:py-20 lg:py-0">
+        <div className="max-w-[580px] space-y-6 sm:space-y-7 relative">
+          
+          {/* Eyebrow Tag with Fine Gold Line */}
+          <div className="flex items-center gap-3.5 animate-hero-fade-up">
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.28em] text-[#D4AF67] font-semibold">
+              Fine Gemstones From Sri Lanka
+            </span>
+            <div className="h-px w-14 bg-gradient-to-r from-[#D4AF67] to-transparent" />
           </div>
 
+          {/* Main Headline */}
+          <div className="animate-hero-fade-up [animation-delay:100ms]">
+            <h1 className="font-serif font-normal text-4xl sm:text-5xl lg:text-[3.65rem] xl:text-[4.25rem] text-[#FAF6EE] leading-[1.12] tracking-tight">
+              Extraordinary Gems.<br />
+              <span className="text-[#D4AF67] font-normal not-italic font-serif">
+                Beautiful Possibilities.
+              </span>
+            </h1>
+          </div>
+
+          {/* Subtext Paragraph */}
+          <p className="font-serif font-normal text-[18px] sm:text-[19px] lg:text-[20px] text-[#FAF6EE]/90 leading-[1.7] max-w-[560px] animate-hero-fade-up [animation-delay:200ms]">
+            Direct from the historic gem gravels of Ratnapura, Sri Lanka. Curators of natural, unheated Royal Blue Sapphires, fiery Padparadschas, and certified collector gemstones.
+          </p>
+
+          {/* Pill CTA Buttons */}
+          <div className="flex flex-wrap items-center gap-4 pt-1 animate-hero-fade-up [animation-delay:300ms]">
+            <Link
+              href="/gems"
+              className="inline-flex items-center justify-center gap-2.5 rounded-full bg-[#B8924A] hover:bg-[#D4AF67] text-[#0A1A14] px-7 py-3.5 text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 shadow-[0_10px_25px_-5px_rgba(184,146,74,0.45)] hover:translate-y-[-2px] group cursor-pointer"
+            >
+              <span>Explore Collection</span>
+              <ArrowRight className="w-4 h-4 text-[#0A1A14] transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF6EE] border border-white/25 hover:border-[#D4AF67] backdrop-blur-md px-7 py-3.5 text-xs uppercase tracking-[0.18em] font-medium transition-all duration-300 hover:translate-y-[-2px] cursor-pointer"
+            >
+              <span>Enquire Now</span>
+            </Link>
+          </div>
+
+          {/* Botanical Leaf Vector Flourish */}
+          <div className="absolute -bottom-6 right-4 w-28 h-28 pointer-events-none opacity-20 hidden xl:block">
+            <svg viewBox="0 0 100 100" fill="none" stroke="#D4AF67" strokeWidth="1.2" className="w-full h-full">
+              <path d="M10 90 C 20 60, 45 35, 85 15 C 65 35, 50 60, 45 90" />
+              <path d="M45 40 C 35 30, 25 35, 20 45 C 30 45, 40 40, 45 40" />
+              <path d="M60 28 C 55 18, 45 20, 40 30 C 50 30, 55 28, 60 28" />
+              <path d="M30 60 C 20 55, 15 65, 18 75 C 25 70, 30 65, 30 60" />
+            </svg>
+          </div>
+
+          {/* Credibility Markers */}
+          <div className="pt-6 sm:pt-7 border-t border-[#FAF6EE]/20 grid grid-cols-2 gap-4 sm:gap-6 max-w-md animate-hero-fade-up [animation-delay:400ms]">
+            <div>
+              <span className="block font-serif text-lg sm:text-xl font-medium text-[#FAF6EE]">Est. 1964</span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#FAF6EE]/70 block mt-0.5">Ratnapura, Ceylon</span>
+            </div>
+            <div>
+              <span className="block font-serif text-lg sm:text-xl font-medium text-[#FAF6EE]">Mine Direct</span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#FAF6EE]/70 block mt-0.5">Ethical Traceability</span>
+            </div>
+          </div>
         </div>
       </div>
+
+
+      {/* Floating Scene Thumbnails Selector (Bottom Right) */}
+      <div className="absolute bottom-6 sm:bottom-8 right-4 sm:right-6 lg:right-12 xl:right-16 z-20 p-2 sm:p-2.5 bg-black/50 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl flex items-center justify-between gap-3 max-w-[calc(100vw-2rem)]">
+        <div className="hidden sm:flex items-center gap-2 overflow-x-auto scrollbar-none py-0.5">
+          {HERO_SCENES.map((scene, idx) => {
+            const isCurrent = idx === currentSlide;
+            return (
+              <button
+                key={scene.id}
+                type="button"
+                onClick={() => goToSlide(idx)}
+                aria-label={`View scene: ${scene.title}`}
+                className={`group/thumb relative rounded-lg overflow-hidden border transition-all duration-300 shrink-0 cursor-pointer ${
+                  isCurrent
+                    ? "ring-2 ring-[#D4AF67] border-transparent scale-105 shadow-[0_4px_12px_rgba(212,175,103,0.4)]"
+                    : "border-white/20 opacity-60 hover:opacity-100 hover:border-white/50"
+                }`}
+              >
+                <div className="relative w-11 h-8 sm:w-13 sm:h-9">
+                  <Image
+                    src={scene.src}
+                    alt=""
+                    fill
+                    sizes="52px"
+                    loading="lazy"
+                    className="object-cover"
+                  />
+                </div>
+                {isCurrent && (
+                  <div className="absolute inset-0 bg-[#D4AF67]/15 pointer-events-none" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Compact active scene label for mobile where thumbnails are hidden */}
+        <div className="sm:hidden px-2 text-xs font-serif text-[#FAF6EE] truncate max-w-[160px]">
+          {activeScene.title}
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 sm:border-l sm:border-white/20 sm:pl-3">
+          <button
+            type="button"
+            onClick={() => setIsPlaying((p) => !p)}
+            aria-label={isPlaying ? "Pause hero rotation" : "Play hero rotation"}
+            className="w-7 h-7 rounded-full border border-white/30 flex items-center justify-center text-[#FAF6EE] hover:text-[#D4AF67] hover:border-[#D4AF67] transition-colors cursor-pointer"
+          >
+            {isPlaying ? (
+              <Pause className="w-3.5 h-3.5" />
+            ) : (
+              <Play className="w-3.5 h-3.5 ml-0.5" />
+            )}
+          </button>
+          <span className="text-[11px] font-mono tracking-wider text-[#FAF6EE]/80">
+            0{currentSlide + 1} / 0{HERO_SCENES.length}
+          </span>
+        </div>
+      </div>
+
     </section>
   );
 }

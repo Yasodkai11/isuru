@@ -16,7 +16,6 @@ const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Gemstones", href: "/gems" },
   { label: "Our Story", href: "/about" },
-  { label: "Certification", href: "/certificates" },
   { label: "Wholesale", href: "/wholesale" },
   { label: "Contact", href: "/contact" },
 ];
@@ -106,11 +105,12 @@ export function Header() {
       }`}
     >
       <div
-        className={`container-luxe flex items-center justify-between gap-4 transition-[height] duration-500 ${
+        className={`container-luxe flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr] gap-4 transition-[height] duration-500 ${
           scrolled ? "h-16" : "h-16 sm:h-20"
         }`}
       >
-        <div className="flex items-center gap-2">
+        {/* Left column: Mobile menu button & Logo */}
+        <div className="flex items-center justify-start gap-2">
           <button
             onClick={() => setMobileMenuOpen(true)}
             className="lg:hidden p-2 -ml-2 text-[#5E0F1E] hover:bg-[#B8924A]/10 transition-colors"
@@ -132,25 +132,27 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-1 sm:gap-2">
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-11 mr-6 xl:mr-10 text-[13px] uppercase tracking-[0.22em] text-[#2B2B2B]">
-            {NAV_LINKS.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`link-underline py-1 transition-colors ${
-                    isActive ? "text-[#5E0F1E] font-medium" : "hover:text-[#5E0F1E]"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
+        {/* Center column: Desktop Nav Links horizontally centered */}
+        <nav className="hidden lg:flex items-center justify-center gap-7 xl:gap-10 text-[13px] uppercase tracking-[0.22em] text-[#2B2B2B]">
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`link-underline py-1 transition-colors ${
+                  isActive ? "text-[#5E0F1E] font-medium" : "hover:text-[#5E0F1E]"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
 
+        {/* Right column: Search, Account, Cart */}
+        <div className="flex items-center justify-end gap-1 sm:gap-2">
           <button
             onClick={() => setSearchOpen(!searchOpen)}
             className="p-2 text-[#B8924A] hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 transition-colors"

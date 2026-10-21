@@ -34,6 +34,7 @@ $itemsToCopy = @(
     "SEO-AUDIT.md",
     "SECURITY-AUDIT.md",
     "DATABASE-DATA-AUDIT.md",
+    "AUDIT_REPORT.md",
     ".gitignore",
     "next-env.d.ts"
 )
