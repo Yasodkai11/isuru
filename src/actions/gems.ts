@@ -3,7 +3,7 @@
 import { cache } from "react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { Gemstone, GemFilterOptions, PaginatedGemsResult } from "@/types/gem";
-import { CATEGORIES_CONFIG } from "@/lib/constants";
+import { CATEGORIES_CONFIG, resolveCategoryKey } from "@/lib/constants";
 import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import { mapDbRowToGemstone } from "@/lib/map-gemstone";
 
@@ -32,9 +32,10 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
         query = query.ilike("variety", `%${filters.variety}%`);
       }
 
-      // Category filter
+      // Category filter (supports both direct config keys and mineral variety slugs)
       if (filters?.category && filters.category !== "all") {
-        const match = CATEGORIES_CONFIG[filters.category]?.match;
+        const resolvedKey = resolveCategoryKey(filters.category) || filters.category;
+        const match = CATEGORIES_CONFIG[resolvedKey]?.match;
         if (match) {
           query = query.ilike(match.column, `%${match.value}%`);
         }
@@ -137,7 +138,27 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
   }
 
   if (filters?.category && filters.category !== "all") {
-    filtered = filtered.filter((g) => g.category === filters.category);
+    const resolvedCat = resolveCategoryKey(filters.category) || filters.category;
+    const match = CATEGORIES_CONFIG[resolvedCat]?.match;
+    if (match) {
+      if (match.column === "color") {
+        filtered = filtered.filter(
+          (g) =>
+            g.category === filters.category ||
+            g.category === resolvedCat ||
+            g.color.toLowerCase().includes(match.value.toLowerCase())
+        );
+      } else {
+        filtered = filtered.filter(
+          (g) =>
+            g.category === filters.category ||
+            g.category === resolvedCat ||
+            g.variety.toLowerCase().includes(match.value.toLowerCase())
+        );
+      }
+    } else {
+      filtered = filtered.filter((g) => g.category === filters.category || g.category === resolvedCat);
+    }
   }
 
   if (filters?.origin && filters.origin !== "all") {
@@ -264,4 +285,38 @@ export async function getRelatedGems(currentSlug: string, limit: number = 3): Pr
       return score(b) - score(a);
     })
     .slice(0, limit);
+}
+
+export interface SitemapGemRecord {
+  slug: string;
+  updated_at?: string;
+  images: Array<{ url: string; alt?: string }>;
+}
+
+/**
+ * Lightweight projected query for sitemap generation.
+ * Selects only slug, updated_at, and images for in-stock gems, avoiding heavy full table scans.
+ */
+export async function getSitemapGemstones(): Promise<SitemapGemRecord[]> {
+  if (isSupabaseConfigured) {
+    try {
+      const supabase = await createClient();
+      const { data, error } = await supabase
+        .from("gemstones")
+        .select("slug, updated_at, images")
+        .eq("in_stock", true)
+        .order("created_at", { ascending: false });
+
+      if (!error && data) {
+        return data as SitemapGemRecord[];
+      }
+    } catch (err) {
+      console.warn("Supabase sitemap gems query note:", err);
+    }
+  }
+
+  return CATALOG_GEMS.filter((g) => g.inStock !== false).map((g) => ({
+    slug: g.slug,
+    images: g.images,
+  }));
 }

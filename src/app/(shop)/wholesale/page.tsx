@@ -14,17 +14,55 @@ import {
 } from "@/components/ui/table";
 import { ShieldCheck, Truck, Briefcase, FileCheck } from "lucide-react";
 import { WholesaleForm } from "@/components/wholesale/wholesale-form";
+import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
+import { getSEORecordByPath } from "@/actions/seo";
 
-export const metadata: Metadata = {
-  title: "Wholesale & B2B Gemstone Parcels",
-  description:
-    "Direct source calibrated parcels, layout pairs, and high-volume unheated Ceylon sapphires for international jewelry ateliers, watchmakers, and gem merchants.",
-  alternates: {
-    canonical: "/wholesale",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSEORecordByPath("/wholesale");
+
+  const metaTitle = seo?.metaTitle || "Wholesale & B2B Gemstone Parcels";
+  const metaDesc =
+    seo?.metaDescription ||
+    "Direct source calibrated parcels, layout pairs, and high-volume unheated Ceylon sapphires for international jewelry ateliers, watchmakers, and gem merchants.";
+  const canonicalUrl = seo?.canonicalUrl || "/wholesale";
+  const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
+
+  return {
+    title: metaTitle,
+    description: metaDesc,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
+    openGraph: {
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      url: canonicalUrl,
+      images: [
+        {
+          url: ogImg,
+          width: 1200,
+          height: 630,
+          alt: metaTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      images: [ogImg],
+    },
+  };
+}
+
 
 export default function WholesalePage() {
+  const breadcrumbSchema = getBreadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Wholesale & B2B Parcels", url: "/wholesale" },
+  ]);
+
   const parcelLots = [
     {
       lot: "LOT-RB-402",
@@ -70,6 +108,7 @@ export default function WholesalePage() {
 
   return (
     <div className="py-16 bg-[#FAF6EE] min-h-screen">
+      <JsonLd data={breadcrumbSchema} />
       <div className="container-luxe space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">

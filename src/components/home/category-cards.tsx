@@ -15,21 +15,22 @@ const MODERN_CATEGORIES: ModernCategory[] = [
     title: "Blue Sapphires",
     subtitle: "Royal & Cornflower Ceylon Sapphires",
     image: "/images/concept03/category-blue-sapphires.webp",
-    link: "/gems?colour=Blue",
+    link: "/gems/category/blue-gems",
   },
   {
     title: "Coloured Gemstones",
     subtitle: "Rubies, Padparadschas & Fancy Gems",
     image: "/images/concept03/category-coloured-gems.webp",
-    link: "/gems?category=coloured",
+    link: "/gems/category/pink-purple-gems",
   },
   {
-    title: "Rough Gemstones",
-    subtitle: "Natural Crystalline Specimens & Minerals",
+    title: "Gem Collections",
+    subtitle: "Trade Parcels & Curated Crystal Trays",
     image: "/images/concept03/category-rough-gems.webp",
-    link: "/gems?category=rough",
+    link: "/gems/category/gem-collections",
   },
 ];
+
 
 export function CategoryCards() {
   return (

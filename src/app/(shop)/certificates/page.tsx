@@ -3,22 +3,60 @@ import Link from "next/link";
 import { GoldDivider } from "@/components/layout/gold-divider";
 import { CERTIFICATIONS } from "@/lib/constants";
 import { ShieldCheck, ArrowRight } from "lucide-react";
+import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
+import { getSEORecordByPath } from "@/actions/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSEORecordByPath("/certificates");
+
+  const metaTitle = seo?.metaTitle || "Gemstone Certification & Authenticity";
+  const metaDesc =
+    seo?.metaDescription ||
+    "All Isuru Gems stones are certified natural corundum authenticated by the National Gem and Jewellery Authority of Sri Lanka (NGJA), GIA, and GRS Swisslab with lifetime guarantees.";
+  const canonicalUrl = seo?.canonicalUrl || "/certificates";
+  const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
+
   return {
-    title: "Gemstone Certification & Authenticity",
-    description:
-      "All Isuru Gems stones are certified natural corundum authenticated by the National Gem and Jewellery Authority of Sri Lanka (NGJA), GIA, and GRS Swisslab.",
+    title: metaTitle,
+    description: metaDesc,
     alternates: {
-      canonical: "/certificates",
+      canonical: canonicalUrl,
+    },
+    robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
+    openGraph: {
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      url: canonicalUrl,
+      images: [
+        {
+          url: ogImg,
+          width: 1200,
+          height: 630,
+          alt: metaTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      images: [ogImg],
     },
   };
 }
 
+
 export default function CertificatesPage() {
+  const breadcrumbSchema = getBreadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Certification & Authenticity", url: "/certificates" },
+  ]);
+
   return (
     <div className="py-16 bg-[#FAF6EE] min-h-screen">
+      <JsonLd data={breadcrumbSchema} />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+
         {/* Header */}
         <div className="text-center space-y-4">
           <span className="text-[11px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold">

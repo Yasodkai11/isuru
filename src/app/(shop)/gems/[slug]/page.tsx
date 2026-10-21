@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 
 import { DETAIL_ON_REQUEST } from "@/lib/catalog-gems";
+import { CATEGORIES_CONFIG } from "@/lib/constants";
 
 // ISR: Cache page for 1 hour, revalidated on-demand when product updates occur
 export const revalidate = 3600;
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
 
   if (!gem) {
     return {
-      title: "Gemstone Specimen Not Found | Isuru Gems Ceylon",
+      title: "Gemstone Specimen Not Found | Isuru Ceylon",
       robots: {
         index: false,
         follow: false,
@@ -63,39 +64,44 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
     };
   }
 
+  const caratSuffix = gem.carat > 0 ? ` (${formatGemCarats(gem.carat)})` : "";
   const ogImages = gem.images && gem.images.length > 0
     ? gem.images.map((img) => ({
         url: img.url,
-        alt: img.alt || `${gem.name} - Ceylon Gemstone`,
+        alt: img.alt || `${gem.name}${caratSuffix} - Natural ${gem.variety} from ${gem.origin}`,
         width: 1200,
         height: 800,
       }))
     : [
         {
-          url: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+          url: "/isuru_images/blue1.webp",
           width: 1200,
           height: 630,
-          alt: gem.name,
+          alt: `${gem.name}${caratSuffix} - Natural Ceylon Gemstone`,
         },
       ];
 
-  const caratSuffix = gem.carat > 0 ? ` (${formatGemCarats(gem.carat)})` : "";
+  const labText = gem.certificate?.lab ? `Certified by ${gem.certificate.lab}.` : "NGJA export certified.";
+  const priceText = isPriceOnRequest(gem.price)
+    ? "Inquire for private viewing and pricing."
+    : `Net investment valuation ${formatGemPrice(gem.price, gem.currency)}.`;
+
+  // Craft a natural, high-relevance 145-160 character description from verified attributes
+  const descriptionPrefix = `${gem.treatment ? gem.treatment + " " : ""}natural ${gem.variety}${caratSuffix} from ${gem.origin}. ${gem.cut}. ${labText} ${priceText} Armoured courier delivery.`;
+  const metaDescription =
+    descriptionPrefix.length > 165
+      ? `${descriptionPrefix.slice(0, 160).trim()}...`
+      : descriptionPrefix;
 
   return {
     title: `${gem.name}${caratSuffix}`,
-    description: [
-      `Natural ${gem.variety} from ${gem.origin}.`,
-      gem.certificate.lab && `Certified by ${gem.certificate.lab}.`,
-      `${formatGemPrice(gem.price, gem.currency)}.`,
-    ]
-      .filter(Boolean)
-      .join(" "),
+    description: metaDescription,
     alternates: {
       canonical: `/gems/${gem.slug}`,
     },
     openGraph: {
       title: `${gem.name}${caratSuffix} | Isuru Ceylon`,
-      description: gem.description,
+      description: gem.description || metaDescription,
       url: `/gems/${gem.slug}`,
       type: "website",
       images: ogImages,
@@ -103,7 +109,7 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
     twitter: {
       card: "summary_large_image",
       title: `${gem.name}${caratSuffix} | Isuru Ceylon`,
-      description: gem.description,
+      description: gem.description || metaDescription,
       images: [ogImages[0].url],
     },
   };
@@ -119,12 +125,19 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
 
   const relatedGems = await getRelatedGems(gem.slug, 3);
 
-  const productSchema = getProductSchema(gem);
-  const breadcrumbSchema = getBreadcrumbListSchema([
+  const categoryConfig = gem.category ? CATEGORIES_CONFIG[gem.category] : null;
+  const breadcrumbItems = [
     { name: "Home", url: "/" },
     { name: "Gemstones Vault", url: "/gems" },
+    ...(categoryConfig
+      ? [{ name: categoryConfig.title, url: `/gems/category/${gem.category}` }]
+      : []),
     { name: gem.name, url: `/gems/${gem.slug}` },
-  ]);
+  ];
+
+  const productSchema = getProductSchema(gem);
+  const breadcrumbSchema = getBreadcrumbListSchema(breadcrumbItems);
+
 
   const isCorundum = /sapphire|ruby|padparadscha/i.test(gem.variety);
   const priceOnRequest = isPriceOnRequest(gem.price);
@@ -156,7 +169,7 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
       <JsonLd data={[productSchema, breadcrumbSchema]} />
       <div className="container-luxe space-y-12">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#2B2B2B]/70">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#2B2B2B]/70 flex-wrap">
           <Link href="/" className="hover:text-[#5E0F1E] transition-colors">
             Home
           </Link>
@@ -164,11 +177,23 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
           <Link href="/gems" className="hover:text-[#5E0F1E] transition-colors">
             Gemstones Vault
           </Link>
+          {categoryConfig && (
+            <>
+              <span>/</span>
+              <Link
+                href={`/gems/category/${gem.category}`}
+                className="hover:text-[#5E0F1E] transition-colors"
+              >
+                {categoryConfig.title}
+              </Link>
+            </>
+          )}
           <span>/</span>
           <span className="text-[#5E0F1E] font-semibold truncate max-w-xs sm:max-w-md">
             {gem.name}
           </span>
         </nav>
+
 
         {/* Back Link */}
         <div>
@@ -241,10 +266,12 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
                     {gem.variety}
                   </span>
                   {gem.certificate.lab && (
-                    <Badge variant="gold" className="text-[10px]">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#B8924A] mr-1 inline" />
-                      {gem.certificate.lab}
-                    </Badge>
+                    <Link href="/certificates" title="View laboratory authentication details">
+                      <Badge variant="gold" className="text-[10px] hover:border-[#B8924A] cursor-pointer">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#B8924A] mr-1 inline" />
+                        {gem.certificate.lab}
+                      </Badge>
+                    </Link>
                   )}
                 </div>
 
@@ -327,7 +354,13 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
                 <div className="pt-3 border-t border-[#B8924A]/15 flex items-start gap-2.5 text-xs text-[#2B2B2B]/75 leading-relaxed">
                   <ShieldCheck className="w-4 h-4 text-[#B8924A] shrink-0 mt-0.5" />
                   <span>
-                    Delivered with sealed original gemological report from {gem.certificate.lab} and tamper-proof security cassette.
+                    Delivered with sealed original gemological report from {gem.certificate.lab} and tamper-proof security cassette.{" "}
+                    <Link
+                      href="/certificates"
+                      className="text-[#5E0F1E] hover:text-[#B8924A] underline underline-offset-2 font-medium"
+                    >
+                      View laboratory standards & guarantee →
+                    </Link>
                   </span>
                 </div>
               )}

@@ -16,9 +16,11 @@ const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Gemstones", href: "/gems" },
   { label: "Our Story", href: "/about" },
+  { label: "Certification", href: "/certificates" },
   { label: "Wholesale", href: "/wholesale" },
   { label: "Contact", href: "/contact" },
 ];
+
 
 export function Header() {
   const pathname = usePathname();

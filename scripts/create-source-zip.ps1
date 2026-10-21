@@ -28,7 +28,8 @@ $itemsToCopy = @(
     "server.js",
     ".htaccess.example",
     ".env.example",
-    "HOSTINGER_DEPLOYMENT_GUIDE.md"
+    "HOSTINGER_DEPLOYMENT_GUIDE.md",
+    "SEO-AUDIT-REPORT.md"
 )
 
 foreach ($item in $itemsToCopy) {

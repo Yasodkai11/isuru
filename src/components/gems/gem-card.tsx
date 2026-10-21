@@ -10,10 +10,13 @@ interface GemCardProps {
 }
 
 export function GemCard({ gem }: GemCardProps) {
+  const caratLabel = gem.carat > 0 ? `${formatGemCarats(gem.carat)} ` : "";
+  const fallbackAlt = `${caratLabel}Natural ${gem.variety} (${gem.cut}) from ${gem.origin}`;
   const primaryImage = gem.images[0] || {
     url: "/isuru_images/blue1.webp",
-    alt: `Natural Ceylon ${gem.variety} gemstone`,
+    alt: fallbackAlt,
   };
+  const imageAlt = primaryImage.alt || `${caratLabel}${gem.name} - ${gem.variety} from ${gem.origin}`;
 
   return (
     <article className="group bg-[#FAF8F5] border border-[#B8924A]/25 overflow-hidden transition-all duration-400 hover:border-[#B8924A]/70 hover:shadow-[0_14px_30px_rgba(25,20,15,0.08)] flex flex-col justify-between h-full rounded-xl">
@@ -23,12 +26,13 @@ export function GemCard({ gem }: GemCardProps) {
           <Link href={`/gems/${gem.slug}`} className="block w-full h-full relative">
             <Image
               src={primaryImage.url}
-              alt={primaryImage.alt || gem.name}
+              alt={imageAlt}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-contain gem-contact-shadow transition-transform duration-700 ease-out group-hover:scale-110"
             />
           </Link>
+
 
           {/* Unheated Natural Seal */}
           <div className="absolute top-3 left-3 pointer-events-none">

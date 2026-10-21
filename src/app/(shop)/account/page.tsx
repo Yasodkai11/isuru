@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  alternates: {
+    canonical: "/account",
+  },
 };
 
 export default function AccountPage() {

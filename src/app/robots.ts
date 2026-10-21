@@ -10,15 +10,26 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: [
           "/admin",
+          "/admin/*",
           "/account",
+          "/account/*",
           "/checkout",
+          "/checkout/*",
           "/cart",
+          "/cart/*",
           "/api",
+          "/api/*",
+          "/auth",
+          "/auth/*",
           "/login",
+          "/login/*",
           "/register",
+          "/register/*",
         ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }
+

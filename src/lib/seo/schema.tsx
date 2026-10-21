@@ -22,7 +22,7 @@ export function getOrganizationSchema() {
       url: `${SITE_URL}/isuru_images/logo-isuru.webp`,
       caption: "Isuru Ceylon Logo",
     },
-    image: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
+    image: `${SITE_URL}/isuru_images/blue1.webp`,
     description:
       "Curators of unheated natural Ceylon Royal Blue Sapphires, Padparadschas, and precious island gemstones directly from the historic gravels of Ratnapura, Sri Lanka since 1964.",
     foundingDate: `${BRAND.established}`,
@@ -105,14 +105,16 @@ export function getProductSchema(gem: Gemstone) {
       ? gem.images.map((img) =>
           img.url.startsWith("http") ? img.url : `${SITE_URL}${img.url}`
         )
-      : [
-          "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=1200&q=85",
-        ];
+      : [`${SITE_URL}/isuru_images/blue1.webp`];
 
   // International luxury courier supported destination country codes (ISO 3166-1 alpha-2)
   const supportedCountries = [
     "US", "GB", "CH", "AE", "AU", "SG", "LK", "FR", "DE", "JP", "HK", "CA", "IT"
   ];
+
+  const nextYear = new Date();
+  nextYear.setFullYear(nextYear.getFullYear() + 1);
+  const priceValidUntil = nextYear.toISOString().split("T")[0];
 
   const offers = {
     "@type": "Offer",
@@ -120,7 +122,7 @@ export function getProductSchema(gem: Gemstone) {
     url: `${SITE_URL}/gems/${gem.slug}`,
     priceCurrency: gem.currency || "USD",
     price: gem.price > 0 ? gem.price : 0,
-    priceValidUntil: "2027-12-31",
+    priceValidUntil,
     itemCondition: "https://schema.org/NewCondition",
     availability: gem.inStock
       ? "https://schema.org/InStock"
@@ -167,6 +169,59 @@ export function getProductSchema(gem: Gemstone) {
     },
   };
 
+  const additionalProperty = [
+    gem.variety && {
+      "@type": "PropertyValue",
+      name: "Mineral Variety",
+      value: gem.variety,
+    },
+    gem.carat > 0 && {
+      "@type": "PropertyValue",
+      name: "Carat Weight",
+      value: `${gem.carat} carats`,
+    },
+    gem.origin && {
+      "@type": "PropertyValue",
+      name: "Origin / Locality",
+      value: gem.origin,
+    },
+    gem.cut && {
+      "@type": "PropertyValue",
+      name: "Cut & Shape",
+      value: gem.cut,
+    },
+    gem.dimensions && {
+      "@type": "PropertyValue",
+      name: "Dimensions",
+      value: gem.dimensions,
+    },
+    gem.color && {
+      "@type": "PropertyValue",
+      name: "Color / Saturation",
+      value: gem.color,
+    },
+    gem.clarity && {
+      "@type": "PropertyValue",
+      name: "Clarity Grade",
+      value: gem.clarity,
+    },
+    gem.treatment && {
+      "@type": "PropertyValue",
+      name: "Thermal Enhancement",
+      value: gem.treatment,
+    },
+    gem.certificate?.lab && {
+      "@type": "PropertyValue",
+      name: "Authentication Lab",
+      value: gem.certificate.lab,
+    },
+    gem.certificate?.number && {
+      "@type": "PropertyValue",
+      name: "Authentication Report Number",
+      value: gem.certificate.number,
+    },
+  ].filter(Boolean);
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -185,61 +240,11 @@ export function getProductSchema(gem: Gemstone) {
       "@type": "Country",
       name: "Sri Lanka",
     },
-    ...(gem.price > 0 ? { offers } : {}),
-    additionalProperty: [
-      {
-        "@type": "PropertyValue",
-        name: "Mineral Variety",
-        value: gem.variety,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Carat Weight",
-        value: `${gem.carat} carats`,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Origin / Locality",
-        value: gem.origin,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Cut & Shape",
-        value: gem.cut,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Dimensions",
-        value: gem.dimensions,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Color / Saturation",
-        value: gem.color,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Clarity Grade",
-        value: gem.clarity,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Thermal Enhancement",
-        value: gem.treatment,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Authentication Lab",
-        value: gem.certificate?.lab,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Authentication Report Number",
-        value: gem.certificate?.number,
-      },
-    ],
+    offers,
+    additionalProperty,
   };
 }
+
 
 /**
  * Schema.org BreadcrumbList structured data

@@ -21,10 +21,13 @@ import { DataTable, ColumnDef, FilterOption } from "@/components/admin/data-tabl
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
+import { updateSEORecordAction, getAllSEORecordsAction } from "@/actions/seo";
 
 export default function AdminSEOPage() {
   const { seoRecords, updateSEORecord } = useAdminStore();
   const [selectedRecord, setSelectedRecord] = useState<AdminSEORecord | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<string | null>(null);
 
   // Form State for editing
   const [metaTitle, setMetaTitle] = useState("");
@@ -36,6 +39,21 @@ export default function AdminSEOPage() {
   const [schemaType, setSchemaType] = useState<AdminSEORecord["schemaType"]>("CollectionPage");
   const [indexStatus, setIndexStatus] = useState<"indexed" | "noindex">("indexed");
   const [previewDevice, setPreviewDevice] = useState<"desktop" | "mobile">("desktop");
+
+  // Sync latest records from server on mount
+  React.useEffect(() => {
+    let isMounted = true;
+    getAllSEORecordsAction().then((res) => {
+      if (isMounted && res.success && res.records.length > 0) {
+        res.records.forEach((rec) => {
+          updateSEORecord(rec.id, rec);
+        });
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [updateSEORecord]);
 
   const openEditModal = (rec: AdminSEORecord) => {
     setSelectedRecord(rec);
@@ -49,11 +67,12 @@ export default function AdminSEOPage() {
     setIndexStatus(rec.indexStatus);
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedRecord) return;
 
-    updateSEORecord(selectedRecord.id, {
+    setIsSaving(true);
+    const updates = {
       metaTitle,
       metaDescription,
       canonicalUrl,
@@ -62,12 +81,31 @@ export default function AdminSEOPage() {
       ogImage,
       schemaType,
       indexStatus,
-    });
-    setSelectedRecord(null);
+    };
+
+    // 1. Update local store
+    updateSEORecord(selectedRecord.id, updates);
+
+    // 2. Persist to server and invalidate live SSR cache
+    try {
+      const res = await updateSEORecordAction(selectedRecord.id, selectedRecord.pagePath, updates);
+      if (res.success) {
+        setSyncStatus(`Live SSR cache revalidated for ${selectedRecord.pagePath}. Googlebot will receive updated HTML.`);
+      } else {
+        setSyncStatus(`Changes saved to session (${res.error || "offline mode"}).`);
+      }
+    } catch {
+      setSyncStatus(`Saved to local session store.`);
+    } finally {
+      setIsSaving(false);
+      setSelectedRecord(null);
+      setTimeout(() => setSyncStatus(null), 6000);
+    }
   };
 
   // Helper length gauges
   const titleLen = metaTitle.length;
+
   const descLen = metaDescription.length;
 
   const columns: ColumnDef<AdminSEORecord>[] = [
@@ -176,6 +214,14 @@ export default function AdminSEOPage() {
           </p>
         </div>
       </div>
+
+      {/* Live Sync Alert Banner */}
+      {syncStatus && (
+        <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xs text-xs text-emerald-900 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+          <span>{syncStatus}</span>
+        </div>
+      )}
 
       {/* SEO Data Table */}
       <DataTable

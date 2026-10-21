@@ -132,7 +132,7 @@ export default function AdminCategoriesPage() {
       render: (row) => (
         <div>
           <span className="font-semibold text-sm sm:text-base text-[#2B2B2B] block">{row.name}</span>
-          <span className="text-xs text-[#2B2B2B]/60 font-mono mt-0.5 block">/gems?category={row.slug}</span>
+          <span className="text-xs text-[#2B2B2B]/60 font-mono mt-0.5 block">/gems/category/{row.slug}</span>
         </div>
       ),
     },
@@ -194,10 +194,10 @@ export default function AdminCategoriesPage() {
       render: (row) => (
         <div className="flex items-center gap-2 justify-end">
           <Link
-            href={`/gems?category=${row.slug}`}
+            href={`/gems/category/${row.slug}`}
             target="_blank"
             className="p-1.5 text-[#2B2B2B]/60 hover:text-[#5E0F1E] hover:bg-[#B8924A]/10 rounded-xs transition-colors"
-            title="View Storefront Collection"
+            title="View Live Category Page"
           >
             <Eye className="w-4 h-4" />
           </Link>

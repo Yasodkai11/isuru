@@ -35,9 +35,11 @@ export function MobileNav({ isOpen, onClose, session }: MobileNavProps) {
     { label: "Home", href: "/" },
     { label: "Gemstones", href: "/gems" },
     { label: "Our Story", href: "/about" },
+    { label: "Certification", href: "/certificates" },
     { label: "Wholesale", href: "/wholesale" },
     { label: "Contact", href: "/contact" },
   ];
+
 
   return (
     <div className="fixed inset-0 z-50 lg:hidden flex justify-end" role="dialog" aria-modal="true">

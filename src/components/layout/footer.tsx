@@ -8,9 +8,11 @@ const EXPLORE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Gemstones Catalog", href: "/gems" },
   { label: "Our Story & Heritage", href: "/about" },
+  { label: "Certification & Authenticity", href: "/certificates" },
   { label: "Wholesale & B2B", href: "/wholesale" },
   { label: "Contact Concierge", href: "/contact" },
 ];
+
 
 const VARIETY_LINKS = Object.entries(CATEGORIES_CONFIG).map(([slug, config]) => ({
   label: config.title,

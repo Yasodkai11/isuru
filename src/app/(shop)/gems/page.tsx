@@ -13,6 +13,7 @@ import {
   getBreadcrumbListSchema,
   getCollectionPageSchema,
 } from "@/lib/seo/schema";
+import { getSEORecordByPath } from "@/actions/seo";
 
 interface GemsPageProps {
   searchParams: Promise<{
@@ -31,22 +32,82 @@ interface GemsPageProps {
 
 export async function generateMetadata({ searchParams }: GemsPageProps): Promise<Metadata> {
   const resolved = await searchParams;
+  const pageNum = resolved.page ? Math.max(1, parseInt(resolved.page, 10)) : 1;
+  const seo = await getSEORecordByPath("/gems");
+
+  const hasSearch = Boolean(resolved.search && resolved.search.trim().length > 0);
+  const isFiltered = Boolean(
+    (resolved.colour && resolved.colour !== "all") ||
+    (resolved.shape && resolved.shape !== "all") ||
+    (resolved.variety && resolved.variety !== "all") ||
+    (resolved.category && resolved.category !== "all") ||
+    (resolved.origin && resolved.origin !== "all") ||
+    (resolved.carat && resolved.carat !== "all") ||
+    (resolved.price && resolved.price !== "all")
+  );
+
   const parts: string[] = [];
-  if (resolved.colour) parts.push(resolved.colour);
-  if (resolved.shape) parts.push(resolved.shape);
-  if (resolved.variety) parts.push(resolved.variety);
+  if (resolved.search) parts.push(`Search: "${resolved.search}"`);
+  if (resolved.colour && resolved.colour !== "all") parts.push(resolved.colour);
+  if (resolved.shape && resolved.shape !== "all") parts.push(resolved.shape);
+  if (resolved.variety && resolved.variety !== "all") parts.push(resolved.variety);
 
   const prefix = parts.length > 0 ? `${parts.join(" ")} - ` : "";
+  const pageSuffix = pageNum > 1 ? ` (Page ${pageNum})` : "";
+  const baseTitle = prefix ? `${prefix}Natural Gemstones Vault` : (seo?.metaTitle || "Natural Gemstones Vault");
+  const baseDesc = seo?.metaDescription ||
+    "Explore certified unheated Ceylon Royal Blue Sapphires, Padparadschas, Rubies, and precious island gemstones with full laboratory certification from NGJA, GIA, and GRS.";
+
+  // Canonical is self-referential for pagination (e.g. /gems?page=2), but clean /gems for page 1 or filtered variants
+  const canonicalUrl = pageNum > 1 && !hasSearch && !isFiltered
+    ? `/gems?page=${pageNum}`
+    : `/gems`;
 
   return {
-    title: `${prefix}Natural Gemstones Vault`,
-    description:
-      "Explore certified unheated Ceylon Royal Blue Sapphires, Padparadschas, Rubies, and precious island gemstones with full laboratory certification from NGJA, GIA, and GRS.",
+    title: `${baseTitle}${pageSuffix}`,
+    description: baseDesc,
     alternates: {
-      canonical: "/gems",
+      canonical: canonicalUrl,
+    },
+
+    // When searching or applying faceted filter permutations, apply noindex, follow to protect crawl budget
+    robots: (hasSearch || isFiltered)
+      ? {
+          index: false,
+          follow: true,
+          googleBot: {
+            index: false,
+            follow: true,
+          },
+        }
+      : {
+          index: true,
+          follow: true,
+        },
+    openGraph: {
+      title: `${prefix}Natural Gemstones Vault${pageSuffix} | Isuru Ceylon`,
+      description:
+        "Explore certified unheated Ceylon Royal Blue Sapphires, Padparadschas, Rubies, and precious island gemstones authenticated by NGJA, GIA, and GRS.",
+      url: canonicalUrl,
+      images: [
+        {
+          url: "/isuru_images/blue1.webp",
+          width: 1200,
+          height: 630,
+          alt: "Natural Ceylon Gemstones Vault",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${prefix}Natural Gemstones Vault${pageSuffix} | Isuru Ceylon`,
+      description:
+        "Explore certified unheated Ceylon Royal Blue Sapphires, Padparadschas, Rubies, and precious island gemstones authenticated by NGJA, GIA, and GRS.",
+      images: ["/isuru_images/blue1.webp"],
     },
   };
 }
+
 
 export default async function GemsPage({ searchParams }: GemsPageProps) {
   const resolved = await searchParams;

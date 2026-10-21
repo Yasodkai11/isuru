@@ -4,6 +4,9 @@ import { InquiryForm } from "@/components/inquiry/inquiry-form";
 import { SalonMap } from "@/components/contact/salon-map";
 import { BRAND } from "@/lib/constants";
 import { Mail, Phone } from "lucide-react";
+import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
+
+import { getSEORecordByPath } from "@/actions/seo";
 
 interface ContactPageProps {
   searchParams: Promise<{
@@ -13,22 +16,58 @@ interface ContactPageProps {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSEORecordByPath("/contact");
+
+  const metaTitle = seo?.metaTitle || "Bespoke Commissions & Concierge";
+  const metaDesc =
+    seo?.metaDescription ||
+    "Contact the gemological concierge at Isuru Gems for loose unheated Ceylon sapphire acquisition, custom ring commissions, or private viewings in Colombo and Ratnapura.";
+  const canonicalUrl = seo?.canonicalUrl || "/contact";
+  const ogImg = seo?.ogImage || "/isuru_images/contactus.webp";
+
   return {
-    title: "Bespoke Commissions & Concierge",
-    description:
-      "Contact the gemological concierge at Isuru Gems for loose unheated Ceylon sapphire acquisition, custom ring commissions, or private viewings in Colombo and Ratnapura.",
+    title: metaTitle,
+    description: metaDesc,
     alternates: {
-      canonical: "/contact",
+      canonical: canonicalUrl,
+    },
+    robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
+    openGraph: {
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      url: canonicalUrl,
+      images: [
+        {
+          url: ogImg,
+          width: 1200,
+          height: 630,
+          alt: metaTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      images: [ogImg],
     },
   };
 }
 
+
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const resolvedParams = await searchParams;
 
+  const breadcrumbSchema = getBreadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Bespoke Concierge & Salons", url: "/contact" },
+  ]);
+
   return (
     <div className="min-h-screen bg-cream py-10 sm:py-14">
+      <JsonLd data={breadcrumbSchema} />
       <div className="container-luxe">
+
         <div className="mx-auto max-w-7xl space-y-10 sm:space-y-14">
           <header className="grid items-center gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
             <div className="max-w-xl">

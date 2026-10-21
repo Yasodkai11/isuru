@@ -11,6 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
       index: false,
       follow: false,
     },
+    alternates: {
+      canonical: "/checkout",
+    },
   };
 }
 

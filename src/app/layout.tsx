@@ -41,7 +41,24 @@ export const metadata: Metadata = {
     "National Gem and Jewellery Authority NGJA",
   ],
   authors: [{ name: "Isuru Ceylon" }],
+  creator: "Isuru Ceylon",
+  publisher: "Isuru Ceylon",
+  category: "Jewelry & Gemstones",
   metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "./",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "Isuru Ceylon | Natural Ceylon Sapphires & Fine Island Gemstones",
     description: "Ethically mined, unheated certified Ceylon gemstones direct from Ratnapura.",
@@ -75,6 +92,7 @@ export const metadata: Metadata = {
     ],
   },
 };
+
 
 export default function RootLayout({
   children,

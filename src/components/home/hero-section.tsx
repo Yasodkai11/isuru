@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -12,17 +12,30 @@ import {
   Pause,
 } from "lucide-react";
 
-function usePrefersReducedMotion() {
-  const [matches, setMatches] = useState(false);
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setMatches(mediaQuery.matches);
-    const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
-    mediaQuery.addEventListener("change", listener);
-    return () => mediaQuery.removeEventListener("change", listener);
-  }, []);
-  return matches;
+function subscribeReducedMotion(callback: () => void) {
+  if (typeof window === "undefined" || !window.matchMedia) return () => {};
+  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mediaQuery.addEventListener("change", callback);
+  return () => mediaQuery.removeEventListener("change", callback);
 }
+
+function getReducedMotionSnapshot() {
+  if (typeof window === "undefined" || !window.matchMedia) return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
+
+function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
+}
+
 
 const SLIDE_DURATION_MS = 6500;
 
@@ -108,7 +121,7 @@ const FLOATING_PODS: FloatingGemPodData[] = [
     carat: "4.28 cts",
     tag: "Unheated Ceylon",
     image: "/isuru_images/blue1.webp",
-    href: "/gems?category=blue-sapphires",
+    href: "/gems/category/blue-gems",
     positionClasses: "-top-5 sm:-top-7 -left-3 sm:-left-7",
     animationDelay: "0s",
   },
@@ -118,11 +131,12 @@ const FLOATING_PODS: FloatingGemPodData[] = [
     carat: "3.15 cts",
     tag: "Rare Collector Specimen",
     image: "/isuru_images/pink1.webp",
-    href: "/gems?category=padparadscha",
+    href: "/gems/category/pink-purple-gems",
     positionClasses: "-bottom-5 sm:-bottom-7 -right-3 sm:-right-7",
     animationDelay: "-3.5s",
   },
 ];
+
 
 export function HeroSection() {
   const reduce = usePrefersReducedMotion();

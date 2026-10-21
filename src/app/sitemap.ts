@@ -1,76 +1,97 @@
 import type { MetadataRoute } from "next";
-import { getGemstones } from "@/actions/gems";
+import { getSitemapGemstones } from "@/actions/gems";
 import { CATEGORIES_CONFIG } from "@/lib/constants";
 
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
-  // Base release timestamp to avoid spurious lastmod changes on static content
-  const staticLastMod = new Date("2026-10-15T00:00:00.000Z");
+  const now = new Date();
 
   // 1. Core static marketing and institutional pages
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/`,
-      lastModified: staticLastMod,
+      lastModified: now,
       changeFrequency: "daily",
       priority: 1.0,
+      images: [`${baseUrl}/isuru_images/blue1.webp`],
     },
     {
       url: `${baseUrl}/gems`,
-      lastModified: staticLastMod,
+      lastModified: now,
       changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: staticLastMod,
-      changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.95,
+      images: [`${baseUrl}/isuru_images/blue1.webp`],
     },
     {
       url: `${baseUrl}/certificates`,
-      lastModified: staticLastMod,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/wholesale`,
-      lastModified: staticLastMod,
+      lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.7,
+      priority: 0.75,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: staticLastMod,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
+      images: [`${baseUrl}/isuru_images/contactus.webp`],
     },
   ];
 
   // 2. Curated gemstone category routes
-  const categoryKeys = Object.keys(CATEGORIES_CONFIG);
-  const categoryRoutes: MetadataRoute.Sitemap = categoryKeys.map((catKey) => ({
-    url: `${baseUrl}/gems/category/${catKey}`,
-    lastModified: staticLastMod,
-    changeFrequency: "weekly",
-    priority: 0.85,
-  }));
+  const categoryRoutes: MetadataRoute.Sitemap = Object.entries(CATEGORIES_CONFIG).map(
+    ([catKey, config]) => {
+      const catImageUrl = config.image.startsWith("http")
+        ? config.image
+        : `${baseUrl}${config.image}`;
 
-  // 3. Dynamic individual gemstone specimen routes (fetch up to 5000 gems)
+      return {
+        url: `${baseUrl}/gems/category/${catKey}`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.85,
+        images: [catImageUrl],
+      };
+    }
+  );
+
+  // 3. Dynamic individual gemstone specimen routes (lean projected query)
   let gemstoneRoutes: MetadataRoute.Sitemap = [];
   try {
-    const { gems } = await getGemstones({ limit: 5000 });
-    gemstoneRoutes = gems.map((gem) => ({
-      url: `${baseUrl}/gems/${gem.slug}`,
-      lastModified: staticLastMod,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    }));
+    const gems = await getSitemapGemstones();
+
+    gemstoneRoutes = gems
+      .filter((gem) => Boolean(gem.slug))
+      .map((gem) => {
+        const images = (gem.images || [])
+          .map((img) => (img.url.startsWith("http") ? img.url : `${baseUrl}${img.url}`))
+          .filter(Boolean);
+
+        return {
+          url: `${baseUrl}/gems/${gem.slug}`,
+          lastModified: gem.updated_at ? new Date(gem.updated_at) : now,
+          changeFrequency: "weekly" as const,
+          priority: 0.9,
+          ...(images.length > 0 ? { images } : {}),
+        };
+      });
   } catch (err) {
     console.warn("Could not retrieve dynamic gemstone routes for sitemap:", err);
   }
 
   return [...staticRoutes, ...categoryRoutes, ...gemstoneRoutes];
 }
+

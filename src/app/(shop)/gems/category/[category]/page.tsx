@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,7 +8,7 @@ import { GemCard } from "@/components/gems/gem-card";
 import { GemFilters } from "@/components/gems/gem-filters";
 import { GemPagination } from "@/components/gems/gem-pagination";
 import { GoldDivider } from "@/components/layout/gold-divider";
-import { CATEGORIES_CONFIG, CARAT_PRESETS, PRICE_PRESETS } from "@/lib/constants";
+import { CATEGORIES_CONFIG, CARAT_PRESETS, PRICE_PRESETS, resolveCategoryKey } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Sparkles } from "lucide-react";
@@ -16,6 +17,7 @@ import {
   getBreadcrumbListSchema,
   getCollectionPageSchema,
 } from "@/lib/seo/schema";
+import { getSEORecordByPath } from "@/actions/seo";
 
 export async function generateStaticParams() {
   return Object.keys(CATEGORIES_CONFIG).map((category) => ({
@@ -39,9 +41,10 @@ interface CategoryPageProps {
   }>;
 }
 
-export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: CategoryPageProps): Promise<Metadata> {
   const { category } = await params;
-  const config = CATEGORIES_CONFIG[category];
+  const resolvedCategory = resolveCategoryKey(category) || category;
+  const config = CATEGORIES_CONFIG[resolvedCategory];
 
   if (!config) {
     return {
@@ -53,23 +56,59 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     };
   }
 
+  const seo =
+    (await getSEORecordByPath(`/gems/category/${category}`)) ||
+    (await getSEORecordByPath(`/gems/category/${resolvedCategory}`));
+
+  const resolved = searchParams ? await searchParams : {};
+  const pageNum = resolved.page ? Math.max(1, parseInt(resolved.page, 10)) : 1;
+
+  const hasSearch = Boolean(resolved.search && resolved.search.trim().length > 0);
+  const isFiltered = Boolean(
+    (resolved.colour && resolved.colour !== "all") ||
+    (resolved.shape && resolved.shape !== "all") ||
+    (resolved.carat && resolved.carat !== "all") ||
+    (resolved.price && resolved.price !== "all") ||
+    (resolved.origin && resolved.origin !== "all")
+  );
+
+  const pageSuffix = pageNum > 1 ? ` (Page ${pageNum})` : "";
+  const canonicalUrl = pageNum > 1
+    ? `/gems/category/${category}?page=${pageNum}`
+    : `/gems/category/${category}`;
+
+  const baseTitle = seo?.metaTitle || `${config.title} - ${config.subtitle}`;
+  const baseDesc = seo?.metaDescription || config.description;
+
   return {
-    title: `${config.title} - ${config.subtitle}`,
-    description: config.description,
+    title: `${baseTitle}${pageSuffix}`,
+    description: baseDesc,
     alternates: {
-      canonical: `/gems/category/${category}`,
+      canonical: canonicalUrl,
     },
+    robots: (hasSearch || isFiltered)
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
     openGraph: {
-      title: `${config.title} - ${config.subtitle}`,
-      description: config.description,
-      images: [{ url: config.image, width: 1200, height: 630, alt: config.title }],
+      title: `${seo?.ogTitle || baseTitle}${pageSuffix} | Isuru Ceylon`,
+      description: seo?.ogDescription || baseDesc,
+      url: canonicalUrl,
+      images: [{ url: seo?.ogImage || config.image, width: 1200, height: 630, alt: config.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${seo?.ogTitle || baseTitle}${pageSuffix} | Isuru Ceylon`,
+      description: seo?.ogDescription || baseDesc,
+      images: [seo?.ogImage || config.image],
     },
   };
 }
 
+
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { category } = await params;
-  const config = CATEGORIES_CONFIG[category];
+  const resolvedCategory = resolveCategoryKey(category) || category;
+  const config = CATEGORIES_CONFIG[resolvedCategory];
 
   if (!config) {
     notFound();
@@ -200,11 +239,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
               <Link
                 key={item.slug}
                 href={`/gems/category/${item.slug}`}
-                className={`text-xs uppercase tracking-wider px-4 py-2 border transition-all font-medium ${
-                  isActive
+                className={`text-xs uppercase tracking-wider px-4 py-2 border transition-all font-medium ${isActive
                     ? "bg-[#5E0F1E] text-[#FAF6EE] border-[#5E0F1E] shadow-xs"
                     : "bg-[#FDFBF7] text-[#2B2B2B] border-[#B8924A]/30 hover:border-[#B8924A]"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>

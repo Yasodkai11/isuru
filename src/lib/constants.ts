@@ -83,6 +83,72 @@ export const CATEGORIES_CONFIG: Record<
     match: { column: "color" | "variety"; value: string };
   }
 > = {
+  // --- High-Intent Gemological Varieties (Admin & Organic Search Targets) ---
+  "blue-sapphires": {
+    title: "Ceylon Blue Sapphires",
+    subtitle: "Royal Blue & Cornflower Blue",
+    tagline: "The Sovereign Gem of Serendib",
+    description:
+      "Celebrated for their velvety, open-color saturation that remains luminous in candlelight and daylight alike.",
+    image: "/isuru_images/categories1.webp",
+    match: { column: "color", value: "Blue" },
+  },
+  "ceylon-rubies": {
+    title: "Natural Ceylon Rubies",
+    subtitle: "Pigeon Blood & Scarlet Fluorescence",
+    tagline: "The Glowing King of Precious Gems",
+    description:
+      "Renowned for their luminous pigeon blood luminescence and natural scarlet fluorescence under sunlight.",
+    image: "/isuru_images/ruby%20category.webp",
+    match: { column: "variety", value: "Ruby" },
+  },
+  "padparadscha": {
+    title: "Padparadscha Sapphires",
+    subtitle: "Sacred Lotus Blossom Sunset Hues",
+    tagline: "The World's Rarest Corundum",
+    description:
+      "Named after the Sinhalese term for aquatic lotus blossom. A tender balance of soft morning rose pink and evening twilight orange.",
+    image: "/isuru_images/Padparadscha%20Sapphire.webp",
+    match: { column: "variety", value: "Padparadscha" },
+  },
+  "alexandrite": {
+    title: "Chrysoberyl Alexandrite",
+    subtitle: "Day-to-Night Optical Miracle",
+    tagline: "Emerald by Day, Ruby by Night",
+    description:
+      "Displays an extraordinary transition from vibrant teal green in daylight to rich raspberry red under warm light.",
+    image: "/isuru_images/Alexandrite%20category.webp",
+    match: { column: "variety", value: "Alexandrite" },
+  },
+  "yellow-sapphires": {
+    title: "Ceylon Yellow Sapphires",
+    subtitle: "Golden Amber & Imperial Honey Corundum (Pushparaga)",
+    tagline: "Auspicious Brilliance from Balangoda",
+    description:
+      "Revered for centuries across Vedic traditions as Pushparaga. Displaying dazzling brilliance and fiery golden undertones.",
+    image: "/isuru_images/yellow.webp",
+    match: { column: "color", value: "Yellow" },
+  },
+  "rare-collector": {
+    title: "Rare Collector Crystals",
+    subtitle: "Asterism Star Sapphires, Rough Crystals & Minerals",
+    tagline: "Museum & Investment Grade Crystals",
+    description:
+      "Singular mineralogical phenomena including six-ray asterism crystals, untreated rough stones, and high-dome cabochons.",
+    image: "/isuru_images/categories3.webp",
+    match: { column: "variety", value: "Star" },
+  },
+  "ceylon-spinel": {
+    title: "Ceylon Natural Spinel",
+    subtitle: "Flame Red & Cobalt Fire",
+    tagline: "High Refractive Index Splendor",
+    description:
+      "Naturally untreated singly-refractive gemstones showcasing pure unheated fiery dispersion.",
+    image: "/isuru_images/Red%20Ceylon%20Spinel.webp",
+    match: { column: "variety", value: "Spinel" },
+  },
+
+  // --- Visual Color Categories (Storefront Legacy & Color Filtering) ---
   "blue-gems": {
     title: "Blue Gems",
     subtitle: "Royal, Cornflower & Pastel Blue",
@@ -135,6 +201,31 @@ export const CATEGORIES_CONFIG: Record<
     match: { column: "variety", value: "Parcel" },
   },
 };
+
+/**
+ * Bidirectional aliases ensuring legacy color slugs and high-intent variety slugs cross-resolve.
+ */
+export const CATEGORY_SLUG_ALIASES: Record<string, string> = {
+  "blue-sapphires": "blue-gems",
+  "ceylon-rubies": "red-gems",
+  "padparadscha": "pink-purple-gems",
+  "yellow-sapphires": "yellow-gems",
+  "ceylon-spinel": "red-gems",
+  "alexandrite": "green-gems",
+  "rare-collector": "gem-collections",
+};
+
+/**
+ * Resolves a category slug, checking direct config match first, then aliases.
+ */
+export function resolveCategoryKey(slug: string): string | undefined {
+  if (!slug) return undefined;
+  if (CATEGORIES_CONFIG[slug]) return slug;
+  const aliased = CATEGORY_SLUG_ALIASES[slug];
+  if (aliased && CATEGORIES_CONFIG[aliased]) return aliased;
+  return undefined;
+}
+
 
 export const CERTIFICATIONS = [
   { code: "NGJA", name: "National Gem and Jewellery Authority of Sri Lanka", trusted: true },

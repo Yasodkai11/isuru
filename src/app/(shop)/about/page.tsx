@@ -2,28 +2,61 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GoldDivider } from "@/components/layout/gold-divider";
 import { Compass, HeartHandshake, ShieldCheck, Award, Sparkles, ArrowRight } from "lucide-react";
+import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
+
+import { getSEORecordByPath } from "@/actions/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSEORecordByPath("/about");
+
+  const metaTitle = seo?.metaTitle || "Our Story: From Generational Heritage to the Digital World";
+  const metaDesc =
+    seo?.metaDescription ||
+    "The authentic story of Isuru Gems. Rooted in the legacies of Reginald Mendis (b. 1922) and Premaratne Pathinayake, combining family mining heritage with modern gemology and official NGJA licensing (Reg: 202610DL42288).";
+  const canonicalUrl = seo?.canonicalUrl || "/about";
+  const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
+
   return {
-    title: "Our Story: From Generational Heritage to the Digital World",
-    description:
-      "The authentic story of Isuru Gems. Rooted in the legacies of Reginald Mendis (b. 1922) and Premaratne Pathinayake, combining family mining heritage with modern gemology and official NGJA licensing (Reg: 202610DL42288).",
+    title: metaTitle,
+    description: metaDesc,
     alternates: {
-      canonical: "/about",
+      canonical: canonicalUrl,
     },
+    robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {
-      title: "Our Story: A Legacy of Gems, A Future of Trust | Isuru Ceylon",
-      description:
-        "From generational Sri Lankan mining heritage to a trusted international digital presence. Licensed NGJA Dealer 202610DL42288.",
-      url: "/about",
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      url: canonicalUrl,
+      images: [
+        {
+          url: ogImg,
+          width: 1200,
+          height: 630,
+          alt: metaTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      images: [ogImg],
     },
   };
 }
 
+
 export default function AboutPage() {
+  const breadcrumbSchema = getBreadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Our Story & Heritage", url: "/about" },
+  ]);
+
   return (
     <div className="py-16 sm:py-20 lg:py-24 bg-[#FAF6EE] min-h-screen">
+      <JsonLd data={breadcrumbSchema} />
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-20 lg:space-y-28">
+
         
         {/* Editorial Heading */}
         <div className="text-center max-w-4xl mx-auto space-y-4">

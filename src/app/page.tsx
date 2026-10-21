@@ -23,39 +23,50 @@ import {
   getBreadcrumbListSchema,
 } from "@/lib/seo/schema";
 
+import { getSEORecordByPath } from "@/actions/seo";
+
 // ISR: Statically prerender and cache page for 1 hour, avoiding no-store headers in production
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSEORecordByPath("/");
+
+  const metaTitle = seo?.metaTitle || "Isuru Ceylon | Natural Ceylon Sapphires & Rare Precious Island Gemstones";
+  const metaDesc = seo?.metaDescription || "Curators of unheated Ceylon Royal Blue Sapphires, rare Padparadschas, and natural gemstones direct from the alluvial gravels of Ratnapura, Sri Lanka since 1964. Authenticated by NGJA, GRS, and GIA.";
+  const canonicalUrl = seo?.canonicalUrl || "/";
+  const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
+
   return {
     title: {
-      absolute: "Isuru Ceylon | Natural Ceylon Sapphires & Rare Precious Island Gemstones",
+      absolute: metaTitle,
     },
-    description:
-      "Curators of unheated Ceylon Royal Blue Sapphires, rare Padparadschas, and natural gemstones direct from the alluvial gravels of Ratnapura, Sri Lanka since 1964. Authenticated by NGJA, GRS, and GIA.",
+    description: metaDesc,
     alternates: {
-      canonical: "/",
+      canonical: canonicalUrl,
     },
+    robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {
-      title: "Isuru Ceylon | The Timeless Beauty of Ceylon",
-      description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
-      url: "/",
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      url: canonicalUrl,
       images: [
         {
-          url: "/isuru_images/blue1.webp",
+          url: ogImg,
           width: 1200,
           height: 630,
-          alt: "Isuru Ceylon - Fine Ceylon Blue Sapphire",
+          alt: metaTitle,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Isuru Ceylon | Natural Ceylon Sapphires & Rare Gems",
-      description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
+      title: seo?.ogTitle || metaTitle,
+      description: seo?.ogDescription || metaDesc,
+      images: [ogImg],
     },
   };
 }
+
 
 export default async function HomePage() {
   const { gems } = await getGemstones({ limit: 16 });
