@@ -36,7 +36,8 @@ $itemsToCopy = @(
     "DATABASE-DATA-AUDIT.md",
     "AUDIT_REPORT.md",
     ".gitignore",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "netlify.toml"
 )
 
 foreach ($item in $itemsToCopy) {
