@@ -470,9 +470,11 @@ export async function getAdminOrdersAction(
 
   try {
     const supabase = await createAdminClient();
+    const projectedOrderColumns =
+      "id, created_at, user_id, customer_name, email, phone, shipping_address, city, country, total_amount, currency, status, notes, tracking_carrier, tracking_number, customs_declaration_number, dispatched_at, order_items(id, order_id, gem_id, gem_name, variety, carat, price, currency, created_at)";
     let q = supabase
       .from("orders")
-      .select("*, order_items(*)", { count: "exact" })
+      .select(projectedOrderColumns, { count: "exact" })
       .order("created_at", { ascending: false });
 
     if (options?.limit || options?.page) {
@@ -674,9 +676,11 @@ export async function getAdminInquiriesAction(
 
   try {
     const supabase = await createAdminClient();
+    const projectedInquiryColumns =
+      "id, created_at, gem_id, gem_name, full_name, email, phone, country, message, preferred_currency, status, reply_notes, replied_at";
     let q = supabase
       .from("inquiries")
-      .select("*", { count: "exact" })
+      .select(projectedInquiryColumns, { count: "exact" })
       .order("created_at", { ascending: false });
 
     if (options?.limit || options?.page) {
@@ -949,9 +953,11 @@ export async function getAdminCategoriesAction(): Promise<AdminActionResult<Admi
 
   try {
     const supabase = await createAdminClient();
+    const projectedCategoryColumns =
+      "id, slug, name, subtitle, tagline, description, image, variety_query, product_count, featured, sort_order, created_at";
     const { data, error } = await supabase
       .from("categories")
-      .select("*")
+      .select(projectedCategoryColumns)
       .order("sort_order", { ascending: true });
 
     if (error || !data || data.length === 0) {
@@ -1103,9 +1109,11 @@ export async function getAdminMediaAssetsAction(): Promise<AdminActionResult<Med
 
   try {
     const supabase = await createAdminClient();
+    const projectedMediaColumns =
+      "id, name, url, type, size, dimensions, format, associated_gem_slug, tag, created_at";
     const { data, error } = await supabase
       .from("media_assets")
-      .select("*")
+      .select(projectedMediaColumns)
       .order("created_at", { ascending: false });
 
     if (error || !data || data.length === 0) {

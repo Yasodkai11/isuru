@@ -77,9 +77,11 @@ export async function getStaffMembersAction(): Promise<StaffActionResult<AdminSt
 
   try {
     const supabase = await createAdminClient();
+    const projectedStaffColumns =
+      "id, full_name, email, role, department, phone, status, can_manage_gems, can_manage_orders, can_manage_staff, can_export_data, last_login, notes, created_at, updated_at, auth_user_id";
     const { data, error } = await supabase
       .from("staff_members")
-      .select("*")
+      .select(projectedStaffColumns)
       .order("created_at", { ascending: true });
 
     if (error) {

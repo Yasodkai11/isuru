@@ -210,9 +210,11 @@ export async function getCustomerProfileAction(
     }
 
     // Query profiles by user_id or id
+    const projectedProfileColumns =
+      "id, user_id, full_name, email, phone, shipping_address, city, country, postal_code, tier, total_spent, orders_count, first_acquisition_date, last_acquisition_date, preferred_varieties, notes, created_at, updated_at";
     const { data, error } = await supabase
       .from("profiles")
-      .select("*")
+      .select(projectedProfileColumns)
       .or(`user_id.eq.${queryUserId},id.eq.${queryUserId}`)
       .maybeSingle();
 

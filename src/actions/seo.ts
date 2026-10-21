@@ -16,9 +16,11 @@ export const getSEORecordByPath = cache(async (path: string): Promise<AdminSEORe
   if (isSupabaseConfigured) {
     try {
       const supabase = await createClient();
+      const projectedSeoColumns =
+        "id, page_path, page_title, meta_title, meta_description, keywords, og_title, og_description, og_image, canonical_url, schema_type, index_status, last_audited";
       const { data, error } = await supabase
         .from("seo_records")
-        .select("*")
+        .select(projectedSeoColumns)
         .eq("page_path", path)
         .maybeSingle();
 
@@ -58,9 +60,11 @@ export async function getAllSEORecordsAction(): Promise<{
   if (isSupabaseConfigured) {
     try {
       const supabase = await createClient();
+      const projectedSeoColumns =
+        "id, page_path, page_title, meta_title, meta_description, keywords, og_title, og_description, og_image, canonical_url, schema_type, index_status, last_audited";
       const { data, error } = await supabase
         .from("seo_records")
-        .select("*")
+        .select(projectedSeoColumns)
         .order("page_path", { ascending: true });
 
       if (!error && data && data.length > 0) {

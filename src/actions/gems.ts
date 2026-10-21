@@ -261,11 +261,21 @@ export const getGemBySlug = cache(async (slug: string): Promise<Gemstone | null>
   if (isSupabaseConfigured) {
     try {
       const supabase = await createClient();
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from("gemstones")
-        .select("*")
+        .select("id, slug, name, variety, category, carat, origin, cut, dimensions, color, treatment, clarity, price, currency, in_stock, featured, description, certificate_lab, certificate_number, certificate_pdf_url, images, created_at")
         .eq("slug", slug)
         .maybeSingle();
+
+      if (error && (error.message?.includes("category") || error.code === "42703")) {
+        const retry = await supabase
+          .from("gemstones")
+          .select("id, slug, name, variety, carat, origin, cut, dimensions, color, treatment, clarity, price, currency, in_stock, featured, description, certificate_lab, certificate_number, certificate_pdf_url, images, created_at")
+          .eq("slug", slug)
+          .maybeSingle();
+        data = retry.data ? { ...retry.data, category: null } : null;
+        error = retry.error;
+      }
 
       if (!error && data) {
         return mapDbRowToGemstone(data);
@@ -286,7 +296,7 @@ export async function getRelatedGems(currentSlug: string, limit: number = 3): Pr
       const supabase = await createClient();
       let query = supabase
         .from("gemstones")
-        .select("*")
+        .select("id, slug, name, variety, carat, origin, cut, dimensions, color, treatment, clarity, price, currency, in_stock, featured, description, certificate_lab, certificate_number, certificate_pdf_url, images, created_at")
         .neq("slug", currentSlug)
         .eq("in_stock", true)
         .limit(limit);
