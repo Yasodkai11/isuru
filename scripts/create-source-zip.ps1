@@ -29,7 +29,12 @@ $itemsToCopy = @(
     ".htaccess.example",
     ".env.example",
     "HOSTINGER_DEPLOYMENT_GUIDE.md",
-    "SEO-AUDIT-REPORT.md"
+    "SEO-AUDIT-REPORT.md",
+    "SEO-AUDIT.md",
+    "SECURITY-AUDIT.md",
+    "DATABASE-DATA-AUDIT.md",
+    ".gitignore",
+    "next-env.d.ts"
 )
 
 foreach ($item in $itemsToCopy) {

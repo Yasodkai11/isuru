@@ -2,10 +2,33 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { verifyIsAdmin } from "@/actions/auth";
 
+const ALLOWED_PROD_HOSTS = new Set(["isuruceylon.com", "www.isuruceylon.com"]);
+
+function getSafeRedirectBase(request: Request, origin: string): string {
+  const isLocalEnv = process.env.NODE_ENV === "development";
+  if (isLocalEnv) {
+    return origin;
+  }
+
+  const forwardedHost = request.headers.get("x-forwarded-host")?.toLowerCase()?.trim();
+  if (forwardedHost && ALLOWED_PROD_HOSTS.has(forwardedHost)) {
+    return `https://${forwardedHost}`;
+  }
+
+  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (configuredSiteUrl && (configuredSiteUrl.startsWith("https://") || configuredSiteUrl.startsWith("http://"))) {
+    return configuredSiteUrl.replace(/\/+$/, "");
+  }
+
+  // Fallback to canonical production domain
+  return "https://isuruceylon.com";
+}
+
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
   const next = searchParams.get("next");
+  const redirectBase = getSafeRedirectBase(request, origin);
 
   if (code) {
     const supabase = await createClient();
@@ -25,7 +48,7 @@ export async function GET(request: Request) {
       // block them and redirect to login with a specific error notice.
       if (target.startsWith("/admin") && !isAdmin) {
         return NextResponse.redirect(
-          `${origin}/login?error=admin_unauthorized&role=admin&email=${encodeURIComponent(data.user.email || "")}`
+          `${redirectBase}/login?error=admin_unauthorized&role=admin&email=${encodeURIComponent(data.user.email || "")}`
         );
       }
 
@@ -34,19 +57,10 @@ export async function GET(request: Request) {
         target = "/admin";
       }
 
-      const forwardedHost = request.headers.get("x-forwarded-host");
-      const isLocalEnv = process.env.NODE_ENV === "development";
-
-      if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${target}`);
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${target}`);
-      } else {
-        return NextResponse.redirect(`${origin}${target}`);
-      }
+      return NextResponse.redirect(`${redirectBase}${target}`);
     }
   }
 
   // If code exchange failed or no code provided, redirect to login with query param
-  return NextResponse.redirect(`${origin}/login?error=oauth_exchange_failed`);
+  return NextResponse.redirect(`${redirectBase}/login?error=oauth_exchange_failed`);
 }

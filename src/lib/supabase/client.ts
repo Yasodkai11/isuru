@@ -6,7 +6,7 @@ import { Database } from "@/types/supabase";
  * Never includes or exposes service-role keys.
  */
 export function createClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://pexbwmaoyoelxzpiohlk.supabase.co";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mock-isuru-gems.supabase.co";
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "mock-anon-key";
 
   return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey);

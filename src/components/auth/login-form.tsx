@@ -38,7 +38,9 @@ export function LoginForm() {
     errorParam === "admin_unauthorized"
       ? `Clearance required: The Google account ${emailParam ? `(${emailParam}) ` : ""
       }is authenticated, but is not registered with Staff Vault administrator privileges. Please sign in with an authorized staff Google account (e.g., ${BRAND.email}) or use staff credentials below.`
-      : errorParam === "oauth_exchange_failed"
+      : errorParam === "admin_clearance_required"
+        ? "Clearance required: Administrative vault access is restricted to verified staff members. Please sign in with staff credentials."
+        : errorParam === "oauth_exchange_failed"
         ? "Google authentication was cancelled or could not be completed. Please try again or use your password."
         : errorParam
           ? "Authentication failed or session expired. Please sign in again."

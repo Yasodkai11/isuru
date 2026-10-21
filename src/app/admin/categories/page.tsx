@@ -21,9 +21,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { slugify } from "@/lib/utils";
+import {
+  getAdminCategoriesAction,
+  saveAdminCategoryAction,
+  deleteAdminCategoryAction,
+} from "@/actions/admin-db";
 
 export default function AdminCategoriesPage() {
-  const { categories, addCategory, updateCategory, deleteCategory, gemstones } = useAdminStore();
+  const { categories, setCategories, addCategory, updateCategory, deleteCategory, gemstones } = useAdminStore();
+
+  // Synchronize persisted categories from Supabase on mount
+  React.useEffect(() => {
+    let isMounted = true;
+    getAdminCategoriesAction().then((res) => {
+      if (isMounted && res.success && res.data && res.data.length > 0) {
+        setCategories(res.data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [setCategories]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
@@ -111,6 +129,16 @@ export default function AdminCategoriesPage() {
       addCategory(data);
     }
     setModalOpen(false);
+
+    try {
+      saveAdminCategoryAction(data).then((res) => {
+        if (res.success && res.data) {
+          updateCategory(data.id, res.data);
+        }
+      });
+    } catch (err) {
+      console.warn("Category persistence note:", err);
+    }
   };
 
   const columns: ColumnDef<AdminCategory>[] = [
@@ -406,9 +434,15 @@ export default function AdminCategoriesPage() {
               </Button>
               <Button
                 size="sm"
-                onClick={() => {
-                  deleteCategory(deleteConfirm.id);
+                onClick={async () => {
+                  const targetId = deleteConfirm.id;
+                  deleteCategory(targetId);
                   setDeleteConfirm(null);
+                  try {
+                    await deleteAdminCategoryAction(targetId);
+                  } catch (err) {
+                    console.warn("Category deletion error:", err);
+                  }
                 }}
                 className="text-xs bg-red-600 hover:bg-red-700 text-white"
               >

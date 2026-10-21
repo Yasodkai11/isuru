@@ -50,7 +50,7 @@ export async function createClient() {
  */
 export async function createAdminClient() {
   let serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://pexbwmaoyoelxzpiohlk.supabase.co";
+  let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mock-isuru-gems.supabase.co";
 
   // Fallback: If not in process.env (e.g. custom standalone runtime), read from .env.local on disk
   if (!serviceRoleKey || !supabaseUrl) {

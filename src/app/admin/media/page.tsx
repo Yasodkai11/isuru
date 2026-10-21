@@ -23,13 +23,31 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { uploadGemMediaAction } from "@/actions/storage";
+import {
+  getAdminMediaAssetsAction,
+  saveAdminMediaAssetAction,
+  deleteAdminMediaAssetAction,
+} from "@/actions/admin-db";
 
 export default function AdminMediaPage() {
-  const { mediaAssets, addMediaAsset, deleteMediaAsset } = useAdminStore();
+  const { mediaAssets, setMediaAssets, addMediaAsset, deleteMediaAsset } = useAdminStore();
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [modalOpen, setModalOpen] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+
+  // Synchronize media assets from Supabase on mount
+  React.useEffect(() => {
+    let isMounted = true;
+    getAdminMediaAssetsAction().then((res) => {
+      if (isMounted && res.success && res.data && res.data.length > 0) {
+        setMediaAssets(res.data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [setMediaAssets]);
 
   // New Media Form
   const [assetName, setAssetName] = useState("");
@@ -48,7 +66,7 @@ export default function AdminMediaPage() {
     e.preventDefault();
     if (!assetUrl.trim()) return;
 
-    addMediaAsset({
+    const newAsset: MediaAsset = {
       id: `media-${Date.now().toString().slice(-5)}`,
       name: assetName.trim() || `gem-asset-${Date.now().toString().slice(-4)}.webp`,
       url: assetUrl.trim(),
@@ -58,11 +76,31 @@ export default function AdminMediaPage() {
       format: assetType === "certificate_pdf" ? "PDF" : "WEBP",
       createdAt: new Date().toISOString().split("T")[0],
       tag: assetTag,
-    });
+    };
 
+    addMediaAsset(newAsset);
     setModalOpen(false);
     setAssetUrl("");
     setAssetName("");
+
+    try {
+      saveAdminMediaAssetAction(newAsset).then((res) => {
+        if (res.success && res.data) {
+          addMediaAsset(res.data);
+        }
+      });
+    } catch (err) {
+      console.warn("Media save error:", err);
+    }
+  };
+
+  const handleDeleteAsset = async (id: string) => {
+    deleteMediaAsset(id);
+    try {
+      await deleteAdminMediaAssetAction(id);
+    } catch (err) {
+      console.warn("Media delete error:", err);
+    }
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,7 +224,7 @@ export default function AdminMediaPage() {
           </Button>
 
           <button
-            onClick={() => deleteMediaAsset(row.id)}
+            onClick={() => handleDeleteAsset(row.id)}
             className="p-1.5 text-red-500 hover:text-red-700 rounded-xs"
             title="Delete Asset"
           >
@@ -314,7 +352,7 @@ export default function AdminMediaPage() {
                   </Button>
 
                   <button
-                    onClick={() => deleteMediaAsset(asset.id)}
+                    onClick={() => handleDeleteAsset(asset.id)}
                     className="p-1 text-red-500 hover:text-red-700"
                     title="Delete Asset"
                   >

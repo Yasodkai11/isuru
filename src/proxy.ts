@@ -49,12 +49,58 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Protect admin routes except dedicated login
-  if (!user && pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    const url = request.nextUrl.clone();
-    url.pathname = "/admin/login";
-    url.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(url);
+  // SEC-03: Protect admin routes with strict role verification at edge proxy
+  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(url);
+    }
+
+    const userRole = (user.app_metadata?.role as string) || (user.user_metadata?.role as string);
+    const staffRoles = [
+      "super_admin",
+      "vault_custodian",
+      "gemologist",
+      "concierge_agent",
+      "inventory_clerk",
+      "admin",
+    ];
+    let isStaff = Boolean(userRole && staffRoles.includes(userRole));
+
+    // If role is not yet in JWT metadata, query staff_members via user ID
+    if (!isStaff && user.id) {
+      try {
+        const { data: staffRecord } = await supabase
+          .from("staff_members")
+          .select("role, status")
+          .eq("auth_user_id", user.id)
+          .eq("status", "active")
+          .maybeSingle();
+
+        if (staffRecord && staffRoles.includes(staffRecord.role)) {
+          isStaff = true;
+        }
+      } catch {
+        // Database query failed - fail closed
+      }
+    }
+
+    // In local development offline mode, allow configured dev admin emails
+    if (!isStaff && process.env.NODE_ENV === "development") {
+      const email = user.email?.toLowerCase();
+      if (email && ["isuru@isurugems.com", "uththiyaisurudewamendis@gmail.com"].includes(email)) {
+        isStaff = true;
+      }
+    }
+
+    if (!isStaff) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("error", "admin_clearance_required");
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;

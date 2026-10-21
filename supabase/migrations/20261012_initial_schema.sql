@@ -105,12 +105,13 @@ create policy "Users can view own orders"
   for select
   using (auth.uid() = user_id);
 
--- Orders: Public / client can insert an order during checkout
+-- Orders: Only service role or checkout stored procedure can insert orders (SEC-05)
 drop policy if exists "Anyone can create order" on public.orders;
-create policy "Anyone can create order"
+drop policy if exists "Service role or checkout function can create order" on public.orders;
+create policy "Service role or checkout function can create order"
   on public.orders
   for insert
-  with check (true);
+  with check (auth.jwt() ->> 'role' = 'service_role');
 
 -- Inquiries: Anyone can submit an inquiry
 drop policy if exists "Anyone can submit inquiry" on public.inquiries;

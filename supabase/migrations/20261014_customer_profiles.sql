@@ -74,6 +74,30 @@ create policy "Users can update own profile or staff can manage"
     or is_active_staff()
   );
 
+-- SEC-06: Column-level access control trigger to prevent patron privilege tampering
+create or replace function public.prevent_profile_privilege_tampering()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if not (auth.jwt() ->> 'role' = 'service_role' or is_active_staff()) then
+    if new.tier is distinct from old.tier
+       or new.total_spent is distinct from old.total_spent
+       or new.orders_count is distinct from old.orders_count then
+      raise exception 'Forbidden: Customer cannot modify privileged profile attributes.';
+    end if;
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_protect_profile_privileges on public.profiles;
+create trigger trg_protect_profile_privileges
+  before update on public.profiles
+  for each row execute function public.prevent_profile_privilege_tampering();
+
 -- Policy: Insert (Allow insertion by auth triggers, service_role, or staff)
 drop policy if exists "Allow inserts from trigger or staff" on public.profiles;
 create policy "Allow inserts from trigger or staff"

@@ -17,6 +17,9 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
       const supabase = await createClient();
       let query = supabase.from("gemstones").select("*", { count: "exact" });
 
+      // DATA-10: Exclude archived gemstones from customer catalog
+      query = query.eq("is_archived", false);
+
       // Colour filter
       if (filters?.colour && filters.colour !== "all") {
         query = query.ilike("color", `%${filters.colour}%`);
@@ -32,12 +35,14 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
         query = query.ilike("variety", `%${filters.variety}%`);
       }
 
-      // Category filter (supports both direct config keys and mineral variety slugs)
+      // Category filter (supports indexed category column with config column fallback - DATA-03)
       if (filters?.category && filters.category !== "all") {
         const resolvedKey = resolveCategoryKey(filters.category) || filters.category;
         const match = CATEGORIES_CONFIG[resolvedKey]?.match;
         if (match) {
-          query = query.ilike(match.column, `%${match.value}%`);
+          query = query.or(`category.eq.${resolvedKey},category.eq.${filters.category},${match.column}.ilike.%${match.value}%`);
+        } else {
+          query = query.or(`category.eq.${resolvedKey},category.eq.${filters.category}`);
         }
       }
 
@@ -289,13 +294,14 @@ export async function getRelatedGems(currentSlug: string, limit: number = 3): Pr
 
 export interface SitemapGemRecord {
   slug: string;
+  created_at?: string;
   updated_at?: string;
   images: Array<{ url: string; alt?: string }>;
 }
 
 /**
  * Lightweight projected query for sitemap generation.
- * Selects only slug, updated_at, and images for in-stock gems, avoiding heavy full table scans.
+ * Selects only slug, created_at, and images for in-stock gems, avoiding heavy full table scans.
  */
 export async function getSitemapGemstones(): Promise<SitemapGemRecord[]> {
   if (isSupabaseConfigured) {
@@ -303,12 +309,17 @@ export async function getSitemapGemstones(): Promise<SitemapGemRecord[]> {
       const supabase = await createClient();
       const { data, error } = await supabase
         .from("gemstones")
-        .select("slug, updated_at, images")
+        .select("slug, created_at, images")
         .eq("in_stock", true)
+        .eq("is_archived", false)
         .order("created_at", { ascending: false });
 
       if (!error && data) {
-        return data as SitemapGemRecord[];
+        return data.map((d) => ({
+          slug: d.slug,
+          created_at: d.created_at,
+          images: Array.isArray(d.images) ? (d.images as unknown as Array<{ url: string; alt?: string }>) : [],
+        }));
       }
     } catch (err) {
       console.warn("Supabase sitemap gems query note:", err);

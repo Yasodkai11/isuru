@@ -41,19 +41,19 @@ In an ultra-high-net-worth e-commerce environment, the primary threat actors and
 
 | Finding ID | Title | Severity | Affected Component / File | Vulnerability Type | Status |
 |---|---|---|---|---|---|
-| **SEC-01** | Host Header Injection & Open Redirect in OAuth Callback Handler | **Critical** | `src/app/auth/callback/route.ts` | CWE-601: URL Redirection to Untrusted Site | Confirmed Issue |
-| **SEC-02** | Fail-Open Admin Authentication When Supabase Configuration Fails | **Critical** | `src/lib/auth-checks.ts` | CWE-636: Not Failing Securely | Confirmed Issue |
-| **SEC-03** | Edge Proxy Lacks Role Verification for `/admin` Route Group | **High** | `src/proxy.ts` | CWE-285: Improper Authorization | Confirmed Issue |
-| **SEC-04** | Privilege Escalation Risk via Unverified Email Account Linking | **High** | `src/lib/auth-checks.ts`, `src/actions/auth.ts` | CWE-287: Improper Authentication | Confirmed Issue |
-| **SEC-05** | Overly Permissive Public Insert Policy on Orders Table | **High** | `supabase/migrations/20261012_initial_schema.sql` | CWE-284: Improper Access Control (RLS) | Confirmed Issue |
-| **SEC-06** | Missing Column-Level Access Control on Customer Profiles Table | **High** | `supabase/migrations/20261014_customer_profiles.sql` | CWE-284: Broken Object Property Authorization | Confirmed Issue |
-| **SEC-07** | Stored Cross-Site Scripting (XSS) Risk in JSON-LD Injection | **High** | `src/lib/seo/schema.tsx` | CWE-79: Cross-Site Scripting | Confirmed Issue |
-| **SEC-08** | Absence of Rate Limiting on Login Authentication Action | **Medium** | `src/actions/auth.ts` (`loginAction`) | CWE-307: Improper Restriction of Excessive Attempts | Confirmed Issue |
-| **SEC-09** | Spoofable In-Memory IP Rate Limiter Implementation | **Medium** | `src/lib/rate-limit.ts` | CWE-348: Use of Less Trusted Source | Confirmed Issue |
-| **SEC-10** | Missing Security Headers in Production Configuration (CSP, HSTS) | **Medium** | `next.config.ts` | CWE-1021: Improper Restriction of Rendered UI | Confirmed Issue |
-| **SEC-11** | Silent Failure to Reserve Stock in Fallback Checkout Path | **Medium** | `src/actions/checkout.ts` | CWE-662: Improper Synchronization | Confirmed Issue |
-| **SEC-12** | Hardcoded Project Supabase URL in Source Fallback Strings | **Low** | `src/lib/supabase/client.ts`, `server.ts` | CWE-200: Exposure of Sensitive Information | Confirmed Issue |
-| **SEC-13** | Synchronous Filesystem Reading of Environment Secrets at Runtime | **Low** | `src/lib/supabase/server.ts` | CWE-73: External Control of File Name or Path | Potential Risk |
+| **SEC-01** | Host Header Injection & Open Redirect in OAuth Callback Handler | **Critical** | `src/app/auth/callback/route.ts` | CWE-601: URL Redirection to Untrusted Site | **Resolved & Hardened** |
+| **SEC-02** | Fail-Open Admin Authentication When Supabase Configuration Fails | **Critical** | `src/lib/auth-checks.ts` | CWE-636: Not Failing Securely | **Resolved & Hardened** |
+| **SEC-03** | Edge Proxy Lacks Role Verification for `/admin` Route Group | **High** | `src/proxy.ts` | CWE-285: Improper Authorization | **Resolved & Hardened** |
+| **SEC-04** | Privilege Escalation Risk via Unverified Email Account Linking | **High** | `src/lib/auth-checks.ts`, `src/actions/auth.ts` | CWE-287: Improper Authentication | **Resolved & Hardened** |
+| **SEC-05** | Overly Permissive Public Insert Policy on Orders Table | **High** | `supabase/migrations/20261012_initial_schema.sql` | CWE-284: Improper Access Control (RLS) | **Resolved & Hardened** |
+| **SEC-06** | Missing Column-Level Access Control on Customer Profiles Table | **High** | `supabase/migrations/20261014_customer_profiles.sql` | CWE-284: Broken Object Property Authorization | **Resolved & Hardened** |
+| **SEC-07** | Stored Cross-Site Scripting (XSS) Risk in JSON-LD Injection | **High** | `src/lib/seo/schema.tsx` | CWE-79: Cross-Site Scripting | **Resolved & Hardened** |
+| **SEC-08** | Absence of Rate Limiting on Login Authentication Action | **Medium** | `src/actions/auth.ts` (`loginAction`) | CWE-307: Improper Restriction of Excessive Attempts | **Resolved & Hardened** |
+| **SEC-09** | Spoofable In-Memory IP Rate Limiter Implementation | **Medium** | `src/lib/rate-limit.ts` | CWE-348: Use of Less Trusted Source | Configured at LiteSpeed Proxy |
+| **SEC-10** | Missing Security Headers in Production Configuration (CSP, HSTS) | **Medium** | `next.config.ts` | CWE-1021: Improper Restriction of Rendered UI | **Resolved & Hardened** |
+| **SEC-11** | Silent Failure to Reserve Stock in Fallback Checkout Path | **Medium** | `src/actions/checkout.ts` | CWE-662: Improper Synchronization | **Resolved & Hardened** |
+| **SEC-12** | Hardcoded Project Supabase URL in Source Fallback Strings | **Low** | `src/lib/supabase/client.ts`, `server.ts` | CWE-200: Exposure of Sensitive Information | **Resolved & Hardened** |
+| **SEC-13** | Synchronous Filesystem Reading of Environment Secrets at Runtime | **Low** | `src/lib/supabase/server.ts` | CWE-73: External Control of File Name or Path | Verified Runtime Loading |
 
 ---
 

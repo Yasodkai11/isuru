@@ -31,6 +31,7 @@ import { Modal } from "@/components/ui/modal";
 import {
   getAdminOrdersAction,
   updateAdminOrderStatusAction,
+  updateAdminOrderTrackingAction,
 } from "@/actions/admin-db";
 
 const WORKFLOW_STEPS: { status: OrderStatus; label: string; desc: string }[] = [
@@ -114,7 +115,7 @@ export default function AdminOrdersPage() {
     }
   };
 
-  const handleSaveTracking = (e: React.FormEvent) => {
+  const handleSaveTracking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedOrder) return;
 
@@ -125,6 +126,12 @@ export default function AdminOrdersPage() {
       trackingNumber: trackingNumberInput,
       status: selectedOrder.status === "customs_clearance" ? "dispatched" : selectedOrder.status,
     });
+
+    try {
+      await updateAdminOrderTrackingAction(selectedOrder.id, carrierInput, trackingNumberInput);
+    } catch (err) {
+      console.warn("Tracking persistence note:", err);
+    }
   };
 
   const getStatusBadge = (status: OrderStatus) => {

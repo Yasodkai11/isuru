@@ -1,8 +1,11 @@
 "use server";
 
+import { headers } from "next/headers";
 import { createAdminClient, createClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { Database } from "@/types/supabase";
 import { loginSchema, registerSchema, LoginInput, RegisterInput } from "@/schemas/auth";
 import { INITIAL_ADMIN_STAFF } from "@/lib/admin-seed";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { redirect } from "next/navigation";
 
 export interface ActionResult<T = unknown> {
@@ -34,28 +37,32 @@ export async function verifyIsAdmin(email?: string | null, userId?: string | nul
 
   const normalizedEmail = (email || "").trim().toLowerCase();
 
-  // 1. Check local seed staff for immediate match
-  if (normalizedEmail) {
+  // SEC-04: In development mode only, allow matching local seed staff if Supabase is offline
+  if (!isSupabaseConfigured && process.env.NODE_ENV === "development" && normalizedEmail) {
     const isSeedStaff = INITIAL_ADMIN_STAFF.some(
       (s) => s.email.toLowerCase() === normalizedEmail && s.status === "active"
     );
     if (isSeedStaff) return true;
   }
 
-  // 2. Query staff_members table in Supabase
+  // 2. Query staff_members table authoritatively in Supabase
   if (isSupabaseConfigured) {
     try {
       const supabase = await createClient();
-      let query = supabase.from("staff_members").select("id, role, status").eq("status", "active");
+      let query = supabase.from("staff_members").select("id, role, status, auth_user_id").eq("status", "active");
 
       if (userId) {
-        query = query.or(`auth_user_id.eq.${userId},email.eq.${normalizedEmail}`);
+        query = query.eq("auth_user_id", userId);
       } else if (normalizedEmail) {
         query = query.eq("email", normalizedEmail);
       }
 
       const { data, error } = await query.maybeSingle();
       if (!error && data) {
+        // If queried with userId, ensure auth_user_id matches
+        if (userId && data.auth_user_id && data.auth_user_id !== userId) {
+          return false;
+        }
         return true;
       }
     } catch {
@@ -71,6 +78,25 @@ export async function verifyIsAdmin(email?: string | null, userId?: string | nul
  * Automatically resolves usernames to registered emails.
  */
 export async function loginAction(formData: FormData | LoginInput): Promise<ActionResult> {
+  // SEC-08: Apply rate limiting on login action to prevent brute-force attacks
+  const headerList = await headers();
+  const clientIp =
+    headerList.get("x-forwarded-for")?.split(",")[0].trim() ||
+    headerList.get("x-real-ip") ||
+    "client-session";
+
+  const rateCheck = checkRateLimit(`login:${clientIp}`, {
+    limit: 5,
+    windowMs: 60 * 1000,
+  });
+
+  if (!rateCheck.success) {
+    return {
+      success: false,
+      message: rateCheck.message || "Too many login attempts. Please wait 60 seconds before trying again.",
+    };
+  }
+
   const rawData =
     formData instanceof FormData ? Object.fromEntries(formData.entries()) : formData;
 
@@ -152,17 +178,33 @@ export async function loginAction(formData: FormData | LoginInput): Promise<Acti
       };
     }
 
-    // When staff logs in successfully, sync last_login and ensure auth_user_id is linked
+    // SEC-04: When staff logs in successfully, sync last_login and safely ensure auth_user_id is linked
     if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         const adminSupabase = await createAdminClient();
-        await adminSupabase
+        const { data: existingStaff } = await adminSupabase
           .from("staff_members")
-          .update({
-            auth_user_id: authData.user.id,
+          .select("id, auth_user_id")
+          .eq("email", resolvedEmail)
+          .maybeSingle();
+
+        if (existingStaff) {
+          const updatePayload: Database["public"]["Tables"]["staff_members"]["Update"] = {
             last_login: new Date().toISOString(),
-          })
-          .eq("email", resolvedEmail);
+          };
+
+          // Only link auth_user_id if not already bound, and caller email is confirmed
+          if (!existingStaff.auth_user_id && authData.user.email_confirmed_at) {
+            updatePayload.auth_user_id = authData.user.id;
+          }
+
+          if (existingStaff.auth_user_id === authData.user.id || !existingStaff.auth_user_id) {
+            await adminSupabase
+              .from("staff_members")
+              .update(updatePayload)
+              .eq("id", existingStaff.id);
+          }
+        }
       } catch {
         // Non-fatal background sync
       }

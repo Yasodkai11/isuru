@@ -82,7 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
         return {
           url: `${baseUrl}/gems/${gem.slug}`,
-          lastModified: gem.updated_at ? new Date(gem.updated_at) : now,
+          lastModified: gem.updated_at ? new Date(gem.updated_at) : (gem.created_at ? new Date(gem.created_at) : now),
           changeFrequency: "weekly" as const,
           priority: 0.9,
           ...(images.length > 0 ? { images } : {}),

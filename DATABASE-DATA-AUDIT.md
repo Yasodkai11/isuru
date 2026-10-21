@@ -507,3 +507,65 @@ supabase/seed.sql                                 # 41 production-grade Ceylon g
   ```
 - **How to Validate Fix:**
   Perform a test database dump and verify a clean restore into a local test PostgreSQL instance.
+
+---
+
+## 4. Recommended Priority Remediation Roadmap
+
+To ensure flawless transactional integrity, high-throughput query execution, and complete administrative data persistence, the remediation roadmap is structured into four sequential phases:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ Phase 1: Critical Financial & Inventory Concurrency Control (P0)       │
+│ • DATA-01: Eliminate non-atomic checkout fallback                      │
+│ • Enforce process_checkout_order row locking (FOR UPDATE)             │
+├────────────────────────────────────────────────────────────────────────┤
+│ Phase 2: Relational Persistence & Schema Alignment (P1)                │
+│ • DATA-02: Create categories, media_assets, and store_settings tables  │
+│ • DATA-03: Add category column & index to gemstones                    │
+│ • DATA-04: Convert inquiries(gem_id) to UUID foreign key with index    │
+│ • DATA-08: Add carrier tracking & customs declaration columns to orders│
+├────────────────────────────────────────────────────────────────────────┤
+│ Phase 3: Query Latency & RLS Optimization (P2)                         │
+│ • DATA-05: Eliminate auth.users per-row subqueries via JWT claims     │
+│ • DATA-06: Offload dashboard metrics to get_vault_metrics() stored proc│
+│ • DATA-07: Memoize admin session verification via React cache()        │
+│ • DATA-09: Deploy dedicated column GIN trigram indexes for ILIKE search│
+├────────────────────────────────────────────────────────────────────────┤
+│ Phase 4: Lifecycle Safeguards & Disaster Recovery (P3)                 │
+│ • DATA-10: Implement soft-deletion (is_archived) on gemstones         │
+│ • DATA-11: Provision backup-database scripts and recovery runbook      │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### Remediation Action Plan Matrix
+
+| Phase | Finding ID | Severity | Action Items | Deliverables / Files | Status |
+|---|---|---|---|---|---|
+| **Phase 1: Immediate** | **DATA-01** | **Critical** | Remove insecure manual checkout fallback in `src/actions/checkout.ts`. Abort transaction immediately if row lock fails or stored procedure is missing, preventing overselling races and orphan orders. | `src/actions/checkout.ts` | **Remediated** |
+| **Phase 2: High** | **DATA-02** | **High** | Create relational PostgreSQL tables with RLS and seed defaults for Categories, Media Assets, and Store Settings. Wire Admin UI modules to database server actions. | `supabase/migrations/20261025_database_audit_remediation.sql`, `src/actions/admin-db.ts`, `src/app/admin/categories/page.tsx`, `src/app/admin/media/page.tsx`, `src/app/admin/settings/page.tsx` | **Remediated** |
+| **Phase 2: High** | **DATA-03** | **High** | Add `category` column and B-tree index to `public.gemstones`. Backfill historical taxonomy for all 41 seed catalog gems. Update PostgREST filter builder in `src/actions/gems.ts`. | `supabase/migrations/20261025_database_audit_remediation.sql`, `src/types/supabase.ts`, `src/actions/gems.ts` | **Remediated** |
+| **Phase 2: High** | **DATA-04** | **High** | Alter `inquiries.gem_id` to UUID with foreign key constraint `REFERENCES public.gemstones(id) ON DELETE SET NULL` and create B-tree index `idx_inquiries_gem_id`. | `supabase/migrations/20261025_database_audit_remediation.sql`, `src/types/supabase.ts` | **Remediated** |
+| **Phase 2: High** | **DATA-08** | **High** | Add `tracking_carrier`, `tracking_number`, `customs_declaration_number`, and `dispatched_at` columns to `public.orders`. Add `updateAdminOrderTrackingAction` and wire dispatch form. | `supabase/migrations/20261025_database_audit_remediation.sql`, `src/types/supabase.ts`, `src/actions/admin-db.ts`, `src/app/admin/orders/page.tsx` | **Remediated** |
+| **Phase 3: Medium** | **DATA-05** | **High** | Replace `email = (select email from auth.users where id = auth.uid())` subqueries in `orders`, `order_items`, and `inquiries` RLS policies with direct JWT claim evaluation `auth.jwt() ->> 'email'`. | `supabase/migrations/20261025_database_audit_remediation.sql` | **Remediated** |
+| **Phase 3: Medium** | **DATA-06** | **Medium** | Implement database-level aggregation stored procedure `public.get_vault_metrics()`. Offload calculation of vault values, carats, revenues, and counts from Node.js memory to PostgreSQL. | `supabase/migrations/20261025_database_audit_remediation.sql`, `src/actions/admin-db.ts` | **Remediated** |
+| **Phase 3: Medium** | **DATA-07** | **Medium** | Wrap `requireAdminSession` in React's `cache()` to eliminate duplicate `staff_members` queries during concurrent server component / server action evaluations. | `src/lib/auth-checks.ts` | **Remediated** |
+| **Phase 3: Medium** | **DATA-09** | **Medium** | Create dedicated single-column GIN trigram indexes on `name`, `variety`, and `origin` in `public.gemstones` to accelerate PostgREST ILIKE search patterns. | `supabase/migrations/20261025_database_audit_remediation.sql` | **Remediated** |
+| **Phase 4: Low** | **DATA-10** | **Low** | Add `is_archived` column and index to `public.gemstones`. Update `deleteAdminGemstoneAction` to soft-archive gems that have historical order line items, preserving relational integrity. | `supabase/migrations/20261025_database_audit_remediation.sql`, `src/actions/admin-db.ts`, `src/actions/gems.ts` | **Remediated** |
+| **Phase 4: Low** | **DATA-11** | **Low** | Provision automated backup scripts (`scripts/backup-database.sh`, `scripts/backup-database.ps1`) using `pg_dump` with custom binary compression and automated retention rotation. | `scripts/backup-database.sh`, `scripts/backup-database.ps1` | **Remediated** |
+
+---
+
+## 5. Verification & Validation Protocol
+
+After applying migration `20261025_database_audit_remediation.sql` in Supabase SQL Editor:
+1. **Concurrency Validation (DATA-01):**
+   Execute parallel checkout requests for the same gemstone. Verify that the first request locks the row and completes, while the concurrent request is safely aborted with inventory notification.
+2. **Persistence Validation (DATA-02, DATA-08):**
+   - In `/admin/categories`, create or modify a category; reload page in an incognito session and confirm persistence from Supabase.
+   - In `/admin/orders`, enter courier waybill details and click "Save Dispatch Tracking"; reload and verify tracking info remains attached to the order.
+3. **RLS Performance Check (DATA-05):**
+   Run `EXPLAIN ANALYZE SELECT * FROM public.orders;` as an authenticated patron user. Verify zero plan nodes accessing `auth.users`.
+4. **Soft-Delete Integrity (DATA-10):**
+   Attempt to delete a gemstone previously acquired in an order via `/admin/products`. Confirm the specimen status transitions to `is_archived = true` without throwing foreign key constraint errors (`23503`).
+

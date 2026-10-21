@@ -6,6 +6,7 @@ import { createClient, createAdminClient, isSupabaseConfigured } from "@/lib/sup
 import { AdminSEORecord } from "@/types/admin";
 import { INITIAL_ADMIN_SEO } from "@/lib/admin-seed";
 import { requireAdminSession } from "@/lib/auth-checks";
+import { Database } from "@/types/supabase";
 
 /**
  * Fast cached lookup for Next.js SSR generateMetadata.
@@ -33,8 +34,8 @@ export const getSEORecordByPath = cache(async (path: string): Promise<AdminSEORe
           ogDescription: data.og_description || undefined,
           ogImage: data.og_image || undefined,
           canonicalUrl: data.canonical_url,
-          schemaType: data.schema_type,
-          indexStatus: data.index_status,
+          schemaType: (data.schema_type as AdminSEORecord["schemaType"]) || "Organization",
+          indexStatus: (data.index_status as AdminSEORecord["indexStatus"]) || "indexed",
           lastAudited: data.last_audited || new Date().toISOString(),
         };
       }
@@ -74,8 +75,8 @@ export async function getAllSEORecordsAction(): Promise<{
           ogDescription: d.og_description || undefined,
           ogImage: d.og_image || undefined,
           canonicalUrl: d.canonical_url,
-          schemaType: d.schema_type,
-          indexStatus: d.index_status,
+          schemaType: (d.schema_type as AdminSEORecord["schemaType"]) || "Organization",
+          indexStatus: (d.index_status as AdminSEORecord["indexStatus"]) || "indexed",
           lastAudited: d.last_audited || new Date().toISOString(),
         }));
         return { success: true, records };
@@ -102,26 +103,26 @@ export async function updateSEORecordAction(
 
     // 2. Persist to database if Supabase is connected
     if (isSupabaseConfigured) {
-      const supabase = createAdminClient();
-      const payload: Record<string, any> = {
+      const supabase = await createAdminClient();
+      const existing = INITIAL_ADMIN_SEO.find((r) => r.id === id || r.pagePath === pagePath);
+      const insertPayload: Database["public"]["Tables"]["seo_records"]["Insert"] = {
         id,
         page_path: pagePath,
-        updated_at: new Date().toISOString(),
+        page_title: updates.pageTitle ?? existing?.pageTitle ?? pagePath,
+        meta_title: updates.metaTitle ?? existing?.metaTitle ?? pagePath,
+        meta_description: updates.metaDescription ?? existing?.metaDescription ?? "",
+        canonical_url: updates.canonicalUrl ?? existing?.canonicalUrl ?? `https://isurugems.com${pagePath}`,
+        keywords: updates.keywords ?? existing?.keywords ?? [],
+        og_title: updates.ogTitle !== undefined ? updates.ogTitle : (existing?.ogTitle || null),
+        og_description: updates.ogDescription !== undefined ? updates.ogDescription : (existing?.ogDescription || null),
+        og_image: updates.ogImage !== undefined ? updates.ogImage : (existing?.ogImage || null),
+        schema_type: updates.schemaType ?? existing?.schemaType ?? "CollectionPage",
+        index_status: updates.indexStatus ?? existing?.indexStatus ?? "indexed",
         last_audited: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       };
 
-      if (updates.pageTitle !== undefined) payload.page_title = updates.pageTitle;
-      if (updates.metaTitle !== undefined) payload.meta_title = updates.metaTitle;
-      if (updates.metaDescription !== undefined) payload.meta_description = updates.metaDescription;
-      if (updates.canonicalUrl !== undefined) payload.canonical_url = updates.canonicalUrl;
-      if (updates.ogTitle !== undefined) payload.og_title = updates.ogTitle;
-      if (updates.ogDescription !== undefined) payload.og_description = updates.ogDescription;
-      if (updates.ogImage !== undefined) payload.og_image = updates.ogImage;
-      if (updates.schemaType !== undefined) payload.schema_type = updates.schemaType;
-      if (updates.indexStatus !== undefined) payload.index_status = updates.indexStatus;
-      if (updates.keywords !== undefined) payload.keywords = updates.keywords;
-
-      const { error } = await supabase.from("seo_records").upsert(payload, { onConflict: "id" });
+      const { error } = await supabase.from("seo_records").upsert(insertPayload, { onConflict: "id" });
       if (error) {
         throw new Error(error.message);
       }
@@ -135,11 +136,12 @@ export async function updateSEORecordAction(
       success: true,
       message: `SEO metadata successfully updated and SSR cache revalidated for ${pagePath}.`,
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
       success: false,
       message: "Failed to persist SEO updates to live server.",
-      error: err.message || "Unknown error",
+      error: msg,
     };
   }
 }

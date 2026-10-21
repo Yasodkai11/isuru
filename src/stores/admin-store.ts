@@ -45,6 +45,7 @@ export interface AdminState {
   toggleFeatured: (id: string) => void;
 
   // Categories CRUD
+  setCategories: (categories: AdminCategory[]) => void;
   addCategory: (category: AdminCategory) => void;
   updateCategory: (id: string, partial: Partial<AdminCategory>) => void;
   deleteCategory: (id: string) => void;
@@ -66,6 +67,7 @@ export interface AdminState {
   addCustomer: (customer: AdminCustomer) => void;
 
   // Media
+  setMediaAssets: (assets: MediaAsset[]) => void;
   addMediaAsset: (asset: MediaAsset) => void;
   deleteMediaAsset: (id: string) => void;
 
@@ -140,6 +142,10 @@ export const useAdminStore = create<AdminState>()(
       },
 
       // Categories
+      setCategories: (categories) => {
+        set({ categories });
+      },
+
       addCategory: (category) => {
         set((state) => ({
           categories: [...state.categories, category],
@@ -236,6 +242,10 @@ export const useAdminStore = create<AdminState>()(
       },
 
       // Media
+      setMediaAssets: (mediaAssets) => {
+        set({ mediaAssets });
+      },
+
       addMediaAsset: (asset) => {
         set((state) => ({
           mediaAssets: [asset, ...state.mediaAssets],

@@ -306,18 +306,25 @@ export function getCollectionPageSchema({
 }
 
 /**
- * Helper component to safely render JSON-LD script tag in server or client components
+ * Helper component to safely render JSON-LD script tag in server or client components.
+ * SEC-07: HTML characters (<, >, &) are escaped to unicode equivalents to prevent
+ * stored XSS breakouts from user-entered or database strings.
  */
 export function JsonLd({
   data,
 }: {
   data: Record<string, unknown> | Array<Record<string, unknown>>;
 }) {
+  const jsonString = JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026");
+
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data),
+        __html: jsonString,
       }}
     />
   );

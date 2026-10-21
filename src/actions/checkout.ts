@@ -1,7 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { createAdminClient, createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { checkoutSchema, CheckoutInput } from "@/schemas/checkout";
 import { CATALOG_GEMS } from "@/lib/catalog-gems";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -77,61 +77,13 @@ export async function processOrderAction(data: CheckoutInput): Promise<CheckoutR
       });
 
       if (rpcError) {
-        // Fallback if RPC migration hasn't been executed yet in the database
-        if (rpcError.message.includes("function") && rpcError.message.includes("does not exist")) {
-          // Manual transactional sequence with verification
-          const { data: availableGems, error: fetchErr } = await supabase
-            .from("gemstones")
-            .select("id, name, variety, carat, price, currency, in_stock")
-            .in("id", itemIds);
-
-          if (fetchErr || !availableGems || availableGems.length !== itemIds.length) {
-            return {
-              success: false,
-              message: "Unable to verify gemstone availability. Please refresh and try again.",
-            };
-          }
-
-          const unavailable = availableGems.filter((g) => !g.in_stock);
-          if (unavailable.length > 0) {
-            return {
-              success: false,
-              message: `The following specimen is no longer available: ${unavailable.map((u) => u.name).join(", ")}.`,
-            };
-          }
-
-          const calculatedTotal = availableGems.reduce((sum, g) => sum + Number(g.price), 0);
-
-          const { error: insertOrderError } = await supabase.from("orders").insert({
-            id: orderReference,
-            user_id: userId,
-            customer_name: fullName,
-            email,
-            phone,
-            shipping_address: `${address}${postalCode ? `, ${postalCode}` : ""}`,
-            city,
-            country,
-            total_amount: calculatedTotal,
-            currency: "USD",
-            status: "pending_verification",
-            notes: formattedNotes,
-          });
-
-          if (insertOrderError) {
-            return {
-              success: false,
-              message: `Order registration failed: ${insertOrderError.message}`,
-            };
-          }
-
-          // Mark gemstones as acquired / reserved
-          await supabase.from("gemstones").update({ in_stock: false }).in("id", itemIds);
-        } else {
-          return {
-            success: false,
-            message: rpcError.message || "Failed to finalize acquisition. Please contact the concierge.",
-          };
-        }
+        console.error("Critical checkout RPC failure:", rpcError);
+        return {
+          success: false,
+          message: rpcError.message?.includes("longer available")
+            ? rpcError.message
+            : "Unable to lock vault inventory for checkout. Please refresh or contact the concierge desk.",
+        };
       }
 
       // Sync customer delivery profile details safely (without permitting client tier tampering)

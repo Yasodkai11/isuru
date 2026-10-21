@@ -32,7 +32,8 @@ export interface Database {
           certificate_number: string;
           certificate_pdf_url: string | null;
           images: Json;
-          category?: string | null;
+          category: string | null;
+          is_archived: boolean;
         };
         Insert: {
           id?: string;
@@ -57,6 +58,7 @@ export interface Database {
           certificate_pdf_url?: string | null;
           images?: Json;
           category?: string | null;
+          is_archived?: boolean;
         };
         Update: {
           id?: string;
@@ -81,6 +83,7 @@ export interface Database {
           certificate_pdf_url?: string | null;
           images?: Json;
           category?: string | null;
+          is_archived?: boolean;
         };
         Relationships: [];
       };
@@ -162,6 +165,10 @@ export interface Database {
           currency: string;
           status: string;
           notes: string | null;
+          tracking_carrier: string | null;
+          tracking_number: string | null;
+          customs_declaration_number: string | null;
+          dispatched_at: string | null;
         };
         Insert: {
           id?: string;
@@ -177,6 +184,10 @@ export interface Database {
           currency?: string;
           status?: string;
           notes?: string | null;
+          tracking_carrier?: string | null;
+          tracking_number?: string | null;
+          customs_declaration_number?: string | null;
+          dispatched_at?: string | null;
         };
         Update: {
           id?: string;
@@ -192,6 +203,10 @@ export interface Database {
           currency?: string;
           status?: string;
           notes?: string | null;
+          tracking_carrier?: string | null;
+          tracking_number?: string | null;
+          customs_declaration_number?: string | null;
+          dispatched_at?: string | null;
         };
         Relationships: [];
       };
@@ -292,7 +307,15 @@ export interface Database {
           reply_notes?: string | null;
           replied_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "fk_inquiries_gem";
+            columns: ["gem_id"];
+            isOneToOne: false;
+            referencedRelation: "gemstones";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       staff_members: {
         Row: {
@@ -351,6 +374,159 @@ export interface Database {
         };
         Relationships: [];
       };
+      categories: {
+        Row: {
+          id: string;
+          created_at: string;
+          slug: string;
+          name: string;
+          subtitle: string | null;
+          tagline: string | null;
+          description: string | null;
+          image: string;
+          variety_query: string | null;
+          product_count: number;
+          featured: boolean;
+          sort_order: number;
+        };
+        Insert: {
+          id?: string;
+          created_at?: string;
+          slug: string;
+          name: string;
+          subtitle?: string | null;
+          tagline?: string | null;
+          description?: string | null;
+          image: string;
+          variety_query?: string | null;
+          product_count?: number;
+          featured?: boolean;
+          sort_order?: number;
+        };
+        Update: {
+          id?: string;
+          created_at?: string;
+          slug?: string;
+          name?: string;
+          subtitle?: string | null;
+          tagline?: string | null;
+          description?: string | null;
+          image?: string;
+          variety_query?: string | null;
+          product_count?: number;
+          featured?: boolean;
+          sort_order?: number;
+        };
+        Relationships: [];
+      };
+      media_assets: {
+        Row: {
+          id: string;
+          created_at: string;
+          name: string;
+          url: string;
+          type: string;
+          size: string | null;
+          dimensions: string | null;
+          format: string | null;
+          associated_gem_slug: string | null;
+          tag: string | null;
+        };
+        Insert: {
+          id?: string;
+          created_at?: string;
+          name: string;
+          url: string;
+          type?: string;
+          size?: string | null;
+          dimensions?: string | null;
+          format?: string | null;
+          associated_gem_slug?: string | null;
+          tag?: string | null;
+        };
+        Update: {
+          id?: string;
+          created_at?: string;
+          name?: string;
+          url?: string;
+          type?: string;
+          size?: string | null;
+          dimensions?: string | null;
+          format?: string | null;
+          associated_gem_slug?: string | null;
+          tag?: string | null;
+        };
+        Relationships: [];
+      };
+      store_settings: {
+        Row: {
+          key: string;
+          value: Json;
+          updated_at: string;
+        };
+        Insert: {
+          key: string;
+          value: Json;
+          updated_at?: string;
+        };
+        Update: {
+          key?: string;
+          value?: Json;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      seo_records: {
+        Row: {
+          id: string;
+          page_path: string;
+          page_title: string;
+          meta_title: string;
+          meta_description: string;
+          keywords: string[];
+          og_title: string | null;
+          og_description: string | null;
+          og_image: string | null;
+          canonical_url: string;
+          schema_type: string;
+          index_status: string;
+          last_audited: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          page_path: string;
+          page_title: string;
+          meta_title: string;
+          meta_description: string;
+          keywords?: string[];
+          og_title?: string | null;
+          og_description?: string | null;
+          og_image?: string | null;
+          canonical_url: string;
+          schema_type?: string;
+          index_status?: string;
+          last_audited?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          page_path?: string;
+          page_title?: string;
+          meta_title?: string;
+          meta_description?: string;
+          keywords?: string[];
+          og_title?: string | null;
+          og_description?: string | null;
+          og_image?: string | null;
+          canonical_url?: string;
+          schema_type?: string;
+          index_status?: string;
+          last_audited?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -374,6 +550,10 @@ export interface Database {
           order_id: string;
           total_amount: number;
         };
+      };
+      get_vault_metrics: {
+        Args: Record<PropertyKey, never>;
+        Returns: Json;
       };
     };
     Enums: {

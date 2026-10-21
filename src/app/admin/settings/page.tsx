@@ -22,6 +22,10 @@ import {
 import { useAdminStore } from "@/stores/admin-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  getAdminSettingsAction,
+  updateAdminSettingsAction,
+} from "@/actions/admin-db";
 
 export default function AdminSettingsPage() {
   const { settings, updateSettings, staff } = useAdminStore();
@@ -30,11 +34,31 @@ export default function AdminSettingsPage() {
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [activeTab, setActiveTab] = useState<"general" | "currency" | "logistics" | "notifications" | "staff">("general");
 
-  const handleSave = (e: React.FormEvent) => {
+  // Synchronize store settings from Supabase on mount
+  React.useEffect(() => {
+    let isMounted = true;
+    getAdminSettingsAction().then((res) => {
+      if (isMounted && res.success && res.data) {
+        updateSettings(res.data);
+        setFormData(res.data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [updateSettings]);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     updateSettings(formData);
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 3000);
+
+    try {
+      await updateAdminSettingsAction(formData);
+    } catch (err) {
+      console.warn("Settings persistence note:", err);
+    }
   };
 
   const handleRateChange = (currency: keyof typeof settings.exchangeRates, value: string) => {
