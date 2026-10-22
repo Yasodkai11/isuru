@@ -204,7 +204,7 @@ export default function WholesalePage() {
         </div>
 
         {/* Interactive B2B Wholesale Inquiry Section */}
-        <div id="wholesale-inquiry-form" className="max-w-4xl mx-auto pt-6">
+        <div id="wholesale-inquiry-form" className="max-w-[780px] mx-auto pt-4">
           <WholesaleForm />
         </div>
       </div>

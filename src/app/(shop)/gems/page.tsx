@@ -19,6 +19,7 @@ import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 interface GemsPageProps {
   searchParams: Promise<{
     colour?: string;
+    color?: string;
     shape?: string;
     carat?: string;
     price?: string;
@@ -36,9 +37,10 @@ export async function generateMetadata({ searchParams }: GemsPageProps): Promise
   const pageNum = resolved.page ? Math.max(1, parseInt(resolved.page, 10)) : 1;
   const seo = await getSEORecordByPath("/gems");
 
+  const effectiveColour = resolved.colour || resolved.color;
   const hasSearch = Boolean(resolved.search && resolved.search.trim().length > 0);
   const isFiltered = Boolean(
-    (resolved.colour && resolved.colour !== "all") ||
+    (effectiveColour && effectiveColour !== "all") ||
     (resolved.shape && resolved.shape !== "all") ||
     (resolved.variety && resolved.variety !== "all") ||
     (resolved.category && resolved.category !== "all") ||
@@ -49,7 +51,7 @@ export async function generateMetadata({ searchParams }: GemsPageProps): Promise
 
   const parts: string[] = [];
   if (resolved.search) parts.push(`Search: "${resolved.search}"`);
-  if (resolved.colour && resolved.colour !== "all") parts.push(resolved.colour);
+  if (effectiveColour && effectiveColour !== "all") parts.push(effectiveColour);
   if (resolved.shape && resolved.shape !== "all") parts.push(resolved.shape);
   if (resolved.variety && resolved.variety !== "all") parts.push(resolved.variety);
 
@@ -139,9 +141,11 @@ export default async function GemsPage({ searchParams }: GemsPageProps) {
   const currentPage = resolved.page ? Math.max(1, parseInt(resolved.page, 10) || 1) : 1;
   const itemsPerPage = 12;
 
+  const activeColour = resolved.colour || resolved.color;
+
   // Fetch paginated stones from Supabase (with fallback)
   const { gems, total, totalPages } = await getGemstones({
-    colour: resolved.colour,
+    colour: activeColour,
     shape: resolved.shape,
     variety: resolved.variety,
     category: resolved.category,

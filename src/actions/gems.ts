@@ -27,9 +27,26 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
           q = q.eq("is_archived", false);
         }
 
-        // Colour filter
+        // Colour filter (supports direct colors, compound colors, and specialized gemstone categories)
         if (filters?.colour && filters.colour !== "all") {
-          q = q.ilike("color", `%${filters.colour}%`);
+          const c = filters.colour.toLowerCase();
+          if (c.includes("spinel")) {
+            q = q.or("variety.ilike.%spinel%,category.ilike.%spinel%,name.ilike.%spinel%");
+          } else if (c.includes("alexandrite")) {
+            q = q.or("variety.ilike.%alexandrite%,category.ilike.%alexandrite%,name.ilike.%alexandrite%");
+          } else if (c.includes("collector")) {
+            q = q.or("variety.ilike.%star%,variety.ilike.%collector%,category.ilike.%rare-collector%,name.ilike.%star%");
+          } else if (c.includes("collection") || c.includes("tray") || c.includes("parcel")) {
+            q = q.or("category.ilike.%gem-collections%,variety.ilike.%parcel%,name.ilike.%tray%,cut.ilike.%assorted%");
+          } else if (c.includes("pink") || c.includes("purple")) {
+            q = q.or("color.ilike.%pink%,color.ilike.%purple%,category.ilike.%pink-purple%");
+          } else if (c.includes("red") || c.includes("maroon")) {
+            q = q.or("color.ilike.%red%,color.ilike.%maroon%,category.ilike.%red-gems%,variety.ilike.%ruby%");
+          } else if (c.includes("yellow") || c.includes("gold")) {
+            q = q.or("color.ilike.%yellow%,color.ilike.%gold%,category.ilike.%yellow-gems%");
+          } else {
+            q = q.ilike("color", `%${filters.colour}%`);
+          }
         }
 
         // Shape/Cut filter
@@ -152,9 +169,66 @@ export async function getGemstones(filters?: GemFilterOptions): Promise<Paginate
 
   if (filters?.colour && filters.colour !== "all") {
     const col = filters.colour.toLowerCase();
-    filtered = filtered.filter(
-      (g) => g.color.toLowerCase().includes(col) || g.name.toLowerCase().includes(col)
-    );
+    if (col.includes("spinel")) {
+      filtered = filtered.filter(
+        (g) =>
+          g.variety.toLowerCase().includes("spinel") ||
+          g.name.toLowerCase().includes("spinel") ||
+          (g.category && g.category.toLowerCase().includes("spinel"))
+      );
+    } else if (col.includes("alexandrite")) {
+      filtered = filtered.filter(
+        (g) =>
+          g.variety.toLowerCase().includes("alexandrite") ||
+          g.name.toLowerCase().includes("alexandrite") ||
+          (g.category && g.category.toLowerCase().includes("alexandrite"))
+      );
+    } else if (col.includes("collector")) {
+      filtered = filtered.filter(
+        (g) =>
+          g.variety.toLowerCase().includes("star") ||
+          g.variety.toLowerCase().includes("collector") ||
+          g.name.toLowerCase().includes("star") ||
+          g.category === "rare-collector"
+      );
+    } else if (col.includes("collection") || col.includes("tray") || col.includes("parcel")) {
+      filtered = filtered.filter(
+        (g) =>
+          g.category === "gem-collections" ||
+          g.variety.toLowerCase().includes("parcel") ||
+          g.name.toLowerCase().includes("tray") ||
+          g.cut.toLowerCase().includes("assorted")
+      );
+    } else if (col.includes("pink") || col.includes("purple")) {
+      filtered = filtered.filter(
+        (g) =>
+          g.color.toLowerCase().includes("pink") ||
+          g.color.toLowerCase().includes("purple") ||
+          g.color.toLowerCase().includes("violet") ||
+          g.category === "pink-purple-gems"
+      );
+    } else if (col.includes("red") || col.includes("maroon")) {
+      filtered = filtered.filter(
+        (g) =>
+          g.color.toLowerCase().includes("red") ||
+          g.color.toLowerCase().includes("maroon") ||
+          g.color.toLowerCase().includes("crimson") ||
+          g.variety.toLowerCase().includes("ruby") ||
+          g.category === "red-gems"
+      );
+    } else if (col.includes("yellow") || col.includes("gold")) {
+      filtered = filtered.filter(
+        (g) =>
+          g.color.toLowerCase().includes("yellow") ||
+          g.color.toLowerCase().includes("gold") ||
+          g.color.toLowerCase().includes("amber") ||
+          g.category === "yellow-gems"
+      );
+    } else {
+      filtered = filtered.filter(
+        (g) => g.color.toLowerCase().includes(col) || g.name.toLowerCase().includes(col)
+      );
+    }
   }
 
   if (filters?.shape && filters.shape !== "all") {

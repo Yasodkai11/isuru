@@ -22,7 +22,8 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   // Local state initialized from URL params for crisp form control
-  const [selectedColour, setSelectedColour] = useState(searchParams.get("colour") || "all");
+  const initialColour = searchParams.get("colour") || searchParams.get("color") || "all";
+  const [selectedColour, setSelectedColour] = useState(initialColour);
   const [selectedShape, setSelectedShape] = useState(searchParams.get("shape") || "all");
   const [selectedCarat, setSelectedCarat] = useState(searchParams.get("carat") || "all");
   const [selectedPrice, setSelectedPrice] = useState(searchParams.get("price") || "all");
@@ -39,8 +40,13 @@ export function GemFilters({ totalCount }: GemFiltersProps) {
     if (e) e.preventDefault();
     const params = new URLSearchParams(searchParams.toString());
 
-    if (selectedColour === "all") params.delete("colour");
-    else params.set("colour", selectedColour);
+    if (selectedColour === "all") {
+      params.delete("colour");
+      params.delete("color");
+    } else {
+      params.set("color", selectedColour);
+      params.delete("colour");
+    }
 
     if (selectedShape === "all") params.delete("shape");
     else params.set("shape", selectedShape);

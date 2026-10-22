@@ -55,7 +55,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https: blob:; font-src 'self' data: https:; connect-src 'self' https: wss:; frame-ancestors 'self';",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https: blob:; font-src 'self' data: https:; connect-src 'self' https: wss:; frame-src 'self' https://www.google.com https://maps.google.com; frame-ancestors 'self';",
           },
         ],
       },
@@ -76,6 +76,18 @@ const nextConfig: NextConfig = {
             value: "public, max-age=31536000, immutable",
           },
         ],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/gemstones",
+        destination: "/gems",
+      },
+      {
+        source: "/gemstones/:path*",
+        destination: "/gems/:path*",
       },
     ];
   },

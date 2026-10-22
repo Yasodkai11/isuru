@@ -43,7 +43,7 @@ export function CraftJourney() {
   return (
     <section
       aria-labelledby="craft-journey-title"
-      className="grain relative overflow-hidden bg-[#120F0D] text-[#FAF6EE] py-24 lg:py-32 xl:py-40"
+      className="grain relative overflow-hidden bg-[#120F0D] text-[#FAF6EE] pt-12 sm:pt-14 lg:pt-16 xl:pt-20 pb-20 lg:pb-28 xl:pb-32"
     >
       <div
         aria-hidden="true"

@@ -36,12 +36,13 @@ export const GEM_VARIETIES = [
 export const GEM_COLOURS = [
   { label: "Blue", value: "Blue" },
   { label: "Green", value: "Green" },
-  { label: "Pink", value: "Pink" },
-  { label: "Purple / Violet", value: "Purple" },
-  { label: "Red / Maroon", value: "Red" },
-  { label: "Yellow / Gold", value: "Yellow" },
-  { label: "Black / Dark", value: "Dark" },
-  { label: "Mixed Colours", value: "Mixed" },
+  { label: "Pink & Purple", value: "Pink & Purple" },
+  { label: "Red & Maroon", value: "Red & Maroon" },
+  { label: "Yellow & Gold", value: "Yellow & Gold" },
+  { label: "Spinel", value: "Spinel" },
+  { label: "Alexandrite", value: "Alexandrite" },
+  { label: "Collector Crystals", value: "Collector Crystals" },
+  { label: "Gem Collections", value: "Gem Collections" },
 ] as const;
 
 export const GEM_SHAPES = [

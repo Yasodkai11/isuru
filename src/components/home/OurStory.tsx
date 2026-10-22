@@ -26,30 +26,12 @@ interface WorkSlide {
 
 const workSlides: WorkSlide[] = [
   {
-    id: "pit-mining",
-    title: "Traditional Shaft Mining",
-    subtitle: "Ratnapura Gem Pit • 40ft Alluvial Shaft",
-    tag: "Mine Site",
-    src: "/isuru_images/work/work-pit-mining.webp",
-    alt: "Authentic gem miner inside a deep timbered shaft in Ratnapura Sri Lanka",
-    position: "object-cover object-center",
-  },
-  {
     id: "river-washing",
     title: "River Illam Washing",
     subtitle: "Artisanal Woven Wattiya Baskets",
     tag: "Ethical Sourcing",
     src: "/isuru_images/work/work-river-washing.webp",
     alt: "Traditional alluvial gem washing in Sri Lankan river with conical bamboo basket",
-    position: "object-cover object-center",
-  },
-  {
-    id: "gem-selection",
-    title: "Hand-Grading Gem Parcels",
-    subtitle: "Unheated Ceylon Sapphires & Spinels",
-    tag: "Inspection",
-    src: "/isuru_images/work/work-gem-selection.webp",
-    alt: "Gemologist reviewing parcels of genuine cut and raw gemstones on display trays",
     position: "object-cover object-center",
   },
   {
@@ -60,6 +42,15 @@ const workSlides: WorkSlide[] = [
     src: "/isuru_images/work/work-three-generations.webp",
     alt: "Three generations of Sri Lankan gem merchants and family craftsmen",
     position: "object-cover object-top",
+  },
+  {
+    id: "pit-mining",
+    title: "Traditional Shaft Mining",
+    subtitle: "Ratnapura Gem Pit • 40ft Alluvial Shaft",
+    tag: "Mine Site",
+    src: "/isuru_images/work/work-pit-mining.webp",
+    alt: "Authentic gem miner inside a deep timbered shaft in Ratnapura Sri Lanka",
+    position: "object-cover object-center",
   },
   {
     id: "partnership",
@@ -275,7 +266,7 @@ export function OurStory() {
       {/* Main 2-column container */}
       <div className="relative container-luxe">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-center">
-          
+
           {/* ======================================================== */}
           {/* LEFT COLUMN: Layered Image Collage                        */}
           {/* Mobile: order-2 (stacked below text)                     */}
@@ -283,11 +274,11 @@ export function OurStory() {
           {/* ======================================================== */}
           <div className="order-2 lg:order-1 lg:col-span-6 xl:col-span-6">
             <div className="relative max-w-md sm:max-w-lg lg:max-w-none mx-auto pt-6 pb-10 sm:py-8 px-3 sm:px-6">
-              
+
               {/* Subtle ambient warm gold glow behind the collage */}
-              <div 
-                aria-hidden="true" 
-                className="absolute -inset-4 bg-gradient-to-tr from-[#B8924A]/15 via-transparent to-[#5E0F1E]/10 rounded-3xl blur-2xl pointer-events-none -z-10" 
+              <div
+                aria-hidden="true"
+                className="absolute -inset-4 bg-gradient-to-tr from-[#B8924A]/15 via-transparent to-[#5E0F1E]/10 rounded-3xl blur-2xl pointer-events-none -z-10"
               />
 
               {/* Parallax wrapper for main showcase */}
@@ -331,7 +322,7 @@ export function OurStory() {
                 </div>
 
                 {/* Main image container with 4:5 tall portrait ratio */}
-                <div 
+                <div
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   className="group relative z-10 aspect-[4/5] w-full bg-[#1A1410] shadow-[0_20px_50px_rgba(43,43,43,0.18)] overflow-hidden rounded-xs border border-[#B8924A]/30 select-none"
@@ -428,7 +419,10 @@ export function OurStory() {
                     </div>
 
                     {/* Segmented interactive progress indicators */}
-                    <div className="grid grid-cols-5 gap-1.5 pt-1">
+                    <div
+                      className="grid gap-1.5 pt-1"
+                      style={{ gridTemplateColumns: `repeat(${workSlides.length}, minmax(0, 1fr))` }}
+                    >
                       {workSlides.map((slide, idx) => {
                         const isActive = idx === currentSlideIndex;
                         const isPast = idx < currentSlideIndex;
@@ -479,8 +473,8 @@ export function OurStory() {
                   isInView
                     ? { opacity: 1, scale: 1, x: 0, y: 0 }
                     : shouldReduceMotion
-                    ? { opacity: 1, scale: 1, x: 0, y: 0 }
-                    : { opacity: 0, scale: 0.85, x: -16, y: -16 }
+                      ? { opacity: 1, scale: 1, x: 0, y: 0 }
+                      : { opacity: 0, scale: 0.85, x: -16, y: -16 }
                 }
                 transition={{
                   duration: shouldReduceMotion ? 0 : 0.7,
@@ -495,16 +489,16 @@ export function OurStory() {
                     shouldReduceMotion
                       ? {}
                       : {
-                          y: [-4, 4, -4],
-                          rotate: [-1.5, 1.5, -1.5],
-                        }
+                        y: [-4, 4, -4],
+                        rotate: [-1.5, 1.5, -1.5],
+                      }
                   }
                   transition={{
                     duration: 4.8,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  onClick={() => setCurrentSlideIndex(1)}
+                  onClick={() => setCurrentSlideIndex(0)}
                   title="Click to view River Illam Washing"
                   className="group relative cursor-pointer"
                 >
@@ -548,8 +542,8 @@ export function OurStory() {
                   isInView
                     ? { opacity: 1, scale: 1, x: 0, y: 0 }
                     : shouldReduceMotion
-                    ? { opacity: 1, scale: 1, x: 0, y: 0 }
-                    : { opacity: 0, scale: 0.88, x: 20, y: 24 }
+                      ? { opacity: 1, scale: 1, x: 0, y: 0 }
+                      : { opacity: 0, scale: 0.88, x: 20, y: 24 }
                 }
                 transition={{
                   duration: shouldReduceMotion ? 0 : 0.75,
@@ -564,9 +558,9 @@ export function OurStory() {
                     shouldReduceMotion
                       ? {}
                       : {
-                          y: [5, -5, 5],
-                          rotate: [0.8, -0.8, 0.8],
-                        }
+                        y: [5, -5, 5],
+                        rotate: [0.8, -0.8, 0.8],
+                      }
                   }
                   transition={{
                     duration: 5.6,
@@ -574,9 +568,8 @@ export function OurStory() {
                     ease: "easeInOut",
                     delay: 0.6,
                   }}
-                  onClick={() => setCurrentSlideIndex(2)}
-                  title="Click to view Gem Parcel Grading"
-                  className="group relative cursor-pointer"
+                  title="Hand-Grading Gem Parcels"
+                  className="group relative select-none"
                 >
                   <div className="relative aspect-square p-2 sm:p-2.5 bg-[#FAF6EE] border border-[#B8924A]/50 shadow-[0_22px_55px_rgba(43,43,43,0.22)] transition-transform duration-300 group-hover:scale-[1.03]">
                     <div className="relative w-full h-full overflow-hidden bg-[#1A1410] border border-[#B8924A]/30">
@@ -611,20 +604,20 @@ export function OurStory() {
                             shouldReduceMotion
                               ? { opacity: 0.7, scale: 1 }
                               : {
-                                  opacity: [0.2, 1, 0.2],
-                                  scale: [0.6, 1.25, 0.6],
-                                  rotate: [0, 45, 0],
-                                }
+                                opacity: [0.2, 1, 0.2],
+                                scale: [0.6, 1.25, 0.6],
+                                rotate: [0, 45, 0],
+                              }
                           }
                           transition={
                             shouldReduceMotion
                               ? { duration: 0 }
                               : {
-                                  duration: 3.2,
-                                  repeat: Infinity,
-                                  delay: s.delay,
-                                  ease: "easeInOut",
-                                }
+                                duration: 3.2,
+                                repeat: Infinity,
+                                delay: s.delay,
+                                ease: "easeInOut",
+                              }
                           }
                         >
                           <path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z" />

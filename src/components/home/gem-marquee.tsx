@@ -23,7 +23,7 @@ export function GemMarquee() {
   return (
     <section
       aria-label="Ceylon gemstone varieties"
-      className="relative overflow-hidden bg-[#120F0D] border-y border-[#B8924A]/25 py-5 sm:py-6"
+      className="relative overflow-hidden bg-[#120F0D] border-t border-b border-[#B8924A]/20 py-3.5 sm:py-4"
     >
       <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 z-10 bg-linear-to-r from-[#120F0D] to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 z-10 bg-linear-to-l from-[#120F0D] to-transparent" />

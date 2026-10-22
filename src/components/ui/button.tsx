@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "gold" | "sapphire" | "outline" | "ghost" | "link";
-  size?: "sm" | "md" | "lg" | "icon";
+  size?: "default" | "sm" | "md" | "lg" | "icon";
   isLoading?: boolean;
 }
 
@@ -43,6 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     const sizes = {
+      default: "text-sm font-semibold uppercase tracking-wider px-5 py-2.5",
       sm: "text-xs tracking-wider uppercase px-3.5 py-1.5",
       md: "text-sm font-semibold uppercase tracking-wider px-5 py-2.5",
       lg: "text-base uppercase tracking-wider px-7 py-3.5",

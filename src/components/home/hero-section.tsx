@@ -168,9 +168,10 @@ export function HeroSection() {
           return (
             <div
               key={scene.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              className={`absolute inset-0 transition-opacity duration-300 ease-out ${
                 isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
               }`}
+              style={{ transitionDuration: "0.3s", transitionTimingFunction: "ease-out" }}
               aria-hidden={!isActive}
             >
               <div
@@ -304,11 +305,12 @@ export function HeroSection() {
                 type="button"
                 onClick={() => goToSlide(idx)}
                 aria-label={`View scene: ${scene.title}`}
-                className={`group/thumb relative rounded-lg overflow-hidden border transition-all duration-300 shrink-0 cursor-pointer ${
+                className={`group/thumb relative rounded-lg overflow-hidden border transition-all duration-300 ease-out shrink-0 cursor-pointer ${
                   isCurrent
                     ? "ring-2 ring-[#D4AF67] border-transparent scale-105 shadow-[0_4px_12px_rgba(212,175,103,0.4)]"
                     : "border-white/20 opacity-60 hover:opacity-100 hover:border-white/50"
                 }`}
+                style={{ transitionDuration: "0.3s", transitionTimingFunction: "ease-out" }}
               >
                 <div className="relative w-11 h-8 sm:w-13 sm:h-9">
                   <Image
@@ -317,7 +319,8 @@ export function HeroSection() {
                     fill
                     sizes="52px"
                     loading="lazy"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 ease-out group-hover/thumb:scale-110"
+                    style={{ transitionDuration: "0.3s", transitionTimingFunction: "ease-out" }}
                   />
                 </div>
                 {isCurrent && (
