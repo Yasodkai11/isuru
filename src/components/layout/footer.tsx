@@ -32,13 +32,13 @@ export function Footer() {
         {/* Tightly merged Newsletter band */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#FAF6EE]/10">
           <div className="max-w-md">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF67] font-semibold block">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#D4AF67] font-semibold block">
               {SEO_CONFIG.brand.name} · Since 1964
             </span>
             <h2 className="mt-1 font-serif text-lg sm:text-xl font-normal leading-snug">
               Be first to preview <em className="text-gold-gradient font-serif">rare acquisitions</em>
             </h2>
-            <p className="mt-0.5 text-xs text-[#FAF6EE]/60">
+            <p className="mt-1 text-sm text-[#FAF6EE]/75">
               Private previews of unheated stones direct from our Ratnapura and Colombo bureaus.
             </p>
           </div>
@@ -60,20 +60,20 @@ export function Footer() {
                 className="h-8 sm:h-9 w-auto object-contain"
               />
             </Link>
-            <p className="text-xs text-[#FAF6EE]/65 leading-relaxed pr-2">
+            <p className="text-sm text-[#FAF6EE]/80 leading-relaxed pr-2">
               {SEO_CONFIG.brand.name} is a licensed Sri Lankan gemstone dealer (NGJA Reg: {SEO_CONFIG.brand.licenseNumber}), specializing in unheated natural Ceylon sapphires, rubies, and collector stones.
             </p>
-            <div className="pt-1 text-[11px] text-[#D4AF67]">
+            <div className="pt-1 text-xs text-[#D4AF67]">
               <span>Est. 1964 · Heritage 1922</span>
             </div>
           </div>
 
           {/* Column 2: Explore */}
           <nav aria-label="Explore" className="col-span-1">
-            <h3 className="text-[11px] uppercase tracking-[0.22em] text-[#D4AF67] font-semibold mb-2.5">
+            <h3 className="text-xs uppercase tracking-[0.18em] text-[#D4AF67] font-semibold mb-2.5">
               Explore
             </h3>
-            <ul className="space-y-1.5 text-xs text-[#FAF6EE]/75">
+            <ul className="space-y-2 text-sm text-[#FAF6EE]/85">
               {EXPLORE_LINKS.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-[#D4AF67] transition-colors">
@@ -86,10 +86,10 @@ export function Footer() {
 
           {/* Column 3: Gemological Knowledge Guides */}
           <nav aria-label="Gemological Guides" className="col-span-1">
-            <h3 className="text-[11px] uppercase tracking-[0.22em] text-[#D4AF67] font-semibold mb-2.5 flex items-center gap-1.5">
+            <h3 className="text-xs uppercase tracking-[0.18em] text-[#D4AF67] font-semibold mb-2.5 flex items-center gap-1.5">
               <span>Knowledge Guides</span>
             </h3>
-            <ul className="space-y-1.5 text-xs text-[#FAF6EE]/75">
+            <ul className="space-y-2 text-sm text-[#FAF6EE]/85">
               {GUIDES_LINKS.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-[#D4AF67] transition-colors">
@@ -100,7 +100,7 @@ export function Footer() {
               <li className="pt-1">
                 <Link
                   href="/guides"
-                  className="inline-flex items-center gap-1 text-xs font-serif text-[#D4AF67] hover:text-[#FAF6EE] transition-colors"
+                  className="inline-flex items-center gap-1 text-sm font-serif text-[#D4AF67] hover:text-[#FAF6EE] transition-colors"
                 >
                   <span>All Guides Index →</span>
                 </Link>
@@ -110,10 +110,10 @@ export function Footer() {
 
           {/* Column 4: Dual Salons & Concierge (NAP) */}
           <div className="col-span-2 sm:col-span-1 space-y-2.5">
-            <h3 className="text-[11px] uppercase tracking-[0.22em] text-[#D4AF67] font-semibold mb-2.5">
+            <h3 className="text-xs uppercase tracking-[0.18em] text-[#D4AF67] font-semibold mb-2.5">
               Physical Bureaus
             </h3>
-            <div className="space-y-2.5 text-xs text-[#FAF6EE]/75">
+            <div className="space-y-3 text-sm text-[#FAF6EE]/85">
               {/* Colombo Salon */}
               <div>
                 <Link
@@ -123,7 +123,7 @@ export function Footer() {
                   <MapPin className="w-3.5 h-3.5 text-[#D4AF67] shrink-0" />
                   <span>Colombo VIP Salon</span>
                 </Link>
-                <p className="text-[11px] text-[#FAF6EE]/60 pl-5">
+                <p className="text-xs text-[#FAF6EE]/75 pl-5">
                   Havelock Town, Colombo 00500, Sri Lanka
                 </p>
               </div>
@@ -137,7 +137,7 @@ export function Footer() {
                   <MapPin className="w-3.5 h-3.5 text-[#D4AF67] shrink-0" />
                   <span>Ratnapura Lapidary Bureau</span>
                 </Link>
-                <p className="text-[11px] text-[#FAF6EE]/60 pl-5">
+                <p className="text-xs text-[#FAF6EE]/75 pl-5">
                   Main Street, Ratnapura, Sri Lanka
                 </p>
               </div>
@@ -164,7 +164,7 @@ export function Footer() {
         </div>
 
         {/* Footer Bottom Bar */}
-        <div className="mt-6 pt-4 border-t border-[#FAF6EE]/10 flex flex-col lg:flex-row items-center justify-between gap-3 text-[11px] text-[#FAF6EE]/50">
+        <div className="mt-6 pt-4 border-t border-[#FAF6EE]/10 flex flex-col lg:flex-row items-center justify-between gap-3 text-xs text-[#FAF6EE]/70">
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-center lg:text-left">
             <span>© {new Date().getFullYear()} {SEO_CONFIG.brand.name}. All Rights Reserved.</span>
             <span className="hidden sm:inline text-[#FAF6EE]/20">•</span>

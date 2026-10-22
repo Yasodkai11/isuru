@@ -183,7 +183,7 @@ export function getWebSiteSchema() {
     url: SITE_URL,
     name: SEO_CONFIG.brand.name,
     alternateName: SEO_CONFIG.brand.alternateNames,
-    description: SEO_CONFIG.brand.defaultDescription || SEO_CONFIG.brand.entityStatement,
+    description: SEO_CONFIG.site.defaultDescription || SEO_CONFIG.brand.entityStatement,
     publisher: {
       "@id": `${SITE_URL}/#organization`,
     },
