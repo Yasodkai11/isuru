@@ -1,44 +1,19 @@
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
+import { SEO_CONFIG } from "@/lib/seo-config";
+
+export const SITE_URL = SEO_CONFIG.site.url;
 
 /**
- * Standard international locale alternates for high-jewelry international export.
- * Targets major collectors and atelier markets worldwide.
+ * Returns alternate language mappings only if multiple localized translations exist.
+ * For English-only production deployments, returning undefined prevents Google Search Console
+ * "Return tag without alternate" or self-referential hreflang warnings.
  */
-export const SUPPORTED_LOCALES = [
-  "en-US", // United States
-  "en-GB", // United Kingdom
-  "en-AU", // Australia
-  "en-SG", // Singapore
-  "en-AE", // United Arab Emirates / Gulf
-  "en-LK", // Sri Lanka (Origin)
-  "x-default", // Global fallback
-] as const;
-
-export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
-
-/**
- * Generates an alternates languages mapping (hreflang) for a given path or absolute URL.
- * Produces clean absolute URLs required by Google and search engine crawlers.
- */
-export function getHrefLangAlternates(pathOrUrl: string = "/") {
-  const isAbsolute = pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://");
-  const fullUrl = isAbsolute
-    ? pathOrUrl
-    : `${SITE_URL}${pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`}`;
-
-  return {
-    "en-US": fullUrl,
-    "en-GB": fullUrl,
-    "en-AU": fullUrl,
-    "en-SG": fullUrl,
-    "en-AE": fullUrl,
-    "en-LK": fullUrl,
-    "x-default": fullUrl,
-  };
+export function getHrefLangAlternates(_pathOrUrl: string = "/"): Record<string, string> | undefined {
+  // English-only site deployment: hreflang tags omitted per international SEO specifications.
+  return undefined;
 }
 
 /**
- * Generates the complete alternates metadata object (canonical + hreflang languages).
+ * Generates the clean alternates metadata object (canonical URL) for Next.js metadata.
  */
 export function getPageAlternates(pathOrUrl: string = "/") {
   const isAbsolute = pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://");
@@ -48,6 +23,5 @@ export function getPageAlternates(pathOrUrl: string = "/") {
 
   return {
     canonical: canonicalUrl,
-    languages: getHrefLangAlternates(canonicalUrl),
   };
 }

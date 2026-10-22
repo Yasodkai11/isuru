@@ -1,71 +1,174 @@
 import React from "react";
 import { Gemstone } from "@/types/gem";
-import { BRAND } from "@/lib/constants";
+import { SEO_CONFIG } from "@/lib/seo-config";
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
 
 /**
- * Schema.org Organization (and JewelryStore) structured data
+ * Schema.org Organization, JewelryStore & LocalBusiness structured data.
+ * Rendered server-side for Google Knowledge Graph, Local SEO, and AI engine grounding.
  */
 export function getOrganizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": ["JewelryStore", "Organization"],
+    "@type": ["JewelryStore", "LocalBusiness", "Organization"],
     "@id": `${SITE_URL}/#organization`,
-    name: "Isuru Ceylon",
-    alternateName: "Isuru Gems",
+    name: SEO_CONFIG.brand.name,
+    alternateName: SEO_CONFIG.brand.alternateNames,
     legalName: "Isuru Ceylon (Pvt) Ltd",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
       "@id": `${SITE_URL}/#logo`,
       url: `${SITE_URL}/isuru_images/logo-isuru.webp`,
-      caption: "Isuru Ceylon Logo",
+      caption: `${SEO_CONFIG.brand.name} Official Seal`,
     },
-    image: `${SITE_URL}/isuru_images/blue1.webp`,
-    description:
-      "Curators of unheated natural Ceylon Royal Blue Sapphires, Padparadschas, and precious island gemstones directly from the historic gravels of Ratnapura, Sri Lanka since 1964.",
-    foundingDate: `${BRAND.established}`,
-    telephone: BRAND.phone,
-    email: BRAND.email,
+    image: [
+      `${SITE_URL}/isuru_images/blue1.webp`,
+      `${SITE_URL}/isuru_images/contactus.webp`,
+      `${SITE_URL}/isuru_images/categories1.webp`,
+    ],
+    description: SEO_CONFIG.brand.entityStatement,
+    foundingDate: `${SEO_CONFIG.brand.foundingYear}`,
+    telephone: SEO_CONFIG.contact.phone,
+    email: SEO_CONFIG.contact.email,
     currenciesAccepted: "USD, LKR, EUR, GBP, AUD, SGD",
-    paymentAccepted: "Bank Wire Transfer, Visa, MasterCard, Amex, Escrow",
+    paymentAccepted: "Bank Wire Transfer, Escrow, Visa, MasterCard, Amex",
     priceRange: "$$$$",
+    identifier: {
+      "@type": "PropertyValue",
+      name: "NGJA Dealer Registration Number",
+      value: SEO_CONFIG.brand.licenseNumber,
+    },
+    taxID: SEO_CONFIG.brand.licenseNumber,
     address: {
       "@type": "PostalAddress",
-      streetAddress: BRAND.headquarters,
-      addressLocality: "Colombo",
-      addressRegion: "Western Province",
-      postalCode: "00500",
-      addressCountry: "LK",
+      streetAddress: SEO_CONFIG.locations.colombo.address.streetAddress,
+      addressLocality: SEO_CONFIG.locations.colombo.address.addressLocality,
+      addressRegion: SEO_CONFIG.locations.colombo.address.addressRegion,
+      postalCode: SEO_CONFIG.locations.colombo.address.postalCode,
+      addressCountry: SEO_CONFIG.locations.colombo.address.addressCountry,
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 7.0338,
-      longitude: 79.8994,
+      latitude: SEO_CONFIG.locations.colombo.geo.latitude,
+      longitude: SEO_CONFIG.locations.colombo.geo.longitude,
     },
-    hasMap: BRAND.mapUrl,
-    sameAs: [
-      "https://www.instagram.com/isurugems",
-      "https://www.facebook.com/isurugems",
-      "https://www.linkedin.com/company/isuru-gems",
+    hasMap: SEO_CONFIG.locations.colombo.hasMap,
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    ],
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Worldwide",
+    },
+    knowsAbout: SEO_CONFIG.knowsAbout,
+    sameAs: SEO_CONFIG.sameAs,
+    founder: SEO_CONFIG.founders.map((f) => ({
+      "@type": "Person",
+      name: f.name,
+      jobTitle: f.role,
+      description: f.description,
+    })),
+    department: [
+      {
+        "@type": "LocalBusiness",
+        name: SEO_CONFIG.locations.ratnapura.name,
+        description: SEO_CONFIG.locations.ratnapura.hubType,
+        telephone: SEO_CONFIG.locations.ratnapura.phone,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: SEO_CONFIG.locations.ratnapura.address.streetAddress,
+          addressLocality: SEO_CONFIG.locations.ratnapura.address.addressLocality,
+          addressRegion: SEO_CONFIG.locations.ratnapura.address.addressRegion,
+          postalCode: SEO_CONFIG.locations.ratnapura.address.postalCode,
+          addressCountry: SEO_CONFIG.locations.ratnapura.address.addressCountry,
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: SEO_CONFIG.locations.ratnapura.geo.latitude,
+          longitude: SEO_CONFIG.locations.ratnapura.geo.longitude,
+        },
+      },
     ],
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: BRAND.phone,
+        telephone: SEO_CONFIG.contact.phone,
         contactType: "customer service",
         availableLanguage: ["English", "Sinhala"],
         areaServed: "Worldwide",
       },
       {
         "@type": "ContactPoint",
-        telephone: BRAND.whatsapp,
+        telephone: SEO_CONFIG.contact.whatsapp,
         contactType: "sales concierge",
         availableLanguage: ["English", "Sinhala"],
         areaServed: "Worldwide",
       },
     ],
+  };
+}
+
+/**
+ * Dedicated LocalBusiness Schema for individual location pages (/locations/ratnapura, /locations/colombo)
+ */
+export function getLocalBusinessSchema(locationKey: "colombo" | "ratnapura") {
+  const loc = SEO_CONFIG.locations[locationKey];
+  return {
+    "@context": "https://schema.org",
+    "@type": ["JewelryStore", "LocalBusiness"],
+    "@id": `${SITE_URL}/locations/${locationKey}#localbusiness`,
+    name: loc.name,
+    parentOrganization: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+    url: `${SITE_URL}/locations/${locationKey}`,
+    telephone: loc.phone,
+    email: SEO_CONFIG.contact.email,
+    description: `${loc.name} — ${loc.hubType}. Official bureau of Isuru Ceylon Gems.`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: loc.address.streetAddress,
+      addressLocality: loc.address.addressLocality,
+      addressRegion: loc.address.addressRegion,
+      postalCode: loc.address.postalCode,
+      addressCountry: loc.address.addressCountry,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: loc.geo.latitude,
+      longitude: loc.geo.longitude,
+    },
+    hasMap: loc.hasMap,
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    ],
+    priceRange: "$$$$",
   };
 }
 
@@ -78,9 +181,9 @@ export function getWebSiteSchema() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     url: SITE_URL,
-    name: "Isuru Ceylon",
-    alternateName: "Isuru Gems",
-    description: "Finest Natural Ceylon Sapphires & Precious Island Gemstones direct from Ratnapura.",
+    name: SEO_CONFIG.brand.name,
+    alternateName: SEO_CONFIG.brand.alternateNames,
+    description: SEO_CONFIG.brand.defaultDescription || SEO_CONFIG.brand.entityStatement,
     publisher: {
       "@id": `${SITE_URL}/#organization`,
     },
@@ -97,7 +200,30 @@ export function getWebSiteSchema() {
 }
 
 /**
- * Schema.org Product structured data for a Gemstone
+ * Schema.org Person Schema for Founders & Gemologists
+ */
+export function getPersonSchema(personKey: "reginald" | "premaratne" | "isuru") {
+  const map = {
+    reginald: SEO_CONFIG.founders[0],
+    premaratne: SEO_CONFIG.founders[1],
+    isuru: SEO_CONFIG.founders[2],
+  };
+  const person = map[personKey];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: person.name,
+    jobTitle: person.role,
+    description: person.description,
+    worksFor: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+  };
+}
+
+/**
+ * Schema.org Product structured data for a Gemstone specimen
  */
 export function getProductSchema(gem: Gemstone) {
   const images =
@@ -107,7 +233,6 @@ export function getProductSchema(gem: Gemstone) {
         )
       : [`${SITE_URL}/isuru_images/blue1.webp`];
 
-  // International luxury courier supported destination country codes (ISO 3166-1 alpha-2)
   const supportedCountries = [
     "US", "GB", "CH", "AE", "AU", "SG", "LK", "FR", "DE", "JP", "HK", "CA", "IT"
   ];
@@ -116,58 +241,78 @@ export function getProductSchema(gem: Gemstone) {
   nextYear.setFullYear(nextYear.getFullYear() + 1);
   const priceValidUntil = nextYear.toISOString().split("T")[0];
 
-  const offers = {
-    "@type": "Offer",
-    "@id": `${SITE_URL}/gems/${gem.slug}#offer`,
-    url: `${SITE_URL}/gems/${gem.slug}`,
-    priceCurrency: gem.currency || "USD",
-    price: gem.price > 0 ? gem.price : 0,
-    priceValidUntil,
-    itemCondition: "https://schema.org/NewCondition",
-    availability: gem.inStock
-      ? "https://schema.org/InStock"
-      : "https://schema.org/OutOfStock",
-    seller: {
-      "@type": "Organization",
-      name: "Isuru Ceylon",
-      url: SITE_URL,
-    },
-    shippingDetails: {
-      "@type": "OfferShippingDetails",
-      shippingRate: {
-        "@type": "MonetaryAmount",
-        value: "0.00",
-        currency: gem.currency || "USD",
-      },
-      shippingDestination: supportedCountries.map((countryCode) => ({
-        "@type": "DefinedRegion",
-        addressCountry: countryCode,
-      })),
-      deliveryTime: {
-        "@type": "ShippingDeliveryTime",
-        handlingTime: {
-          "@type": "QuantitativeValue",
-          minValue: 1,
-          maxValue: 2,
-          unitCode: "DAY",
+  const isEnquiry = !gem.price || gem.price <= 0;
+
+  const offers = isEnquiry
+    ? {
+        "@type": "Offer",
+        "@id": `${SITE_URL}/gems/${gem.slug}#offer`,
+        url: `${SITE_URL}/gems/${gem.slug}`,
+        priceCurrency: "USD",
+        price: "0",
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          priceCurrency: "USD",
+          description: "Price upon private concierge enquiry and viewing request",
         },
-        transitTime: {
-          "@type": "QuantitativeValue",
-          minValue: 2,
-          maxValue: 5,
-          unitCode: "DAY",
+        itemCondition: "https://schema.org/NewCondition",
+        availability: gem.inStock
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+        seller: {
+          "@id": `${SITE_URL}/#organization`,
         },
-      },
-    },
-    hasMerchantReturnPolicy: {
-      "@type": "MerchantReturnPolicy",
-      applicableCountry: supportedCountries,
-      returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-      merchantReturnDays: 14,
-      returnMethod: "https://schema.org/ReturnByMail",
-      returnFees: "https://schema.org/FreeReturn",
-    },
-  };
+      }
+    : {
+        "@type": "Offer",
+        "@id": `${SITE_URL}/gems/${gem.slug}#offer`,
+        url: `${SITE_URL}/gems/${gem.slug}`,
+        priceCurrency: gem.currency || "USD",
+        price: gem.price,
+        priceValidUntil,
+        itemCondition: "https://schema.org/NewCondition",
+        availability: gem.inStock
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+        seller: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: {
+            "@type": "MonetaryAmount",
+            value: "0.00",
+            currency: gem.currency || "USD",
+          },
+          shippingDestination: supportedCountries.map((countryCode) => ({
+            "@type": "DefinedRegion",
+            addressCountry: countryCode,
+          })),
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: {
+              "@type": "QuantitativeValue",
+              minValue: 1,
+              maxValue: 2,
+              unitCode: "DAY",
+            },
+            transitTime: {
+              "@type": "QuantitativeValue",
+              minValue: 2,
+              maxValue: 5,
+              unitCode: "DAY",
+            },
+          },
+        },
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: supportedCountries,
+          returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+          merchantReturnDays: 14,
+          returnMethod: "https://schema.org/ReturnByMail",
+          returnFees: "https://schema.org/FreeReturn",
+        },
+      };
 
   const additionalProperty = [
     gem.variety && {
@@ -233,7 +378,7 @@ export function getProductSchema(gem: Gemstone) {
     mpn: gem.certificate?.number || `ISURU-${gem.id}`,
     brand: {
       "@type": "Brand",
-      name: "Isuru Ceylon",
+      name: SEO_CONFIG.brand.name,
     },
     category: gem.variety,
     countryOfOrigin: {
@@ -244,7 +389,6 @@ export function getProductSchema(gem: Gemstone) {
     additionalProperty,
   };
 }
-
 
 /**
  * Schema.org BreadcrumbList structured data
@@ -261,6 +405,116 @@ export function getBreadcrumbListSchema(
       name: item.name,
       item: item.url.startsWith("http") ? item.url : `${SITE_URL}${item.url}`,
     })),
+  };
+}
+
+/**
+ * Schema.org FAQPage structured data for AEO & Google Rich Results
+ */
+export function getFAQPageSchema(
+  faqs: { question: string; answer: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+/**
+ * Schema.org AboutPage structured data
+ */
+export function getAboutPageSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${SITE_URL}/about#aboutpage`,
+    url: `${SITE_URL}/about`,
+    name: `About ${SEO_CONFIG.brand.name} · Generational Ceylon Gemstone Heritage`,
+    description: SEO_CONFIG.brand.entityStatement,
+    mainEntity: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+  };
+}
+
+/**
+ * Schema.org ContactPage structured data
+ */
+export function getContactPageSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${SITE_URL}/contact#contactpage`,
+    url: `${SITE_URL}/contact`,
+    name: `Contact Concierge · ${SEO_CONFIG.brand.name}`,
+    description: `Connect with the gemological concierge at ${SEO_CONFIG.brand.name} in Colombo or Ratnapura for private viewings and bespoke commissions.`,
+    mainEntity: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+  };
+}
+
+/**
+ * Schema.org Article structured data for Evergreen Gemological Guides
+ */
+export function getArticleSchema({
+  title,
+  description,
+  url,
+  image,
+  datePublished,
+  dateModified,
+  authorName = "Uththiya Isuru Dewa Mendis",
+}: {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  datePublished: string;
+  dateModified: string;
+  authorName?: string;
+}) {
+  const pageUrl = url.startsWith("http") ? url : `${SITE_URL}${url}`;
+  const imageUrl = image
+    ? image.startsWith("http")
+      ? image
+      : `${SITE_URL}${image}`
+    : `${SITE_URL}/isuru_images/blue1.webp`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${pageUrl}#article`,
+    headline: title,
+    description,
+    url: pageUrl,
+    image: [imageUrl],
+    datePublished,
+    dateModified,
+    inLanguage: "en-US",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+    },
+    author: {
+      "@type": "Person",
+      name: authorName,
+      jobTitle: "Registered Gem Dealer & Gemologist",
+      worksFor: {
+        "@id": `${SITE_URL}/#organization`,
+      },
+    },
+    publisher: {
+      "@id": `${SITE_URL}/#organization`,
+    },
   };
 }
 

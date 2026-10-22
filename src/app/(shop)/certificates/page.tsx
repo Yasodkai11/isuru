@@ -6,15 +6,18 @@ import { ShieldCheck, ArrowRight } from "lucide-react";
 import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
 import { getSEORecordByPath } from "@/actions/seo";
 import { getHrefLangAlternates } from "@/lib/seo/hreflang";
+import { SEO_CONFIG } from "@/lib/seo-config";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEORecordByPath("/certificates");
 
-  const metaTitle = seo?.metaTitle || "Gemstone Certification & Authenticity";
+  const metaTitle =
+    seo?.metaTitle ||
+    `Gemstone Certification & Laboratory Authenticity | ${SEO_CONFIG.brand.name}`;
   const metaDesc =
     seo?.metaDescription ||
-    "All Isuru Gems stones are certified natural corundum authenticated by the National Gem and Jewellery Authority of Sri Lanka (NGJA), GIA, and GRS Swisslab with lifetime guarantees.";
-  const canonicalUrl = seo?.canonicalUrl || "/certificates";
+    `Every gemstone from ${SEO_CONFIG.brand.name} is guaranteed natural unheated corundum authenticated by the National Gem and Jewellery Authority of Sri Lanka (NGJA Reg: ${SEO_CONFIG.brand.licenseNumber}), GIA, and GRS Swisslab.`;
+  const canonicalUrl = `${SEO_CONFIG.site.url}/certificates`;
   const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
 
   return {
@@ -22,7 +25,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
-      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {
@@ -143,13 +145,19 @@ export default function CertificatesPage() {
           <p className="text-xs sm:text-sm text-[#FAF6EE]/80 max-w-xl mx-auto leading-relaxed">
             If any stone purchased from Isuru Gems is ever determined by an accredited international gemological laboratory to be synthetic or inconsistent with its disclosed natural origin, we issue a 100% full refund immediately.
           </p>
-          <div className="pt-2">
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/gems"
-              className="inline-flex items-center gap-2 bg-[#B8924A] text-[#FAF6EE] px-6 py-3 text-xs uppercase tracking-widest font-medium hover:bg-[#967433] transition-colors"
+              className="inline-flex items-center gap-2 bg-[#B8924A] text-[#0A1A14] px-6 py-3 text-xs uppercase tracking-widest font-semibold hover:bg-[#D4AF67] transition-colors"
             >
               <span>Explore Certified Stones</span>
               <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/guides/how-to-read-gemstone-certificate"
+              className="inline-flex items-center gap-2 border border-[#B8924A] text-[#FAF6EE] px-6 py-3 text-xs uppercase tracking-widest font-medium hover:bg-white/10 transition-colors"
+            >
+              <span>How to Read a Certificate Guide</span>
             </Link>
           </div>
         </div>

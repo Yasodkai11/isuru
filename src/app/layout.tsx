@@ -27,12 +27,15 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Isuru Ceylon",
-    default: "Isuru Ceylon | Natural Ceylon Sapphires & Precious Island Gemstones",
+    template: "%s | Isuru Ceylon Gems",
+    default: "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires from Ratnapura, Sri Lanka",
   },
   description:
-    "Direct from the historic gem gravels of Ratnapura, Sri Lanka. Unheated Royal Blue Sapphires, Padparadscha, Rubies, and Star Sapphires certified by NGJA, GRS & GIA.",
+    "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura and Colombo, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural, unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.",
   keywords: [
+    "Isuru Ceylon Gems",
+    "Isuru Ceylon",
+    "Isuru Gems",
     "Ceylon Sapphires",
     "Ratnapura Gems",
     "Padparadscha Sapphire",
@@ -40,15 +43,15 @@ export const metadata: Metadata = {
     "Unheated Ceylon Sapphire",
     "Natural Gemstones Sri Lanka",
     "National Gem and Jewellery Authority NGJA",
+    "Colombo Gem Dealer",
   ],
-  authors: [{ name: "Isuru Ceylon" }],
-  creator: "Isuru Ceylon",
-  publisher: "Isuru Ceylon",
+  authors: [{ name: "Isuru Ceylon Gems", url: siteUrl }],
+  creator: "Isuru Ceylon Gems",
+  publisher: "Isuru Ceylon Gems",
   category: "Jewelry & Gemstones",
   metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: "./",
-    languages: getHrefLangAlternates("/"),
+    canonical: siteUrl,
   },
   robots: {
     index: true,
@@ -62,9 +65,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Isuru Ceylon | Natural Ceylon Sapphires & Fine Island Gemstones",
-    description: "Ethically mined, unheated certified Ceylon gemstones direct from Ratnapura.",
-    siteName: "Isuru Ceylon",
+    title: "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires from Ratnapura, Sri Lanka",
+    description: "Ethically mined, unheated certified Ceylon gemstones direct from Ratnapura and Colombo bureaus.",
+    siteName: "Isuru Ceylon Gems",
     url: siteUrl,
     locale: "en_US",
     type: "website",
@@ -73,14 +76,14 @@ export const metadata: Metadata = {
         url: "/isuru_images/blue1.webp",
         width: 1200,
         height: 630,
-        alt: "Isuru Ceylon - Certified Natural Gemstones",
+        alt: "Isuru Ceylon Gems - Certified Natural Ceylon Gemstones",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Isuru Ceylon | Natural Ceylon Sapphires & Rare Gems",
-    description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens.",
+    title: "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires & Rare Gems",
+    description: "Direct mine-to-market natural Ceylon gemstones, unheated Royal Blue Sapphires, and certified precious specimens from Ratnapura, Sri Lanka.",
     images: ["/isuru_images/blue1.webp"],
   },
   icons: {

@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getSitemapGemstones } from "@/actions/gems";
 import { CATEGORIES_CONFIG } from "@/lib/constants";
-import { getHrefLangAlternates } from "@/lib/seo/hreflang";
+import { SEO_CONFIG } from "@/lib/seo-config";
 
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://isuruceylon.com";
+  const baseUrl = SEO_CONFIG.site.url;
   const now = new Date();
 
   // 1. Core static marketing and institutional pages
@@ -16,9 +16,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "daily",
       priority: 1.0,
-      alternates: {
-        languages: getHrefLangAlternates(`${baseUrl}/`),
-      },
       images: [`${baseUrl}/isuru_images/blue1.webp`],
     },
     {
@@ -26,9 +23,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "daily",
       priority: 0.95,
-      alternates: {
-        languages: getHrefLangAlternates(`${baseUrl}/gems`),
-      },
+      images: [`${baseUrl}/isuru_images/blue1.webp`],
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
       images: [`${baseUrl}/isuru_images/blue1.webp`],
     },
     {
@@ -36,41 +37,94 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.85,
-      alternates: {
-        languages: getHrefLangAlternates(`${baseUrl}/certificates`),
-      },
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.8,
-      alternates: {
-        languages: getHrefLangAlternates(`${baseUrl}/about`),
-      },
     },
     {
       url: `${baseUrl}/wholesale`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.75,
-      alternates: {
-        languages: getHrefLangAlternates(`${baseUrl}/wholesale`),
-      },
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.7,
-      alternates: {
-        languages: getHrefLangAlternates(`${baseUrl}/contact`),
-      },
+      priority: 0.75,
       images: [`${baseUrl}/isuru_images/contactus.webp`],
     },
   ];
 
-  // 2. Curated gemstone category routes
+  // 2. Physical Location Hubs (Local SEO)
+  const locationRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/locations/ratnapura`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/work/work-pit-mining.webp`],
+    },
+    {
+      url: `${baseUrl}/locations/colombo`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/contactus.webp`],
+    },
+  ];
+
+  // 3. Educational & Evergreen Gemological Guides (AEO & GEO)
+  const guideRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/guides`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+      images: [`${baseUrl}/isuru_images/blue1.webp`],
+    },
+    {
+      url: `${baseUrl}/guides/ceylon-blue-sapphire-buying-guide`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/blue1.webp`],
+    },
+    {
+      url: `${baseUrl}/guides/padparadscha-sapphire-guide`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/Padparadscha%20Sapphire.webp`],
+    },
+    {
+      url: `${baseUrl}/guides/natural-vs-heated-gemstones-guide`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/categories1.webp`],
+    },
+    {
+      url: `${baseUrl}/guides/pigeon-blood-ruby-guide`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/ruby%20category.webp`],
+    },
+    {
+      url: `${baseUrl}/guides/how-to-read-gemstone-certificate`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/blue1.webp`],
+    },
+    {
+      url: `${baseUrl}/guides/ratnapura-gem-mining-heritage`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      images: [`${baseUrl}/isuru_images/work/work-pit-mining.webp`],
+    },
+  ];
+
+  // 4. Curated gemstone category routes
   const categoryRoutes: MetadataRoute.Sitemap = Object.entries(CATEGORIES_CONFIG).map(
     ([catKey, config]) => {
       const catUrl = `${baseUrl}/gems/category/${catKey}`;
@@ -83,15 +137,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: now,
         changeFrequency: "weekly",
         priority: 0.85,
-        alternates: {
-          languages: getHrefLangAlternates(catUrl),
-        },
         images: [catImageUrl],
       };
     }
   );
 
-  // 3. Dynamic individual gemstone specimen routes (lean projected query)
+  // 5. Dynamic individual gemstone specimen routes
   let gemstoneRoutes: MetadataRoute.Sitemap = [];
   try {
     const gems = await getSitemapGemstones();
@@ -106,12 +157,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
         return {
           url: gemUrl,
-          lastModified: gem.updated_at ? new Date(gem.updated_at) : (gem.created_at ? new Date(gem.created_at) : now),
+          lastModified: gem.updated_at
+            ? new Date(gem.updated_at)
+            : gem.created_at
+            ? new Date(gem.created_at)
+            : now,
           changeFrequency: "weekly" as const,
           priority: 0.9,
-          alternates: {
-            languages: getHrefLangAlternates(gemUrl),
-          },
           ...(images.length > 0 ? { images } : {}),
         };
       });
@@ -119,6 +171,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn("Could not retrieve dynamic gemstone routes for sitemap:", err);
   }
 
-  return [...staticRoutes, ...categoryRoutes, ...gemstoneRoutes];
+  return [
+    ...staticRoutes,
+    ...locationRoutes,
+    ...guideRoutes,
+    ...categoryRoutes,
+    ...gemstoneRoutes,
+  ];
 }
-

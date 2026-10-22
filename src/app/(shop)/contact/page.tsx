@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { InquiryForm } from "@/components/inquiry/inquiry-form";
 import { SalonMap } from "@/components/contact/salon-map";
 import { GoldDivider } from "@/components/layout/gold-divider";
-import { BRAND } from "@/lib/constants";
-import { Mail, Phone, ArrowRight, ExternalLink } from "lucide-react";
-import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
-
+import { Mail, Phone, ArrowRight, ExternalLink, MapPin } from "lucide-react";
+import { JsonLd, getBreadcrumbListSchema, getContactPageSchema, getOrganizationSchema } from "@/lib/seo/schema";
+import { SEO_CONFIG } from "@/lib/seo-config";
 import { getSEORecordByPath } from "@/actions/seo";
-import { getHrefLangAlternates } from "@/lib/seo/hreflang";
+
+export const revalidate = 86400;
 
 interface ContactPageProps {
   searchParams: Promise<{
@@ -20,11 +21,13 @@ interface ContactPageProps {
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEORecordByPath("/contact");
 
-  const metaTitle = seo?.metaTitle || "Bespoke Commissions & Concierge";
+  const metaTitle =
+    seo?.metaTitle ||
+    "Bespoke Commissions & Concierge Salons | Isuru Ceylon Gems";
   const metaDesc =
     seo?.metaDescription ||
-    "Contact the gemological concierge at Isuru Gems for loose unheated Ceylon sapphire acquisition, custom ring commissions, or private viewings in Colombo and Ratnapura.";
-  const canonicalUrl = seo?.canonicalUrl || "/contact";
+    "Contact the gemological concierge at Isuru Ceylon Gems for unheated Ceylon sapphire acquisition, custom ring commissions, or private viewings in Colombo and Ratnapura.";
+  const canonicalUrl = `${SEO_CONFIG.site.url}/contact`;
   const ogImg = seo?.ogImage || "/isuru_images/contactus.webp";
 
   return {
@@ -32,7 +35,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
-      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {
@@ -65,9 +67,12 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
     { name: "Bespoke Concierge & Salons", url: "/contact" },
   ]);
 
+  const contactSchema = getContactPageSchema();
+  const orgSchema = getOrganizationSchema();
+
   return (
     <div className="min-h-screen bg-[#FAF6EE] py-8 sm:py-12">
-      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={[breadcrumbSchema, contactSchema, orgSchema]} />
       <div className="container-luxe">
         <div className="mx-auto max-w-7xl space-y-8 sm:space-y-10">
           {/* Hero Header with Gold Divider and Tightened Spacing */}
@@ -76,7 +81,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
               <div className="inline-flex items-center gap-2">
                 <span className="w-5 h-px bg-[#80601C]" />
                 <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#80601C]">
-                  Isuru Gems Ceylon · Private Concierge
+                  {SEO_CONFIG.brand.name} · Private Concierge
                 </span>
               </div>
               <h1 className="font-serif text-4xl sm:text-5xl font-semibold leading-tight text-[#5E0F1E]">
@@ -141,7 +146,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <div className="grid grid-cols-1 gap-2.5">
                   {/* Telephone Card */}
                   <a
-                    href={`tel:${BRAND.phone.replace(/[^\d+]/g, "")}`}
+                    href={`tel:${SEO_CONFIG.contact.phone.replace(/[^\d+]/g, "")}`}
                     className="group flex items-center justify-between p-3.5 bg-[#FDFBF7] border border-[#B8924A]/30 rounded-xl hover:border-[#B8924A] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
@@ -153,7 +158,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                           Direct Telephone
                         </span>
                         <span className="font-serif text-sm font-medium text-[#5E0F1E] group-hover:text-[#80601C] transition-colors">
-                          {BRAND.phone}
+                          {SEO_CONFIG.contact.phone}
                         </span>
                       </div>
                     </div>
@@ -162,7 +167,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
                   {/* WhatsApp Card */}
                   <a
-                    href={`https://wa.me/${BRAND.whatsapp.replace(/\D/g, "")}`}
+                    href={`https://wa.me/${SEO_CONFIG.contact.whatsapp.replace(/\D/g, "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center justify-between p-3.5 bg-[#FDFBF7] border border-[#B8924A]/30 rounded-xl hover:border-[#B8924A] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
@@ -182,7 +187,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                           WhatsApp Concierge
                         </span>
                         <span className="font-serif text-sm font-medium text-[#5E0F1E] group-hover:text-[#80601C] transition-colors">
-                          {BRAND.whatsapp}
+                          {SEO_CONFIG.contact.whatsapp}
                         </span>
                       </div>
                     </div>
@@ -191,7 +196,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
                   {/* Email Card */}
                   <a
-                    href={`mailto:${BRAND.email}`}
+                    href={`mailto:${SEO_CONFIG.contact.email}`}
                     className="group flex items-center justify-between p-3.5 bg-[#FDFBF7] border border-[#B8924A]/30 rounded-xl hover:border-[#B8924A] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                   >
                     <div className="flex items-center gap-3 min-w-0">
@@ -203,12 +208,42 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                           Confidential Email
                         </span>
                         <span className="font-serif text-xs sm:text-sm font-medium text-[#5E0F1E] group-hover:text-[#80601C] transition-colors truncate block">
-                          {BRAND.email}
+                          {SEO_CONFIG.contact.email}
                         </span>
                       </div>
                     </div>
                     <ArrowRight className="w-4 h-4 text-[#B8924A] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                   </a>
+                </div>
+              </section>
+
+              {/* Local SEO Dual Hub Links */}
+              <section aria-label="Physical Bureaus" className="p-4 rounded-xl bg-[#FDFBF7] border border-[#B8924A]/30 space-y-2.5">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#80601C] block">
+                  Physical Bureau Locations
+                </span>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <Link
+                    href="/locations/ratnapura"
+                    className="p-2.5 rounded bg-[#FAF6EE] border border-[#B8924A]/20 hover:border-[#80601C] transition-colors group"
+                  >
+                    <span className="font-serif font-medium text-[#5E0F1E] block">Ratnapura Bureau</span>
+                    <span className="text-[10px] text-[#2B2B2B]/65 block">Mining & Lapidary</span>
+                    <span className="text-[10px] text-[#80601C] group-hover:underline inline-flex items-center gap-0.5 mt-1 font-semibold">
+                      View details →
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="/locations/colombo"
+                    className="p-2.5 rounded bg-[#FAF6EE] border border-[#B8924A]/20 hover:border-[#80601C] transition-colors group"
+                  >
+                    <span className="font-serif font-medium text-[#5E0F1E] block">Colombo Salon</span>
+                    <span className="text-[10px] text-[#2B2B2B]/65 block">VIP & Export Desk</span>
+                    <span className="text-[10px] text-[#80601C] group-hover:underline inline-flex items-center gap-0.5 mt-1 font-semibold">
+                      View details →
+                    </span>
+                  </Link>
                 </div>
               </section>
 

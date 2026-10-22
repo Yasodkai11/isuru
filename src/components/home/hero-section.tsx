@@ -52,7 +52,7 @@ const HERO_SCENES: HeroScene[] = [
   {
     id: "modern-ceylon",
     src: "/images/concept03/hero-modern-ceylon.webp",
-    alt: "Fine loose faceted Ceylon Blue Sapphire, Pink Sapphire and Yellow Sapphire staged on white travertine stone blocks",
+    alt: "Natural unheated Ceylon royal blue sapphire, lotus pink sapphire, and golden sapphire specimens, master faceted, from Ratnapura, Sri Lanka",
     title: "Master Faceted Sapphires",
     subtitle: "Natural · Unheated · Certified Ceylon",
     tag: "01 · Ceylon Trio",
@@ -62,7 +62,7 @@ const HERO_SCENES: HeroScene[] = [
   {
     id: "heritage-chest",
     src: "/isuru_images/hero1.webp",
-    alt: "Ceylon royal sapphires and rubies displayed on an antique hand-carved mahogany chest in sunlight",
+    alt: "Natural unheated Ceylon royal blue sapphires and scarlet rubies displayed on antique carved mahogany chest in Ratnapura atelier",
     title: "Sacred Heritage Salon",
     subtitle: "Ratnapura · Historic Alluvial Gravels Since 1964",
     tag: "02 · Royal Chest",
@@ -72,7 +72,7 @@ const HERO_SCENES: HeroScene[] = [
   {
     id: "highland-blues",
     src: "/isuru_images/hero2.webp",
-    alt: "Ceylon royal blue sapphires glistening in dawn light over mist-shrouded highland tea hills",
+    alt: "Natural unheated Ceylon cornflower blue and royal blue sapphires glistening over mist-shrouded Sabaragamuwa gem hills, Sri Lanka",
     title: "Highland Cornflower Blues",
     subtitle: "Sabaragamuwa · Electric Crystalline Brilliance",
     tag: "03 · Highland Blue",
@@ -82,7 +82,7 @@ const HERO_SCENES: HeroScene[] = [
   {
     id: "sunset-padparadscha",
     src: "/isuru_images/hero3.webp",
-    alt: "Rare fancy color sapphires and fiery gems catching the sunset at a luxury panoramic salon",
+    alt: "Rare natural unheated Ceylon Padparadscha sapphire and sunset-fire corundum crystals from Ratnapura alluvial gravels",
     title: "Twilight Lotus Padparadscha",
     subtitle: "Sunset Fire · Legendary Ceylon King of Sapphires",
     tag: "04 · Padparadscha",
@@ -92,7 +92,7 @@ const HERO_SCENES: HeroScene[] = [
   {
     id: "collector-parcels",
     src: "/isuru_images/hero4.webp",
-    alt: "Master collection of natural precious sapphires and collector gems overlooking a calm lake and mountains",
+    alt: "Master collection parcels of natural unheated Ceylon sapphires with independent NGJA, GIA, and GRS authentication dossiers",
     title: "Master Lapidary Parcels",
     subtitle: "Certified Investment Gems · Independent Dossiers",
     tag: "05 · Lapidary Parcels",

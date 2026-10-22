@@ -19,6 +19,7 @@ import {
 } from "@/lib/seo/schema";
 import { getSEORecordByPath } from "@/actions/seo";
 import { getHrefLangAlternates } from "@/lib/seo/hreflang";
+import { SEO_CONFIG } from "@/lib/seo-config";
 
 export async function generateStaticParams() {
   return Object.keys(CATEGORIES_CONFIG).map((category) => ({
@@ -75,31 +76,30 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
 
   const pageSuffix = pageNum > 1 ? ` (Page ${pageNum})` : "";
   const canonicalUrl = pageNum > 1
-    ? `/gems/category/${category}?page=${pageNum}`
-    : `/gems/category/${category}`;
+    ? `${SEO_CONFIG.site.url}/gems/category/${category}?page=${pageNum}`
+    : `${SEO_CONFIG.site.url}/gems/category/${category}`;
 
-  const baseTitle = seo?.metaTitle || `${config.title} - ${config.subtitle}`;
-  const baseDesc = seo?.metaDescription || config.description;
+  const baseTitle = seo?.metaTitle || `${config.title} | ${SEO_CONFIG.brand.name}`;
+  const baseDesc = seo?.metaDescription || `${config.description} Ethically sourced, unheated natural gemstones from Ratnapura, Sri Lanka. Certified by NGJA, GIA, and GRS.`;
 
   return {
     title: `${baseTitle}${pageSuffix}`,
     description: baseDesc,
     alternates: {
       canonical: canonicalUrl,
-      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: (hasSearch || isFiltered)
       ? { index: false, follow: true }
       : { index: true, follow: true },
     openGraph: {
-      title: `${seo?.ogTitle || baseTitle}${pageSuffix} | Isuru Ceylon`,
+      title: `${seo?.ogTitle || baseTitle}${pageSuffix}`,
       description: seo?.ogDescription || baseDesc,
       url: canonicalUrl,
       images: [{ url: seo?.ogImage || config.image, width: 1200, height: 630, alt: config.title }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${seo?.ogTitle || baseTitle}${pageSuffix} | Isuru Ceylon`,
+      title: `${seo?.ogTitle || baseTitle}${pageSuffix}`,
       description: seo?.ogDescription || baseDesc,
       images: [seo?.ogImage || config.image],
     },

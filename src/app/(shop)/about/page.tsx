@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { GoldDivider } from "@/components/layout/gold-divider";
-import { Compass, HeartHandshake, ShieldCheck, Award, Sparkles, ArrowRight } from "lucide-react";
-import { JsonLd, getBreadcrumbListSchema } from "@/lib/seo/schema";
-
+import { Compass, HeartHandshake, ShieldCheck, Award, Sparkles, ArrowRight, CheckCircle2, MapPin } from "lucide-react";
+import { JsonLd, getBreadcrumbListSchema, getAboutPageSchema, getPersonSchema } from "@/lib/seo/schema";
+import { SEO_CONFIG } from "@/lib/seo-config";
 import { getSEORecordByPath } from "@/actions/seo";
-import { getHrefLangAlternates } from "@/lib/seo/hreflang";
+
+export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEORecordByPath("/about");
 
-  const metaTitle = seo?.metaTitle || "Our Story: From Generational Heritage to the Digital World";
+  const metaTitle =
+    seo?.metaTitle ||
+    "About Isuru Ceylon Gems | Generational Heritage from Ratnapura to the Digital World";
   const metaDesc =
     seo?.metaDescription ||
-    "The authentic story of Isuru Gems. Rooted in the legacies of Reginald Mendis (b. 1922) and Premaratne Pathinayake, combining family mining heritage with modern gemology and official NGJA licensing (Reg: 202610DL42288).";
-  const canonicalUrl = seo?.canonicalUrl || "/about";
+    "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura, Sri Lanka, selling natural, unheated Ceylon sapphires, rubies, padparadschas and spinels, founded on gem-mining heritage dating back to the 1920s (NGJA Reg: 202610DL42288).";
+  const canonicalUrl = `${SEO_CONFIG.site.url}/about`;
   const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
 
   return {
@@ -22,7 +25,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
-      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {
@@ -47,23 +49,26 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-
 export default function AboutPage() {
   const breadcrumbSchema = getBreadcrumbListSchema([
     { name: "Home", url: "/" },
     { name: "Our Story & Heritage", url: "/about" },
   ]);
 
+  const aboutSchema = getAboutPageSchema();
+  const reginaldSchema = getPersonSchema("reginald");
+  const premaratneSchema = getPersonSchema("premaratne");
+  const isuruSchema = getPersonSchema("isuru");
+
   return (
     <div className="py-16 sm:py-20 lg:py-24 bg-[#FAF6EE] min-h-screen">
-      <JsonLd data={breadcrumbSchema} />
-      <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-20 lg:space-y-28">
+      <JsonLd data={[breadcrumbSchema, aboutSchema, reginaldSchema, premaratneSchema, isuruSchema]} />
+      <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-16 sm:space-y-20 lg:space-y-28">
 
-        
         {/* Editorial Heading */}
         <div className="text-center max-w-4xl mx-auto space-y-4">
           <span className="text-[11px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold">
-            ISURU GEMS • OUR STORY
+            {SEO_CONFIG.brand.name} • OUR STORY & HERITAGE
           </span>
           {/* Strictly the single H1 for this page */}
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#5E0F1E] font-normal leading-[1.15]">
@@ -72,9 +77,14 @@ export default function AboutPage() {
           <p className="text-base sm:text-lg text-[#2B2B2B]/80 leading-relaxed max-w-3xl mx-auto font-serif italic">
             “Gemstones are more than just precious stones. They represent generations of experience, knowledge, trust, and heritage.”
           </p>
-          <p className="text-sm sm:text-base text-[#2B2B2B]/75 leading-relaxed max-w-2xl mx-auto">
-            Isuru Gems is a distinctive gemstone business that connects a rich family heritage with the opportunities of the modern digital world.
-          </p>
+
+          {/* Plain-text 2-sentence entity statement for crawlers and visitors */}
+          <div className="p-4 sm:p-5 rounded-lg bg-[#F5EFE0] border border-[#B8924A]/40 max-w-3xl mx-auto text-left sm:text-center">
+            <p className="text-sm sm:text-base text-[#5E0F1E] font-medium leading-relaxed">
+              {SEO_CONFIG.brand.entityStatement}
+            </p>
+          </div>
+
           <GoldDivider withOrnament className="my-8 max-w-xs mx-auto" />
         </div>
 
@@ -112,6 +122,33 @@ export default function AboutPage() {
           </div>
         </div>
 
+        {/* Machine-Readable Fast Facts / Quotable Entity Profile for GEO & AI Engines */}
+        <section
+          id="facts"
+          aria-labelledby="facts-heading"
+          className="p-6 sm:p-8 rounded-xl bg-[#FDFBF7] border border-[#B8924A]/40 shadow-sm max-w-5xl mx-auto space-y-6"
+        >
+          <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#80601C] font-semibold">
+            <CheckCircle2 className="w-4 h-4 text-[#80601C]" />
+            <h2 id="facts-heading">
+              {SEO_CONFIG.brand.name} · Verified Entity Facts
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-[#2B2B2B]/85">
+            {SEO_CONFIG.facts.map((item, idx) => (
+              <div key={idx} className="p-3.5 rounded bg-[#FAF6EE] border border-[#B8924A]/20 space-y-1">
+                <span className="text-[10px] uppercase tracking-wider text-[#80601C] font-semibold block">
+                  {item.topic}
+                </span>
+                <p className="leading-relaxed text-[#2B2B2B]">
+                  {item.fact}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Narrative Chapters - 2-Column Editorial Spreads on Desktop */}
         <div className="space-y-16 lg:space-y-24">
           
@@ -140,162 +177,91 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
+
             <div className="lg:col-span-5">
-              <div className="relative bg-[#FDFBF7] border border-[#B8924A]/30 p-8 sm:p-10 shadow-sm space-y-5">
-                <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-[#B8924A]/60" />
-                <div className="text-[#B8924A]/40 font-serif text-5xl leading-none select-none">“</div>
-                <blockquote className="font-serif text-lg sm:text-xl text-[#5E0F1E] leading-relaxed -mt-3 italic">
-                  When he passed away in January 2000, he had already passed on his knowledge, experience, and business expertise to my father... Traditional mining continues on lands that once belonged to him.
-                </blockquote>
-                <div className="pt-3 border-t border-[#B8924A]/20 flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-[#B8924A] font-medium">
-                  <span>Reginald Mendis (b. 1922)</span>
-                  <span>Premaratne Pathinayake</span>
+              <div className="p-6 sm:p-8 bg-[#FDFBF7] border border-[#B8924A]/40 rounded-sm shadow-sm space-y-4">
+                <span className="text-[10px] uppercase tracking-[0.28em] text-[#B8924A] font-semibold block">
+                  HERITAGE ANCHORS
+                </span>
+                <div className="space-y-4 divide-y divide-[#B8924A]/20 text-xs text-[#2B2B2B]/80">
+                  <div className="pt-2">
+                    <span className="font-semibold text-[#5E0F1E] block text-sm font-serif">Reginald Mendis (b. 1922)</span>
+                    <span>Alluvial mining pioneer in Ratnapura. Passed trade wisdom through three generations.</span>
+                  </div>
+                  <div className="pt-3">
+                    <span className="font-semibold text-[#5E0F1E] block text-sm font-serif">Premaratne Pathinayake</span>
+                    <span>Sabaragamuwa plantation proprietor. Ancestral mining lands active to this day.</span>
+                  </div>
+                  <div className="pt-3">
+                    <span className="font-semibold text-[#5E0F1E] block text-sm font-serif">National Licensing</span>
+                    <span>National Gem and Jewellery Authority of Sri Lanka (Reg: <strong>{SEO_CONFIG.brand.licenseNumber}</strong>).</span>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <GoldDivider withOrnament className="opacity-40" />
-
-          {/* Chapter 2: Passion to Professional Knowledge */}
+          {/* Chapter 2: Childhood Passion & Professional Expertise */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             <div className="lg:col-span-5 order-2 lg:order-1">
-              <div className="relative bg-[#FDFBF7] border border-[#B8924A]/30 p-8 sm:p-10 shadow-sm space-y-5">
-                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-[#B8924A]/60" />
-                <div className="text-[#B8924A]/40 font-serif text-5xl leading-none select-none">“</div>
-                <blockquote className="font-serif text-lg sm:text-xl text-[#5E0F1E] leading-relaxed -mt-3 italic">
-                  By combining inherited family experience with modern education, I aim to establish a trusted and forward-looking presence in the gemstone industry.
-                </blockquote>
-                <div className="pt-3 border-t border-[#B8924A]/20 flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-[#B8924A] font-medium">
-                  <span>Gemology Study</span>
-                  <span>Since 2020</span>
+              <div className="p-6 sm:p-8 bg-[#FDFBF7] border border-[#B8924A]/40 rounded-sm shadow-sm space-y-3">
+                <span className="text-[10px] uppercase tracking-[0.28em] text-[#B8924A] font-semibold block">
+                  PROFESSIONAL ACCREDITATION
+                </span>
+                <p className="font-serif text-lg text-[#5E0F1E]">
+                  Registered Gemstone Dealer
+                </p>
+                <p className="text-xs text-[#2B2B2B]/75 leading-relaxed">
+                  Registered under the <strong>National Gem and Jewellery Authority of Sri Lanka</strong> (Registration Number: <strong>{SEO_CONFIG.brand.licenseNumber}</strong>).
+                </p>
+                <div className="pt-2 border-t border-[#B8924A]/20 flex items-center gap-2 text-xs text-[#80601C] font-semibold">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Formal Gemological Studies Since 2020</span>
                 </div>
               </div>
             </div>
+
             <div className="lg:col-span-7 order-1 lg:order-2 space-y-4">
               <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#B8924A] font-semibold">
                 <span className="w-6 h-px bg-[#B8924A]" />
                 Chapter 02
               </div>
               <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#5E0F1E] font-normal leading-snug">
-                From a Childhood Passion to Professional Knowledge
+                From Childhood Passion to Professional Expertise
               </h2>
               <div className="space-y-4 text-sm sm:text-base text-[#2B2B2B]/85 leading-relaxed font-normal">
                 <p>
-                  My interest in gemstones began during my childhood, when I pursued them as a personal hobby, fascinated by the crystalline brilliance unearthed from the gravels of Sabaragamuwa.
+                  Growing up surrounded by gemstones, I developed a natural passion for this trade from an early age. I closely observed my family members engaged in gemstone mining, rough stone identification, cutting, and trading. This childhood exposure gave me a deep understanding of the industry from its very roots.
                 </p>
                 <p>
-                  Since <strong>2020</strong>, I have devoted myself to studying gemology in greater depth, developing my scientific knowledge of gemstones and gaining a thorough understanding of their technical aspects, optical properties, crystal structures, and laboratory evaluation practices.
-                </p>
-                <p>
-                  By synthesizing generations of practical family wisdom with modern gemological standards, I am committed to establishing a trusted, transparent, and forward-looking presence in the gemstone industry.
+                  To build upon this family legacy, I began studying the gemstone trade professionally and systematically in 2020. I expanded my knowledge through formal gemological training, practical market experience, and continuous research into the global gemstone industry.
                 </p>
               </div>
             </div>
           </section>
 
-          <GoldDivider withOrnament className="opacity-40" />
-
-          {/* Chapter 3: Official Registration and Trust */}
-          <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#B8924A] font-semibold">
-                <span className="w-6 h-px bg-[#B8924A]" />
-                Chapter 03
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#5E0F1E] font-normal leading-snug">
-                Official Registration and Trust
-              </h2>
-              <div className="space-y-4 text-sm sm:text-base text-[#2B2B2B]/85 leading-relaxed font-normal">
-                <p>
-                  I am a fully registered gemstone dealer accredited under the <strong>National Gem and Jewellery Authority (NGJA) of Sri Lanka</strong>.
-                </p>
-                <div className="p-4 sm:p-5 bg-[#FAF6EE] border-l-4 border-[#B8924A] shadow-xs space-y-1">
-                  <span className="text-[10px] uppercase tracking-widest text-[#B8924A] font-bold block">
-                    Official Regulatory Accreditation
-                  </span>
-                  <div className="text-base sm:text-lg font-mono font-semibold text-[#5E0F1E]">
-                    NGJA Registration Number: 202610DL42288
-                  </div>
-                  <p className="text-xs text-[#2B2B2B]/70">
-                    National Gem and Jewellery Authority of Sri Lanka • Licensed Gemstone Dealer
-                  </p>
-                </div>
-                <p>
-                  Building on this official governmental accreditation and my family&apos;s generations of experience, I am dedicated to providing clients and international collectors with a reliable, legally verified, and trustworthy service.
-                </p>
-              </div>
+          {/* Chapter 3: Our Mission and Vision */}
+          <section className="space-y-6 max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.25em] text-[#B8924A] font-semibold">
+              <span className="w-6 h-px bg-[#B8924A]" />
+              Chapter 03
+              <span className="w-6 h-px bg-[#B8924A]" />
             </div>
-            <div className="lg:col-span-5">
-              <div className="relative bg-[#FDFBF7] border border-[#B8924A]/40 p-8 sm:p-10 shadow-md space-y-4 text-center">
-                <div className="w-16 h-16 rounded-full bg-[#FAF6EE] border-2 border-[#B8924A] mx-auto flex items-center justify-center text-[#B8924A] shadow-xs">
-                  <Award className="w-8 h-8 text-[#B8924A]" />
-                </div>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-[#B8924A] font-bold block">
-                  Sri Lanka State Verified
-                </span>
-                <h3 className="font-serif text-xl sm:text-2xl text-[#5E0F1E] font-normal">
-                  Registered Dealer
-                </h3>
-                <p className="text-xs font-mono font-bold text-[#5E0F1E] bg-[#FAF6EE] py-2 px-3 border border-[#B8924A]/30 inline-block">
-                  Reg No: 202610DL42288
-                </p>
-                <p className="text-xs text-[#2B2B2B]/75 leading-relaxed pt-2">
-                  Zero ambiguity standard. Every specimen authenticated with verified mine-to-market provenance.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <GoldDivider withOrnament className="opacity-40" />
-
-          {/* Chapter 4: From Tradition to the Digital World */}
-          <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            <div className="lg:col-span-5 order-2 lg:order-1">
-              <div className="relative bg-[#FDFBF7] border border-[#B8924A]/30 p-8 sm:p-10 shadow-sm space-y-5">
-                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-[#B8924A]/60" />
-                <div className="text-[#B8924A]/40 font-serif text-5xl leading-none select-none">“</div>
-                <blockquote className="font-serif text-lg sm:text-xl text-[#5E0F1E] leading-relaxed -mt-3 italic">
-                  Our primary objective is to connect gemstones directly with buyers, reducing dependence on intermediaries and creating opportunities to access these valuable treasures more directly.
-                </blockquote>
-                <div className="pt-3 border-t border-[#B8924A]/20 flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-[#B8924A] font-medium">
-                  <span>Direct to Buyer</span>
-                  <span>Zero Intermediaries</span>
-                </div>
-              </div>
-            </div>
-            <div className="lg:col-span-7 order-1 lg:order-2 space-y-4">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#B8924A] font-semibold">
-                <span className="w-6 h-px bg-[#B8924A]" />
-                Chapter 04
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#5E0F1E] font-normal leading-snug">
-                From Tradition to the Digital World
-              </h2>
-              <div className="space-y-4 text-sm sm:text-base text-[#2B2B2B]/85 leading-relaxed font-normal">
-                <p>
-                  Until now, our family gemstone business has operated largely through traditional trading methods rooted in local markets and multi-tiered broker networks.
-                </p>
-                <p>
-                  My vision is to move beyond these limitations by harnessing modern digital technology to bring Sri Lanka&apos;s most precious gemstones closer to customers around the globe.
-                </p>
-                <p>
-                  Our primary objective is to connect gemstones directly with buyers, reducing dependence on intermediaries and creating opportunities for customers to access these valuable treasures directly at fair, transparent value.
-                </p>
-                <p className="font-serif text-base sm:text-lg text-[#5E0F1E] italic">
-                  At Isuru Gems, we believe that authenticity, transparency, trust, and customer satisfaction are the foundations of a successful gemstone business.
-                </p>
-              </div>
-            </div>
+            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#5E0F1E] font-normal leading-snug">
+              Our Vision: Connecting Ceylon to the Global Market
+            </h2>
+            <p className="text-sm sm:text-base text-[#2B2B2B]/85 leading-relaxed max-w-3xl mx-auto">
+              Our primary goal is to make genuine, high-quality Sri Lankan gemstones easily and transparently accessible to buyers around the world. By using modern digital platforms, we aim to bridge the gap between traditional mining communities and international buyers—reducing dependence on intermediaries and ensuring greater transparency, authenticity, and fair pricing.
+            </p>
           </section>
 
         </div>
 
-        {/* Pillars Grid - Architectural Pledges */}
-        <div className="pt-6">
-          <div className="text-center space-y-2 mb-10">
-            <span className="text-[11px] uppercase tracking-[0.3em] text-[#B8924A] font-semibold">
-              ISURU GEMS — CORE FOUNDATIONS
+        {/* Pillars of Trust */}
+        <div className="space-y-8 pt-4">
+          <div className="text-center space-y-2">
+            <span className="text-[10px] uppercase tracking-[0.28em] text-[#B8924A] font-semibold">
+              THE PILLARS OF ISURU CEYLON GEMS
             </span>
             <h3 className="font-serif text-2xl sm:text-3xl text-[#5E0F1E]">
               Heritage, Trust, and Value
@@ -308,7 +274,7 @@ export default function AboutPage() {
               <div className="w-14 h-14 rounded-full bg-[#FAF6EE] border border-[#B8924A]/35 mx-auto flex items-center justify-center text-[#B8924A] group-hover:scale-105 transition-transform duration-300 shadow-xs">
                 <Compass className="w-6 h-6 text-[#B8924A]" />
               </div>
-              <h3 className="font-serif text-xl sm:text-2xl text-[#5E0F1E]">Generational Heritage</h3>
+              <h4 className="font-serif text-xl sm:text-2xl text-[#5E0F1E]">Generational Heritage</h4>
               <p className="text-xs sm:text-sm text-[#2B2B2B]/75 leading-relaxed">
                 Roots tracing back to Reginald Mendis (b. 1922) and Premaratne Pathinayake, preserving authentic pit extraction on family lands.
               </p>
@@ -319,9 +285,9 @@ export default function AboutPage() {
               <div className="w-14 h-14 rounded-full bg-[#FAF6EE] border border-[#B8924A]/35 mx-auto flex items-center justify-center text-[#B8924A] group-hover:scale-105 transition-transform duration-300 shadow-xs">
                 <ShieldCheck className="w-6 h-6 text-[#B8924A]" />
               </div>
-              <h3 className="font-serif text-xl sm:text-2xl text-[#5E0F1E]">NGJA Registered Trust</h3>
+              <h4 className="font-serif text-xl sm:text-2xl text-[#5E0F1E]">NGJA Registered Trust</h4>
               <p className="text-xs sm:text-sm text-[#2B2B2B]/75 leading-relaxed">
-                Officially accredited dealer under the National Gem and Jewellery Authority of Sri Lanka (Reg: 202610DL42288).
+                Officially accredited dealer under the National Gem and Jewellery Authority of Sri Lanka (Reg: <strong>{SEO_CONFIG.brand.licenseNumber}</strong>).
               </p>
             </div>
 
@@ -330,7 +296,7 @@ export default function AboutPage() {
               <div className="w-14 h-14 rounded-full bg-[#FAF6EE] border border-[#B8924A]/35 mx-auto flex items-center justify-center text-[#B8924A] group-hover:scale-105 transition-transform duration-300 shadow-xs">
                 <HeartHandshake className="w-6 h-6 text-[#B8924A]" />
               </div>
-              <h3 className="font-serif text-xl sm:text-2xl text-[#5E0F1E]">Direct Global Access</h3>
+              <h4 className="font-serif text-xl sm:text-2xl text-[#5E0F1E]">Direct Global Access</h4>
               <p className="text-xs sm:text-sm text-[#2B2B2B]/75 leading-relaxed">
                 Eliminating brokers to deliver unheated, certified Ceylon sapphires directly to international clients with complete transparency.
               </p>
@@ -342,7 +308,7 @@ export default function AboutPage() {
         <div className="relative bg-[#FDFBF7] border border-[#B8924A]/40 p-10 sm:p-14 text-center space-y-6 max-w-4xl mx-auto shadow-md">
           <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#B8924A] font-semibold">
             <Sparkles className="w-4 h-4 text-[#B8924A]" />
-            ISURU GEMS — A LEGACY OF GEMS. A FUTURE OF TRUST.
+            {SEO_CONFIG.brand.name} — A LEGACY OF GEMS. A FUTURE OF TRUST.
           </div>
           
           <h3 className="font-serif text-3xl sm:text-4xl text-[#5E0F1E] font-normal leading-tight">
@@ -350,7 +316,7 @@ export default function AboutPage() {
           </h3>
           
           <p className="text-sm sm:text-base text-[#2B2B2B]/75 max-w-2xl mx-auto leading-relaxed">
-            We invite you to become part of our journey as we combine generations of traditional knowledge with modern technology to shape the future of gemstone trading.
+            We invite you to explore our certified unheated natural gemstone collection or schedule a viewing with our concierge.
           </p>
 
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">

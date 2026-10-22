@@ -34,6 +34,7 @@ import {
 
 import { DETAIL_ON_REQUEST } from "@/lib/catalog-gems";
 import { CATEGORIES_CONFIG } from "@/lib/constants";
+import { SEO_CONFIG } from "@/lib/seo-config";
 
 // ISR: Cache page for 1 hour, revalidated on-demand when product updates occur
 export const revalidate = 3600;
@@ -95,22 +96,21 @@ export async function generateMetadata({ params }: GemDetailPageProps): Promise<
       : descriptionPrefix;
 
   return {
-    title: `${gem.name}${caratSuffix}`,
+    title: `${gem.name}${caratSuffix} | ${SEO_CONFIG.brand.name}`,
     description: metaDescription,
     alternates: {
-      canonical: `/gems/${gem.slug}`,
-      languages: getHrefLangAlternates(`/gems/${gem.slug}`),
+      canonical: `${SEO_CONFIG.site.url}/gems/${gem.slug}`,
     },
     openGraph: {
-      title: `${gem.name}${caratSuffix} | Isuru Ceylon`,
+      title: `${gem.name}${caratSuffix} | ${SEO_CONFIG.brand.name}`,
       description: gem.description || metaDescription,
-      url: `/gems/${gem.slug}`,
+      url: `${SEO_CONFIG.site.url}/gems/${gem.slug}`,
       type: "website",
       images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${gem.name}${caratSuffix} | Isuru Ceylon`,
+      title: `${gem.name}${caratSuffix} | ${SEO_CONFIG.brand.name}`,
       description: gem.description || metaDescription,
       images: [ogImages[0].url],
     },
@@ -366,6 +366,49 @@ export default async function GemDetailPage({ params }: GemDetailPageProps) {
                   </span>
                 </div>
               )}
+
+              {/* GEO / AEO Trust & Last Updated Tag */}
+              <div className="pt-3 border-t border-[#B8924A]/15 flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#2B2B2B]/60">
+                <span>
+                  Vault record verified by {SEO_CONFIG.brand.name}
+                </span>
+                <span>
+                  Last updated: <time dateTime="2026-10-22">2026-10-22</time>
+                </span>
+              </div>
+
+              {/* Contextual Gemological Guide Link */}
+              <div className="p-3.5 rounded bg-[#FAF6EE] border border-[#B8924A]/25 text-xs space-y-1">
+                <span className="text-[10px] uppercase tracking-wider text-[#80601C] font-semibold block">
+                  Gemological Reading
+                </span>
+                <p className="text-[#2B2B2B]/80">
+                  Curious about unheated certification and color grades? Read our{" "}
+                  <Link
+                    href={
+                      /padparadscha/i.test(gem.variety)
+                        ? "/guides/padparadscha-sapphire-guide"
+                        : /ruby/i.test(gem.variety)
+                        ? "/guides/pigeon-blood-ruby-guide"
+                        : "/guides/ceylon-blue-sapphire-buying-guide"
+                    }
+                    className="text-[#5E0F1E] font-semibold underline underline-offset-2 hover:text-[#80601C]"
+                  >
+                    {/padparadscha/i.test(gem.variety)
+                      ? "Padparadscha Sapphire Guide"
+                      : /ruby/i.test(gem.variety)
+                      ? "Pigeon Blood Ruby Guide"
+                      : "Ceylon Blue Sapphire Buying Guide"}
+                  </Link>
+                  {" "}or learn{" "}
+                  <Link
+                    href="/guides/how-to-read-gemstone-certificate"
+                    className="text-[#5E0F1E] font-semibold underline underline-offset-2 hover:text-[#80601C]"
+                  >
+                    how to read a gem certificate
+                  </Link>.
+                </p>
+              </div>
             </div>
           </div>
         </div>

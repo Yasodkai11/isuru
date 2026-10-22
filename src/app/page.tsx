@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/home/hero-section";
+import { EntityStatement } from "@/components/home/entity-statement";
 import { CategoryCards } from "@/components/home/category-cards";
 import { FeaturedGems } from "@/components/home/featured-gems";
 import { GemMarquee } from "@/components/home/gem-marquee";
 import { TrustMarkers } from "@/components/home/trust-markers";
+import { HomeFaqSection, HOME_FAQS } from "@/components/home/home-faq-section";
 import { getGemstones } from "@/actions/gems";
+import { SEO_CONFIG } from "@/lib/seo-config";
 
 const CraftJourney = dynamic(
   () => import("@/components/home/craft-journey").then((m) => m.CraftJourney)
@@ -21,10 +24,10 @@ import {
   getOrganizationSchema,
   getWebSiteSchema,
   getBreadcrumbListSchema,
+  getFAQPageSchema,
 } from "@/lib/seo/schema";
 
 import { getSEORecordByPath } from "@/actions/seo";
-import { getHrefLangAlternates } from "@/lib/seo/hreflang";
 
 // ISR: Statically prerender and cache page for 1 hour, avoiding no-store headers in production
 export const revalidate = 3600;
@@ -32,9 +35,13 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEORecordByPath("/");
 
-  const metaTitle = seo?.metaTitle || "Isuru Ceylon | Natural Ceylon Sapphires & Rare Precious Island Gemstones";
-  const metaDesc = seo?.metaDescription || "Curators of unheated Ceylon Royal Blue Sapphires, rare Padparadschas, and natural gemstones direct from the alluvial gravels of Ratnapura, Sri Lanka since 1964. Authenticated by NGJA, GRS, and GIA.";
-  const canonicalUrl = seo?.canonicalUrl || "/";
+  const metaTitle =
+    seo?.metaTitle ||
+    "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires from Ratnapura, Sri Lanka";
+  const metaDesc =
+    seo?.metaDescription ||
+    "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura and Colombo, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.";
+  const canonicalUrl = `${SEO_CONFIG.site.url}/`;
   const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
 
   return {
@@ -44,7 +51,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
-      languages: getHrefLangAlternates(canonicalUrl),
     },
     robots: seo?.indexStatus === "noindex" ? { index: false, follow: false } : undefined,
     openGraph: {
@@ -69,7 +75,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-
 export default async function HomePage() {
   const { gems } = await getGemstones({ limit: 16 });
 
@@ -77,6 +82,12 @@ export default async function HomePage() {
     getOrganizationSchema(),
     getWebSiteSchema(),
     getBreadcrumbListSchema([{ name: "Home", url: "/" }]),
+    getFAQPageSchema(
+      HOME_FAQS.map((faq) => ({
+        question: faq.question,
+        answer: faq.detail ? `${faq.directAnswer} ${faq.detail}` : faq.directAnswer,
+      }))
+    ),
   ];
 
   return (
@@ -84,14 +95,17 @@ export default async function HomePage() {
       <JsonLd data={homeSchemas} />
 
       <HeroSection />
+      {/* 2-Sentence Plain Text Brand Statement for Human Visitors & AI/Bot Crawlers */}
+      <EntityStatement />
       <CategoryCards />
       <FeaturedGems gems={gems} />
       <GemMarquee />
       <CraftJourney />
       <OurStory />
       <TrustMarkers />
+      {/* Visible, Crawlable Direct-Answer AEO FAQ Section */}
+      <HomeFaqSection />
       <EnquiryCTA />
     </div>
   );
 }
-
