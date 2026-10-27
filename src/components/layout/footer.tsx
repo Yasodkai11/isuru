@@ -39,7 +39,7 @@ export function Footer() {
               Be first to preview <em className="text-gold-gradient font-serif">rare acquisitions</em>
             </h2>
             <p className="mt-1 text-sm text-[#FAF6EE]/75">
-              Private previews of unheated stones direct from our Ratnapura and Colombo bureaus.
+              Private previews of unheated stones direct from our Ratnapura bureau.
             </p>
           </div>
           <div className="w-full md:w-auto md:min-w-[320px] lg:min-w-[380px]">
@@ -108,25 +108,12 @@ export function Footer() {
             </ul>
           </nav>
 
-          {/* Column 4: Dual Salons & Concierge (NAP) */}
+          {/* Column 4: Physical Bureau & Concierge (NAP) */}
           <div className="col-span-2 sm:col-span-1 space-y-2.5">
             <h3 className="text-xs uppercase tracking-[0.18em] text-[#D4AF67] font-semibold mb-2.5">
-              Physical Bureaus
+              Physical Bureau
             </h3>
             <div className="space-y-3 text-sm text-[#FAF6EE]/85">
-              {/* Colombo Salon */}
-              <div>
-                <Link
-                  href="/locations/colombo"
-                  className="font-medium text-[#FAF6EE] hover:text-[#D4AF67] transition-colors flex items-center gap-1.5"
-                >
-                  <MapPin className="w-3.5 h-3.5 text-[#D4AF67] shrink-0" />
-                  <span>Colombo VIP Salon</span>
-                </Link>
-                <p className="text-xs text-[#FAF6EE]/75 pl-5">
-                  Havelock Town, Colombo 00500, Sri Lanka
-                </p>
-              </div>
 
               {/* Ratnapura Bureau */}
               <div>

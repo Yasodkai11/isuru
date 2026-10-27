@@ -6,7 +6,7 @@ export const HOME_FAQS = [
   {
     question: "What is Isuru Ceylon Gems?",
     directAnswer:
-      "Isuru Ceylon Gems is an authentic Sri Lankan gemstone dealer headquartered in Ratnapura and Colombo, specializing in natural, unheated Ceylon sapphires, padparadschas, rubies, and spinels. Built upon family mining roots established in the 1920s and officially licensed by the National Gem and Jewellery Authority (NGJA), we supply certified gems directly to international collectors.",
+      "Isuru Ceylon Gems is an authentic Sri Lankan gemstone dealer headquartered in Ratnapura, specializing in natural, unheated Ceylon sapphires, padparadschas, rubies, and spinels. Built upon family mining roots established in the 1920s and officially licensed by the National Gem and Jewellery Authority (NGJA), we supply certified gems directly to international collectors.",
     detail:
       "Unlike retail resellers who purchase pre-cut inventory from brokers, Isuru Ceylon Gems maintains direct mine-head partnerships with artisanal alluvial pit miners, ensuring complete ethical traceability, superior cut proportions, and fair origin pricing.",
   },

@@ -23,10 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const metaTitle =
     seo?.metaTitle ||
-    "Bespoke Commissions & Concierge Salons | Isuru Ceylon Gems";
+    "Bespoke Commissions & Concierge | Isuru Ceylon Gems";
   const metaDesc =
     seo?.metaDescription ||
-    "Contact the gemological concierge at Isuru Ceylon Gems for unheated Ceylon sapphire acquisition, custom ring commissions, or private viewings in Colombo and Ratnapura.";
+    "Contact the gemological concierge at Isuru Ceylon Gems for unheated Ceylon sapphire acquisition, custom ring commissions, or private viewings in Ratnapura.";
   const canonicalUrl = `${SEO_CONFIG.site.url}/contact`;
   const ogImg = seo?.ogImage || "/isuru_images/contactus.webp";
 
@@ -64,7 +64,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
   const breadcrumbSchema = getBreadcrumbListSchema([
     { name: "Home", url: "/" },
-    { name: "Bespoke Concierge & Salons", url: "/contact" },
+    { name: "Bespoke Concierge", url: "/contact" },
   ]);
 
   const contactSchema = getContactPageSchema();
@@ -89,7 +89,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
               </h1>
               <GoldDivider className="my-2" />
               <p className="text-sm sm:text-base leading-relaxed text-[#2B2B2B]/80 font-normal">
-                Talk with our gemological concierge about acquiring loose unheated Ceylon sapphires, commissioning a bespoke high-jewelry piece, or scheduling an appointment at our Colombo salon or Ratnapura bureau.
+                Talk with our gemological concierge about acquiring loose unheated Ceylon sapphires, commissioning a bespoke high-jewelry piece, or scheduling a private viewing at our Ratnapura bureau.
               </p>
             </div>
             <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[4/3] max-h-[320px] overflow-hidden rounded-xl border border-[#B8924A]/30 shadow-md">
@@ -217,37 +217,24 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 </div>
               </section>
 
-              {/* Local SEO Dual Hub Links */}
-              <section aria-label="Physical Bureaus" className="p-4 rounded-xl bg-[#FDFBF7] border border-[#B8924A]/30 space-y-2.5">
+              {/* Local SEO Bureau Link */}
+              <section aria-label="Physical Bureau" className="p-4 rounded-xl bg-[#FDFBF7] border border-[#B8924A]/30 space-y-2.5">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#80601C] block">
-                  Physical Bureau Locations
+                  Physical Bureau Location
                 </span>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <Link
-                    href="/locations/ratnapura"
-                    className="p-2.5 rounded bg-[#FAF6EE] border border-[#B8924A]/20 hover:border-[#80601C] transition-colors group"
-                  >
-                    <span className="font-serif font-medium text-[#5E0F1E] block">Ratnapura Bureau</span>
-                    <span className="text-[10px] text-[#2B2B2B]/65 block">Mining & Lapidary</span>
-                    <span className="text-[10px] text-[#80601C] group-hover:underline inline-flex items-center gap-0.5 mt-1 font-semibold">
-                      View details →
-                    </span>
-                  </Link>
-
-                  <Link
-                    href="/locations/colombo"
-                    className="p-2.5 rounded bg-[#FAF6EE] border border-[#B8924A]/20 hover:border-[#80601C] transition-colors group"
-                  >
-                    <span className="font-serif font-medium text-[#5E0F1E] block">Colombo Salon</span>
-                    <span className="text-[10px] text-[#2B2B2B]/65 block">VIP & Export Desk</span>
-                    <span className="text-[10px] text-[#80601C] group-hover:underline inline-flex items-center gap-0.5 mt-1 font-semibold">
-                      View details →
-                    </span>
-                  </Link>
-                </div>
+                <Link
+                  href="/locations/ratnapura"
+                  className="block p-3 rounded bg-[#FAF6EE] border border-[#B8924A]/20 hover:border-[#80601C] transition-colors group"
+                >
+                  <span className="font-serif font-medium text-[#5E0F1E] block">Ratnapura Bureau</span>
+                  <span className="text-[10px] text-[#2B2B2B]/65 block">Mining & Lapidary Operations</span>
+                  <span className="text-[10px] text-[#80601C] group-hover:underline inline-flex items-center gap-0.5 mt-1 font-semibold">
+                    View location details →
+                  </span>
+                </Link>
               </section>
 
-              {/* Interactive Salon Map */}
+              {/* Interactive Bureau Map */}
               <SalonMap />
             </aside>
           </div>

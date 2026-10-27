@@ -812,7 +812,7 @@ export const REAL_PRODUCTS = [
     currency: "USD",
     in_stock: true,
     featured: false,
-    description: "Multiple gemstone trays presented alongside finished high-jewelry specimens in our private salon.",
+    description: "Multiple gemstone trays presented alongside finished high-jewelry specimens in our private viewing atelier.",
     certificate_lab: "NGJA Atelier Certified",
     certificate_number: "NGJA-ATELIER-20",
     certificate_pdf_url: null,

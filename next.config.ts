@@ -79,6 +79,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/locations/colombo",
+        destination: "/locations/ratnapura",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

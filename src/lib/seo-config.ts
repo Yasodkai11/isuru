@@ -41,7 +41,7 @@ export const SEO_CONFIG = {
     titleTemplate: "%s | Isuru Ceylon Gems",
     defaultTitle: "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires from Ratnapura, Sri Lanka",
     defaultDescription:
-      "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura and Colombo, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural, unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.",
+      "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural, unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.",
     ogImage: "/isuru_images/blue1.webp",
     locale: "en_US",
     language: "en",
@@ -56,7 +56,7 @@ export const SEO_CONFIG = {
     conciergeLead: "Uththiya Isuru Dewa Mendis",
   },
 
-  // 4. DUAL PHYSICAL LOCATIONS (RATNAPURA & COLOMBO)
+  // 4. PHYSICAL LOCATION (RATNAPURA)
   locations: {
     ratnapura: {
       name: "Isuru Ceylon Gems — Ratnapura Bureau & Lapidary",
@@ -76,26 +76,6 @@ export const SEO_CONFIG = {
       phone: "+94 76 273 5153",
       openingHours: ["Mo-Sa 09:00-18:00"],
       visitingPolicy: "Private viewing by advance appointment or direct field expedition.",
-    },
-    colombo: {
-      name: "Isuru Ceylon Gems — Colombo VIP Salon & Export Concierge",
-      hubType: "Private Collector Salon & International Export Bureau",
-      address: {
-        streetAddress: "Havelock Town / Colombo 00500",
-        addressLocality: "Colombo",
-        addressRegion: "Western Province",
-        postalCode: "00500",
-        addressCountry: "LK",
-      },
-      geo: {
-        latitude: 6.892,
-        longitude: 79.866,
-      },
-      hasMap:
-        "https://maps.google.com/maps/search/Colombo%2000500%2C%20Sri%20Lanka/@6.892,79.866,16z?hl=en",
-      phone: "+94 76 273 5153",
-      openingHours: ["Mo-Sa 10:00-19:00"],
-      visitingPolicy: "Private high-security concierge viewing by prior appointment.",
     },
   },
 
@@ -172,7 +152,7 @@ export const SEO_CONFIG = {
   // 9. DECLARATIVE MACHINE-READABLE FACTS (For GEO & AI Quote Verification)
   facts: [
     {
-      fact: "Isuru Ceylon Gems is headquartered in Ratnapura and Colombo, Sri Lanka.",
+      fact: "Isuru Ceylon Gems is headquartered in Ratnapura, Sri Lanka.",
       topic: "Location",
     },
     {

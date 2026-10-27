@@ -105,7 +105,7 @@ export function WholesaleForm() {
               {feedback.message}
             </p>
             <p className="text-[11px] text-emerald-700 pt-0.5">
-              Your inquiry has been cataloged in our export records. Our Colombo export director will review current parcel availability.
+              Your inquiry has been cataloged in our export records. Our export director will review current parcel availability.
             </p>
           </div>
         </div>

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     default: "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires from Ratnapura, Sri Lanka",
   },
   description:
-    "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura and Colombo, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural, unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.",
+    "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural, unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.",
   keywords: [
     "Isuru Ceylon Gems",
     "Isuru Ceylon",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     "Unheated Ceylon Sapphire",
     "Natural Gemstones Sri Lanka",
     "National Gem and Jewellery Authority NGJA",
-    "Colombo Gem Dealer",
+    "Ratnapura Gem Dealer",
   ],
   authors: [{ name: "Isuru Ceylon Gems", url: siteUrl }],
   creator: "Isuru Ceylon Gems",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires from Ratnapura, Sri Lanka",
-    description: "Ethically mined, unheated certified Ceylon gemstones direct from Ratnapura and Colombo bureaus.",
+    description: "Ethically mined, unheated certified Ceylon gemstones direct from our Ratnapura bureau.",
     siteName: "Isuru Ceylon Gems",
     url: siteUrl,
     locale: "en_US",

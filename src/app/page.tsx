@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Isuru Ceylon Gems | Natural Unheated Ceylon Sapphires from Ratnapura, Sri Lanka";
   const metaDesc =
     seo?.metaDescription ||
-    "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura and Colombo, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.";
+    "Isuru Ceylon Gems is a registered gemstone dealer in Ratnapura, Sri Lanka (NGJA Reg: 202610DL42288). Direct source of natural unheated Ceylon royal blue sapphires, padparadschas, rubies and spinels with GIA, GRS and NGJA certification.";
   const canonicalUrl = `${SEO_CONFIG.site.url}/`;
   const ogImg = seo?.ogImage || "/isuru_images/blue1.webp";
 

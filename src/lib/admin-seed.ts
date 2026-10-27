@@ -296,10 +296,10 @@ export const INITIAL_ADMIN_ENQUIRIES: AdminEnquiry[] = [
     gemId: "gem-002",
     gemName: "Ceylon Padparadscha Sapphire (Lotus Blossom)",
     type: "private_viewing",
-    message: "I will be visiting Colombo next month. Could we arrange a private appointment at your Colombo salon to inspect this unheated Padparadscha alongside any unlisted 5ct+ rough stones in your vault?",
+    message: "I will be visiting Sri Lanka next month. Could we arrange a private appointment at your Ratnapura bureau to inspect this unheated Padparadscha alongside any unlisted 5ct+ rough stones in your vault?",
     preferredCurrency: "USD",
     status: "replied",
-    replyNotes: "Confirmed private appointment at Colombo Showroom for Nov 14th with Master Gemologist.",
+    replyNotes: "Confirmed private appointment at Ratnapura Bureau for Nov 14th with Master Gemologist.",
     repliedAt: "2026-10-10T14:15:00Z",
   },
   {

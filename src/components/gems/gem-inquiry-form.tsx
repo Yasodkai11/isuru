@@ -189,7 +189,7 @@ export function GemInquiryForm({ gem }: GemInquiryFormProps) {
             </label>
             <textarea
               rows={3}
-              placeholder="Ask about microscopic inspection videos, bespoke ring mounting in 18K yellow gold or platinum, or private salon viewing in Colombo / Ratnapura..."
+              placeholder="Ask about microscopic inspection videos, bespoke ring mounting in 18K yellow gold or platinum, or private viewing in Ratnapura..."
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full bg-[#FAF6EE] border border-[#B8924A]/40 p-3 text-xs text-[#2B2B2B] placeholder:text-[#2B2B2B]/40 focus:border-[#B8924A] focus:outline-none transition-subtle"
@@ -237,7 +237,7 @@ export function GemInquiryForm({ gem }: GemInquiryFormProps) {
 
         <div className="flex items-center gap-1.5 text-[11px] text-[#2B2B2B]/70">
           <ShieldCheck className="w-3.5 h-3.5 text-[#B8924A]" />
-          <span>Direct to Ratnapura & Colombo Vault</span>
+          <span>Direct to Ratnapura Vault</span>
         </div>
       </div>
     </div>

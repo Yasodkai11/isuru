@@ -479,7 +479,7 @@ export default function AdminProductsPage() {
             </span>
           </div>
           <p className="text-sm sm:text-base text-[#2B2B2B]/80 mt-1.5">
-            Real inventory from our Ratnapura and Colombo vaults with multi-angle photography, NGJA/GRS/GIA lab credentials, and live valuation.
+            Real inventory from our Ratnapura vaults with multi-angle photography, NGJA/GRS/GIA lab credentials, and live valuation.
           </p>
           {dbNotice && (
             <p className="text-xs text-emerald-700 font-medium mt-1 flex items-center gap-1">

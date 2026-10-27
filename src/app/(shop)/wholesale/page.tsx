@@ -11,7 +11,7 @@ import {
   TableCell,
   TableCaption,
 } from "@/components/ui/table";
-import { ShieldCheck, Truck, Briefcase, FileCheck, HelpCircle } from "lucide-react";
+import { ShieldCheck, Truck, Briefcase, FileCheck, HelpCircle, ChevronDown } from "lucide-react";
 import { WholesaleForm } from "@/components/wholesale/wholesale-form";
 import { JsonLd, getBreadcrumbListSchema, getFAQPageSchema } from "@/lib/seo/schema";
 import { SEO_CONFIG } from "@/lib/seo-config";
@@ -243,21 +243,30 @@ export default function WholesalePage() {
               Wholesale & B2B Inquiries: Frequently Asked Questions
             </h2>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {WHOLESALE_FAQS.map((faq, idx) => (
-              <div key={idx} className="p-6 rounded-lg bg-[#FDFBF7] border border-[#B8924A]/30 space-y-2">
-                <h3 className="font-serif text-lg sm:text-xl text-[#5E0F1E] font-medium">
-                  {faq.question}
-                </h3>
-                <p className="text-sm text-[#2B2B2B] font-medium bg-[#FAF6EE] p-3.5 rounded border-l-2 border-[#80601C] leading-relaxed">
-                  {faq.directAnswer}
-                </p>
-                {faq.detail && (
-                  <p className="text-xs sm:text-sm text-[#2B2B2B]/75 leading-relaxed pt-1">
-                    {faq.detail}
+              <details
+                key={idx}
+                className="group rounded-xl bg-[#FDFBF7] border border-[#B8924A]/30 shadow-2xs hover:border-[#80601C]/60 transition-colors"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6 font-serif text-base sm:text-lg font-medium text-[#5E0F1E] leading-snug focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#80601C] [&::-webkit-details-marker]:hidden select-none">
+                  <span>{faq.question}</span>
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="h-4 w-4 shrink-0 text-[#80601C] transition-transform duration-200 group-open:rotate-180"
+                  />
+                </summary>
+                <div className="space-y-2.5 px-5 pb-5 sm:px-6 sm:pb-6 pt-0">
+                  <p className="text-sm text-[#2B2B2B] font-medium bg-[#FAF6EE] p-3.5 rounded border-l-2 border-[#80601C] leading-relaxed">
+                    {faq.directAnswer}
                   </p>
-                )}
-              </div>
+                  {faq.detail && (
+                    <p className="text-xs sm:text-sm text-[#2B2B2B]/75 leading-relaxed pt-1">
+                      {faq.detail}
+                    </p>
+                  )}
+                </div>
+              </details>
             ))}
           </div>
         </section>

@@ -25,7 +25,7 @@ export function EntityStatement() {
           <div className="flex flex-wrap items-center justify-center gap-4 pt-1 text-xs text-[#2B2B2B]/75 font-medium">
             <span className="flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-[#80601C]" />
-              Ratnapura Bureau & Colombo VIP Salon
+              Ratnapura Lapidary Bureau, Sri Lanka
             </span>
             <span className="hidden sm:inline text-[#B8924A]">•</span>
             <span>Est. 1964 · Ancestral Mining Heritage 1922</span>

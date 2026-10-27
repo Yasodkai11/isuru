@@ -43,18 +43,18 @@ export function getOrganizationSchema() {
     taxID: SEO_CONFIG.brand.licenseNumber,
     address: {
       "@type": "PostalAddress",
-      streetAddress: SEO_CONFIG.locations.colombo.address.streetAddress,
-      addressLocality: SEO_CONFIG.locations.colombo.address.addressLocality,
-      addressRegion: SEO_CONFIG.locations.colombo.address.addressRegion,
-      postalCode: SEO_CONFIG.locations.colombo.address.postalCode,
-      addressCountry: SEO_CONFIG.locations.colombo.address.addressCountry,
+      streetAddress: SEO_CONFIG.locations.ratnapura.address.streetAddress,
+      addressLocality: SEO_CONFIG.locations.ratnapura.address.addressLocality,
+      addressRegion: SEO_CONFIG.locations.ratnapura.address.addressRegion,
+      postalCode: SEO_CONFIG.locations.ratnapura.address.postalCode,
+      addressCountry: SEO_CONFIG.locations.ratnapura.address.addressCountry,
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: SEO_CONFIG.locations.colombo.geo.latitude,
-      longitude: SEO_CONFIG.locations.colombo.geo.longitude,
+      latitude: SEO_CONFIG.locations.ratnapura.geo.latitude,
+      longitude: SEO_CONFIG.locations.ratnapura.geo.longitude,
     },
-    hasMap: SEO_CONFIG.locations.colombo.hasMap,
+    hasMap: SEO_CONFIG.locations.ratnapura.hasMap,
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -123,10 +123,10 @@ export function getOrganizationSchema() {
 }
 
 /**
- * Dedicated LocalBusiness Schema for individual location pages (/locations/ratnapura, /locations/colombo)
+ * Dedicated LocalBusiness Schema for individual location pages (/locations/ratnapura)
  */
-export function getLocalBusinessSchema(locationKey: "colombo" | "ratnapura") {
-  const loc = SEO_CONFIG.locations[locationKey];
+export function getLocalBusinessSchema(locationKey: "ratnapura" | string = "ratnapura") {
+  const loc = (SEO_CONFIG.locations as Record<string, any>)[locationKey] || SEO_CONFIG.locations.ratnapura;
   return {
     "@context": "https://schema.org",
     "@type": ["JewelryStore", "LocalBusiness"],
@@ -455,7 +455,7 @@ export function getContactPageSchema() {
     "@id": `${SITE_URL}/contact#contactpage`,
     url: `${SITE_URL}/contact`,
     name: `Contact Concierge · ${SEO_CONFIG.brand.name}`,
-    description: `Connect with the gemological concierge at ${SEO_CONFIG.brand.name} in Colombo or Ratnapura for private viewings and bespoke commissions.`,
+    description: `Connect with the gemological concierge at ${SEO_CONFIG.brand.name} in Ratnapura for private viewings and bespoke commissions.`,
     mainEntity: {
       "@id": `${SITE_URL}/#organization`,
     },

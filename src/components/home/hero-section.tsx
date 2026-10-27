@@ -63,7 +63,7 @@ const HERO_SCENES: HeroScene[] = [
     id: "heritage-chest",
     src: "/isuru_images/hero1.webp",
     alt: "Natural unheated Ceylon royal blue sapphires and scarlet rubies displayed on antique carved mahogany chest in Ratnapura atelier",
-    title: "Sacred Heritage Salon",
+    title: "Sacred Heritage Atelier",
     subtitle: "Ratnapura · Historic Alluvial Gravels Since 1964",
     tag: "02 · Royal Chest",
     specimen: "Ancient Alluvial Sapphires & Deep Ceylon Rubies",

@@ -772,7 +772,7 @@ export const CATALOG_GEMS: Gemstone[] = [
     currency: "USD",
     inStock: true,
     featured: false,
-    description: "Multiple gemstone trays presented alongside finished high-jewelry specimens in our private salon.",
+    description: "Multiple gemstone trays presented alongside finished high-jewelry specimens in our private viewing atelier.",
     certificate: { lab: "NGJA Atelier Certified", number: "NGJA-ATELIER-20" },
     images: [
       { url: `${TRAYS}/Mixed_Colors/20_gem_trays_and_necklace_arrangement.webp`, alt: "Gem Trays & Necklace Arrangement" }

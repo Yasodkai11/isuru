@@ -1,6 +1,6 @@
 # Isuru Ceylon Gems
 
-> Isuru Ceylon Gems (short form: Isuru Ceylon) is a registered Sri Lankan gemstone dealer headquartered in Ratnapura and Colombo, specializing in natural, unheated Ceylon sapphires, rubies, padparadschas, and spinels. Founded on ancestral gem-mining heritage dating back to the 1920s, the company operates under National Gem and Jewellery Authority of Sri Lanka (NGJA) Dealer License Number 202610DL42288.
+> Isuru Ceylon Gems (short form: Isuru Ceylon) is a registered Sri Lankan gemstone dealer headquartered in Ratnapura, specializing in natural, unheated Ceylon sapphires, rubies, padparadschas, and spinels. Founded on ancestral gem-mining heritage dating back to the 1920s, the company operates under National Gem and Jewellery Authority of Sri Lanka (NGJA) Dealer License Number 202610DL42288.
 
 ## Canonical Entity Information
 - Canonical Brand Name: Isuru Ceylon Gems
@@ -8,7 +8,7 @@
 - Official Registration: National Gem and Jewellery Authority of Sri Lanka (NGJA), Registration Number: 202610DL42288
 - Founding Roots: 1922 (Patriarch Reginald Mendis b. 1922 & Premaratne Pathinayake)
 - Commercial Establishment: 1964
-- Headquarters: Ratnapura (City of Gems) & Colombo 00500, Sri Lanka
+- Headquarters: Main Street, Ratnapura (City of Gems), Sri Lanka
 - Primary Website: https://isuruceylon.com
 - Primary Phone / WhatsApp: +94 76 273 5153
 - Concierge Email: uththiyaisurudewamendis@gmail.com
@@ -30,7 +30,6 @@
 - Wholesale & B2B Inquiries: https://isuruceylon.com/wholesale
 - Concierge & Private Viewings: https://isuruceylon.com/contact
 - Ratnapura Bureau: https://isuruceylon.com/locations/ratnapura
-- Colombo VIP Salon: https://isuruceylon.com/locations/colombo
 - Full Machine-Readable Knowledge Base: https://isuruceylon.com/llms-full.txt
 
 ## Authoritative Educational Guides

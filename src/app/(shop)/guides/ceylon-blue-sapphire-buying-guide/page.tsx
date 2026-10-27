@@ -159,7 +159,7 @@ export default function CeylonBlueSapphireBuyingGuidePage() {
           A 1.50-carat unheated Royal Blue sapphire may trade at $2,500 per carat ($3,750 total), while a 5.00-carat specimen of equivalent color and clarity will frequently command $9,000 to $14,000 per carat ($45,000 to $70,000 total). Always ensure that pricing reflects net carat weight, verified origin, and documented absence of thermal treatment.
         </p>
         <p className="pt-2">
-          Ready to review authentic unheated Ceylon blue sapphires? Explore our active vault or contact our gemological concierge for private viewings in Colombo or Ratnapura.
+          Ready to review authentic unheated Ceylon blue sapphires? Explore our active vault or contact our gemological concierge for private viewings at our Ratnapura bureau.
         </p>
       </section>
     </GuideLayout>

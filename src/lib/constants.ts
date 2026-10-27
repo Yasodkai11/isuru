@@ -5,15 +5,14 @@ export const BRAND = {
   subheading: "From Generational Heritage to the Digital World",
   established: 1964,
   ngjaLicense: "202610DL42288",
-  location: "Ratnapura & Colombo, Sri Lanka",
-  headquarters: "Havelock Town, Colombo 00500 & Main Street, Ratnapura, Sri Lanka",
+  location: "Ratnapura, Sri Lanka",
+  headquarters: "Main Street, Ratnapura, Sabaragamuwa Province, Sri Lanka",
   ratnapuraAddress: "Main Street, Ratnapura, Sabaragamuwa Province, Sri Lanka",
-  colomboAddress: "Colombo 00500, Western Province, Sri Lanka",
   phone: "+94 76 273 5153",
   whatsapp: "+94 76 273 5153",
   email: "uththiyaisurudewamendis@gmail.com",
   mapUrl:
-    "https://maps.google.com/maps/search/Colombo%2000500%2C%20Sri%20Lanka/@6.892,79.866,16z?hl=en",
+    "https://maps.google.com/maps?q=Gem%20Market%20Arcade%2C%20Ratnapura%2C%20Sri%20Lanka",
 };
 
 export const CEYLON_ORIGINS = [

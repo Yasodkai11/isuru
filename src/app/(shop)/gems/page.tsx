@@ -16,7 +16,7 @@ import {
 } from "@/lib/seo/schema";
 import { getSEORecordByPath } from "@/actions/seo";
 import { SEO_CONFIG } from "@/lib/seo-config";
-import { HelpCircle, ArrowRight, BookOpen } from "lucide-react";
+import { HelpCircle, ArrowRight, BookOpen, ChevronDown } from "lucide-react";
 
 interface GemsPageProps {
   searchParams: Promise<{
@@ -364,21 +364,30 @@ export default async function GemsPage({ searchParams }: GemsPageProps) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div className="max-w-4xl mx-auto space-y-3 pt-2">
             {GEM_FAQS.map((faq, idx) => (
-              <div key={idx} className="p-5 sm:p-6 rounded-lg bg-[#FDFBF7] border border-[#B8924A]/30 space-y-2.5">
-                <h3 className="font-serif text-lg font-medium text-[#5E0F1E] leading-snug">
-                  {faq.question}
-                </h3>
-                <p className="text-xs sm:text-sm text-[#2B2B2B] font-medium leading-relaxed bg-[#FAF6EE] p-3 rounded border-l-2 border-[#80601C]">
-                  {faq.directAnswer}
-                </p>
-                {faq.detail && (
-                  <p className="text-xs text-[#2B2B2B]/75 leading-relaxed pt-1">
-                    {faq.detail}
+              <details
+                key={idx}
+                className="group rounded-xl bg-[#FDFBF7] border border-[#B8924A]/30 shadow-2xs hover:border-[#80601C]/60 transition-colors"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 sm:p-5 font-serif text-base sm:text-lg font-medium text-[#5E0F1E] leading-snug focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#80601C] [&::-webkit-details-marker]:hidden select-none">
+                  <span>{faq.question}</span>
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="h-4 w-4 shrink-0 text-[#80601C] transition-transform duration-200 group-open:rotate-180"
+                  />
+                </summary>
+                <div className="space-y-2.5 px-4 pb-4 sm:px-5 sm:pb-5 pt-0">
+                  <p className="text-xs sm:text-sm text-[#2B2B2B] font-medium leading-relaxed bg-[#FAF6EE] p-3 rounded border-l-2 border-[#80601C]">
+                    {faq.directAnswer}
                   </p>
-                )}
-              </div>
+                  {faq.detail && (
+                    <p className="text-xs text-[#2B2B2B]/75 leading-relaxed pt-1">
+                      {faq.detail}
+                    </p>
+                  )}
+                </div>
+              </details>
             ))}
           </div>
         </section>

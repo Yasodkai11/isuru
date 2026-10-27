@@ -62,13 +62,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
       images: [`${baseUrl}/isuru_images/work/work-pit-mining.webp`],
     },
-    {
-      url: `${baseUrl}/locations/colombo`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.85,
-      images: [`${baseUrl}/isuru_images/contactus.webp`],
-    },
   ];
 
   // 3. Educational & Evergreen Gemological Guides (AEO & GEO)

@@ -936,7 +936,7 @@ export default function AdminStaffPage() {
             {/* Department */}
             <div>
               <Label htmlFor="new-dept" className="text-sm font-semibold text-[#2B2B2B]">
-                Department / Salon
+                Department / Bureau
               </Label>
               <Input
                 id="new-dept"
