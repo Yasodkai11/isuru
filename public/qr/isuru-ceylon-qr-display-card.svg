@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120" width="800" height="1120">
+  <defs>
+    <radialGradient id="cardBg" cx="50%" cy="35%" r="80%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="60%" stop-color="#080C14"/>
+      <stop offset="100%" stop-color="#030508"/>
+    </radialGradient>
+
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F2DFAB"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA8224"/>
+    </linearGradient>
+
+    <linearGradient id="goldBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="25%" stop-color="#8C6618"/>
+      <stop offset="50%" stop-color="#F5E4B5"/>
+      <stop offset="75%" stop-color="#8C6618"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#000000" flood-opacity="0.9"/>
+    </filter>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#cardBg)"/>
+
+  <!-- Ornate Luxury Borders -->
+  <rect x="24" y="24" width="752" height="1072" fill="none" stroke="url(#goldBorderGrad)" stroke-width="2" rx="4"/>
+  <rect x="34" y="34" width="732" height="1052" fill="none" stroke="#D4AF37" stroke-width="0.75" stroke-opacity="0.4" rx="2"/>
+
+  <!-- Corner Flourishes -->
+  <g stroke="url(#goldText)" stroke-width="1.5" fill="none">
+    <path d="M 45 65 L 45 45 L 65 45" />
+    <circle cx="45" cy="45" r="3" fill="#D4AF37"/>
+    <path d="M 755 65 L 755 45 L 735 45" />
+    <circle cx="755" cy="45" r="3" fill="#D4AF37"/>
+    <path d="M 45 1055 L 45 1075 L 65 1075" />
+    <circle cx="45" cy="1075" r="3" fill="#D4AF37"/>
+    <path d="M 755 1055 L 755 1075 L 735 1075" />
+    <circle cx="755" cy="1075" r="3" fill="#D4AF37"/>
+  </g>
+
+  <!-- Gemstone Crown Icon Top Center -->
+  <g transform="translate(400, 110)">
+    <polygon points="0,-24 20,-8 14,18 -14,18 -20,-8" fill="url(#goldText)"/>
+    <polygon points="0,-16 12,-4 8,12 -8,12 -12,-4" fill="#0E1626"/>
+    <circle cx="0" cy="0" r="3" fill="#D4AF37"/>
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="400" y="180" font-family="'Cinzel', 'Playfair Display', 'Georgia', serif" font-size="34" font-weight="700" letter-spacing="8" fill="url(#goldText)" text-anchor="middle">ISURU CEYLON</text>
+  <text x="400" y="215" font-family="'Montserrat', 'Inter', 'Helvetica Neue', sans-serif" font-size="13" font-weight="600" letter-spacing="6" fill="#D4AF37" fill-opacity="0.85" text-anchor="middle">PRECIOUS GEMSTONES • RATNAPURA</text>
+
+  <!-- Divider Line with Diamond -->
+  <g transform="translate(400, 245)">
+    <line x1="-140" y1="0" x2="-25" y2="0" stroke="url(#goldBorderGrad)" stroke-width="1"/>
+    <polygon points="0,-5 5,0 0,5 -5,0" fill="#D4AF37"/>
+    <line x1="25" y1="0" x2="140" y2="0" stroke="url(#goldBorderGrad)" stroke-width="1"/>
+  </g>
+
+  <!-- Subtitle Heritage & Accreditation -->
+  <text x="400" y="295" font-family="'Cinzel', 'Georgia', serif" font-size="16" letter-spacing="3" fill="#E5E7EB" text-anchor="middle">AUTHENTIC UNHEATED CEYLON SAPPHIRES</text>
+  <text x="400" y="325" font-family="'Inter', sans-serif" font-size="12" letter-spacing="2" fill="#9CA3AF" text-anchor="middle">ESTABLISHED 1920 • RATNAPURA GEM REGION</text>
+  <text x="400" y="350" font-family="'Inter', sans-serif" font-size="11" letter-spacing="1.5" fill="#D4AF37" fill-opacity="0.9" text-anchor="middle">NGJA DEALER REGISTRATION: 202610DL42288</text>
+
+  <!-- QR Code Framing Container -->
+  <g filter="url(#cardShadow)">
+    <!-- White Plaque for 100% Guaranteed High-Contrast Camera Scan -->
+    <rect x="235.25" y="414" width="329.5" height="329.5" fill="#FFFFFF" rx="16" stroke="url(#goldBorderGrad)" stroke-width="3"/>
+    
+    <!-- QR Code Data Modules -->
+    <g transform="translate(251.25, 430)">
+      <path d="M25.5,25.5h8.5v8.5h-8.5z M34,25.5h8.5v8.5h-8.5z M42.5,25.5h8.5v8.5h-8.5z M51,25.5h8.5v8.5h-8.5z M59.5,25.5h8.5v8.5h-8.5z M68,25.5h8.5v8.5h-8.5z M76.5,25.5h8.5v8.5h-8.5z M110.5,25.5h8.5v8.5h-8.5z M136,25.5h8.5v8.5h-8.5z M153,25.5h8.5v8.5h-8.5z M178.5,25.5h8.5v8.5h-8.5z M187,25.5h8.5v8.5h-8.5z M195.5,25.5h8.5v8.5h-8.5z M212.5,25.5h8.5v8.5h-8.5z M221,25.5h8.5v8.5h-8.5z M229.5,25.5h8.5v8.5h-8.5z M238,25.5h8.5v8.5h-8.5z M246.5,25.5h8.5v8.5h-8.5z M255,25.5h8.5v8.5h-8.5z M263.5,25.5h8.5v8.5h-8.5z M25.5,34h8.5v8.5h-8.5z M76.5,34h8.5v8.5h-8.5z M93.5,34h8.5v8.5h-8.5z M110.5,34h8.5v8.5h-8.5z M119,34h8.5v8.5h-8.5z M127.5,34h8.5v8.5h-8.5z M144.5,34h8.5v8.5h-8.5z M161.5,34h8.5v8.5h-8.5z M187,34h8.5v8.5h-8.5z M212.5,34h8.5v8.5h-8.5z M263.5,34h8.5v8.5h-8.5z M25.5,42.5h8.5v8.5h-8.5z M42.5,42.5h8.5v8.5h-8.5z M51,42.5h8.5v8.5h-8.5z M59.5,42.5h8.5v8.5h-8.5z M76.5,42.5h8.5v8.5h-8.5z M170,42.5h8.5v8.5h-8.5z M178.5,42.5h8.5v8.5h-8.5z M195.5,42.5h8.5v8.5h-8.5z M212.5,42.5h8.5v8.5h-8.5z M229.5,42.5h8.5v8.5h-8.5z M238,42.5h8.5v8.5h-8.5z M246.5,42.5h8.5v8.5h-8.5z M263.5,42.5h8.5v8.5h-8.5z M25.5,51h8.5v8.5h-8.5z M42.5,51h8.5v8.5h-8.5z M51,51h8.5v8.5h-8.5z M59.5,51h8.5v8.5h-8.5z M76.5,51h8.5v8.5h-8.5z M110.5,51h8.5v8.5h-8.5z M119,51h8.5v8.5h-8.5z M144.5,51h8.5v8.5h-8.5z M153,51h8.5v8.5h-8.5z M161.5,51h8.5v8.5h-8.5z M178.5,51h8.5v8.5h-8.5z M187,51h8.5v8.5h-8.5z M195.5,51h8.5v8.5h-8.5z M212.5,51h8.5v8.5h-8.5z M229.5,51h8.5v8.5h-8.5z M238,51h8.5v8.5h-8.5z M246.5,51h8.5v8.5h-8.5z M263.5,51h8.5v8.5h-8.5z M25.5,59.5h8.5v8.5h-8.5z M42.5,59.5h8.5v8.5h-8.5z M51,59.5h8.5v8.5h-8.5z M59.5,59.5h8.5v8.5h-8.5z M76.5,59.5h8.5v8.5h-8.5z M110.5,59.5h8.5v8.5h-8.5z M119,59.5h8.5v8.5h-8.5z M144.5,59.5h8.5v8.5h-8.5z M153,59.5h8.5v8.5h-8.5z M170,59.5h8.5v8.5h-8.5z M212.5,59.5h8.5v8.5h-8.5z M229.5,59.5h8.5v8.5h-8.5z M238,59.5h8.5v8.5h-8.5z M246.5,59.5h8.5v8.5h-8.5z M263.5,59.5h8.5v8.5h-8.5z M25.5,68h8.5v8.5h-8.5z M76.5,68h8.5v8.5h-8.5z M93.5,68h8.5v8.5h-8.5z M110.5,68h8.5v8.5h-8.5z M127.5,68h8.5v8.5h-8.5z M136,68h8.5v8.5h-8.5z M170,68h8.5v8.5h-8.5z M187,68h8.5v8.5h-8.5z M212.5,68h8.5v8.5h-8.5z M263.5,68h8.5v8.5h-8.5z M25.5,76.5h8.5v8.5h-8.5z M34,76.5h8.5v8.5h-8.5z M42.5,76.5h8.5v8.5h-8.5z M51,76.5h8.5v8.5h-8.5z M59.5,76.5h8.5v8.5h-8.5z M68,76.5h8.5v8.5h-8.5z M76.5,76.5h8.5v8.5h-8.5z M93.5,76.5h8.5v8.5h-8.5z M110.5,76.5h8.5v8.5h-8.5z M127.5,76.5h8.5v8.5h-8.5z M144.5,76.5h8.5v8.5h-8.5z M161.5,76.5h8.5v8.5h-8.5z M178.5,76.5h8.5v8.5h-8.5z M195.5,76.5h8.5v8.5h-8.5z M212.5,76.5h8.5v8.5h-8.5z M221,76.5h8.5v8.5h-8.5z M229.5,76.5h8.5v8.5h-8.5z M238,76.5h8.5v8.5h-8.5z M246.5,76.5h8.5v8.5h-8.5z M255,76.5h8.5v8.5h-8.5z M263.5,76.5h8.5v8.5h-8.5z M93.5,85h8.5v8.5h-8.5z M102,85h8.5v8.5h-8.5z M110.5,85h8.5v8.5h-8.5z M119,85h8.5v8.5h-8.5z M187,85h8.5v8.5h-8.5z M59.5,93.5h8.5v8.5h-8.5z M68,93.5h8.5v8.5h-8.5z M76.5,93.5h8.5v8.5h-8.5z M85,93.5h8.5v8.5h-8.5z M102,93.5h8.5v8.5h-8.5z M110.5,93.5h8.5v8.5h-8.5z M119,93.5h8.5v8.5h-8.5z M127.5,93.5h8.5v8.5h-8.5z M153,93.5h8.5v8.5h-8.5z M161.5,93.5h8.5v8.5h-8.5z M187,93.5h8.5v8.5h-8.5z M195.5,93.5h8.5v8.5h-8.5z M212.5,93.5h8.5v8.5h-8.5z M221,93.5h8.5v8.5h-8.5z M255,93.5h8.5v8.5h-8.5z M25.5,102h8.5v8.5h-8.5z M34,102h8.5v8.5h-8.5z M42.5,102h8.5v8.5h-8.5z M59.5,102h8.5v8.5h-8.5z M93.5,102h8.5v8.5h-8.5z M119,102h8.5v8.5h-8.5z M153,102h8.5v8.5h-8.5z M161.5,102h8.5v8.5h-8.5z M178.5,102h8.5v8.5h-8.5z M212.5,102h8.5v8.5h-8.5z M221,102h8.5v8.5h-8.5z M229.5,102h8.5v8.5h-8.5z M238,102h8.5v8.5h-8.5z M246.5,102h8.5v8.5h-8.5z M255,102h8.5v8.5h-8.5z M263.5,102h8.5v8.5h-8.5z M34,110.5h8.5v8.5h-8.5z M42.5,110.5h8.5v8.5h-8.5z M68,110.5h8.5v8.5h-8.5z M76.5,110.5h8.5v8.5h-8.5z M93.5,110.5h8.5v8.5h-8.5z M119,110.5h8.5v8.5h-8.5z M144.5,110.5h8.5v8.5h-8.5z M153,110.5h8.5v8.5h-8.5z M195.5,110.5h8.5v8.5h-8.5z M204,110.5h8.5v8.5h-8.5z M229.5,110.5h8.5v8.5h-8.5z M238,110.5h8.5v8.5h-8.5z M246.5,110.5h8.5v8.5h-8.5z M263.5,110.5h8.5v8.5h-8.5z M25.5,119h8.5v8.5h-8.5z M51,119h8.5v8.5h-8.5z M59.5,119h8.5v8.5h-8.5z M68,119h8.5v8.5h-8.5z M102,119h8.5v8.5h-8.5z M119,119h8.5v8.5h-8.5z M127.5,119h8.5v8.5h-8.5z M136,119h8.5v8.5h-8.5z M144.5,119h8.5v8.5h-8.5z M153,119h8.5v8.5h-8.5z M161.5,119h8.5v8.5h-8.5z M187,119h8.5v8.5h-8.5z M195.5,119h8.5v8.5h-8.5z M204,119h8.5v8.5h-8.5z M229.5,119h8.5v8.5h-8.5z M238,119h8.5v8.5h-8.5z M255,119h8.5v8.5h-8.5z M263.5,119h8.5v8.5h-8.5z M42.5,127.5h8.5v8.5h-8.5z M68,127.5h8.5v8.5h-8.5z M76.5,127.5h8.5v8.5h-8.5z M93.5,127.5h8.5v8.5h-8.5z M127.5,127.5h8.5v8.5h-8.5z M144.5,127.5h8.5v8.5h-8.5z M153,127.5h8.5v8.5h-8.5z M178.5,127.5h8.5v8.5h-8.5z M221,127.5h8.5v8.5h-8.5z M238,127.5h8.5v8.5h-8.5z M263.5,127.5h8.5v8.5h-8.5z M85,136h8.5v8.5h-8.5z M93.5,136h8.5v8.5h-8.5z M110.5,136h8.5v8.5h-8.5z M136,136h8.5v8.5h-8.5z M153,136h8.5v8.5h-8.5z M161.5,136h8.5v8.5h-8.5z M170,136h8.5v8.5h-8.5z M212.5,136h8.5v8.5h-8.5z M229.5,136h8.5v8.5h-8.5z M246.5,136h8.5v8.5h-8.5z M263.5,136h8.5v8.5h-8.5z M25.5,144.5h8.5v8.5h-8.5z M34,144.5h8.5v8.5h-8.5z M42.5,144.5h8.5v8.5h-8.5z M59.5,144.5h8.5v8.5h-8.5z M68,144.5h8.5v8.5h-8.5z M76.5,144.5h8.5v8.5h-8.5z M93.5,144.5h8.5v8.5h-8.5z M102,144.5h8.5v8.5h-8.5z M110.5,144.5h8.5v8.5h-8.5z M119,144.5h8.5v8.5h-8.5z M127.5,144.5h8.5v8.5h-8.5z M144.5,144.5h8.5v8.5h-8.5z M153,144.5h8.5v8.5h-8.5z M161.5,144.5h8.5v8.5h-8.5z M170,144.5h8.5v8.5h-8.5z M178.5,144.5h8.5v8.5h-8.5z M195.5,144.5h8.5v8.5h-8.5z M229.5,144.5h8.5v8.5h-8.5z M263.5,144.5h8.5v8.5h-8.5z M25.5,153h8.5v8.5h-8.5z M34,153h8.5v8.5h-8.5z M42.5,153h8.5v8.5h-8.5z M51,153h8.5v8.5h-8.5z M93.5,153h8.5v8.5h-8.5z M102,153h8.5v8.5h-8.5z M136,153h8.5v8.5h-8.5z M144.5,153h8.5v8.5h-8.5z M170,153h8.5v8.5h-8.5z M204,153h8.5v8.5h-8.5z M221,153h8.5v8.5h-8.5z M238,153h8.5v8.5h-8.5z M263.5,153h8.5v8.5h-8.5z M25.5,161.5h8.5v8.5h-8.5z M34,161.5h8.5v8.5h-8.5z M51,161.5h8.5v8.5h-8.5z M59.5,161.5h8.5v8.5h-8.5z M76.5,161.5h8.5v8.5h-8.5z M119,161.5h8.5v8.5h-8.5z M136,161.5h8.5v8.5h-8.5z M161.5,161.5h8.5v8.5h-8.5z M178.5,161.5h8.5v8.5h-8.5z M195.5,161.5h8.5v8.5h-8.5z M255,161.5h8.5v8.5h-8.5z M25.5,170h8.5v8.5h-8.5z M42.5,170h8.5v8.5h-8.5z M59.5,170h8.5v8.5h-8.5z M85,170h8.5v8.5h-8.5z M93.5,170h8.5v8.5h-8.5z M110.5,170h8.5v8.5h-8.5z M136,170h8.5v8.5h-8.5z M144.5,170h8.5v8.5h-8.5z M161.5,170h8.5v8.5h-8.5z M170,170h8.5v8.5h-8.5z M212.5,170h8.5v8.5h-8.5z M221,170h8.5v8.5h-8.5z M229.5,170h8.5v8.5h-8.5z M246.5,170h8.5v8.5h-8.5z M263.5,170h8.5v8.5h-8.5z M42.5,178.5h8.5v8.5h-8.5z M68,178.5h8.5v8.5h-8.5z M76.5,178.5h8.5v8.5h-8.5z M93.5,178.5h8.5v8.5h-8.5z M119,178.5h8.5v8.5h-8.5z M127.5,178.5h8.5v8.5h-8.5z M136,178.5h8.5v8.5h-8.5z M144.5,178.5h8.5v8.5h-8.5z M161.5,178.5h8.5v8.5h-8.5z M170,178.5h8.5v8.5h-8.5z M195.5,178.5h8.5v8.5h-8.5z M221,178.5h8.5v8.5h-8.5z M238,178.5h8.5v8.5h-8.5z M263.5,178.5h8.5v8.5h-8.5z M42.5,187h8.5v8.5h-8.5z M59.5,187h8.5v8.5h-8.5z M85,187h8.5v8.5h-8.5z M102,187h8.5v8.5h-8.5z M110.5,187h8.5v8.5h-8.5z M119,187h8.5v8.5h-8.5z M144.5,187h8.5v8.5h-8.5z M153,187h8.5v8.5h-8.5z M161.5,187h8.5v8.5h-8.5z M178.5,187h8.5v8.5h-8.5z M187,187h8.5v8.5h-8.5z M229.5,187h8.5v8.5h-8.5z M238,187h8.5v8.5h-8.5z M25.5,195.5h8.5v8.5h-8.5z M34,195.5h8.5v8.5h-8.5z M42.5,195.5h8.5v8.5h-8.5z M51,195.5h8.5v8.5h-8.5z M68,195.5h8.5v8.5h-8.5z M76.5,195.5h8.5v8.5h-8.5z M93.5,195.5h8.5v8.5h-8.5z M144.5,195.5h8.5v8.5h-8.5z M153,195.5h8.5v8.5h-8.5z M170,195.5h8.5v8.5h-8.5z M178.5,195.5h8.5v8.5h-8.5z M187,195.5h8.5v8.5h-8.5z M195.5,195.5h8.5v8.5h-8.5z M204,195.5h8.5v8.5h-8.5z M212.5,195.5h8.5v8.5h-8.5z M221,195.5h8.5v8.5h-8.5z M229.5,195.5h8.5v8.5h-8.5z M255,195.5h8.5v8.5h-8.5z M93.5,204h8.5v8.5h-8.5z M110.5,204h8.5v8.5h-8.5z M136,204h8.5v8.5h-8.5z M144.5,204h8.5v8.5h-8.5z M161.5,204h8.5v8.5h-8.5z M178.5,204h8.5v8.5h-8.5z M187,204h8.5v8.5h-8.5z M195.5,204h8.5v8.5h-8.5z M229.5,204h8.5v8.5h-8.5z M246.5,204h8.5v8.5h-8.5z M255,204h8.5v8.5h-8.5z M263.5,204h8.5v8.5h-8.5z M25.5,212.5h8.5v8.5h-8.5z M34,212.5h8.5v8.5h-8.5z M42.5,212.5h8.5v8.5h-8.5z M51,212.5h8.5v8.5h-8.5z M59.5,212.5h8.5v8.5h-8.5z M68,212.5h8.5v8.5h-8.5z M76.5,212.5h8.5v8.5h-8.5z M93.5,212.5h8.5v8.5h-8.5z M110.5,212.5h8.5v8.5h-8.5z M119,212.5h8.5v8.5h-8.5z M153,212.5h8.5v8.5h-8.5z M161.5,212.5h8.5v8.5h-8.5z M187,212.5h8.5v8.5h-8.5z M195.5,212.5h8.5v8.5h-8.5z M212.5,212.5h8.5v8.5h-8.5z M229.5,212.5h8.5v8.5h-8.5z M263.5,212.5h8.5v8.5h-8.5z M25.5,221h8.5v8.5h-8.5z M76.5,221h8.5v8.5h-8.5z M93.5,221h8.5v8.5h-8.5z M110.5,221h8.5v8.5h-8.5z M161.5,221h8.5v8.5h-8.5z M170,221h8.5v8.5h-8.5z M187,221h8.5v8.5h-8.5z M195.5,221h8.5v8.5h-8.5z M229.5,221h8.5v8.5h-8.5z M238,221h8.5v8.5h-8.5z M255,221h8.5v8.5h-8.5z M25.5,229.5h8.5v8.5h-8.5z M42.5,229.5h8.5v8.5h-8.5z M51,229.5h8.5v8.5h-8.5z M59.5,229.5h8.5v8.5h-8.5z M76.5,229.5h8.5v8.5h-8.5z M93.5,229.5h8.5v8.5h-8.5z M102,229.5h8.5v8.5h-8.5z M110.5,229.5h8.5v8.5h-8.5z M127.5,229.5h8.5v8.5h-8.5z M136,229.5h8.5v8.5h-8.5z M144.5,229.5h8.5v8.5h-8.5z M161.5,229.5h8.5v8.5h-8.5z M187,229.5h8.5v8.5h-8.5z M195.5,229.5h8.5v8.5h-8.5z M204,229.5h8.5v8.5h-8.5z M212.5,229.5h8.5v8.5h-8.5z M221,229.5h8.5v8.5h-8.5z M229.5,229.5h8.5v8.5h-8.5z M25.5,238h8.5v8.5h-8.5z M42.5,238h8.5v8.5h-8.5z M51,238h8.5v8.5h-8.5z M59.5,238h8.5v8.5h-8.5z M76.5,238h8.5v8.5h-8.5z M119,238h8.5v8.5h-8.5z M127.5,238h8.5v8.5h-8.5z M136,238h8.5v8.5h-8.5z M144.5,238h8.5v8.5h-8.5z M161.5,238h8.5v8.5h-8.5z M178.5,238h8.5v8.5h-8.5z M221,238h8.5v8.5h-8.5z M238,238h8.5v8.5h-8.5z M255,238h8.5v8.5h-8.5z M25.5,246.5h8.5v8.5h-8.5z M42.5,246.5h8.5v8.5h-8.5z M51,246.5h8.5v8.5h-8.5z M59.5,246.5h8.5v8.5h-8.5z M76.5,246.5h8.5v8.5h-8.5z M102,246.5h8.5v8.5h-8.5z M127.5,246.5h8.5v8.5h-8.5z M136,246.5h8.5v8.5h-8.5z M144.5,246.5h8.5v8.5h-8.5z M153,246.5h8.5v8.5h-8.5z M161.5,246.5h8.5v8.5h-8.5z M170,246.5h8.5v8.5h-8.5z M187,246.5h8.5v8.5h-8.5z M195.5,246.5h8.5v8.5h-8.5z M204,246.5h8.5v8.5h-8.5z M238,246.5h8.5v8.5h-8.5z M255,246.5h8.5v8.5h-8.5z M263.5,246.5h8.5v8.5h-8.5z M25.5,255h8.5v8.5h-8.5z M76.5,255h8.5v8.5h-8.5z M102,255h8.5v8.5h-8.5z M110.5,255h8.5v8.5h-8.5z M127.5,255h8.5v8.5h-8.5z M136,255h8.5v8.5h-8.5z M153,255h8.5v8.5h-8.5z M161.5,255h8.5v8.5h-8.5z M195.5,255h8.5v8.5h-8.5z M221,255h8.5v8.5h-8.5z M238,255h8.5v8.5h-8.5z M255,255h8.5v8.5h-8.5z M263.5,255h8.5v8.5h-8.5z M25.5,263.5h8.5v8.5h-8.5z M34,263.5h8.5v8.5h-8.5z M42.5,263.5h8.5v8.5h-8.5z M51,263.5h8.5v8.5h-8.5z M59.5,263.5h8.5v8.5h-8.5z M68,263.5h8.5v8.5h-8.5z M76.5,263.5h8.5v8.5h-8.5z M102,263.5h8.5v8.5h-8.5z M127.5,263.5h8.5v8.5h-8.5z M136,263.5h8.5v8.5h-8.5z M153,263.5h8.5v8.5h-8.5z M161.5,263.5h8.5v8.5h-8.5z M195.5,263.5h8.5v8.5h-8.5z M212.5,263.5h8.5v8.5h-8.5z M229.5,263.5h8.5v8.5h-8.5z M238,263.5h8.5v8.5h-8.5z M255,263.5h8.5v8.5h-8.5z" fill="#080C14"/>
+    </g>
+  </g>
+
+  <!-- Instructions & Call to Action -->
+  <text x="400" y="820" font-family="'Cinzel', 'Georgia', serif" font-size="18" font-weight="600" letter-spacing="3" fill="url(#goldText)" text-anchor="middle">SCAN WITH CAMERA</text>
+  <text x="400" y="855" font-family="'Inter', sans-serif" font-size="13.5" letter-spacing="1" fill="#D1D5DB" text-anchor="middle">Explore Natural Ceylon Sapphires, Rubies &amp; Rare Spinels</text>
+  <text x="400" y="880" font-family="'Inter', sans-serif" font-size="12" letter-spacing="0.5" fill="#9CA3AF" text-anchor="middle">Certified with GIA, GRS &amp; NGJA Authenticity Reports</text>
+
+  <!-- Luxury Pill with Website Domain -->
+  <g transform="translate(400, 940)">
+    <rect x="-180" y="-22" width="360" height="44" rx="22" fill="#111827" stroke="url(#goldBorderGrad)" stroke-width="1.5"/>
+    <text x="0" y="7" font-family="'Inter', monospace" font-size="15" font-weight="700" letter-spacing="3" fill="#FFFFFF" text-anchor="middle">ISURUCEYLON.COM</text>
+  </g>
+
+  <!-- Bottom Certificate Guarantee -->
+  <text x="400" y="1035" font-family="'Inter', sans-serif" font-size="11" letter-spacing="2" fill="#6B7280" text-anchor="middle">RATNAPURA MINING HERITAGE • DIRECT MINE-TO-MARKET PURITY</text>
+</svg>

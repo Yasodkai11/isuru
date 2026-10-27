@@ -11,6 +11,7 @@
     "serve": "node server.js",
     "lint": "eslint",
     "images:process": "node scripts/process-gem-images.mjs",
+    "qr:generate": "node -e \"const fs = require('fs'); eval(fs.readFileSync('scripts/generate-qr-assets.mjs','utf8').replace(/^import [^;]+;/gm,'')); eval(fs.readFileSync('scripts/generate-qr-pngs.mjs','utf8').replace(/^import [^;]+;/gm,''));\"",
     "pack:deploy": "powershell -ExecutionPolicy Bypass -File scripts/create-deploy-zip.ps1"
   },
   "dependencies": {

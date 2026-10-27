@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isuru Ceylon Gems — Official QR Code Assets & Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060910;
+      --card-bg: #0C121E;
+      --border: rgba(212, 175, 55, 0.25);
+      --border-hover: rgba(212, 175, 55, 0.6);
+      --gold: #D4AF37;
+      --gold-light: #F4E2B6;
+      --gold-dark: #8C6618;
+      --text: #F3F4F6;
+      --muted: #9CA3AF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 10%, #111A2B 0%, var(--bg) 80%);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .emblem {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      clip-path: polygon(50% 0%, 100% 30%, 82% 100%, 18% 100%, 0% 30%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      letter-spacing: 5px;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .pill-url {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 14px;
+      color: var(--gold);
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .pill-url:hover {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: var(--gold);
+    }
+
+    /* Grid Layout */
+    .qr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+
+    .qr-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .qr-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      box-shadow: 0 16px 40px rgba(212, 175, 55, 0.12);
+    }
+
+    .badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: var(--gold-light);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 19px;
+      letter-spacing: 1.5px;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+      min-height: 40px;
+    }
+
+    .preview-box {
+      background: #04060A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      min-height: 280px;
+    }
+
+    .preview-box img {
+      max-width: 100%;
+      max-height: 260px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .button-group {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #060910;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #FFF, var(--gold-light));
+      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+      color: var(--gold-light);
+    }
+
+    /* Live Generator Section */
+    .custom-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+    }
+
+    .custom-title {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+
+    .custom-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .generator-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .inputs-col {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: #04060A;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #FFF;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+    }
+
+    .preview-col {
+      width: 280px;
+      text-align: center;
+    }
+
+    #customCanvas {
+      width: 240px;
+      height: 240px;
+      background: #FFF;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="emblem"></div>
+      <h1>Isuru Ceylon Gems</h1>
+      <div class="subtitle">Official High-Resolution QR Code Assets (Print &amp; Digital)</div>
+      <a href="https://isuruceylon.com" target="_blank" class="pill-url">
+        <span>Target URL: <strong>https://isuruceylon.com</strong></span>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+    </header>
+
+    <!-- Pre-generated Official Assets Grid -->
+    <div class="qr-grid">
+      
+      <!-- Card 1: Classic Print -->
+      <div class="qr-card">
+        <span class="badge">Universal Print</span>
+        <h3 class="card-title">Classic Vector QR</h3>
+        <p class="card-desc">Standard high-contrast monochrome vector. Guaranteed 100% readability across every camera, receipt printer, stamp, and business card back.</p>
+        <div class="preview-box" style="background: #FFFFFF;">
+          <img src="/qr/isuru-ceylon-qr-classic.svg" alt="Classic QR Code">
+        </div>
+        <div class="button-group">
+          <button class="btn btn-gold" onclick="downloadRaster('/qr/isuru-ceylon-qr-classic.svg', 'isuru-ceylon-qr-classic-3000px.png', 3000, 3000)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download PNG (3000px Print HD)
+          </button>
+          <a href="/qr/isuru-ceylon-qr-classic.svg" download="isuru-ceylon-qr-classic.svg" class="btn btn-outline">
+            Download Vector SVG
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Luxury Sapphire & Gold Emblem Edition -->
+      <div class="qr-card">
+        <span class="badge">Luxury Edition</span>
+        <h3 class="card-title">Royal Gold &amp; Obsidian</h3>
+        <p class="card-desc">Deep obsidian palette with warm metallic gold styling and the official Isuru Ceylon crest. High Error-Correction (Level H) for effortless scanning.</p>
+        <div class="preview-box">
+          <img src="/qr/isuru-ceylon-qr-luxury.svg" alt="Luxury QR Code">
+        </div>
+        <div class="button-group">
+          <button class="btn btn-gold" onclick="downloadRaster('/qr/isuru-ceylon-qr-luxury.svg', 'isuru-ceylon-qr-luxury-3000px.png', 3000, 3000)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download PNG (3000px Print HD)
+          </button>
+          <a href="/qr/isuru-ceylon-qr-luxury.svg" download="isuru-ceylon-qr-luxury.svg" class="btn btn-outline">
+            Download Vector SVG
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Complete Showroom Stand Card -->
+      <div class="qr-card">
+        <span class="badge">Showroom Ready</span>
+        <h3 class="card-title">Display &amp; Counter Card</h3>
+        <p class="card-desc">Complete presentation card with heritage typography, NGJA Dealer License (202610DL42288), and clear camera instructions. Ready to frame or print.</p>
+        <div class="preview-box">
+          <img src="/qr/isuru-ceylon-qr-display-card.svg" alt="Display Stand Card" style="max-height: 280px; width: auto;">
+        </div>
+        <div class="button-group">
+          <button class="btn btn-gold" onclick="downloadRaster('/qr/isuru-ceylon-qr-display-card.svg', 'isuru-ceylon-counter-card-2400x3360.png', 2400, 3360)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Card PNG (High-Res)
+          </button>
+          <a href="/qr/isuru-ceylon-qr-display-card.svg" download="isuru-ceylon-qr-display-card.svg" class="btn btn-outline">
+            Download Vector SVG
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live Custom Generator Section -->
+    <div class="custom-section">
+      <h3 class="custom-title">Custom URL Generator</h3>
+      <p class="custom-desc">Need a QR code for a specific gem page, wholesale inquiry, or WhatsApp direct chat? Type any link below to generate and download instantly.</p>
+      
+      <div class="generator-flex">
+        <div class="inputs-col">
+          <div class="form-group">
+            <label class="form-label" for="customUrl">Target Destination URL</label>
+            <input type="url" id="customUrl" class="form-input" value="https://isuruceylon.com/gems" placeholder="https://isuruceylon.com/...">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="resolutionSelect">Download Resolution</label>
+            <select id="resolutionSelect" class="form-input" style="cursor: pointer;">
+              <option value="1200">1200 x 1200 px (Digital &amp; Social)</option>
+              <option value="2400" selected>2400 x 2400 px (300 DPI Business Cards)</option>
+              <option value="4000">4000 x 4000 px (Ultra-HD Print / Billboard)</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="btn btn-gold" style="flex: 1;" onclick="downloadCustomQr()">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download Custom PNG
+            </button>
+          </div>
+        </div>
+
+        <div class="preview-col">
+          <canvas id="customCanvas" width="600" height="600"></canvas>
+          <p style="font-size: 11px; color: var(--muted); margin-top: 10px; letter-spacing: 0.5px;">Live Interactive Preview</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code Generator Engine (inline script for standalone browser execution) -->
+  <script src="/qr-engine.js"></script>
+  <script>
+    // Universal rasterizer function (SVG -> High-Resolution PNG download)
+    function downloadRaster(svgUrl, filename, width, height) {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#FFFFFF";
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const a = document.createElement("a");
+        a.download = filename;
+        a.href = canvas.toDataURL("image/png");
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+      img.src = svgUrl;
+    }
+
+    // Custom QR live generator
+    const customUrlInput = document.getElementById("customUrl");
+    const customCanvas = document.getElementById("customCanvas");
+
+    function renderCustomQr() {
+      const url = customUrlInput.value.trim() || "https://isuruceylon.com";
+      if (!window.qrcode) return;
+      
+      const qr = window.qrcode(0, 'H');
+      qr.addData(url);
+      qr.make();
+      
+      const count = qr.getModuleCount();
+      const margin = 4;
+      const total = count + margin * 2;
+      const size = 600;
+      const cell = size / total;
+
+      const ctx = customCanvas.getContext("2d");
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, size, size);
+
+      ctx.fillStyle = "#0A0E17";
+      for (let r = 0; r < count; r++) {
+        for (let c = 0; c < count; c++) {
+          if (qr.isDark(r, c)) {
+            ctx.fillRect((c + margin) * cell, (r + margin) * cell, cell, cell);
+          }
+        }
+      }
+    }
+
+    function downloadCustomQr() {
+      const res = parseInt(document.getElementById("resolutionSelect").value, 10);
+      const url = customUrlInput.value.trim() || "https://isuruceylon.com";
+      const qr = window.qrcode(0, 'H');
+      qr.addData(url);
+      qr.make();
+      
+      const count = qr.getModuleCount();
+      const margin = 4;
+      const total = count + margin * 2;
+      const cell = res / total;
+
+      const offCanvas = document.createElement("canvas");
+      offCanvas.width = res;
+      offCanvas.height = res;
+      const ctx = offCanvas.getContext("2d");
+      
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, res, res);
+
+      ctx.fillStyle = "#0A0E17";
+      for (let r = 0; r < count; r++) {
+        for (let c = 0; c < count; c++) {
+          if (qr.isDark(r, c)) {
+            ctx.fillRect((c + margin) * cell, (r + margin) * cell, cell + 0.5, cell + 0.5);
+          }
+        }
+      }
+
+      const a = document.createElement("a");
+      a.download = `isuru-ceylon-qr-${res}px.png`;
+      a.href = offCanvas.toDataURL("image/png");
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (window.qrcode) {
+        renderCustomQr();
+      } else {
+        setTimeout(renderCustomQr, 500);
+      }
+      customUrlInput.addEventListener("input", renderCustomQr);
+    });
+  </script>
+</body>
+</html>
